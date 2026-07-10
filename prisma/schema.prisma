@@ -19,6 +19,7 @@ model Article {
   metaTitle       String?
   metaDescription String?
   faqJson         String? // JSON: [{q,a}] cho FAQPage (AEO)
+  phone           String? // Hotline riêng cho bài này (trống = hotline mặc định)
   published       Boolean  @default(true)
   views           Int      @default(0)
   publishedAt     DateTime @default(now())

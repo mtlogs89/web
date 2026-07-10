@@ -1,9 +1,11 @@
 "use client";
 
-import { useEditor, EditorContent } from "@tiptap/react";
+import { useEditor, EditorContent, type Editor } from "@tiptap/react";
 import StarterKit from "@tiptap/starter-kit";
 import Image from "@tiptap/extension-image";
 import Link from "@tiptap/extension-link";
+import Underline from "@tiptap/extension-underline";
+import Youtube from "@tiptap/extension-youtube";
 import Table from "@tiptap/extension-table";
 import TableRow from "@tiptap/extension-table-row";
 import TableHeader from "@tiptap/extension-table-header";
@@ -12,19 +14,25 @@ import TextAlign from "@tiptap/extension-text-align";
 import {
   Bold,
   Italic,
-  Heading2,
-  Heading3,
+  Underline as UnderlineIcon,
+  Strikethrough,
   List,
   ListOrdered,
   Quote,
   Code,
+  Minus,
   Link as LinkIcon,
+  Unlink,
   Image as ImageIcon,
+  Youtube as YoutubeIcon,
   AlignLeft,
   AlignCenter,
   AlignRight,
+  AlignJustify,
   Undo,
   Redo,
+  Table as TableIcon,
+  Trash2,
 } from "lucide-react";
 
 interface RichTextEditorProps {
@@ -32,35 +40,78 @@ interface RichTextEditorProps {
   onChange: (value: string) => void;
 }
 
-const Button = ({ icon: Icon, onClick, active, title, children }: any) => (
-  <button
-    onClick={onClick}
-    title={title}
-    className={`p-2 rounded transition ${
-      active
-        ? "bg-brand-500 text-white"
-        : "bg-slate-100 hover:bg-slate-200 text-ink"
-    }`}
-  >
-    {Icon ? <Icon className="h-4 w-4" /> : children}
-  </button>
-);
+function ToolBtn({
+  icon: Icon,
+  label,
+  onClick,
+  active,
+  title,
+  disabled,
+}: {
+  icon?: React.ComponentType<{ className?: string }>;
+  label?: string;
+  onClick: () => void;
+  active?: boolean;
+  title: string;
+  disabled?: boolean;
+}) {
+  return (
+    <button
+      type="button"
+      onClick={onClick}
+      title={title}
+      disabled={disabled}
+      className={`flex h-8 min-w-8 items-center justify-center rounded px-1.5 text-sm font-semibold transition disabled:opacity-40 ${
+        active ? "bg-brand-500 text-white" : "text-ink hover:bg-slate-200"
+      }`}
+    >
+      {Icon ? <Icon className="h-4 w-4" /> : label}
+    </button>
+  );
+}
+
+function Divider() {
+  return <div className="mx-1 w-px self-stretch bg-slate-300" />;
+}
+
+function TableMenu({ editor }: { editor: Editor }) {
+  const inTable = editor.isActive("table");
+  return (
+    <>
+      <ToolBtn
+        icon={TableIcon}
+        onClick={() =>
+          editor.chain().focus().insertTable({ rows: 3, cols: 3, withHeaderRow: true }).run()
+        }
+        title="Chèn bảng 3×3"
+      />
+      {inTable && (
+        <>
+          <ToolBtn label="+Hàng" onClick={() => editor.chain().focus().addRowAfter().run()} title="Thêm hàng dưới" />
+          <ToolBtn label="−Hàng" onClick={() => editor.chain().focus().deleteRow().run()} title="Xóa hàng" />
+          <ToolBtn label="+Cột" onClick={() => editor.chain().focus().addColumnAfter().run()} title="Thêm cột phải" />
+          <ToolBtn label="−Cột" onClick={() => editor.chain().focus().deleteColumn().run()} title="Xóa cột" />
+          <ToolBtn icon={Trash2} onClick={() => editor.chain().focus().deleteTable().run()} title="Xóa bảng" />
+        </>
+      )}
+    </>
+  );
+}
 
 export function RichTextEditor({ value, onChange }: RichTextEditorProps) {
   const editor = useEditor({
+    immediatelyRender: false,
     extensions: [
       StarterKit,
+      Underline,
       Image.configure({ allowBase64: true }),
       Link.configure({ openOnClick: false }),
-      Table.configure({
-        resizable: true,
-      }),
+      Youtube.configure({ width: 640, height: 360 }),
+      Table.configure({ resizable: true }),
       TableRow,
       TableHeader,
       TableCell,
-      TextAlign.configure({
-        types: ["heading", "paragraph"],
-      }),
+      TextAlign.configure({ types: ["heading", "paragraph"] }),
     ],
     content: value,
     onUpdate: ({ editor }) => {
@@ -68,7 +119,13 @@ export function RichTextEditor({ value, onChange }: RichTextEditorProps) {
     },
   });
 
-  if (!editor) return null;
+  if (!editor) {
+    return (
+      <div className="rounded-xl border border-slate-200 px-4 py-3 text-sm text-ink-muted">
+        Đang tải trình soạn thảo…
+      </div>
+    );
+  }
 
   const handleImageUpload = () => {
     const input = document.createElement("input");
@@ -77,157 +134,88 @@ export function RichTextEditor({ value, onChange }: RichTextEditorProps) {
     input.onchange = async (e) => {
       const file = (e.target as HTMLInputElement).files?.[0];
       if (!file) return;
-
       const formData = new FormData();
       formData.append("file", file);
-
       try {
-        const res = await fetch("/api/upload", {
-          method: "POST",
-          body: formData,
-        });
+        const res = await fetch("/api/upload", { method: "POST", body: formData });
         const data = await res.json();
         if (data.url) {
           editor.chain().focus().setImage({ src: data.url }).run();
+        } else {
+          alert(data.error || "Upload ảnh thất bại");
         }
-      } catch (err) {
+      } catch {
         alert("Upload ảnh thất bại");
-        console.error(err);
       }
     };
     input.click();
   };
 
-  const handleLinkAdd = () => {
-    const url = prompt("Nhập URL:");
-    if (url) {
-      editor.chain().focus().setLink({ href: url }).run();
+  const handleLink = () => {
+    const prev = editor.getAttributes("link").href as string | undefined;
+    const url = prompt("Nhập URL:", prev || "https://");
+    if (url === null) return;
+    if (url === "" || url === "https://") {
+      editor.chain().focus().unsetLink().run();
+      return;
     }
+    editor.chain().focus().extendMarkRange("link").setLink({ href: url }).run();
   };
 
+  const handleYoutube = () => {
+    const url = prompt("Dán link YouTube:");
+    if (!url) return;
+    editor.commands.setYoutubeVideo({ src: url });
+  };
+
+  const words = editor.getText().trim().split(/\s+/).filter(Boolean).length;
+  const para = () => editor.chain().focus().setParagraph().run();
+  const heading = (level: 2 | 3 | 4) =>
+    editor.chain().focus().toggleHeading({ level }).run();
+
   return (
-    <div className="border border-slate-200 rounded-xl overflow-hidden">
+    <div className="overflow-hidden rounded-xl border border-slate-200">
       {/* Toolbar */}
-      <div className="bg-slate-50 border-b border-slate-200 p-3 flex flex-wrap gap-1">
-        {/* Undo/Redo */}
-        <Button
-          icon={Undo}
-          onClick={() => editor.chain().focus().undo().run()}
-          title="Undo (Ctrl+Z)"
-        />
-        <Button
-          icon={Redo}
-          onClick={() => editor.chain().focus().redo().run()}
-          title="Redo (Ctrl+Shift+Z)"
-        />
-
-        <div className="w-px bg-slate-300" />
-
-        {/* Format */}
-        <Button
-          icon={Bold}
-          onClick={() => editor.chain().focus().toggleBold().run()}
-          active={editor.isActive("bold")}
-          title="Bold (Ctrl+B)"
-        />
-        <Button
-          icon={Italic}
-          onClick={() => editor.chain().focus().toggleItalic().run()}
-          active={editor.isActive("italic")}
-          title="Italic (Ctrl+I)"
-        />
-
-        <div className="w-px bg-slate-300" />
-
-        {/* Heading */}
-        <Button
-          icon={Heading2}
-          onClick={() => editor.chain().focus().toggleHeading({ level: 2 }).run()}
-          active={editor.isActive("heading", { level: 2 })}
-          title="Heading 2"
-        />
-        <Button
-          icon={Heading3}
-          onClick={() => editor.chain().focus().toggleHeading({ level: 3 }).run()}
-          active={editor.isActive("heading", { level: 3 })}
-          title="Heading 3"
-        />
-
-        <div className="w-px bg-slate-300" />
-
-        {/* Lists */}
-        <Button
-          icon={List}
-          onClick={() => editor.chain().focus().toggleBulletList().run()}
-          active={editor.isActive("bulletList")}
-          title="Bullet List"
-        />
-        <Button
-          icon={ListOrdered}
-          onClick={() => editor.chain().focus().toggleOrderedList().run()}
-          active={editor.isActive("orderedList")}
-          title="Ordered List"
-        />
-
-        <div className="w-px bg-slate-300" />
-
-        {/* Align */}
-        <Button
-          icon={AlignLeft}
-          onClick={() => editor.chain().focus().setTextAlign("left").run()}
-          active={editor.isActive({ textAlign: "left" })}
-          title="Align Left"
-        />
-        <Button
-          icon={AlignCenter}
-          onClick={() => editor.chain().focus().setTextAlign("center").run()}
-          active={editor.isActive({ textAlign: "center" })}
-          title="Align Center"
-        />
-        <Button
-          icon={AlignRight}
-          onClick={() => editor.chain().focus().setTextAlign("right").run()}
-          active={editor.isActive({ textAlign: "right" })}
-          title="Align Right"
-        />
-
-        <div className="w-px bg-slate-300" />
-
-        {/* Quote & Code */}
-        <Button
-          icon={Quote}
-          onClick={() => editor.chain().focus().toggleBlockquote().run()}
-          active={editor.isActive("blockquote")}
-          title="Quote"
-        />
-        <Button
-          icon={Code}
-          onClick={() => editor.chain().focus().toggleCodeBlock().run()}
-          active={editor.isActive("codeBlock")}
-          title="Code Block"
-        />
-
-        <div className="w-px bg-slate-300" />
-
-        {/* Image & Link */}
-        <Button
-          icon={ImageIcon}
-          onClick={handleImageUpload}
-          title="Insert Image"
-        />
-        <Button
-          icon={LinkIcon}
-          onClick={handleLinkAdd}
-          active={editor.isActive("link")}
-          title="Add Link"
-        />
+      <div className="flex flex-wrap items-center gap-0.5 border-b border-slate-200 bg-slate-50 p-2">
+        <ToolBtn icon={Undo} onClick={() => editor.chain().focus().undo().run()} title="Hoàn tác (Ctrl+Z)" disabled={!editor.can().undo()} />
+        <ToolBtn icon={Redo} onClick={() => editor.chain().focus().redo().run()} title="Làm lại (Ctrl+Shift+Z)" disabled={!editor.can().redo()} />
+        <Divider />
+        <ToolBtn label="P" onClick={para} active={editor.isActive("paragraph") && !editor.isActive("bulletList") && !editor.isActive("orderedList")} title="Đoạn văn thường" />
+        <ToolBtn label="H2" onClick={() => heading(2)} active={editor.isActive("heading", { level: 2 })} title="Tiêu đề mục lớn (H2)" />
+        <ToolBtn label="H3" onClick={() => heading(3)} active={editor.isActive("heading", { level: 3 })} title="Tiêu đề mục nhỏ (H3)" />
+        <ToolBtn label="H4" onClick={() => heading(4)} active={editor.isActive("heading", { level: 4 })} title="Tiêu đề phụ (H4)" />
+        <Divider />
+        <ToolBtn icon={Bold} onClick={() => editor.chain().focus().toggleBold().run()} active={editor.isActive("bold")} title="In đậm (Ctrl+B)" />
+        <ToolBtn icon={Italic} onClick={() => editor.chain().focus().toggleItalic().run()} active={editor.isActive("italic")} title="In nghiêng (Ctrl+I)" />
+        <ToolBtn icon={UnderlineIcon} onClick={() => editor.chain().focus().toggleUnderline().run()} active={editor.isActive("underline")} title="Gạch chân (Ctrl+U)" />
+        <ToolBtn icon={Strikethrough} onClick={() => editor.chain().focus().toggleStrike().run()} active={editor.isActive("strike")} title="Gạch ngang chữ" />
+        <Divider />
+        <ToolBtn icon={AlignLeft} onClick={() => editor.chain().focus().setTextAlign("left").run()} active={editor.isActive({ textAlign: "left" })} title="Căn trái" />
+        <ToolBtn icon={AlignCenter} onClick={() => editor.chain().focus().setTextAlign("center").run()} active={editor.isActive({ textAlign: "center" })} title="Căn giữa" />
+        <ToolBtn icon={AlignRight} onClick={() => editor.chain().focus().setTextAlign("right").run()} active={editor.isActive({ textAlign: "right" })} title="Căn phải" />
+        <ToolBtn icon={AlignJustify} onClick={() => editor.chain().focus().setTextAlign("justify").run()} active={editor.isActive({ textAlign: "justify" })} title="Căn đều 2 bên" />
+        <Divider />
+        <ToolBtn icon={List} onClick={() => editor.chain().focus().toggleBulletList().run()} active={editor.isActive("bulletList")} title="Danh sách chấm" />
+        <ToolBtn icon={ListOrdered} onClick={() => editor.chain().focus().toggleOrderedList().run()} active={editor.isActive("orderedList")} title="Danh sách đánh số" />
+        <ToolBtn icon={Quote} onClick={() => editor.chain().focus().toggleBlockquote().run()} active={editor.isActive("blockquote")} title="Trích dẫn" />
+        <ToolBtn icon={Code} onClick={() => editor.chain().focus().toggleCodeBlock().run()} active={editor.isActive("codeBlock")} title="Khối code" />
+        <ToolBtn icon={Minus} onClick={() => editor.chain().focus().setHorizontalRule().run()} title="Đường kẻ ngang" />
+        <Divider />
+        <ToolBtn icon={LinkIcon} onClick={handleLink} active={editor.isActive("link")} title="Chèn/sửa link" />
+        <ToolBtn icon={Unlink} onClick={() => editor.chain().focus().unsetLink().run()} disabled={!editor.isActive("link")} title="Gỡ link" />
+        <ToolBtn icon={ImageIcon} onClick={handleImageUpload} title="Chèn ảnh từ máy" />
+        <ToolBtn icon={YoutubeIcon} onClick={handleYoutube} title="Chèn video YouTube" />
+        <Divider />
+        <TableMenu editor={editor} />
       </div>
 
       {/* Editor */}
-      <EditorContent
-        editor={editor}
-        className="prose prose-sm max-w-none px-4 py-3 min-h-96 focus:outline-none"
-      />
+      <EditorContent editor={editor} className="rte prose-mt" />
+
+      {/* Footer */}
+      <div className="flex justify-end border-t border-slate-100 bg-slate-50 px-3 py-1.5 text-xs text-ink-muted">
+        {words} từ
+      </div>
     </div>
   );
 }

@@ -17,6 +17,7 @@ type ArticleData = {
   metaTitle?: string | null;
   metaDescription?: string | null;
   faqJson?: string | null;
+  phone?: string | null;
   published?: boolean;
 };
 
@@ -100,6 +101,18 @@ export function ArticleEditor({
           <div>
             <label className={labelCls}>Tags (phân cách dấu phẩy)</label>
             <input name="tags" defaultValue={article?.tags ?? ""} className={inputCls} />
+          </div>
+          <div>
+            <label className={labelCls}>Điện thoại (để trống sẽ lấy hotline mặc định)</label>
+            <input
+              name="phone"
+              defaultValue={article?.phone ?? ""}
+              placeholder="vd: 0964369789"
+              className={inputCls}
+            />
+            <p className="mt-1 text-xs text-ink-muted">
+              Nút Gọi điện / Zalo trên bài này sẽ dùng số này thay cho hotline chung.
+            </p>
           </div>
         </div>
 

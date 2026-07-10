@@ -77,6 +77,7 @@ export async function saveArticle(_prev: FormState, formData: FormData): Promise
     metaTitle: String(formData.get("metaTitle") || "") || null,
     metaDescription: String(formData.get("metaDescription") || "") || null,
     faqJson,
+    phone: String(formData.get("phone") || "").trim() || null,
     published: formData.get("published") === "on",
   };
 

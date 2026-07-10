@@ -11,6 +11,7 @@ import {
   breadcrumbJsonLd,
 } from "@/lib/structured-data";
 import { site } from "@/lib/site";
+import { ContactOverride } from "@/components/site/contact-override";
 
 export const dynamic = "force-dynamic";
 
@@ -49,9 +50,12 @@ export default async function ArticlePage({
   const faqs = parseFaq(article.faqJson);
   const url = `${site.url}/tin-tuc/${article.slug}`;
   const date = new Date(article.publishedAt).toLocaleDateString("vi-VN");
+  const phone = article.phone || site.phone;
+  const phoneDisplay = article.phone || site.phoneDisplay;
 
   return (
     <>
+      {article.phone && <ContactOverride phone={article.phone} />}
       <JsonLd
         data={articleJsonLd({
           title: article.title,
@@ -127,10 +131,10 @@ export default async function ArticlePage({
           </p>
           <div className="mt-5 flex flex-wrap justify-center gap-3">
             <a
-              href={`tel:${site.phone}`}
+              href={`tel:${phone}`}
               className="flex items-center gap-2 rounded-full bg-coral-500 px-7 py-3 font-semibold text-white shadow-lg shadow-coral-500/30 hover:bg-coral-600"
             >
-              <Phone className="h-5 w-5" /> {site.phoneDisplay}
+              <Phone className="h-5 w-5" /> {phoneDisplay}
             </a>
             <Link
               href="/lien-he"
