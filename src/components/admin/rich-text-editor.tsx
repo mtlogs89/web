@@ -174,9 +174,9 @@ export function RichTextEditor({ value, onChange }: RichTextEditorProps) {
     editor.chain().focus().toggleHeading({ level }).run();
 
   return (
-    <div className="overflow-hidden rounded-xl border border-slate-200">
-      {/* Toolbar */}
-      <div className="flex flex-wrap items-center gap-0.5 border-b border-slate-200 bg-slate-50 p-2">
+    <div className="rounded-xl border border-slate-200">
+      {/* Toolbar — sticky: dính trên cùng màn hình khi cuộn bài dài */}
+      <div className="sticky top-0 z-20 flex flex-wrap items-center gap-0.5 rounded-t-xl border-b border-slate-200 bg-slate-50 p-2">
         <ToolBtn icon={Undo} onClick={() => editor.chain().focus().undo().run()} title="Hoàn tác (Ctrl+Z)" disabled={!editor.can().undo()} />
         <ToolBtn icon={Redo} onClick={() => editor.chain().focus().redo().run()} title="Làm lại (Ctrl+Shift+Z)" disabled={!editor.can().redo()} />
         <Divider />
@@ -213,7 +213,7 @@ export function RichTextEditor({ value, onChange }: RichTextEditorProps) {
       <EditorContent editor={editor} className="rte prose-mt" />
 
       {/* Footer */}
-      <div className="flex justify-end border-t border-slate-100 bg-slate-50 px-3 py-1.5 text-xs text-ink-muted">
+      <div className="flex justify-end rounded-b-xl border-t border-slate-100 bg-slate-50 px-3 py-1.5 text-xs text-ink-muted">
         {words} từ
       </div>
     </div>
