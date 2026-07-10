@@ -137,7 +137,7 @@ export function RichTextEditor({ value, onChange }: RichTextEditorProps) {
       const formData = new FormData();
       formData.append("file", file);
       try {
-        const res = await fetch("/api/upload", { method: "POST", body: formData });
+        const res = await fetch("/api/upload", { method: "POST", body: formData, credentials: "include" });
         const data = await res.json();
         if (data.url) {
           editor.chain().focus().setImage({ src: data.url }).run();
