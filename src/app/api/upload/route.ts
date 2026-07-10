@@ -1,6 +1,7 @@
 import { NextResponse } from "next/server";
 import { writeFile, mkdir } from "fs/promises";
 import path from "path";
+import { getAdminId } from "@/lib/auth";
 
 export const dynamic = "force-dynamic";
 
@@ -23,15 +24,12 @@ function slugify(text: string): string {
 }
 
 export async function POST(req: Request) {
-  // Check admin session từ cookie
-  const cookie = req.headers.get("cookie") || "";
-  const adminSession = cookie.includes("admin_session=") || cookie.includes("auth=");
-
-  // Cho phép: admin (có session) HOẶC có API key hợp lệ
+  // Cho phép: admin đã đăng nhập (cookie mt_admin hợp lệ) HOẶC có API key hợp lệ
+  const adminId = await getAdminId();
   const key = req.headers.get("x-api-key");
   const isValidKey = process.env.ARTICLE_API_KEY && key === process.env.ARTICLE_API_KEY;
 
-  if (!adminSession && !isValidKey) {
+  if (!adminId && !isValidKey) {
     return NextResponse.json({ error: "Không được phép upload" }, { status: 401 });
   }
 
