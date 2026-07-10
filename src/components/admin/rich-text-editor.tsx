@@ -24,7 +24,7 @@ import {
   Link as LinkIcon,
   Unlink,
   Image as ImageIcon,
-  Youtube as YoutubeIcon,
+  Video as VideoIcon,
   AlignLeft,
   AlignCenter,
   AlignRight,
@@ -204,7 +204,7 @@ export function RichTextEditor({ value, onChange }: RichTextEditorProps) {
         <ToolBtn icon={LinkIcon} onClick={handleLink} active={editor.isActive("link")} title="Chèn/sửa link" />
         <ToolBtn icon={Unlink} onClick={() => editor.chain().focus().unsetLink().run()} disabled={!editor.isActive("link")} title="Gỡ link" />
         <ToolBtn icon={ImageIcon} onClick={handleImageUpload} title="Chèn ảnh từ máy" />
-        <ToolBtn icon={YoutubeIcon} onClick={handleYoutube} title="Chèn video YouTube" />
+        <ToolBtn icon={VideoIcon} onClick={handleYoutube} title="Chèn video YouTube" />
         <Divider />
         <TableMenu editor={editor} />
       </div>
