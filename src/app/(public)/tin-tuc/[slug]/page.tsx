@@ -104,7 +104,10 @@ export default async function ArticlePage({
 
         <div
           className="prose-mt mt-8"
-          dangerouslySetInnerHTML={{ __html: article.content }}
+          dangerouslySetInnerHTML={{
+            // Ảnh trong bài chỉ tải khi khách cuộn tới (đỡ nặng trang)
+            __html: article.content.replace(/<img /g, '<img loading="lazy" decoding="async" '),
+          }}
         />
 
         {faqs.length > 0 && (
