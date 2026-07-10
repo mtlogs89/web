@@ -42,3 +42,7 @@ next-env.d.ts
 
 # Ảnh upload runtime
 /public/uploads/
+
+# Database (server-only, never overwrite)
+prisma/*.db
+prisma/*.db.bak*
