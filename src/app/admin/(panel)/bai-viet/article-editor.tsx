@@ -1,8 +1,9 @@
 "use client";
 
-import { useActionState } from "react";
+import { useActionState, useState } from "react";
 import { Save } from "lucide-react";
 import { saveArticle, type FormState } from "../../actions";
+import { RichTextEditor } from "@/components/admin/rich-text-editor";
 
 type ArticleData = {
   id?: string;
@@ -37,6 +38,7 @@ export function ArticleEditor({
   categories?: string[];
 }) {
   const [state, formAction, pending] = useActionState<FormState, FormData>(saveArticle, null);
+  const [content, setContent] = useState(article?.content ?? "");
   const catList = categories && categories.length > 0 ? categories : fallbackCategories;
   // Bài đang sửa có chuyên mục cũ không còn trong danh sách -> vẫn hiển thị để không mất
   const currentCat = article?.category;
@@ -60,16 +62,9 @@ export function ArticleEditor({
           <textarea name="excerpt" rows={2} defaultValue={article?.excerpt ?? ""} className={inputCls} />
         </div>
         <div>
-          <label className={labelCls}>Nội dung (HTML) *</label>
-          <textarea
-            name="content"
-            required
-            rows={16}
-            defaultValue={article?.content}
-            placeholder="<h2>Tiêu đề mục</h2><p>Nội dung…</p>"
-            className={`${inputCls} font-mono text-sm`}
-          />
-          <p className="mt-1 text-xs text-ink-muted">Dùng thẻ HTML: &lt;h2&gt;, &lt;p&gt;, &lt;ul&gt;&lt;li&gt;, &lt;strong&gt;, &lt;table&gt;…</p>
+          <label className={labelCls}>Nội dung *</label>
+          <RichTextEditor value={content} onChange={setContent} />
+          <input type="hidden" name="content" value={content} required />
         </div>
         <div>
           <label className={labelCls}>FAQ (JSON) — cho AEO/GEO</label>

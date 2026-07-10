@@ -23,9 +23,16 @@ function slugify(text: string): string {
 }
 
 export async function POST(req: Request) {
+  // Check admin session từ cookie
+  const cookie = req.headers.get("cookie") || "";
+  const adminSession = cookie.includes("admin_session=") || cookie.includes("auth=");
+
+  // Cho phép: admin (có session) HOẶC có API key hợp lệ
   const key = req.headers.get("x-api-key");
-  if (!process.env.ARTICLE_API_KEY || key !== process.env.ARTICLE_API_KEY) {
-    return NextResponse.json({ error: "Sai hoặc thiếu API key" }, { status: 401 });
+  const isValidKey = process.env.ARTICLE_API_KEY && key === process.env.ARTICLE_API_KEY;
+
+  if (!adminSession && !isValidKey) {
+    return NextResponse.json({ error: "Không được phép upload" }, { status: 401 });
   }
 
   const form = await req.formData();
