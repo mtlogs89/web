@@ -1,0 +1,156 @@
+@import "tailwindcss";
+
+@theme {
+  --font-sans: var(--font-be-vietnam), ui-sans-serif, system-ui, sans-serif;
+
+  --color-brand-50: #e7f8f5;
+  --color-brand-100: #c9f0ea;
+  --color-brand-200: #9fe3d9;
+  --color-brand-300: #6fd2c4;
+  --color-brand-400: #3ec4b1;
+  --color-brand-500: #1fb6a2;
+  --color-brand-600: #159484;
+  --color-brand-700: #0f7568;
+  --color-brand-800: #0c5b52;
+  --color-brand-900: #0a4942;
+
+  --color-coral-50: #fdeced;
+  --color-coral-100: #fad2d3;
+  --color-coral-200: #f5a9aa;
+  --color-coral-300: #f08081;
+  --color-coral-400: #ee6d6d;
+  --color-coral-500: #ec5e5e;
+  --color-coral-600: #d94747;
+  --color-coral-700: #b83636;
+
+  --color-sun-50: #fef4e3;
+  --color-sun-100: #fde4ba;
+  --color-sun-200: #f9cd83;
+  --color-sun-300: #f5b955;
+  --color-sun-400: #f2a93c;
+  --color-sun-500: #e0941f;
+  --color-sun-600: #c47d15;
+
+  --color-ink: #14323a;
+  --color-ink-soft: #3c5961;
+  --color-ink-muted: #6b878d;
+}
+
+:root {
+  --background: #ffffff;
+  --foreground: #14323a;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  background: var(--background);
+  color: var(--foreground);
+  font-family: var(--font-sans);
+}
+
+@keyframes float {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-14px); }
+}
+@keyframes marquee {
+  from { transform: translateX(0); }
+  to { transform: translateX(-50%); }
+}
+@keyframes reveal-up {
+  from { opacity: 0; transform: translateY(26px); }
+  to { opacity: 1; transform: none; }
+}
+
+.animate-float { animation: float 6s ease-in-out infinite; }
+.animate-marquee { animation: marquee 30s linear infinite; }
+
+.mesh-bg {
+  background:
+    radial-gradient(40rem 30rem at 8% -5%, rgba(31, 182, 162, 0.20), transparent 60%),
+    radial-gradient(34rem 26rem at 98% 5%, rgba(242, 169, 60, 0.20), transparent 60%),
+    radial-gradient(40rem 30rem at 80% 100%, rgba(236, 94, 94, 0.14), transparent 60%),
+    #f6fbfa;
+}
+
+.grad-text {
+  background: linear-gradient(100deg, #1fb6a2, #159484);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+
+.reveal {
+  opacity: 0;
+}
+.reveal.in-view {
+  animation: reveal-up 0.7s cubic-bezier(0.2, 0.7, 0.2, 1) forwards;
+}
+
+/* Prose cho nội dung bài viết HTML */
+.prose-mt {
+  color: var(--color-ink-soft);
+  line-height: 1.8;
+}
+.prose-mt h2 {
+  color: var(--color-ink);
+  font-size: 1.5rem;
+  font-weight: 800;
+  margin: 2rem 0 0.75rem;
+}
+.prose-mt h3 {
+  color: var(--color-ink);
+  font-size: 1.2rem;
+  font-weight: 700;
+  margin: 1.5rem 0 0.5rem;
+}
+.prose-mt p { margin: 0.85rem 0; }
+.prose-mt ul, .prose-mt ol { margin: 0.85rem 0; padding-left: 1.4rem; }
+.prose-mt ul { list-style: disc; }
+.prose-mt ol { list-style: decimal; }
+.prose-mt li { margin: 0.35rem 0; }
+.prose-mt strong { color: var(--color-ink); font-weight: 700; }
+.prose-mt a { color: var(--color-brand-600); text-decoration: underline; }
+
+/* Khung ảnh (frame) cho bài viết */
+.prose-mt img {
+  border-radius: 16px;
+  margin: 1.5rem 0;
+  max-width: 100%;
+  height: auto;
+}
+.prose-mt figure {
+  margin: 1.75rem 0;
+}
+.prose-mt figure img,
+.prose-mt p > img {
+  width: 100%;
+  border-radius: 18px;
+  border: 4px solid transparent;
+  background:
+    linear-gradient(#fff, #fff) padding-box,
+    linear-gradient(120deg, #ec5e5e, #f2a93c 50%, #1fb6a2) border-box;
+  box-shadow: 0 16px 40px -16px rgba(20, 50, 58, 0.28);
+  margin: 0;
+}
+.prose-mt figcaption {
+  margin-top: 0.7rem;
+  text-align: center;
+  font-size: 0.9rem;
+  color: var(--color-ink-muted);
+}
+.prose-mt figcaption::before {
+  content: "";
+  display: inline-block;
+  width: 24px;
+  height: 3px;
+  border-radius: 2px;
+  background: linear-gradient(90deg, #ec5e5e, #f2a93c, #1fb6a2);
+  vertical-align: middle;
+  margin-right: 8px;
+}
+.prose-mt table { width: 100%; border-collapse: collapse; margin: 1.25rem 0; }
+.prose-mt th, .prose-mt td { border: 1px solid var(--color-brand-100); padding: 10px 12px; text-align: left; }
+.prose-mt th { background: var(--color-brand-50); color: var(--color-ink); }
