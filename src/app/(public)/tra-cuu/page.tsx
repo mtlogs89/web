@@ -92,7 +92,6 @@ export default async function TrackPage({
             <div className="grid grid-cols-1 gap-4 px-6 py-5 sm:grid-cols-2">
               <Info label="Người nhận" value={order.receiver} />
               <Info label="Điểm đến" value={order.destination} />
-              <Info label="Khối lượng" value={order.weight ? `${order.weight} kg` : "—"} />
               <Info
                 label="Ngày tiếp nhận"
                 value={new Date(order.createdAt).toLocaleDateString("vi-VN")}
