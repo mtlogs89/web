@@ -40,7 +40,7 @@ export function AddGalleryForm() {
     }
   }
 
-  function handleFiles(files: FileList) {
+  async function handleFiles(files: FileList) {
     const arr = Array.from(files);
     const news: Pending[] = arr.map((f, i) => ({
       key: `${Date.now()}-${i}-${f.name}`,
@@ -51,7 +51,17 @@ export function AddGalleryForm() {
       status: "uploading",
     }));
     setItems((prev) => [...prev, ...news]);
-    news.forEach((n, i) => uploadOne(arr[i], n.key));
+
+    // Tải tối đa 3 ảnh cùng lúc để không làm quá tải server (ảnh điện thoại nặng).
+    const CONCURRENCY = 3;
+    let cursor = 0;
+    async function worker() {
+      while (cursor < arr.length) {
+        const i = cursor++;
+        await uploadOne(arr[i], news[i].key);
+      }
+    }
+    await Promise.all(Array.from({ length: Math.min(CONCURRENCY, arr.length) }, worker));
   }
 
   const ready = items.filter((it) => it.status === "done");
