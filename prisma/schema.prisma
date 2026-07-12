@@ -83,3 +83,9 @@ model AdminUser {
   name      String   @default("Admin")
   createdAt DateTime @default(now())
 }
+
+model SiteSetting {
+  key       String   @id
+  value     String   @default("")
+  updatedAt DateTime @updatedAt
+}

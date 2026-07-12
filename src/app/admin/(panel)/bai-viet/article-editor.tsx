@@ -4,6 +4,7 @@ import { useActionState, useState } from "react";
 import { Save } from "lucide-react";
 import { saveArticle, type FormState } from "../../actions";
 import { RichTextEditor } from "@/components/admin/rich-text-editor";
+import { ImageUpload } from "@/components/site/image-upload";
 
 type ArticleData = {
   id?: string;
@@ -95,8 +96,12 @@ export function ArticleEditor({
             </p>
           </div>
           <div>
-            <label className={labelCls}>Ảnh đại diện (URL)</label>
-            <input name="coverImage" defaultValue={article?.coverImage ?? ""} placeholder="https://… hoặc /file/…" className={inputCls} />
+            <ImageUpload
+              name="coverImage"
+              defaultValue={article?.coverImage ?? ""}
+              label="Ảnh đại diện bài viết"
+              hint="Ảnh hiện ở đầu bài và khi chia sẻ link. Đổi theo mùa Noel/Tết/Vu Lan tùy ý."
+            />
           </div>
           <div>
             <label className={labelCls}>Tags (phân cách dấu phẩy)</label>

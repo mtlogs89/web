@@ -24,6 +24,8 @@ import { gallery } from "@/lib/gallery";
 import { JsonLd, faqJsonLd } from "@/lib/structured-data";
 import { partners, services, site } from "@/lib/site";
 import { getPublishedArticles } from "@/lib/articles";
+import { getHomeSettings } from "@/lib/settings";
+import { prisma } from "@/lib/prisma";
 
 export const dynamic = "force-dynamic";
 
@@ -43,7 +45,29 @@ const homeFaqs = [
 ];
 
 export default async function HomePage() {
-  const latestArticles = await getPublishedArticles({ take: 3 });
+  const home = await getHomeSettings();
+
+  // Bài viết nổi bật: theo admin chọn, thiếu thì bù bằng bài mới nhất.
+  const featuredSlugs = home.home_featured_slugs.split(",").map((s) => s.trim()).filter(Boolean);
+  let latestArticles;
+  if (featuredSlugs.length > 0) {
+    const picked = await prisma.article.findMany({
+      where: { published: true, slug: { in: featuredSlugs } },
+    });
+    const bySlug = new Map(picked.map((a) => [a.slug, a]));
+    const ordered = featuredSlugs.map((s) => bySlug.get(s)).filter((a): a is NonNullable<typeof a> => Boolean(a));
+    if (ordered.length < 3) {
+      const fill = await getPublishedArticles({ take: 3 });
+      for (const a of fill) {
+        if (ordered.length >= 3) break;
+        if (!ordered.some((x) => x.slug === a.slug)) ordered.push(a);
+      }
+    }
+    latestArticles = ordered.slice(0, 3);
+  } else {
+    latestArticles = await getPublishedArticles({ take: 3 });
+  }
+
   return (
     <>
       <JsonLd data={faqJsonLd(homeFaqs)} />
@@ -55,18 +79,12 @@ export default async function HomePage() {
         <div className="relative mx-auto grid grid-cols-1 max-w-7xl items-center gap-12 px-6 pb-24 pt-16 lg:grid-cols-2">
           <div>
             <span className="inline-flex items-center gap-2 rounded-full bg-white px-4 py-1.5 text-sm font-semibold text-brand-600 shadow-sm">
-              <Globe className="h-4 w-4 text-sun-400" /> Vận chuyển tới hơn 200 quốc gia
+              <Globe className="h-4 w-4 text-sun-400" /> {home.home_hero_badge}
             </span>
             <h1 className="mt-6 text-4xl font-black leading-[1.05] text-ink md:text-[56px]">
-              Gửi hàng đi quốc tế
-              <br />
-              <span className="grad-text">nhanh, an toàn,</span>{" "}
-              <span className="text-coral-500">giá tốt</span>
+              <span className="grad-text">{home.home_hero_title}</span>
             </h1>
-            <p className="mt-5 max-w-xl text-lg text-ink-soft">
-              {site.name} chuyển phát hàng đi Mỹ, Úc, Canada, Châu Âu, Nhật, Hàn… và nhập
-              hàng Trung Quốc – Thái Lan tận nơi. Tư vấn miễn phí, báo giá trong 5 phút.
-            </p>
+            <p className="mt-5 max-w-xl text-lg text-ink-soft">{home.home_hero_subtitle}</p>
             <div className="mt-8 flex flex-wrap gap-4">
               <Link
                 href="#bao-gia"
@@ -101,7 +119,7 @@ export default async function HomePage() {
           <div className="relative">
           {/* eslint-disable-next-line @next/next/no-img-element */}
           <img
-            src="/images/cargo-port.jpg"
+            src={home.home_hero_image}
             alt="Vận chuyển hàng hóa quốc tế"
             className="h-64 w-full rounded-[28px] object-cover shadow-xl shadow-brand-500/20"
           />
@@ -213,7 +231,7 @@ export default async function HomePage() {
           <Reveal className="grid grid-cols-2 gap-4">
             {/* eslint-disable-next-line @next/next/no-img-element */}
             <img
-              src="/images/boxes.jpg"
+              src={home.home_whyus_image}
               alt="Kho vận hành chuyên nghiệp của Minh Thiện Logistics"
               className="col-span-2 h-52 w-full rounded-3xl object-cover shadow-lg shadow-brand-500/10"
             />
@@ -297,7 +315,7 @@ export default async function HomePage() {
       <section className="mx-auto max-w-7xl px-6 pb-20">
         <div className="relative overflow-hidden rounded-[32px] p-10 text-center text-white md:p-14">
           {/* eslint-disable-next-line @next/next/no-img-element */}
-          <img src="/images/delivery.jpg" alt="" aria-hidden className="absolute inset-0 h-full w-full object-cover" />
+          <img src={home.home_cta_image} alt="" aria-hidden className="absolute inset-0 h-full w-full object-cover" />
           <span className="absolute inset-0" style={{ background: "linear-gradient(120deg,rgba(15,117,104,0.92),rgba(21,148,132,0.85) 60%,rgba(31,182,162,0.80))" }} />
           {/* eslint-disable-next-line @next/next/no-img-element */}
           <img

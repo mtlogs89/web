@@ -1,11 +1,12 @@
 import Link from "next/link";
 import { redirect } from "next/navigation";
-import { LayoutDashboard, Newspaper, FolderOpen, Inbox, Package, LogOut, ExternalLink } from "lucide-react";
+import { LayoutDashboard, Newspaper, FolderOpen, Inbox, Package, LogOut, ExternalLink, Palette } from "lucide-react";
 import { getAdminId } from "@/lib/auth";
 import { logout } from "../actions";
 
 const menu = [
   { href: "/admin", label: "Tổng quan", icon: LayoutDashboard },
+  { href: "/admin/giao-dien", label: "Giao diện trang chủ", icon: Palette },
   { href: "/admin/bai-viet", label: "Bài viết", icon: Newspaper },
   { href: "/admin/chuyen-muc", label: "Chuyên mục", icon: FolderOpen },
   { href: "/admin/lead", label: "Yêu cầu báo giá", icon: Inbox },

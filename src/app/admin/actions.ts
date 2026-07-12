@@ -5,6 +5,7 @@ import { revalidatePath } from "next/cache";
 import { redirect } from "next/navigation";
 import { prisma } from "@/lib/prisma";
 import { setSession, clearSession, getAdminId } from "@/lib/auth";
+import { HOME_DEFAULTS, type HomeSettingKey } from "@/lib/settings";
 
 function slugify(text: string): string {
   const map: Record<string, string> = {
@@ -45,6 +46,26 @@ async function ensureAdmin() {
   const id = await getAdminId();
   if (!id) redirect("/admin/login");
   return id;
+}
+
+export async function saveHomeSettings(_prev: FormState, formData: FormData): Promise<FormState> {
+  await ensureAdmin();
+  const keys = Object.keys(HOME_DEFAULTS) as HomeSettingKey[];
+  // Bài nổi bật: gộp các checkbox "featured" (tối đa 3) thành CSV.
+  const featuredSlugs = formData.getAll("featured").map(String).slice(0, 3).join(",");
+  await Promise.all(
+    keys.map((key) => {
+      const value = key === "home_featured_slugs" ? featuredSlugs : String(formData.get(key) ?? "").trim();
+      return prisma.siteSetting.upsert({
+        where: { key },
+        update: { value },
+        create: { key, value },
+      });
+    })
+  );
+  revalidatePath("/");
+  revalidatePath("/admin/giao-dien");
+  return { ok: true, message: "Đã lưu! Mở trang chủ để xem thay đổi." };
 }
 
 export async function saveArticle(_prev: FormState, formData: FormData): Promise<FormState> {
