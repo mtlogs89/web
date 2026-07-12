@@ -63,6 +63,28 @@ export async function addGalleryImage(_prev: FormState, formData: FormData): Pro
   return { ok: true, message: "Đã thêm ảnh vào thư viện." };
 }
 
+export async function addGalleryImages(_prev: FormState, formData: FormData): Promise<FormState> {
+  await ensureAdmin();
+  let items: Array<{ src: string; caption?: string }> = [];
+  try {
+    items = JSON.parse(String(formData.get("items") || "[]"));
+  } catch {
+    return { ok: false, message: "Dữ liệu ảnh không hợp lệ." };
+  }
+  const valid = items.filter((it) => it && typeof it.src === "string" && it.src.trim());
+  if (valid.length === 0) return { ok: false, message: "Chưa có ảnh nào để thêm." };
+
+  const last = await prisma.galleryImage.findFirst({ orderBy: { sort: "desc" } });
+  let sort = (last?.sort ?? 0) + 1;
+  await prisma.galleryImage.createMany({
+    data: valid.map((it) => ({ src: it.src.trim(), caption: (it.caption || "").trim(), sort: sort++ })),
+  });
+  revalidatePath("/");
+  revalidatePath("/thu-vien");
+  revalidatePath("/admin/thu-vien");
+  return { ok: true, message: `Đã thêm ${valid.length} ảnh vào thư viện.` };
+}
+
 export async function deleteGalleryImage(formData: FormData) {
   await ensureAdmin();
   const id = String(formData.get("id") || "");
