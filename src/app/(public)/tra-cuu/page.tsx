@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { Search, PackageCheck, MapPin, CircleDot } from "lucide-react";
+import { Search, PackageCheck, MapPin, CircleDot, ExternalLink, Truck } from "lucide-react";
 import { PageHero } from "@/components/site/page-hero";
 
 export const metadata: Metadata = {
@@ -10,6 +10,20 @@ export const metadata: Metadata = {
 export const dynamic = "force-dynamic";
 
 const TRACK_API = process.env.TRACK_API_URL || "https://app.minhthienlogs.com/api/public/track";
+
+/** Mã đơn nội bộ Minh Thiện: MT-xxx hoặc MT2026... — tra qua hệ thống MT LOGS. */
+function isInternalCode(code: string): boolean {
+  return /^MT/i.test(code.trim());
+}
+
+/** Nhận diện hãng để hiện nút tra cứu trực tiếp (chỉ cần nhận UPS; còn lại dùng 17track). */
+function detectCarrier(code: string): { name: string; url: string } | null {
+  const c = code.trim().toUpperCase();
+  if (/^1Z[0-9A-Z]{16}$/.test(c)) {
+    return { name: "UPS", url: `https://www.ups.com/track?tracknum=${encodeURIComponent(c)}` };
+  }
+  return null;
+}
 
 type TrackResult = {
   ok: boolean;
@@ -42,9 +56,19 @@ export default async function TrackPage({
   searchParams: Promise<{ code?: string }>;
 }) {
   const { code } = await searchParams;
-  const result = code ? await lookup(code) : null;
+  const trimmed = (code || "").trim();
+  const internal = trimmed ? isInternalCode(trimmed) : false;
+  const external = trimmed && !internal ? trimmed : null;
+
+  // Chỉ gọi API nội bộ khi là mã MT; mã hãng ngoài → chuyển tiếp sang trang tra cứu hãng.
+  const result = trimmed && internal ? await lookup(trimmed) : null;
   const order = result?.ok ? result.order : undefined;
   const events = result?.ok ? (result.events ?? []) : [];
+
+  const carrier = external ? detectCarrier(external) : null;
+  const universalUrl = external
+    ? `https://t.17track.net/en#nums=${encodeURIComponent(external)}`
+    : "";
 
   return (
     <>
@@ -58,7 +82,7 @@ export default async function TrackPage({
           <input
             name="code"
             defaultValue={code || ""}
-            placeholder="Nhập mã đơn (VD: MT-0000123)"
+            placeholder="Nhập mã đơn Minh Thiện (MT-…) hoặc mã vận đơn hãng (1Z…)"
             className="flex-1 rounded-xl border border-slate-200 px-4 py-3.5 font-medium uppercase outline-none focus:border-brand-500"
           />
           <button
@@ -68,6 +92,51 @@ export default async function TrackPage({
             <Search className="h-5 w-5" /> Tra cứu
           </button>
         </form>
+
+        {external && (
+          <div className="mt-8 overflow-hidden rounded-3xl border border-brand-50 bg-white shadow-sm">
+            <div className="flex items-center gap-3 bg-brand-50 px-6 py-5">
+              <Truck className="h-6 w-6 shrink-0 text-brand-600" />
+              <div>
+                <div className="text-sm text-ink-muted">Mã vận đơn hãng quốc tế</div>
+                <div className="text-xl font-black text-brand-700">{external}</div>
+              </div>
+            </div>
+            <div className="px-6 py-6">
+              <p className="text-ink-soft">
+                Đây là mã của hãng chuyển phát{carrier ? ` ${carrier.name}` : " quốc tế"}. Bấm nút bên dưới
+                để xem hành trình mới nhất trực tiếp từ hãng — cập nhật theo thời gian thực.
+              </p>
+              <div className="mt-5 flex flex-wrap gap-3">
+                {carrier && (
+                  <a
+                    href={carrier.url}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="flex items-center gap-2 rounded-xl bg-brand-500 px-6 py-3.5 font-semibold text-white shadow-lg shadow-brand-500/30 transition hover:bg-brand-600"
+                  >
+                    <ExternalLink className="h-5 w-5" /> Xem trên {carrier.name}
+                  </a>
+                )}
+                <a
+                  href={universalUrl}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className={`flex items-center gap-2 rounded-xl px-6 py-3.5 font-semibold transition ${
+                    carrier
+                      ? "border border-brand-100 bg-white text-ink hover:bg-brand-50"
+                      : "bg-brand-500 text-white shadow-lg shadow-brand-500/30 hover:bg-brand-600"
+                  }`}
+                >
+                  <ExternalLink className="h-5 w-5" /> Xem hành trình (mọi hãng)
+                </a>
+              </div>
+              <p className="mt-4 text-sm text-ink-muted">
+                Mẹo: nếu là đơn Minh Thiện, hãy nhập mã bắt đầu bằng <strong>MT-</strong> để xem ngay trên trang này.
+              </p>
+            </div>
+          </div>
+        )}
 
         {code && result && !result.ok && (
           <div className="mt-8 rounded-2xl border border-coral-100 bg-coral-50 p-6 text-center text-coral-700">
