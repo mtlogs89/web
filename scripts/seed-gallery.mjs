@@ -1,9 +1,16 @@
 // Seed thư viện ảnh mẫu vào DB nếu bảng đang trống.
 // Chạy 1 lần trên VPS sau khi `prisma db push`:  node scripts/seed-gallery.mjs
-import { PrismaClient } from "@prisma/client";
+import Database from "better-sqlite3";
 import { readFileSync } from "fs";
+import { randomUUID } from "crypto";
 
-const prisma = new PrismaClient();
+const db = new Database(new URL("../prisma/dev.db", import.meta.url).pathname);
+
+const count = db.prepare("SELECT COUNT(*) AS c FROM GalleryImage").get().c;
+if (count > 0) {
+  console.log(`Bảng đã có ${count} ảnh — bỏ qua seed.`);
+  process.exit(0);
+}
 
 // Đọc danh sách mặc định trực tiếp từ src/lib/gallery.ts để khỏi lặp thủ công.
 const ts = readFileSync(new URL("../src/lib/gallery.ts", import.meta.url), "utf8");
@@ -12,14 +19,10 @@ const items = [...ts.matchAll(/\{\s*src:\s*"([^"]+)",\s*caption:\s*"([^"]+)"\s*\
   caption: m[2],
 }));
 
-const count = await prisma.galleryImage.count();
-if (count > 0) {
-  console.log(`Bảng đã có ${count} ảnh — bỏ qua seed.`);
-} else {
-  await prisma.galleryImage.createMany({
-    data: items.map((it, i) => ({ src: it.src, caption: it.caption, sort: i })),
-  });
-  console.log(`Đã seed ${items.length} ảnh mẫu vào thư viện.`);
-}
+const insert = db.prepare("INSERT INTO GalleryImage (id, src, caption, sort) VALUES (?, ?, ?, ?)");
+const tx = db.transaction((rows) => {
+  rows.forEach((it, i) => insert.run("g" + randomUUID(), it.src, it.caption, i));
+});
+tx(items);
 
-await prisma.$disconnect();
+console.log(`Đã seed ${items.length} ảnh mẫu vào thư viện.`);
