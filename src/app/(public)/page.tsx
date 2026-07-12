@@ -20,7 +20,7 @@ import { ServiceMedia } from "@/components/site/service-media";
 import { ArticleCard } from "@/components/site/article-card";
 import { GalleryGrid } from "@/components/site/gallery-grid";
 import { QuoteCalculator } from "@/components/site/quote-calculator";
-import { gallery } from "@/lib/gallery";
+import { getGalleryItems } from "@/lib/gallery";
 import { JsonLd, faqJsonLd } from "@/lib/structured-data";
 import { partners, services, site } from "@/lib/site";
 import { getPublishedArticles } from "@/lib/articles";
@@ -46,6 +46,7 @@ const homeFaqs = [
 
 export default async function HomePage() {
   const home = await getHomeSettings();
+  const galleryItems = await getGalleryItems();
 
   // Bài viết nổi bật: theo admin chọn, thiếu thì bù bằng bài mới nhất.
   const featuredSlugs = home.home_featured_slugs.split(",").map((s) => s.trim()).filter(Boolean);
@@ -299,7 +300,7 @@ export default async function HomePage() {
           </p>
         </Reveal>
         <div className="mt-10">
-          <GalleryGrid items={gallery.slice(0, 8)} />
+          <GalleryGrid items={galleryItems.slice(0, 8)} />
         </div>
         <div className="mt-8 text-center">
           <Link

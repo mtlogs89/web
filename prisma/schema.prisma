@@ -89,3 +89,13 @@ model SiteSetting {
   value     String   @default("")
   updatedAt DateTime @updatedAt
 }
+
+model GalleryImage {
+  id        String   @id @default(cuid())
+  src       String
+  caption   String   @default("")
+  sort      Int      @default(0)
+  createdAt DateTime @default(now())
+
+  @@index([sort])
+}

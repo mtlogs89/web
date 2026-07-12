@@ -48,6 +48,51 @@ async function ensureAdmin() {
   return id;
 }
 
+export async function addGalleryImage(_prev: FormState, formData: FormData): Promise<FormState> {
+  await ensureAdmin();
+  const src = String(formData.get("src") || "").trim();
+  const caption = String(formData.get("caption") || "").trim();
+  if (!src) return { ok: false, message: "Hãy chọn ảnh để thêm." };
+  const last = await prisma.galleryImage.findFirst({ orderBy: { sort: "desc" } });
+  await prisma.galleryImage.create({
+    data: { src, caption, sort: (last?.sort ?? 0) + 1 },
+  });
+  revalidatePath("/");
+  revalidatePath("/thu-vien");
+  revalidatePath("/admin/thu-vien");
+  return { ok: true, message: "Đã thêm ảnh vào thư viện." };
+}
+
+export async function deleteGalleryImage(formData: FormData) {
+  await ensureAdmin();
+  const id = String(formData.get("id") || "");
+  if (id) await prisma.galleryImage.delete({ where: { id } });
+  revalidatePath("/");
+  revalidatePath("/thu-vien");
+  revalidatePath("/admin/thu-vien");
+}
+
+export async function moveGalleryImage(formData: FormData) {
+  await ensureAdmin();
+  const id = String(formData.get("id") || "");
+  const dir = String(formData.get("dir") || ""); // "up" | "down"
+  if (!id) return;
+  const all = await prisma.galleryImage.findMany({ orderBy: [{ sort: "asc" }, { createdAt: "asc" }] });
+  const idx = all.findIndex((g) => g.id === id);
+  if (idx === -1) return;
+  const swapWith = dir === "up" ? idx - 1 : idx + 1;
+  if (swapWith < 0 || swapWith >= all.length) return;
+  const a = all[idx];
+  const b = all[swapWith];
+  await prisma.$transaction([
+    prisma.galleryImage.update({ where: { id: a.id }, data: { sort: b.sort } }),
+    prisma.galleryImage.update({ where: { id: b.id }, data: { sort: a.sort } }),
+  ]);
+  revalidatePath("/");
+  revalidatePath("/thu-vien");
+  revalidatePath("/admin/thu-vien");
+}
+
 export async function saveHomeSettings(_prev: FormState, formData: FormData): Promise<FormState> {
   await ensureAdmin();
   const keys = Object.keys(HOME_DEFAULTS) as HomeSettingKey[];

@@ -19,3 +19,17 @@ export const gallery: GalleryItem[] = [
   { src: "/images/real/hang-hoa-da-dang.jpg", caption: "Nhiều loại hàng hóa gom gửi" },
   { src: "/images/real/kien-hang-carton.jpg", caption: "Kiện hàng đóng thùng chắc chắn" },
 ];
+
+import { prisma } from "./prisma";
+
+/**
+ * Đọc thư viện từ DB (admin quản lý). Nếu DB trống → trả về danh sách mặc định ở trên
+ * để trang không bao giờ trống trước khi seed.
+ */
+export async function getGalleryItems(): Promise<GalleryItem[]> {
+  const rows = await prisma.galleryImage.findMany({
+    orderBy: [{ sort: "asc" }, { createdAt: "asc" }],
+  });
+  if (rows.length === 0) return gallery;
+  return rows.map((r) => ({ src: r.src, caption: r.caption }));
+}
