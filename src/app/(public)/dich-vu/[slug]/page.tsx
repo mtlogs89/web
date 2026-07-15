@@ -8,7 +8,6 @@ import { ServiceMedia } from "@/components/site/service-media";
 import { services, site } from "@/lib/site";
 import { serviceContent, serviceImages } from "@/lib/service-content";
 import { GalleryGrid } from "@/components/site/gallery-grid";
-import { ServiceJourney } from "@/components/site/service-journey";
 import { GuiHangMyDetail } from "@/components/site/gui-hang-my-detail";
 import { gallery } from "@/lib/gallery";
 import {
@@ -127,7 +126,6 @@ export default async function ServicePage({
 
       {slug === "gui-hang-di-my" ? (
         <>
-          <ServiceJourney />
           <GuiHangMyDetail />
 
           {relatedArticles.length > 0 && (
