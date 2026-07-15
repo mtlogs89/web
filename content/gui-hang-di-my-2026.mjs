@@ -259,7 +259,8 @@ const data = {
   coverImage: "/images/my/gui-hang-di-my-hang-kho-bao-hiem.webp",
   category: "Mỹ",
   tags: "gửi hàng đi Mỹ,gửi thuốc tây đi Mỹ,gửi thịt heo đi Mỹ,gửi thịt bò đi Mỹ,gửi thịt gà đi Mỹ,cước gửi hàng đi Mỹ,bảo hiểm hàng hóa",
-  metaTitle: "Gửi hàng đi Mỹ từ 79K/kg — nhận hàng khó, bảo hiểm 100% | Minh Thiện Logistics",
+  // KHÔNG thêm "| Minh Thiện Logistics" — layout tự nối tên brand vào sau (template "%s | site.name").
+  metaTitle: "Gửi hàng đi Mỹ từ 79K/kg — nhận hàng khó, bảo hiểm 100%",
   metaDescription:
     "Gửi hàng đi Mỹ chỉ từ 79K/kg, nhanh từ 3 ngày, bảo hiểm hàng hóa lên đến 100%. Nhận thuốc tây, thực phẩm, thịt heo bò gà đã chế biến. Lấy hàng tận nhà. Zalo 0589.77.89.89 - Ms. Min.",
   faqJson: JSON.stringify(faqs),
