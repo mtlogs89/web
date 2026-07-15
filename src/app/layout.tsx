@@ -1,8 +1,12 @@
 import type { Metadata } from "next";
+import Script from "next/script";
 import { Be_Vietnam_Pro } from "next/font/google";
 import "./globals.css";
 import { JsonLd, localBusinessJsonLd, websiteJsonLd, organizationJsonLd } from "@/lib/structured-data";
 import { site } from "@/lib/site";
+
+// Google Tag Manager — đo chuyển đổi (conversion) cho marketing/Ads.
+const GTM_ID = "GTM-W9TVBQKV";
 
 const beVietnam = Be_Vietnam_Pro({
   variable: "--font-be-vietnam",
@@ -50,6 +54,19 @@ export default function RootLayout({
   return (
     <html lang="vi" className={`${beVietnam.variable} h-full antialiased`}>
       <body className="flex min-h-full flex-col bg-white text-ink">
+        {/* Google Tag Manager (noscript) — ngay sau <body> */}
+        <noscript>
+          <iframe
+            src={`https://www.googletagmanager.com/ns.html?id=${GTM_ID}`}
+            height="0"
+            width="0"
+            style={{ display: "none", visibility: "hidden" }}
+          />
+        </noscript>
+        {/* Google Tag Manager */}
+        <Script id="gtm" strategy="afterInteractive">
+          {`(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src='https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);})(window,document,'script','dataLayer','${GTM_ID}');`}
+        </Script>
         <JsonLd data={localBusinessJsonLd()} />
         <JsonLd data={websiteJsonLd()} />
         <JsonLd data={organizationJsonLd()} />
