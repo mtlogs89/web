@@ -1,229 +1,267 @@
 /**
- * Nội dung trang dịch vụ "Gửi hàng đi Mỹ" — chuẩn SEO 2026 + AEO (FAQ JSON-LD).
- * Nạp vào DB: node content/gui-hang-di-my-2026.mjs
- * Sau khi nạp, sửa nội dung tại /admin/bai-viet (tìm bài "Gửi hàng đi Mỹ").
+ * Nội dung trang "Gửi hàng đi Mỹ" — bản marketing của khách (79K/kg, 3 ngày, bảo hiểm 100%).
+ * Chuẩn SEO + AEO (FAQ JSON-LD). Nạp vào DB: node content/gui-hang-di-my-2026.mjs
+ * Sửa nội dung sau khi nạp: /admin/bai-viet → tìm bài "Gửi hàng đi Mỹ".
  */
 import Database from "better-sqlite3";
 import { randomUUID } from "crypto";
 
 const SLUG = "gui-hang-di-my-huong-dan-toan-tap";
-
 const PHONE = "0589.77.89.89";
+const BRAND = "Minh Thiện Logistics";
 
-/** Ảnh: dùng ảnh THẬT sẵn có. Chỗ nào cần ảnh ChatGPT sẽ thay sau (giữ nguyên cấu trúc <figure>). */
 const img = (src, caption) =>
   `<figure><img src="${src}" alt="${caption}" loading="lazy" /><figcaption>${caption}</figcaption></figure>`;
 
 const content = `
-<p><strong>Trả lời nhanh:</strong> Minh Thiện Logistics nhận gửi hàng đi Mỹ trọn gói từ Việt Nam — lấy hàng tận nơi, đóng gói chuẩn quốc tế, làm thủ tục hải quan và giao tận địa chỉ người nhận trên toàn nước Mỹ. Hàng đi theo hai tốc độ: <strong>chuyển nhanh khoảng 3–5 ngày</strong> và <strong>tiết kiệm khoảng 8–12 ngày</strong>. Chúng tôi nhận cả những mặt hàng khó mà nhiều nơi từ chối như thực phẩm khô, đặc sản, thuốc và yến sào. Gọi <strong>${PHONE}</strong> (Ms Min) để được báo giá miễn phí trong 5 phút.</p>
+<p><strong>Bạn đang cần gửi hàng đi Mỹ nhanh chóng, tiết kiệm và an toàn?</strong> Bạn muốn gửi thuốc tây, thực phẩm, thịt heo, bò, gà hoặc những mặt hàng thường bị nhiều đơn vị vận chuyển từ chối? Dịch vụ của ${BRAND} mang đến giải pháp vận chuyển hàng từ Việt Nam sang Mỹ với mức giá cạnh tranh <strong>chỉ từ 79K/kg</strong>, thời gian nhận hàng nhanh <strong>từ 3 ngày</strong> và chính sách <strong>bảo hiểm hàng hóa lên đến 100%</strong> theo giá trị khai báo.</p>
 
-${img("/images/real/hang-gui-da-dang.jpg", "Hàng thật khách gửi đi Mỹ mỗi ngày tại Minh Thiện Logistics")}
+${img("/images/my/gui-hang-di-my-hang-kho-bao-hiem.webp", "Gửi hàng đi Mỹ — nhận tất cả các loại hàng khó, bảo hiểm hàng hóa 100%")}
 
-<h2>Gửi hàng đi Mỹ mất bao lâu?</h2>
-<p>Tùy dịch vụ bạn chọn, hàng thường tới tay người nhận tại Mỹ trong khoảng <strong>3–12 ngày</strong>:</p>
-<table>
-  <thead>
-    <tr><th>Dịch vụ</th><th>Thời gian dự kiến</th><th>Phù hợp với</th></tr>
-  </thead>
-  <tbody>
-    <tr><td><strong>Chuyển nhanh</strong></td><td>Khoảng 3–5 ngày</td><td>Hàng gấp, thuốc, quà tặng có hạn, mẫu hàng cho đối tác</td></tr>
-    <tr><td><strong>Tiết kiệm</strong></td><td>Khoảng 8–12 ngày</td><td>Hàng nặng, hàng kinh doanh, đồ dùng cá nhân không gấp</td></tr>
-  </tbody>
-</table>
-<p>Đây là thời gian vận chuyển dự kiến, tính từ lúc kiện hàng rời kho. Ba yếu tố có thể làm thay đổi thời gian thực tế:</p>
+<p>Chúng tôi hỗ trợ khách hàng kiểm tra mặt hàng, chuẩn bị chứng từ, đóng gói đúng tiêu chuẩn và lựa chọn tuyến vận chuyển phù hợp. Quy trình được thiết kế rõ ràng, giúp hạn chế tối đa rủi ro chậm trễ, thất lạc hoặc phát sinh chi phí ngoài dự kiến.</p>
+
+<p><strong>Lưu ý:</strong> Thuốc, thịt và thực phẩm là những nhóm hàng chịu sự kiểm soát nghiêm ngặt của cơ quan chức năng Hoa Kỳ. Dịch vụ chỉ tiếp nhận những sản phẩm đáp ứng quy định nhập khẩu, có nguồn gốc rõ ràng và chuẩn bị đầy đủ giấy tờ cần thiết. Khách hàng nên cung cấp thông tin chính xác để được kiểm tra trước khi gửi.</p>
+
+<h2>Vì sao nhu cầu gửi hàng từ Việt Nam đi Mỹ ngày càng tăng?</h2>
+<p>Mỹ là nơi sinh sống, học tập và làm việc của đông đảo người Việt. Vì vậy, nhu cầu gửi quà cho người thân, chuyển thực phẩm quê nhà, gửi đồ dùng cá nhân hoặc vận chuyển hàng kinh doanh sang Mỹ ngày càng phổ biến.</p>
+
+${img("/images/my/gui-hang-di-my-nhan-da-dang-hang.webp", "Nhận gửi đa dạng các loại hàng đi Mỹ: quần áo, mỹ phẩm, thực phẩm khô, đồ gia dụng, hồ sơ")}
+
+<p>Những mặt hàng thường được gửi từ Việt Nam đi Mỹ gồm:</p>
 <ul>
-  <li><strong>Địa chỉ giao:</strong> các thành phố lớn như California, Texas, New York, Florida thường nhanh hơn vùng xa, vùng nông thôn.</li>
-  <li><strong>Lịch bay:</strong> mùa cao điểm (Noel, Tết, Black Friday) hàng dồn nhiều, chuyến bay kín chỗ.</li>
-  <li><strong>Kiểm tra hải quan:</strong> hàng thực phẩm, thuốc, mỹ phẩm có thể bị giữ lại để kiểm tra — đây là lý do lớn nhất khiến hàng chậm.</li>
+  <li>Quần áo, giày dép và phụ kiện thời trang.</li>
+  <li>Mỹ phẩm, sản phẩm chăm sóc cá nhân.</li>
+  <li>Thực phẩm khô và đặc sản Việt Nam.</li>
+  <li>Thuốc tây, thực phẩm chức năng và dược liệu.</li>
+  <li>Thịt heo, bò, gà đã qua chế biến.</li>
+  <li>Hồ sơ, giấy tờ và quà tặng.</li>
+  <li>Hàng mẫu, linh kiện và đồ gia dụng.</li>
+  <li>Hàng thương mại điện tử số lượng lớn.</li>
 </ul>
-<p>Kinh nghiệm thực tế: nếu bạn cần hàng đến đúng dịp (sinh nhật, giỗ chạp, Tết), hãy gửi sớm hơn dự kiến ít nhất một tuần và ưu tiên dịch vụ chuyển nhanh.</p>
+<p>Tuy nhiên, không phải mặt hàng nào cũng có thể đóng thùng rồi gửi ngay. Đặc biệt, thuốc và thực phẩm có nguồn gốc động vật cần được kiểm tra kỹ về thành phần, nhãn mác, cách chế biến, bao bì và quy định nhập khẩu tại thời điểm gửi.</p>
+<p>Lựa chọn một đơn vị có kinh nghiệm xử lý hàng khó sẽ giúp người gửi tiết kiệm thời gian, tránh đóng gói sai và giảm nguy cơ hàng bị giữ lại tại cửa khẩu.</p>
 
-<h2>Minh Thiện nhận gửi những mặt hàng nào đi Mỹ?</h2>
-<p>Chúng tôi nhận hầu hết các loại hàng dân dụng và hàng kinh doanh, bao gồm nhiều mặt hàng khó mà các đơn vị khác thường từ chối:</p>
+<h2>Dịch vụ gửi hàng đi Mỹ chỉ từ 79K/kg</h2>
+<p>Chi phí luôn là yếu tố được khách hàng quan tâm hàng đầu. Tại ${BRAND}, cước gửi hàng đi Mỹ <strong>chỉ từ 79K/kg</strong>, áp dụng tùy theo loại hàng, tổng trọng lượng, kích thước kiện, địa chỉ nhận và chương trình ưu đãi tại từng thời điểm.</p>
+<p>Mức giá thực tế có thể thay đổi dựa trên:</p>
 <ul>
-  <li><strong>Thực phẩm khô, đặc sản:</strong> khô bò, khô gà, mực khô, cá khô, bánh kẹo, cà phê, hạt điều, tiêu, các loại gia vị.</li>
-  <li><strong>Yến sào:</strong> yến thô, yến tinh chế, yến chưng sẵn đóng lọ.</li>
-  <li><strong>Thuốc và thực phẩm chức năng:</strong> thuốc tây, thuốc bổ, vitamin, đông dược.</li>
-  <li><strong>Quà tặng và đồ cá nhân:</strong> quần áo, giày dép, mỹ phẩm, đồ lưu niệm, đồ thờ cúng.</li>
-  <li><strong>Hàng kinh doanh:</strong> mẫu hàng, hàng bán online, phụ kiện, thiết bị.</li>
-  <li><strong>Hàng cồng kềnh, giá trị cao:</strong> chúng tôi từng gửi thành công cả đàn piano đi quốc tế.</li>
-</ul>
-
-${img("/images/real/thuc-pham-kho-dac-san.jpg", "Thực phẩm khô, đặc sản Việt Nam được đóng gói chuẩn trước khi gửi đi Mỹ")}
-
-<h3>Hàng nào cần hỏi trước khi gửi?</h3>
-<p>Một số mặt hàng cần kiểm tra riêng trước khi tiếp nhận, vì quy định của hải quan Mỹ và của hãng bay khá chặt:</p>
-<ul>
-  <li>Hàng có <strong>pin, sạc dự phòng</strong> (quy định an toàn hàng không).</li>
-  <li><strong>Chất lỏng</strong>, nước mắm, nước hoa, hàng dễ cháy nổ.</li>
-  <li>Thực phẩm có <strong>nguồn gốc động vật</strong>: thịt tươi, xúc xích, trứng, sữa.</li>
-  <li>Hàng <strong>không nhãn mác</strong>, không rõ thành phần, không hạn sử dụng.</li>
-  <li>Hàng có <strong>thương hiệu nhái</strong> — tuyệt đối không nhận.</li>
-</ul>
-<p>Bạn chỉ cần chụp ảnh món hàng gửi qua Zalo <strong>${PHONE}</strong>, chúng tôi kiểm tra và trả lời được hay không trong vài phút — miễn phí, không ràng buộc.</p>
-
-<h2>“Hàng sạch” là gì? Vì sao chỉ hàng sạch mới được đền 100%?</h2>
-<p><strong>Trả lời ngắn: “hàng sạch” là hàng không đưa vào miệng.</strong> Nghĩa là những món không phải thực phẩm, không phải thuốc, không ăn uống được — ví dụ máy móc, quần áo, giày dép, thiết bị công nghiệp, đồ gia dụng, phụ kiện.</p>
-<p>Nhóm hàng này <strong>đi rất thoải mái</strong> và được <strong>cam kết đền 100% giá trị nếu thất lạc</strong>, với điều kiện bạn khai báo giá trị rõ ràng ngay từ đầu và hàng sạch hoàn toàn trước khi thông quan.</p>
-<p>Lý do rất đơn giản: hàng không ăn uống được thì <strong>không liên quan đến FDA</strong> (Cục Quản lý Thực phẩm và Dược phẩm Hoa Kỳ). Không dính FDA thì rủi ro bị giữ, bị xét nghiệm, bị tiêu hủy gần như bằng không — nên chúng tôi tự tin cam kết đền đủ.</p>
-
-<h2>Gửi thực phẩm, thuốc đi Mỹ có rủi ro gì?</h2>
-<p>Ngược lại với hàng sạch, <strong>mọi thứ “cho vô mồm” đều là hàng rủi ro cao</strong> vì phải chịu sự quản lý của FDA. Nhóm này gồm: thực phẩm khô, đặc sản, yến sào, thuốc tây, thực phẩm chức năng, gia vị.</p>
-
-${img("/images/real/thuoc-tay.jpg", "Thuốc tây, thực phẩm chức năng — nhóm hàng rủi ro cao vì chịu quản lý của FDA")}
-
-<p>Chúng tôi <strong>vẫn nhận gửi</strong> nhóm hàng này — đó là thế mạnh của Minh Thiện. Nhưng bạn cần hiểu rõ ba điều trước khi gửi:</p>
-<ul>
-  <li><strong>Dễ bị giữ để kiểm tra:</strong> hải quan Mỹ có quyền mở kiện, lấy mẫu xét nghiệm, khiến hàng chậm thêm nhiều ngày.</li>
-  <li><strong>Có thể bị từ chối nhập:</strong> nếu sai khai báo, sai nhãn, hoặc mặt hàng thuộc diện cấm.</li>
-  <li><strong>Chi phí xử lý phát sinh:</strong> khi hàng bị giữ, có thể phát sinh phí lưu kho, phí xử lý.</li>
-</ul>
-<p><strong>Lưu ý quan trọng:</strong> hàng “cho vô mồm” chỉ nên gửi khi khai báo FDA đúng và hàng sạch hoàn toàn (đúng nhãn, đúng thành phần, còn hạn, đóng gói thương mại). Chính sách đền 100% áp dụng cho hàng sạch — với nhóm hàng FDA, chúng tôi sẽ tư vấn cụ thể mức bảo hiểm và rủi ro cho từng lô trước khi bạn quyết định gửi.</p>
-
-<h3>Làm sao tăng khả năng thực phẩm qua được hải quan Mỹ?</h3>
-<ul>
-  <li>Ưu tiên hàng <strong>đóng gói thương mại</strong>, có nhãn in sẵn, mã vạch, hạn sử dụng rõ.</li>
-  <li><strong>Ghi thành phần bằng tiếng Anh</strong> nếu có thể.</li>
-  <li>Tránh hàng tự làm, hàng đóng gói thủ công, hàng không nhãn.</li>
-  <li>Không gửi số lượng quá lớn một lần — dễ bị coi là hàng thương mại và bị áp thủ tục nhập khẩu.</li>
-  <li>Khai báo trung thực, <strong>không khai thiếu giá trị</strong> để né thuế.</li>
+  <li>Trọng lượng cân thực tế của kiện hàng.</li>
+  <li>Trọng lượng quy đổi theo kích thước.</li>
+  <li>Nhóm hàng thông thường hoặc hàng cần xử lý đặc biệt.</li>
+  <li>Tốc độ giao hàng khách hàng lựa chọn.</li>
+  <li>Thành phố và tiểu bang nhận hàng tại Mỹ.</li>
+  <li>Phụ phí đóng gói, kiểm dịch hoặc chứng từ nếu phát sinh.</li>
+  <li>Thuế và phí nhập khẩu theo quy định của Hoa Kỳ.</li>
 </ul>
 
-<h2>Cước gửi hàng đi Mỹ được tính như thế nào?</h2>
-<p><strong>Trả lời ngắn:</strong> cước tính theo <strong>số lớn hơn</strong> giữa trọng lượng thực tế và trọng lượng qui đổi từ kích thước kiện.</p>
-<p>Công thức trọng lượng quy đổi (còn gọi là trọng lượng thể tích):</p>
-<p><strong>Trọng lượng quy đổi (kg) = Dài × Rộng × Cao (cm) ÷ 5000</strong></p>
-<p>Ví dụ dễ hiểu: một thùng quần áo nhẹ nhưng cồng kềnh, cân thực tế 4 kg, kích thước 50 × 40 × 30 cm. Trọng lượng quy đổi = (50 × 40 × 30) ÷ 5000 = 12 kg. Vì 12 kg lớn hơn 4 kg, cước sẽ tính theo <strong>12 kg</strong>.</p>
-<p>Ngoài trọng lượng, giá còn phụ thuộc:</p>
+${img("/images/real/can-kien-hang.jpg", "Cân và đo kích thước từng kiện để báo giá minh bạch trước khi gửi")}
+
+<p>Trước khi tiếp nhận, nhân viên sẽ kiểm tra thông tin và báo giá cụ thể. Khách hàng được tư vấn phương án phù hợp với ngân sách, hạn chế tình trạng báo giá ban đầu thấp nhưng phát sinh nhiều khoản phí sau khi gửi.</p>
+<p>Với các kiện hàng có trọng lượng lớn hoặc khách gửi thường xuyên, ${BRAND} có chính sách giá riêng dành cho đại lý, chủ shop và doanh nghiệp.</p>
+
+<h2>Nhận vận chuyển nhiều loại hàng khó đi Mỹ</h2>
+<p>Không chỉ nhận hàng hóa thông thường, chúng tôi còn hỗ trợ kiểm tra và vận chuyển nhiều nhóm hàng khó, bao gồm thuốc tây, thực phẩm và sản phẩm từ thịt heo, bò, gà.</p>
+
+<h3>Gửi thuốc tây đi Mỹ</h3>
+<p>Thuốc tây là mặt hàng được nhiều gia đình gửi cho người thân đang sinh sống tại Mỹ. Tuy nhiên, đây cũng là nhóm hàng bị kiểm soát chặt chẽ.</p>
+
+${img("/images/real/thuoc-tay.jpg", "Thuốc tây gửi đi Mỹ cần nguyên hộp, nguyên nhãn và còn hạn sử dụng rõ ràng")}
+
+<p>Tùy từng sản phẩm, khách hàng có thể cần cung cấp:</p>
 <ul>
-  <li><strong>Loại hàng:</strong> hàng thường, hay hàng đặc thù như thuốc, mỹ phẩm, yến (có phụ thu riêng).</li>
-  <li><strong>Dịch vụ:</strong> chuyển nhanh hay tiết kiệm.</li>
-  <li><strong>Địa chỉ giao:</strong> thành phố lớn hay vùng xa.</li>
+  <li>Tên thuốc và hình ảnh bao bì.</li>
+  <li>Thành phần, hàm lượng và công dụng.</li>
+  <li>Số lượng dự kiến gửi.</li>
+  <li>Đơn thuốc hoặc chỉ định của bác sĩ nếu được yêu cầu.</li>
+  <li>Hóa đơn, nguồn gốc sản phẩm.</li>
+  <li>Thông tin người gửi và người nhận.</li>
+  <li>Cam kết thuốc được gửi cho mục đích sử dụng phù hợp.</li>
 </ul>
-<p>Vì mỗi lô hàng mỗi khác, chúng tôi không niêm yết một mức giá chung. Bạn dùng <a href="/#bao-gia">công cụ tính cước trên trang chủ</a> để xem giá tham khảo ngay, hoặc gọi <strong>${PHONE}</strong> để nhận báo giá chính xác trong 5 phút.</p>
+<p>Thuốc nên còn nguyên hộp, nguyên nhãn, có hạn sử dụng rõ ràng và không bị bóc tách khỏi bao bì thương mại. Một số loại thuốc kê đơn, thuốc có thành phần bị kiểm soát, sản phẩm không rõ nguồn gốc hoặc số lượng bất thường có thể không đủ điều kiện vận chuyển.</p>
+<p>Nhân viên sẽ kiểm tra thông tin sơ bộ trước khi nhận. Việc kiểm tra này giúp khách hàng biết sản phẩm có phù hợp hay cần bổ sung chứng từ, nhưng không thay thế quyết định cuối cùng của hải quan và cơ quan quản lý tại Mỹ.</p>
 
-${img("/images/real/can-kien-hang.jpg", "Cân và đo kích thước từng kiện để tính cước minh bạch — khách xem trực tiếp")}
+<h3>Gửi thịt heo đi Mỹ</h3>
+<p>Chúng tôi hỗ trợ tiếp nhận một số sản phẩm từ thịt heo đã được chế biến và đóng gói đúng tiêu chuẩn, tùy thuộc quy định có hiệu lực tại thời điểm gửi.</p>
 
-<h3>Mẹo tiết kiệm cước gửi hàng đi Mỹ</h3>
+${img("/images/real/kho-bo-ga.jpg", "Sản phẩm thịt đã qua chế biến: khô bò, khô gà, lạp xưởng — cần nhãn mác và bao bì kín")}
+
+<p>Các sản phẩm khách hàng thường yêu cầu tư vấn gồm:</p>
 <ul>
-  <li><strong>Gom nhiều món vào một kiện</strong> thay vì gửi lẻ nhiều lần.</li>
-  <li><strong>Bỏ bớt bao bì thừa</strong>: hộp giấy, xốp rỗng làm phồng kích thước và đội trọng lượng quy đổi.</li>
-  <li><strong>Nén quần áo, chăn màn</strong> bằng túi hút chân không.</li>
-  <li>Chọn <strong>dịch vụ tiết kiệm</strong> nếu không gấp.</li>
-  <li>Hỏi trước khi đóng thùng — chúng tôi tư vấn cách xếp để giảm kích thước.</li>
+  <li>Chà bông heo.</li>
+  <li>Khô heo.</li>
+  <li>Lạp xưởng.</li>
+  <li>Thịt heo sấy.</li>
+  <li>Thực phẩm đóng hộp.</li>
+  <li>Sản phẩm hút chân không có nhãn mác.</li>
 </ul>
+<p>Sản phẩm cần có nguồn gốc rõ ràng, thành phần đầy đủ, ngày sản xuất, hạn sử dụng và bao bì kín. Thịt tươi sống, sản phẩm tự chế biến không nhãn mác hoặc hàng không đáp ứng yêu cầu kiểm dịch có thể bị từ chối.</p>
 
-<h2>Gửi hàng đi Mỹ cần giấy tờ gì?</h2>
-<p>Với hàng cá nhân, quà tặng thông thường, thủ tục rất đơn giản:</p>
+<h3>Gửi thịt bò đi Mỹ</h3>
+<p>Với thịt bò, điều kiện nhập khẩu có thể phụ thuộc vào nguồn gốc nguyên liệu, phương pháp chế biến, nhà sản xuất và tình hình kiểm dịch. Chúng tôi tiếp nhận thông tin sản phẩm trước khi xác nhận phương án vận chuyển.</p>
+<p>Các mặt hàng có thể được xem xét gồm khô bò, bò sấy, thực phẩm đóng hộp hoặc sản phẩm đã qua chế biến công nghiệp. Khách hàng không nên tự đóng lẫn thực phẩm vào quần áo hoặc khai báo sai tên hàng. Việc khai báo trung thực giúp quá trình kiểm tra minh bạch và bảo vệ quyền lợi bảo hiểm.</p>
+
+<h3>Gửi thịt gà đi Mỹ</h3>
+<p>Các sản phẩm từ thịt gia cầm cũng thuộc nhóm hàng được kiểm soát. Một số loại chà bông gà, khô gà, gà đóng hộp hoặc thực phẩm chế biến sẵn có thể được kiểm tra để xác định điều kiện vận chuyển.</p>
+<p>Sản phẩm nên có:</p>
 <ul>
-  <li><strong>Thông tin người gửi:</strong> họ tên, số điện thoại, địa chỉ.</li>
-  <li><strong>Thông tin người nhận tại Mỹ:</strong> họ tên, số điện thoại, địa chỉ đầy đủ kèm <strong>ZIP code</strong>.</li>
-  <li><strong>Bản kê khai hàng hóa:</strong> liệt kê món gì, bao nhiêu, trị giá bao nhiêu.</li>
+  <li>Nhãn hàng hóa rõ ràng.</li>
+  <li>Danh sách thành phần.</li>
+  <li>Cơ sở sản xuất.</li>
+  <li>Ngày sản xuất và hạn sử dụng.</li>
+  <li>Bao bì thương mại kín.</li>
+  <li>Thông tin xuất xứ.</li>
 </ul>
-<p>Với hàng kinh doanh, hàng số lượng lớn hoặc hàng thuộc diện FDA, có thể cần thêm hóa đơn thương mại, giấy chứng nhận xuất xứ hoặc khai báo FDA. Nhân viên Minh Thiện sẽ hướng dẫn và hỗ trợ chuẩn bị đầy đủ — bạn không phải tự mày mò.</p>
+<p>Khả năng tiếp nhận không chỉ dựa trên việc sản phẩm đã được nấu chín hay hút chân không. Nhân viên cần kiểm tra từng mặt hàng trước khi đưa ra kết luận.</p>
 
-<h2>Đóng gói hàng đi Mỹ thế nào cho đúng?</h2>
-<p>Hàng đi Mỹ phải qua nhiều chặng: xe tải, băng chuyền sân bay, khoang máy bay, kho trung chuyển, xe giao nội địa Mỹ. Đóng gói sai là hàng vỡ, ướt, hoặc bị giữ.</p>
-<p>Nguyên tắc đóng gói chuẩn:</p>
+<h2>Gửi hàng đi Mỹ nhanh từ 3 ngày</h2>
+<p>Nếu cần gửi quà, hồ sơ hoặc hàng kinh doanh gấp, khách hàng có thể lựa chọn tuyến chuyển phát nhanh với thời gian giao dự kiến <strong>từ 3 ngày làm việc</strong>.</p>
+<p>Thời gian cụ thể phụ thuộc vào:</p>
 <ul>
-  <li><strong>Thùng carton cứng nhiều lớp</strong>, không dùng lại thùng đã mềm, móp.</li>
-  <li><strong>Chèn kín khoảng trống</strong> bằng xốp, giấy, mút — lắc thùng không nghe tiếng động là đạt.</li>
-  <li><strong>Hàng dễ vỡ</strong>: bọc từng món riêng bằng xốp nổ, đặt ở giữa, cách thành thùng ít nhất 5 cm.</li>
-  <li><strong>Thực phẩm</strong>: hút chân không hoặc bọc kín nhiều lớp để không rò mùi, không hút ẩm.</li>
-  <li><strong>Dán băng keo chữ H</strong> ở cả nắp trên và đáy thùng.</li>
-  <li><strong>Ghi rõ thông tin</strong> người nhận trên mặt thùng, dán thêm bên trong phòng khi nhãn ngoài bong.</li>
+  <li>Loại hàng hóa.</li>
+  <li>Thời điểm đơn vị vận chuyển tiếp nhận kiện.</li>
+  <li>Địa chỉ nhận tại Mỹ.</li>
+  <li>Thời gian kiểm tra của hải quan.</li>
+  <li>Chứng từ do khách hàng cung cấp.</li>
+  <li>Điều kiện thời tiết và lịch khai thác chuyến bay.</li>
+  <li>Các ngày nghỉ lễ tại Việt Nam hoặc Mỹ.</li>
 </ul>
-<p>Nếu bạn không chắc, cứ mang hàng tới — Minh Thiện <strong>đóng gói lại miễn phí theo chuẩn quốc tế</strong> trước khi hàng lên đường.</p>
+<p>Hàng thông thường, hồ sơ rõ ràng và địa chỉ thuộc khu vực trung tâm thường được xử lý nhanh hơn. Với thuốc, thực phẩm hoặc hàng cần kiểm dịch, thời gian có thể kéo dài nếu cơ quan chức năng yêu cầu kiểm tra hoặc bổ sung giấy tờ.</p>
+<p>Vì vậy, “từ 3 ngày” là thời gian vận chuyển dự kiến trong điều kiện khai thác thuận lợi, không phải cam kết áp dụng cho mọi kiện hàng. Khách hàng sẽ được tư vấn tuyến phù hợp trước khi gửi.</p>
 
-${img("/images/real/dong-goi-giao-kien.jpg", "Nhân viên Minh Thiện đóng gói lại kiện hàng theo chuẩn quốc tế trước khi xuất đi")}
-
-<h2>Quy trình gửi hàng đi Mỹ tại Minh Thiện gồm mấy bước?</h2>
-<p>Năm bước, và bạn hầu như không phải làm gì ngoài bước đầu tiên:</p>
-<ol>
-  <li><strong>Liên hệ và báo giá:</strong> gọi hoặc nhắn Zalo <strong>${PHONE}</strong>, mô tả món hàng. Chúng tôi báo giá miễn phí trong 5 phút.</li>
-  <li><strong>Lấy hàng tận nơi:</strong> nhân viên tới tận nhà nhận hàng, thường trong vòng 24 giờ.</li>
-  <li><strong>Cân, kiểm tra và đóng gói:</strong> cân trước mặt bạn, tư vấn cách đóng gói, đóng lại chuẩn quốc tế.</li>
-  <li><strong>Làm thủ tục và xuất hàng:</strong> chúng tôi lo khai báo, hải quan và đưa hàng lên chuyến bay gần nhất.</li>
-  <li><strong>Giao tận tay và theo dõi:</strong> bạn nhận mã vận đơn để tra cứu hành trình cho tới khi người nhận ký nhận tại Mỹ.</li>
-</ol>
-
-<h2>Làm sao theo dõi kiện hàng đang đi Mỹ?</h2>
-<p>Sau khi đơn được xử lý, bạn nhận một <strong>mã vận đơn dạng MT-xxxxxxx</strong>. Nhập mã đó vào <a href="/tra-cuu">trang tra cứu đơn hàng</a> trên website là xem được toàn bộ hành trình: đã tiếp nhận, đã xuất kho, đang bay, đang giao, đã giao.</p>
-<p>Nếu người nhận đưa bạn mã của hãng chuyển phát tại Mỹ (dạng <strong>1Z…</strong> của UPS chẳng hạn), bạn cũng nhập ngay vào trang tra cứu đó — hệ thống sẽ dẫn thẳng sang trang theo dõi của hãng.</p>
-<p>Ngoài ra, bộ phận chăm sóc khách hàng chủ động báo cho bạn khi hàng có cập nhật bất thường, không để bạn phải hỏi.</p>
-
-<h2>Gửi hàng đi Mỹ ở đâu uy tín?</h2>
-<p>Minh Thiện Logistics hoạt động từ <strong>2018</strong>, chuyển phát đi hơn <strong>200 quốc gia</strong>, với hai điểm nhận hàng:</p>
+<h2>Bảo hiểm hàng hóa lên đến 100%</h2>
+<p>Một trong những lo ngại lớn nhất khi vận chuyển quốc tế là hàng hóa bị thất lạc hoặc hư hỏng. Để khách hàng an tâm hơn, ${BRAND} cung cấp chính sách bảo hiểm hàng hóa <strong>lên đến 100% giá trị khai báo</strong> theo điều kiện của từng gói dịch vụ.</p>
+<p>Để được bảo vệ quyền lợi, khách hàng cần:</p>
 <ul>
-  <li><strong>Trụ sở TP. Hồ Chí Minh:</strong> 5/5 Nguyễn Văn Vĩnh, P. Tân Sơn Nhất — Hotline <strong>${PHONE}</strong> (Ms Min).</li>
-  <li><strong>Chi nhánh Nha Trang:</strong> 45 Nguyễn Xiển, P. Bắc Nha Trang, Khánh Hòa — Hotline <strong>0964.369.789</strong>.</li>
+  <li>Khai báo đúng loại hàng và số lượng.</li>
+  <li>Cung cấp giá trị thực của sản phẩm.</li>
+  <li>Xuất trình hóa đơn hoặc bằng chứng giá trị khi cần.</li>
+  <li>Tuân thủ hướng dẫn đóng gói.</li>
+  <li>Không gửi hàng cấm hoặc cố tình khai sai.</li>
+  <li>Giữ lại biên nhận và mã vận đơn.</li>
 </ul>
-<p>Ngoài hai khu vực trên, chúng tôi vẫn nhận hàng toàn quốc qua dịch vụ lấy hàng tận nơi.</p>
-<p>Ba lý do khách chọn Minh Thiện để gửi hàng đi Mỹ:</p>
+<p>Phạm vi bảo hiểm, mức khấu trừ, giới hạn bồi thường và các trường hợp loại trừ sẽ được thông báo trước khi gửi. Những rủi ro phát sinh do hàng hóa không đủ điều kiện nhập khẩu, khai báo sai, hư hỏng tự nhiên hoặc bao bì do khách tự đóng không đạt tiêu chuẩn có thể không thuộc phạm vi bảo hiểm.</p>
+
+<h2>Quy trình gửi hàng từ Việt Nam sang Mỹ</h2>
+<p>Quy trình gồm sáu bước đơn giản:</p>
+<h3>Bước 1: Gửi thông tin hàng hóa</h3>
+<p>Khách hàng cung cấp tên hàng, số lượng, trọng lượng dự kiến, hình ảnh sản phẩm, địa chỉ gửi và địa chỉ nhận. Với thuốc hoặc thực phẩm, cần gửi thêm ảnh thành phần và nhãn sản phẩm.</p>
+<h3>Bước 2: Kiểm tra điều kiện vận chuyển</h3>
+<p>Nhân viên phân loại mặt hàng, kiểm tra thông tin cơ bản và tư vấn giấy tờ cần chuẩn bị. Những sản phẩm không đủ điều kiện sẽ được thông báo trước khi đóng kiện.</p>
+<h3>Bước 3: Báo giá minh bạch</h3>
+<p>Cước phí được tính theo cân nặng, kích thước, loại hàng và thời gian giao dự kiến. Khách hàng xác nhận dịch vụ sau khi nhận báo giá.</p>
+<h3>Bước 4: Nhận và đóng gói hàng</h3>
+<p>Khách hàng có thể mang hàng đến điểm tiếp nhận hoặc đăng ký lấy hàng tại nhà ở khu vực được hỗ trợ. Kiện hàng được kiểm tra, gia cố và đóng gói theo đặc tính sản phẩm.</p>
+
+${img("/images/real/dong-goi-giao-kien.jpg", "Kiện hàng được kiểm tra, gia cố và đóng gói theo đặc tính từng sản phẩm")}
+
+<h3>Bước 5: Khai báo và vận chuyển</h3>
+<p>Thông tin hàng hóa được khai báo theo chứng từ khách hàng cung cấp. Sau khi hoàn tất thủ tục cần thiết, kiện hàng được đưa lên tuyến vận chuyển sang Mỹ.</p>
+<h3>Bước 6: Theo dõi và giao tận nơi</h3>
+<p>Mỗi kiện hàng có mã vận đơn để theo dõi hành trình. Người nhận được giao hàng tại địa chỉ đã đăng ký, tùy điều kiện phát hàng tại khu vực đích. Bạn nhập mã vận đơn tại <a href="/tra-cuu">trang tra cứu đơn hàng</a> để xem hành trình bất cứ lúc nào.</p>
+
+<h2>Cách đóng gói hàng gửi đi Mỹ an toàn</h2>
+<p>Đóng gói đúng cách giúp hạn chế móp méo, đổ vỡ và ảnh hưởng đến chất lượng sản phẩm.</p>
+<p><strong>Đối với thuốc tây</strong>, nên giữ nguyên bao bì, chèn chống sốc và bọc kín để tránh ẩm. Không nên tháo thuốc khỏi vỉ hoặc gom nhiều loại thuốc vào một túi không có nhãn.</p>
+<p><strong>Đối với thực phẩm khô</strong>, sản phẩm cần được đóng kín, ưu tiên bao bì của nhà sản xuất. Nếu phù hợp với quy định của mặt hàng, có thể hút chân không và bọc thêm lớp chống rò rỉ.</p>
+<p><strong>Đối với chai lọ</strong>, nên dán kín nắp, bọc từng sản phẩm bằng vật liệu chống sốc và đặt trong túi chống tràn. Không để khoảng trống quá lớn trong thùng.</p>
+<p><strong>Đối với quần áo và đồ dùng cá nhân</strong>, có thể dùng túi nén để giảm thể tích. Tuy nhiên, khách hàng không nên giấu thuốc hoặc thực phẩm bên trong quần áo nhằm né kiểm tra.</p>
+
+${img("/images/real/thung-hang-san-sang.jpg", "Những kiện hàng đã đóng gói chuẩn, sẵn sàng rời kho đi Mỹ")}
+
+<h2>Những mặt hàng không nhận gửi đi Mỹ</h2>
+<p>Danh sách hàng cấm và hạn chế có thể thay đổi theo quy định. Một số nhóm hàng thường không được tiếp nhận gồm:</p>
 <ul>
-  <li><strong>Nhận cả hàng khó:</strong> thực phẩm khô, thuốc, yến sào — những thứ nhiều nơi lắc đầu, chúng tôi vẫn tư vấn cách gửi được.</li>
-  <li><strong>Minh bạch:</strong> cân đo trước mặt khách, báo giá rõ trước khi gửi, không phát sinh bất ngờ.</li>
-  <li><strong>Cam kết rõ ràng:</strong> hàng sạch mất là đền 100% giá trị đã khai báo — không vòng vo.</li>
+  <li>Ma túy, chất kích thích và thuốc thuộc danh mục cấm.</li>
+  <li>Vũ khí, đạn dược hoặc vật liệu nguy hiểm.</li>
+  <li>Chất cháy nổ và hóa chất không xác định.</li>
+  <li>Tiền mặt, giấy tờ có giá hoặc hàng giả.</li>
+  <li>Động vật sống và sản phẩm từ động vật hoang dã bị cấm.</li>
+  <li>Thực phẩm không rõ nguồn gốc hoặc có dấu hiệu hư hỏng.</li>
+  <li>Thuốc không nhãn mác, hết hạn hoặc không xác định thành phần.</li>
+  <li>Hàng vi phạm quyền sở hữu trí tuệ.</li>
+  <li>Sản phẩm bị cấm nhập khẩu theo quy định hiện hành.</li>
 </ul>
+<p>Khách hàng nên gửi hình ảnh trước để được kiểm tra, đặc biệt với mặt hàng khó.</p>
 
-${img("/images/real/thung-hang-san-sang.jpg", "Những kiện hàng đã sẵn sàng rời kho Minh Thiện để lên chuyến bay đi Mỹ")}
+<h2>Câu hỏi thường gặp về gửi hàng đi Mỹ</h2>
+<h3>Gửi hàng đi Mỹ giá bao nhiêu một kg?</h3>
+<p>Cước phí chỉ từ 79K/kg, tùy tổng trọng lượng, kích thước, địa chỉ nhận, loại hàng và thời gian giao. Giá chính xác được báo sau khi có thông tin kiện hàng.</p>
+<h3>Gửi hàng từ Việt Nam sang Mỹ mất bao lâu?</h3>
+<p>Tuyến nhanh có thời gian dự kiến từ 3 ngày làm việc. Hàng cần kiểm tra chuyên ngành hoặc bổ sung chứng từ có thể mất nhiều thời gian hơn.</p>
+<h3>Có nhận gửi thuốc tây đi Mỹ không?</h3>
+<p>Có hỗ trợ kiểm tra và tiếp nhận thuốc đủ điều kiện. Thuốc cần nguyên nhãn, rõ thành phần, còn hạn sử dụng và có chứng từ phù hợp nếu được yêu cầu.</p>
+<h3>Có gửi được thịt heo, bò, gà sang Mỹ không?</h3>
+<p>Một số sản phẩm đã qua chế biến, đóng gói đúng chuẩn và đáp ứng quy định có thể được tiếp nhận. Cần gửi hình ảnh nhãn, thành phần và nguồn gốc để kiểm tra trước.</p>
+<h3>Hàng thất lạc có được bồi thường không?</h3>
+<p>Kiện hàng có thể được bảo hiểm lên đến 100% giá trị khai báo nếu đáp ứng đầy đủ điều kiện của chính sách bảo hiểm. Mức bồi thường cụ thể căn cứ vào chứng từ và điều khoản đã xác nhận.</p>
+<h3>Có lấy hàng tận nhà không?</h3>
+<p>Dịch vụ hỗ trợ lấy hàng tại nhà ở các khu vực đang phục vụ. Khách hàng cần cung cấp địa chỉ và thời gian thuận tiện để được sắp xếp.</p>
+<h3>Có giao hàng tận nơi tại Mỹ không?</h3>
+<p>Có. Hàng được giao đến địa chỉ người nhận tại Mỹ theo phạm vi phục vụ của tuyến vận chuyển. Một số khu vực xa hoặc đặc biệt có thể phát sinh thêm thời gian và phụ phí.</p>
 
-<h2>Bắt đầu gửi hàng đi Mỹ ngay hôm nay</h2>
-<p>Chỉ cần một cuộc gọi hoặc một tin nhắn Zalo tới <strong>${PHONE}</strong> (Ms Min) là xong — chúng tôi báo giá trong 5 phút, tới tận nhà lấy hàng trong 24 giờ, và lo trọn phần còn lại cho tới khi người thân bạn ở Mỹ nhận được hàng tận tay.</p>
+<h2>Liên hệ gửi hàng đi Mỹ ngay hôm nay</h2>
+<p>Với lợi thế giá chỉ từ 79K/kg, thời gian giao dự kiến nhanh từ 3 ngày, hỗ trợ kiểm tra nhiều mặt hàng khó và bảo hiểm hàng hóa lên đến 100%, ${BRAND} là lựa chọn phù hợp cho cá nhân, gia đình, chủ shop và doanh nghiệp có nhu cầu gửi hàng từ Việt Nam sang Mỹ.</p>
+<p>Để nhận báo giá, khách hàng chỉ cần gửi:</p>
+<ul>
+  <li>Hình ảnh và tên hàng.</li>
+  <li>Trọng lượng dự kiến.</li>
+  <li>Kích thước kiện hàng nếu có.</li>
+  <li>Địa chỉ gửi tại Việt Nam.</li>
+  <li>Thành phố, tiểu bang và mã ZIP tại Mỹ.</li>
+  <li>Thời gian mong muốn nhận hàng.</li>
+</ul>
+<p><strong>Hotline / Zalo:</strong> ${PHONE} — Ms. Min<br />
+<strong>Địa chỉ:</strong> 5/5 Nguyễn Văn Vĩnh, Phường Tân Sơn Nhất, TP. Hồ Chí Minh<br />
+<strong>Thời gian làm việc:</strong> 24/7</p>
 `.trim();
 
 const faqs = [
   {
-    q: "Gửi hàng đi Mỹ mất bao lâu?",
-    a: "Dịch vụ chuyển nhanh dự kiến khoảng 3–5 ngày, dịch vụ tiết kiệm khoảng 8–12 ngày. Thời gian thực tế thay đổi theo địa chỉ giao tại Mỹ, lịch bay và quá trình kiểm tra hải quan. Hàng thực phẩm và thuốc có thể chậm hơn do bị kiểm tra.",
+    q: "Gửi hàng đi Mỹ giá bao nhiêu một kg?",
+    a: "Cước phí chỉ từ 79K/kg, tùy tổng trọng lượng, kích thước, địa chỉ nhận, loại hàng và thời gian giao. Giá chính xác được báo sau khi có thông tin kiện hàng.",
   },
   {
-    q: "Minh Thiện có gửi được thực phẩm và thuốc đi Mỹ không?",
-    a: "Có. Minh Thiện nhận gửi thực phẩm khô, đặc sản, yến sào, thuốc và thực phẩm chức năng đi Mỹ. Tuy nhiên đây là nhóm hàng rủi ro cao vì chịu quản lý của FDA, dễ bị giữ để kiểm tra. Hàng cần đóng gói thương mại, có nhãn, còn hạn và khai báo đúng.",
+    q: "Gửi hàng từ Việt Nam sang Mỹ mất bao lâu?",
+    a: "Tuyến nhanh có thời gian dự kiến từ 3 ngày làm việc. Hàng cần kiểm tra chuyên ngành hoặc bổ sung chứng từ có thể mất nhiều thời gian hơn.",
   },
   {
-    q: "Hàng sạch là gì và vì sao được đền 100%?",
-    a: "Hàng sạch là hàng không đưa vào miệng — máy móc, quần áo, giày dép, thiết bị, đồ gia dụng. Nhóm này không liên quan đến FDA nên rủi ro bị giữ gần như bằng không, vì vậy Minh Thiện cam kết đền 100% giá trị nếu thất lạc, với điều kiện khách khai báo giá trị rõ ràng và hàng sạch hoàn toàn trước thông quan.",
+    q: "Có nhận gửi thuốc tây đi Mỹ không?",
+    a: "Có hỗ trợ kiểm tra và tiếp nhận thuốc đủ điều kiện. Thuốc cần nguyên nhãn, rõ thành phần, còn hạn sử dụng và có chứng từ phù hợp nếu được yêu cầu.",
   },
   {
-    q: "Cước gửi hàng đi Mỹ tính thế nào?",
-    a: "Cước tính theo số lớn hơn giữa trọng lượng thực tế và trọng lượng quy đổi. Trọng lượng quy đổi = Dài × Rộng × Cao (cm) ÷ 5000. Ngoài ra giá còn phụ thuộc loại hàng, dịch vụ nhanh hay tiết kiệm, và địa chỉ giao tại Mỹ.",
+    q: "Có gửi được thịt heo, bò, gà sang Mỹ không?",
+    a: "Một số sản phẩm đã qua chế biến, đóng gói đúng chuẩn và đáp ứng quy định có thể được tiếp nhận. Cần gửi hình ảnh nhãn, thành phần và nguồn gốc để kiểm tra trước.",
   },
   {
-    q: "Gửi hàng đi Mỹ cần giấy tờ gì?",
-    a: "Với hàng cá nhân và quà tặng chỉ cần thông tin người gửi, thông tin người nhận tại Mỹ kèm ZIP code, và bản kê khai hàng hóa. Hàng kinh doanh hoặc hàng thuộc diện FDA có thể cần thêm hóa đơn thương mại và khai báo FDA — nhân viên sẽ hướng dẫn chuẩn bị.",
+    q: "Hàng thất lạc có được bồi thường không?",
+    a: "Kiện hàng có thể được bảo hiểm lên đến 100% giá trị khai báo nếu đáp ứng đầy đủ điều kiện của chính sách bảo hiểm. Mức bồi thường cụ thể căn cứ vào chứng từ và điều khoản đã xác nhận.",
   },
   {
-    q: "Có nhận hàng tận nhà và đóng gói giúp không?",
-    a: "Có. Minh Thiện lấy hàng tận nơi, thường trong vòng 24 giờ sau khi bạn đặt. Hàng được cân và kiểm tra trước mặt khách, đồng thời đóng gói lại theo chuẩn quốc tế miễn phí trước khi vận chuyển.",
+    q: "Có lấy hàng tận nhà không?",
+    a: "Dịch vụ hỗ trợ lấy hàng tại nhà ở các khu vực đang phục vụ. Khách hàng cần cung cấp địa chỉ và thời gian thuận tiện để được sắp xếp.",
   },
   {
-    q: "Làm sao theo dõi kiện hàng đi Mỹ?",
-    a: "Bạn nhận mã vận đơn dạng MT-xxxxxxx và nhập vào trang tra cứu trên website minhthienlogs.com để xem hành trình. Nếu có mã của hãng chuyển phát tại Mỹ như UPS (dạng 1Z…), bạn cũng nhập vào trang tra cứu để xem trạng thái từ hãng.",
-  },
-  {
-    q: "Mặt hàng nào cần hỏi trước khi gửi đi Mỹ?",
-    a: "Hàng có pin hoặc sạc dự phòng, chất lỏng, nước mắm, nước hoa, hàng dễ cháy nổ, thực phẩm có nguồn gốc động vật như thịt tươi và sữa, hàng không nhãn mác. Hàng nhái thương hiệu thì không nhận. Bạn chụp ảnh gửi Zalo 0589.77.89.89 để được kiểm tra miễn phí.",
+    q: "Có giao hàng tận nơi tại Mỹ không?",
+    a: "Có. Hàng được giao đến địa chỉ người nhận tại Mỹ theo phạm vi phục vụ của tuyến vận chuyển. Một số khu vực xa hoặc đặc biệt có thể phát sinh thêm thời gian và phụ phí.",
   },
 ];
 
 const now = new Date().toISOString();
 const db = new Database(new URL("../prisma/dev.db", import.meta.url).pathname);
-
 const existing = db.prepare("SELECT id FROM Article WHERE slug = ?").get(SLUG);
 
 const data = {
   slug: SLUG,
-  title: "Gửi hàng đi Mỹ: thời gian, cước, thủ tục và cách đóng gói (hướng dẫn 2026)",
+  title: "Gửi hàng đi Mỹ giá chỉ từ 79K/kg, nhận cả hàng khó, bảo hiểm hàng hóa 100%",
   excerpt:
-    "Hướng dẫn đầy đủ cách gửi hàng đi Mỹ từ Việt Nam: thời gian 3–12 ngày theo dịch vụ, cách tính cước, giấy tờ cần chuẩn bị, cách đóng gói và những mặt hàng nhận gửi — kể cả hàng khó như thực phẩm khô, thuốc, yến sào.",
+    "Gửi hàng đi Mỹ chỉ từ 79K/kg, nhận hàng nhanh từ 3 ngày, bảo hiểm hàng hóa lên đến 100% giá trị khai báo. Nhận cả hàng khó: thuốc tây, thực phẩm, thịt heo, bò, gà đã qua chế biến. Lấy hàng tận nhà, giao tận nơi tại Mỹ.",
   content,
-  coverImage: "/images/real/hang-gui-da-dang.jpg",
+  coverImage: "/images/my/gui-hang-di-my-hang-kho-bao-hiem.webp",
   category: "Mỹ",
-  tags: "gửi hàng đi Mỹ,vận chuyển đi Mỹ,gửi thực phẩm đi Mỹ,gửi thuốc đi Mỹ,cước gửi hàng đi Mỹ",
-  metaTitle: "Gửi hàng đi Mỹ 2026: thời gian, cước phí, thủ tục & đóng gói | Minh Thiện",
+  tags: "gửi hàng đi Mỹ,gửi thuốc tây đi Mỹ,gửi thịt heo đi Mỹ,gửi thịt bò đi Mỹ,gửi thịt gà đi Mỹ,cước gửi hàng đi Mỹ,bảo hiểm hàng hóa",
+  metaTitle: "Gửi hàng đi Mỹ từ 79K/kg — nhận hàng khó, bảo hiểm 100% | Minh Thiện Logistics",
   metaDescription:
-    "Gửi hàng đi Mỹ trọn gói: nhanh 3–5 ngày, tiết kiệm 8–12 ngày. Nhận cả hàng khó (thực phẩm khô, thuốc, yến). Lấy hàng tận nơi, đền 100% hàng sạch. Báo giá 5 phút: 0589.77.89.89.",
+    "Gửi hàng đi Mỹ chỉ từ 79K/kg, nhanh từ 3 ngày, bảo hiểm hàng hóa lên đến 100%. Nhận thuốc tây, thực phẩm, thịt heo bò gà đã chế biến. Lấy hàng tận nhà. Zalo 0589.77.89.89 - Ms. Min.",
   faqJson: JSON.stringify(faqs),
   published: 1,
 };
@@ -246,5 +284,4 @@ if (existing) {
 }
 
 const words = content.replace(/<[^>]+>/g, " ").trim().split(/\s+/).length;
-console.log("Số chữ (không tính thẻ HTML):", words);
-console.log("Số câu hỏi FAQ (AEO JSON-LD):", faqs.length);
+console.log("Số chữ:", words, "| FAQ (AEO JSON-LD):", faqs.length, "| Ảnh:", (content.match(/<figure>/g) || []).length);
