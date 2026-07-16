@@ -1,27 +1,10 @@
 import Link from "next/link";
-import {
-  ArrowRight,
-  Check,
-  CheckCircle2,
-  FileCheck2,
-  MapPin,
-  PackageCheck,
-  Phone,
-  Sparkles,
-  Truck,
-} from "lucide-react";
+import { ArrowRight, CheckCircle2, Phone } from "lucide-react";
 import { GalleryGrid } from "./gallery-grid";
 import { ServiceMedia } from "./service-media";
 import { QuoteCalculator } from "./quote-calculator";
 import { gallery } from "@/lib/gallery";
 import { services, site } from "@/lib/site";
-
-const BENEFITS = [
-  { icon: Truck, title: "Nhận hàng tận nơi", text: "Hỗ trợ nhận hàng tại nhà và gom nhiều loại hàng trong cùng một kiện." },
-  { icon: PackageCheck, title: "Đóng gói phù hợp", text: "Kiểm tra, phân loại và gia cố theo đặc tính của từng mặt hàng." },
-  { icon: FileCheck2, title: "Hỗ trợ khai báo", text: "Tư vấn thông tin hàng hóa và chứng từ cần thiết trước khi gửi." },
-  { icon: MapPin, title: "Giao tận địa chỉ", text: "Giao đến nhà người nhận tại các bang và thành phố trên toàn nước Mỹ." },
-];
 
 const GOODS = [
   { img: "thuoc-tay", title: "Thuốc và thực phẩm bổ sung", text: "Cần kiểm tra thành phần, số lượng và hồ sơ trước khi nhận." },
@@ -37,67 +20,6 @@ export function GuiHangMyDetail({ articleHtml }: { articleHtml?: string | null }
 
   return (
     <>
-      <section className="mx-auto max-w-7xl px-4 py-10 sm:px-6 sm:py-14">
-        <div className="grid gap-8 lg:grid-cols-[1.2fr_0.8fr] lg:items-start">
-          <div>
-            <span className="inline-flex items-center gap-2 rounded-full bg-brand-50 px-4 py-2 text-sm font-bold text-brand-700">
-              <Sparkles className="h-4 w-4" /> Dịch vụ trọn gói từ Việt Nam đến Mỹ
-            </span>
-            <h2 className="mt-5 text-3xl font-black leading-tight text-ink sm:text-4xl">
-              Gửi hàng đi Mỹ rõ quy trình, dễ theo dõi và giao tận nhà
-            </h2>
-            <div className="mt-5 space-y-4 text-base leading-7 text-ink-soft">
-              <p>
-                Minh Thiện Logistics hỗ trợ khách cá nhân và doanh nghiệp gửi hàng từ Việt Nam đi Mỹ. Từ bước kiểm tra mặt hàng, nhận hàng, đóng gói đến khai báo và theo dõi vận chuyển đều được hướng dẫn rõ ràng trước khi gửi.
-              </p>
-              <p>
-                Mỗi kiện hàng có yêu cầu khác nhau. Vì vậy, cước phí và thời gian được xác định dựa trên loại hàng, kích thước, trọng lượng, địa chỉ giao và hình thức vận chuyển mà khách lựa chọn.
-              </p>
-            </div>
-            <div className="mt-7 flex flex-col gap-3 sm:flex-row">
-              <a href={`tel:${site.phone}`} className="inline-flex min-h-12 items-center justify-center gap-2 rounded-full bg-coral-500 px-6 py-3 font-bold text-white shadow-lg shadow-coral-500/25 transition hover:bg-coral-600">
-                <Phone className="h-5 w-5" /> Gọi {site.phoneDisplay}
-              </a>
-              <a href={site.zalo} className="inline-flex min-h-12 items-center justify-center rounded-full border border-brand-200 bg-white px-6 py-3 font-bold text-brand-700 transition hover:bg-brand-50">
-                Gửi ảnh hàng qua Zalo
-              </a>
-            </div>
-          </div>
-
-          <aside className="rounded-3xl bg-ink p-6 text-white shadow-xl sm:p-8">
-            <p className="text-sm font-bold uppercase tracking-wider text-brand-200">Thông tin cần để báo giá</p>
-            <ul className="mt-5 space-y-4">
-              {["Tên và số lượng từng mặt hàng", "Cân nặng, kích thước kiện dự kiến", "Thành phố hoặc ZIP code tại Mỹ", "Thời gian mong muốn nhận hàng"].map((item) => (
-                <li key={item} className="flex gap-3 text-sm leading-6 text-white/85">
-                  <Check className="mt-0.5 h-5 w-5 shrink-0 text-brand-300" /> {item}
-                </li>
-              ))}
-            </ul>
-            <p className="mt-6 rounded-2xl bg-white/10 p-4 text-sm leading-6 text-white/80">
-              Chụp ảnh hàng và gửi trước sẽ giúp nhân viên kiểm tra nhanh, hạn chế phát sinh sau khi nhận kiện.
-            </p>
-          </aside>
-        </div>
-      </section>
-
-      <section className="border-y border-brand-50 bg-brand-50/45 py-12 sm:py-16">
-        <div className="mx-auto max-w-7xl px-4 sm:px-6">
-          <div className="max-w-2xl">
-            <p className="text-sm font-bold uppercase tracking-wider text-coral-500">Vì sao chọn Minh Thiện?</p>
-            <h2 className="mt-2 text-3xl font-black text-ink sm:text-4xl">Một đầu mối hỗ trợ suốt hành trình</h2>
-          </div>
-          <div className="mt-8 grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
-            {BENEFITS.map(({ icon: Icon, title, text }) => (
-              <article key={title} className="rounded-3xl border border-brand-100 bg-white p-5 shadow-sm sm:p-6">
-                <div className="flex h-11 w-11 items-center justify-center rounded-2xl bg-brand-50 text-brand-700"><Icon className="h-5 w-5" /></div>
-                <h3 className="mt-4 text-lg font-black text-ink">{title}</h3>
-                <p className="mt-2 text-sm leading-6 text-ink-soft">{text}</p>
-              </article>
-            ))}
-          </div>
-        </div>
-      </section>
-
       {articleHtml && (
         <section className="mx-auto max-w-3xl px-4 py-12 sm:px-6 sm:py-16">
           <div
