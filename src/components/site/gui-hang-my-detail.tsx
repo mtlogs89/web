@@ -21,9 +21,9 @@ export function GuiHangMyDetail({ articleHtml }: { articleHtml?: string | null }
   return (
     <>
       {articleHtml && (
-        <section className="mx-auto max-w-3xl px-4 py-12 sm:px-6 sm:py-16">
+        <section className="mx-auto max-w-4xl px-4 py-10 sm:px-6 sm:py-14">
           <div
-            className="prose-mt"
+            className="prose-mt rounded-3xl bg-white px-5 py-8 shadow-[0_24px_60px_-34px_rgba(20,50,58,0.28)] ring-1 ring-brand-100/70 sm:px-10 sm:py-12"
             dangerouslySetInnerHTML={{
               __html: articleHtml.replace(/<img /g, '<img loading="lazy" decoding="async" '),
             }}
@@ -32,7 +32,7 @@ export function GuiHangMyDetail({ articleHtml }: { articleHtml?: string | null }
       )}
 
       <section className="border-y border-brand-50 bg-brand-50/45 py-12 sm:py-16">
-        <div className="mx-auto max-w-3xl px-4 sm:px-6">
+        <div className="mx-auto max-w-4xl px-4 sm:px-6">
           <div className="text-center">
             <p className="text-sm font-bold uppercase tracking-wider text-coral-500">Tự tính trước chi phí</p>
             <h2 className="mt-2 text-3xl font-black text-ink sm:text-4xl">Ước tính cước gửi hàng đi Mỹ</h2>
@@ -46,8 +46,8 @@ export function GuiHangMyDetail({ articleHtml }: { articleHtml?: string | null }
         </div>
       </section>
 
-      <section className="mx-auto max-w-7xl px-4 py-12 sm:px-6 sm:py-16">
-        <div className="mx-auto max-w-3xl text-center">
+      <section className="mx-auto max-w-6xl px-4 py-12 sm:px-6 sm:py-16">
+        <div className="mx-auto max-w-2xl text-center">
           <p className="text-sm font-bold uppercase tracking-wider text-coral-500">Mặt hàng thường gửi</p>
           <h2 className="mt-2 text-3xl font-black text-ink sm:text-4xl">Kiểm tra trước để gửi đúng ngay từ đầu</h2>
           <p className="mt-3 leading-7 text-ink-soft">Khả năng tiếp nhận phụ thuộc thành phần, nguồn gốc, số lượng, bao bì và quy định tại thời điểm gửi.</p>

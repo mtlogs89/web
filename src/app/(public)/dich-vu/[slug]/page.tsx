@@ -158,7 +158,7 @@ export default async function ServicePage({
           <GuiHangMyDetail articleHtml={articleBody?.html ?? null} />
 
           {relatedArticles.length > 0 && (
-            <section className="mx-auto max-w-7xl px-6 py-14">
+            <section className="mx-auto max-w-6xl px-4 py-14 sm:px-6">
               <h2 className="flex items-center gap-2 text-2xl font-black text-ink">
                 <BookOpen className="h-6 w-6" /> Bài viết liên quan
               </h2>
