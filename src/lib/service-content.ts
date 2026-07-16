@@ -26,9 +26,12 @@ export const serviceContent: Record<string, ServiceDetail> = {
     ],
     items: ["Thực phẩm khô, đặc sản", "Thuốc, thực phẩm chức năng", "Quà tặng, đồ cá nhân", "Hàng kinh doanh, mẫu hàng"],
     faqs: [
-      { q: "Gửi hàng đi Mỹ mất bao lâu?", a: "Thông thường 3–7 ngày tùy bang và loại dịch vụ." },
-      { q: "Có gửi được thực phẩm đi Mỹ không?", a: "Có, với thực phẩm khô đóng gói đúng chuẩn và khai báo FDA hợp lệ." },
-      { q: "Cước gửi hàng đi Mỹ tính thế nào?", a: "Theo trọng lượng thực hoặc quy đổi (số lớn hơn). Liên hệ 0589.77.89.89 để báo giá chính xác." },
+      { q: "Gửi hàng đi Mỹ mất bao lâu?", a: "Dịch vụ nhanh thường dự kiến 3–5 ngày, dịch vụ tiết kiệm khoảng 8–12 ngày. Thời gian có thể thay đổi theo địa chỉ giao, lịch bay và quá trình kiểm tra hải quan." },
+      { q: "Có gửi được thực phẩm đi Mỹ không?", a: "Nhiều loại thực phẩm khô, đóng gói thương mại và còn hạn sử dụng có thể được tiếp nhận. Cần kiểm tra thành phần, nhãn và quy định áp dụng cho từng sản phẩm trước khi gửi." },
+      { q: "Cước gửi hàng đi Mỹ tính thế nào?", a: "Cước thường tính theo mức lớn hơn giữa trọng lượng thực tế và trọng lượng quy đổi từ kích thước kiện. Loại hàng, địa chỉ giao và dịch vụ nhanh hay tiết kiệm cũng ảnh hưởng đến giá." },
+      { q: "Có nhận hàng và đóng gói tại nhà không?", a: "Minh Thiện hỗ trợ sắp xếp nhận hàng tùy khu vực. Hàng sẽ được kiểm tra và tư vấn cách đóng gói phù hợp trước khi vận chuyển." },
+      { q: "Tôi có theo dõi được kiện hàng không?", a: "Có. Sau khi đơn được xử lý, khách nhận mã theo dõi để kiểm tra hành trình và được hỗ trợ nếu có cập nhật bất thường." },
+      { q: "Những mặt hàng nào cần hỏi trước?", a: "Hàng có pin, chất lỏng, mỹ phẩm, thuốc, thực phẩm có nguồn gốc động vật, hàng dễ cháy hoặc sản phẩm không có nhãn cần được kiểm tra riêng trước khi nhận." },
     ],
   },
   "gui-hang-di-uc": {

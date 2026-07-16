@@ -50,7 +50,7 @@ const SPEEDS = [
   { name: "Tiết kiệm", time: "Khoảng 8–12 ngày", text: "Phù hợp với kiện hàng không gấp và ưu tiên tối ưu chi phí.", accent: false },
 ];
 
-export function GuiHangMyDetail() {
+export function GuiHangMyDetail({ articleHtml }: { articleHtml?: string | null }) {
   const faqs = serviceContent["gui-hang-di-my"].faqs;
   const others = services.filter((service) => service.slug !== "gui-hang-di-my").slice(0, 3);
 
@@ -238,6 +238,18 @@ export function GuiHangMyDetail() {
             <a href={site.zalo} className="inline-flex min-h-12 items-center justify-center rounded-full bg-white px-7 py-3 font-bold text-brand-800 hover:bg-brand-50">Nhắn Zalo ngay</a>
           </div>
         </div>
+
+        {articleHtml && (
+          <div className="mx-auto mt-14 max-w-3xl">
+            <h2 className="text-3xl font-black text-ink">Cẩm nang gửi hàng đi Mỹ từ A đến Z</h2>
+            <div
+              className="prose-mt mt-6"
+              dangerouslySetInnerHTML={{
+                __html: articleHtml.replace(/<img /g, '<img loading="lazy" decoding="async" '),
+              }}
+            />
+          </div>
+        )}
 
         <div className="mt-14">
           <h2 className="text-2xl font-black text-ink">Dịch vụ khác</h2>

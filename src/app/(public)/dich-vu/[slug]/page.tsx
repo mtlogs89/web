@@ -88,6 +88,20 @@ function getRelatedArticles(slug: string) {
   }
 }
 
+function getArticleHtml(articleSlug: string): string | null {
+  try {
+    const db = new Database(`${process.cwd()}/prisma/dev.db`);
+    const row = db.prepare(
+      "SELECT content FROM Article WHERE slug = ? AND published = 1"
+    ).get(articleSlug) as { content: string } | undefined;
+    db.close();
+    return row?.content ?? null;
+  } catch (e) {
+    console.error("Failed to fetch article content:", e);
+    return null;
+  }
+}
+
 export default async function ServicePage({
   params,
 }: {
@@ -126,7 +140,7 @@ export default async function ServicePage({
 
       {slug === "gui-hang-di-my" ? (
         <>
-          <GuiHangMyDetail />
+          <GuiHangMyDetail articleHtml={getArticleHtml("gui-hang-di-my-huong-dan-toan-tap")} />
 
           {relatedArticles.length > 0 && (
             <section className="mx-auto max-w-7xl px-6 py-14">
