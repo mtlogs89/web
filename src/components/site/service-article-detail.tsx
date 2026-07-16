@@ -15,8 +15,18 @@ const GOODS = [
   { img: "kho-bo-ga", title: "Hàng cần kiểm tra riêng", text: "Sản phẩm có nguồn gốc động vật hoặc thành phần đặc biệt cần tư vấn trước." },
 ];
 
-export function GuiHangMyDetail({ articleHtml }: { articleHtml?: string | null }) {
-  const others = services.filter((service) => service.slug !== "gui-hang-di-my").slice(0, 3);
+export function ServiceArticleDetail({
+  slug,
+  country,
+  destKey,
+  articleHtml,
+}: {
+  slug: string;
+  country: string;
+  destKey?: string;
+  articleHtml?: string | null;
+}) {
+  const others = services.filter((service) => service.slug !== slug).slice(0, 3);
 
   return (
     <>
@@ -35,13 +45,13 @@ export function GuiHangMyDetail({ articleHtml }: { articleHtml?: string | null }
         <div className="mx-auto max-w-4xl px-4 sm:px-6">
           <div className="text-center">
             <p className="text-sm font-bold uppercase tracking-wider text-coral-500">Tự tính trước chi phí</p>
-            <h2 className="mt-2 text-3xl font-black text-ink sm:text-4xl">Ước tính cước gửi hàng đi Mỹ</h2>
+            <h2 className="mt-2 text-3xl font-black text-ink sm:text-4xl">Ước tính cước gửi hàng đi {country}</h2>
             <p className="mt-3 leading-7 text-ink-soft">
               Nhập cân nặng và loại hàng để xem mức cước tham khảo ngay. Giá chính thức được báo lại sau khi kiểm tra kiện hàng thực tế.
             </p>
           </div>
           <div className="mt-8 rounded-[28px] bg-white p-6 shadow-xl shadow-brand-500/10 sm:p-8">
-            <QuoteCalculator />
+            <QuoteCalculator defaultDestKey={destKey} />
           </div>
         </div>
       </section>
@@ -76,8 +86,8 @@ export function GuiHangMyDetail({ articleHtml }: { articleHtml?: string | null }
         </div>
 
         <div className="mt-14 rounded-[2rem] bg-gradient-to-br from-brand-700 to-brand-900 px-5 py-9 text-center text-white sm:px-8 sm:py-12">
-          <h2 className="text-3xl font-black">Bạn cần báo giá kiện hàng?</h2>
-          <p className="mx-auto mt-3 max-w-2xl leading-7 text-white/75">Gửi ảnh hàng, cân nặng dự kiến và ZIP code người nhận để được kiểm tra và tư vấn phương án phù hợp.</p>
+          <h2 className="text-3xl font-black">Bạn cần báo giá kiện hàng đi {country}?</h2>
+          <p className="mx-auto mt-3 max-w-2xl leading-7 text-white/75">Gửi ảnh hàng, cân nặng dự kiến và địa chỉ người nhận để được kiểm tra và tư vấn phương án phù hợp.</p>
           <div className="mt-6 flex flex-col justify-center gap-3 sm:flex-row">
             <a href={`tel:${site.phone}`} className="inline-flex min-h-12 items-center justify-center gap-2 rounded-full bg-coral-500 px-7 py-3 font-bold text-white hover:bg-coral-600"><Phone className="h-5 w-5" /> {site.phoneDisplay}</a>
             <a href={site.zalo} className="inline-flex min-h-12 items-center justify-center rounded-full bg-white px-7 py-3 font-bold text-brand-800 hover:bg-brand-50">Nhắn Zalo ngay</a>

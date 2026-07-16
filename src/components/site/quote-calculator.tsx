@@ -9,8 +9,11 @@ import { site } from "@/lib/site";
 const inputCls =
   "mt-1.5 w-full rounded-xl border border-slate-200 px-3 py-3 font-medium outline-none focus:border-brand-500";
 
-export function QuoteCalculator() {
-  const [destKey, setDestKey] = useState(destinations[0].key);
+export function QuoteCalculator({ defaultDestKey }: { defaultDestKey?: string } = {}) {
+  const initialDest = destinations.some((d) => d.key === defaultDestKey)
+    ? (defaultDestKey as string)
+    : destinations[0].key;
+  const [destKey, setDestKey] = useState(initialDest);
   const [weight, setWeight] = useState("5");
   const [cargoKey, setCargoKey] = useState(cargoTypes[0].key);
   const [showDims, setShowDims] = useState(false);

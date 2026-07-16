@@ -8,7 +8,7 @@ import { ServiceMedia } from "@/components/site/service-media";
 import { services, site } from "@/lib/site";
 import { serviceContent, serviceImages } from "@/lib/service-content";
 import { GalleryGrid } from "@/components/site/gallery-grid";
-import { GuiHangMyDetail } from "@/components/site/gui-hang-my-detail";
+import { ServiceArticleDetail } from "@/components/site/service-article-detail";
 import { gallery } from "@/lib/gallery";
 import {
   JsonLd,
@@ -88,6 +88,17 @@ function getRelatedArticles(slug: string) {
   }
 }
 
+// Các trang dịch vụ dùng bố cục "nhúng bài đầy đủ + công cụ tính".
+// country: nhãn hiển thị; article: slug bài nhúng; destKey: nước mặc định cho công cụ tính.
+const RICH_PAGES: Record<string, { country: string; article: string; destKey: string }> = {
+  "gui-hang-di-my": { country: "Mỹ", article: "gui-hang-di-my-huong-dan-toan-tap", destKey: "my" },
+  "gui-hang-di-uc": { country: "Úc", article: "gui-hang-di-uc-tong-quan", destKey: "uc" },
+  "gui-hang-di-canada": { country: "Canada", article: "gui-hang-di-canada-tong-quan", destKey: "canada" },
+  "gui-hang-di-chau-au": { country: "Châu Âu", article: "gui-hang-di-chau-au-tong-quan", destKey: "khac" },
+  "gui-hang-di-nhat": { country: "Nhật", article: "gui-hang-di-nhat-tong-quan", destKey: "khac" },
+  "gui-hang-di-han": { country: "Hàn", article: "gui-hang-di-han-tong-quan", destKey: "khac" },
+};
+
 type ArticleBody = { html: string; faqs: { q: string; a: string }[] };
 
 function getArticleBody(articleSlug: string): ArticleBody | null {
@@ -126,10 +137,12 @@ export default async function ServicePage({
   const url = `${site.url}/dich-vu/${slug}`;
   const others = services.filter((s) => s.slug !== slug).slice(0, 3);
 
-  const relatedArticles = getRelatedArticles(slug);
-  const articleBody = slug === "gui-hang-di-my" ? getArticleBody("gui-hang-di-my-huong-dan-toan-tap") : null;
+  const rich = RICH_PAGES[slug];
+  const articleBody = rich ? getArticleBody(rich.article) : null;
+  // Bài đã nhúng ở thân trang thì bỏ khỏi mục "Bài viết liên quan" để không lặp.
+  const relatedArticles = getRelatedArticles(slug).filter((a) => a.slug !== rich?.article);
 
-  // FAQ hiển thị trên trang Mỹ là FAQ trong bài, nên schema phải lấy đúng bộ đó.
+  // FAQ hiển thị trên các trang rich là FAQ trong bài, nên schema phải lấy đúng bộ đó.
   const faqsForSchema = articleBody?.faqs.length ? articleBody.faqs : detail.faqs;
 
   return (
@@ -153,9 +166,14 @@ export default async function ServicePage({
         ]}
       />
 
-      {slug === "gui-hang-di-my" ? (
+      {rich ? (
         <>
-          <GuiHangMyDetail articleHtml={articleBody?.html ?? null} />
+          <ServiceArticleDetail
+            slug={slug}
+            country={rich.country}
+            destKey={rich.destKey}
+            articleHtml={articleBody?.html ?? null}
+          />
 
           {relatedArticles.length > 0 && (
             <section className="mx-auto max-w-6xl px-4 py-14 sm:px-6">
