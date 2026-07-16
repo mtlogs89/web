@@ -88,14 +88,25 @@ function getRelatedArticles(slug: string) {
   }
 }
 
-function getArticleHtml(articleSlug: string): string | null {
+type ArticleBody = { html: string; faqs: { q: string; a: string }[] };
+
+function getArticleBody(articleSlug: string): ArticleBody | null {
   try {
     const db = new Database(`${process.cwd()}/prisma/dev.db`);
     const row = db.prepare(
-      "SELECT content FROM Article WHERE slug = ? AND published = 1"
-    ).get(articleSlug) as { content: string } | undefined;
+      "SELECT content, faqJson FROM Article WHERE slug = ? AND published = 1"
+    ).get(articleSlug) as { content: string; faqJson: string | null } | undefined;
     db.close();
-    return row?.content ?? null;
+    if (!row) return null;
+    let faqs: { q: string; a: string }[] = [];
+    if (row.faqJson) {
+      try {
+        faqs = JSON.parse(row.faqJson);
+      } catch {
+        faqs = [];
+      }
+    }
+    return { html: row.content, faqs };
   } catch (e) {
     console.error("Failed to fetch article content:", e);
     return null;
@@ -116,11 +127,15 @@ export default async function ServicePage({
   const others = services.filter((s) => s.slug !== slug).slice(0, 3);
 
   const relatedArticles = getRelatedArticles(slug);
+  const articleBody = slug === "gui-hang-di-my" ? getArticleBody("gui-hang-di-my-huong-dan-toan-tap") : null;
+
+  // FAQ hiển thị trên trang Mỹ là FAQ trong bài, nên schema phải lấy đúng bộ đó.
+  const faqsForSchema = articleBody?.faqs.length ? articleBody.faqs : detail.faqs;
 
   return (
     <>
       <JsonLd data={serviceJsonLd({ name: service.title, description: detail.intro, url })} />
-      <JsonLd data={faqJsonLd(detail.faqs)} />
+      <JsonLd data={faqJsonLd(faqsForSchema)} />
       <JsonLd
         data={breadcrumbJsonLd([
           { name: "Trang chủ", url: site.url },
@@ -140,7 +155,7 @@ export default async function ServicePage({
 
       {slug === "gui-hang-di-my" ? (
         <>
-          <GuiHangMyDetail articleHtml={getArticleHtml("gui-hang-di-my-huong-dan-toan-tap")} />
+          <GuiHangMyDetail articleHtml={articleBody?.html ?? null} />
 
           {relatedArticles.length > 0 && (
             <section className="mx-auto max-w-7xl px-6 py-14">
