@@ -3,6 +3,7 @@ import Link from "next/link";
 import { notFound } from "next/navigation";
 import { Calendar, Phone } from "lucide-react";
 import { PageHero } from "@/components/site/page-hero";
+import { CallAction } from "@/components/site/call-action";
 import { getArticleBySlug, parseFaq, readingMinutes } from "@/lib/articles";
 import {
   JsonLd,
@@ -133,12 +134,12 @@ export default async function ArticlePage({
             Gọi Minh Thiện Logistics để được báo giá miễn phí, chính xác trong 5 phút.
           </p>
           <div className="mt-5 flex flex-wrap justify-center gap-3">
-            <a
-              href={`tel:${phone}`}
+            <CallAction
+              phone={phone}
               className="flex items-center gap-2 rounded-full bg-coral-500 px-7 py-3 font-semibold text-white shadow-lg shadow-coral-500/30 hover:bg-coral-600"
             >
               <Phone className="h-5 w-5" /> {phoneDisplay}
-            </a>
+            </CallAction>
             <Link
               href="/lien-he"
               className="rounded-full border border-brand-200 bg-white px-7 py-3 font-semibold text-brand-700 hover:bg-white"

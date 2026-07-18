@@ -10,14 +10,19 @@ export function ContactOverride({ phone }: { phone: string }) {
   useEffect(() => {
     if (!phone) return;
     const call = document.getElementById("floating-call") as HTMLAnchorElement | null;
+    // Bản cho máy tính (nút sao chép, không phải link tel:) — xem CallAction.
+    const callCopy = document.getElementById("floating-call-copy") as HTMLButtonElement | null;
     const zalo = document.getElementById("floating-zalo") as HTMLAnchorElement | null;
     const prevCall = call?.href;
+    const prevCopy = callCopy?.dataset.phone;
     const prevZalo = zalo?.href;
     if (call) call.href = `tel:${phone}`;
+    if (callCopy) callCopy.dataset.phone = phone;
     if (zalo) zalo.href = `https://zalo.me/${phone}`;
     return () => {
       // Rời trang bài viết (client navigation) -> trả lại hotline mặc định
       if (call && prevCall) call.href = prevCall;
+      if (callCopy && prevCopy) callCopy.dataset.phone = prevCopy;
       if (zalo && prevZalo) zalo.href = prevZalo;
     };
   }, [phone]);

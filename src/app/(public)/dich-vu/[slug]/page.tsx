@@ -4,6 +4,7 @@ import { notFound } from "next/navigation";
 import { Check, Phone, ArrowRight, BookOpen } from "lucide-react";
 import Database from "better-sqlite3";
 import { PageHero } from "@/components/site/page-hero";
+import { CallAction } from "@/components/site/call-action";
 import { ServiceMedia } from "@/components/site/service-media";
 import { services, site } from "@/lib/site";
 import { serviceContent, serviceImages } from "@/lib/service-content";
@@ -256,12 +257,12 @@ export default async function ServicePage({
               <ServiceMedia service={service} />
               <h3 className="mt-4 text-xl font-black">Báo giá {service.title.toLowerCase()}</h3>
               <p className="mt-2 text-white/80">Tư vấn miễn phí, báo giá chính xác trong 5 phút.</p>
-              <a
-                href={`tel:${site.phone}`}
+              <CallAction
+                phone={site.phone}
                 className="mt-5 flex items-center justify-center gap-2 rounded-xl bg-white py-3.5 font-bold text-brand-700"
               >
                 <Phone className="h-5 w-5" /> {site.phoneDisplay}
-              </a>
+              </CallAction>
               <Link
                 href="/lien-he"
                 className="mt-3 flex items-center justify-center gap-2 rounded-xl bg-coral-500 py-3.5 font-semibold text-white hover:bg-coral-600"

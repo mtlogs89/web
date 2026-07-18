@@ -4,6 +4,7 @@ import { useState } from "react";
 import Link from "next/link";
 import { Bolt, ArrowRight, Calculator, Phone } from "lucide-react";
 import { destinations, cargoTypes, estimate, vnd, type EstimateResult } from "@/lib/pricing";
+import { CallAction } from "./call-action";
 import { site } from "@/lib/site";
 
 const inputCls =
@@ -138,12 +139,12 @@ export function QuoteCalculator({ defaultDestKey }: { defaultDestKey?: string } 
               * Giá tham khảo, có thể thay đổi theo thời gian và quy cách hàng. Liên hệ để chốt giá chính xác.
             </p>
             <div className="mt-3 flex flex-wrap gap-2">
-              <a
-                href={`tel:${site.phone}`}
+              <CallAction
+                phone={site.phone}
                 className="flex items-center gap-1.5 rounded-xl bg-coral-500 px-4 py-2.5 text-sm font-semibold text-white hover:bg-coral-600"
               >
                 <Phone className="h-4 w-4" /> Gọi chốt giá
-              </a>
+              </CallAction>
               <Link
                 href="/lien-he"
                 className="rounded-xl border border-brand-200 bg-white px-4 py-2.5 text-sm font-semibold text-brand-700 hover:bg-white"
@@ -158,21 +159,21 @@ export function QuoteCalculator({ defaultDestKey }: { defaultDestKey?: string } 
           <div className="rounded-2xl border border-coral-100 bg-coral-50 p-4">
             <div className="font-semibold text-ink">{result.destLabel}</div>
             <p className="mt-1 text-sm text-ink-soft">{result.reason}</p>
-            <a
-              href={`tel:${site.phone}`}
+            <CallAction
+              phone={site.phone}
               className="mt-3 flex w-fit items-center gap-1.5 rounded-xl bg-coral-500 px-4 py-2.5 text-sm font-semibold text-white hover:bg-coral-600"
             >
               <Phone className="h-4 w-4" /> Gọi {site.phoneDisplay}
-            </a>
+            </CallAction>
           </div>
         )}
 
         {!result && (
           <p className="text-center text-sm text-ink-soft">
             Hoặc gọi ngay{" "}
-            <a href={`tel:${site.phone}`} className="font-bold text-brand-600">
+            <CallAction phone={site.phone} className="font-bold text-brand-600">
               {site.phoneDisplay}
-            </a>{" "}
+            </CallAction>{" "}
             ({site.contactName})
           </p>
         )}

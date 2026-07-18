@@ -4,6 +4,7 @@ import Link from "next/link";
 import { useState } from "react";
 import { Menu, Phone, X } from "lucide-react";
 import { Logo } from "./logo";
+import { CallAction } from "./call-action";
 import { nav, site } from "@/lib/site";
 
 export function Header() {
@@ -17,12 +18,12 @@ export function Header() {
             <span>{site.addressFull}</span>
             <span>{site.hours}</span>
           </div>
-          <a
-            href={`tel:${site.phone}`}
+          <CallAction
+            phone={site.phone}
             className="flex items-center gap-1.5 font-semibold text-sun-300 hover:text-white"
           >
             <Phone className="h-4 w-4" /> {site.phoneDisplay}
-          </a>
+          </CallAction>
         </div>
       </div>
 
@@ -39,15 +40,15 @@ export function Header() {
           </nav>
 
           <div className="flex items-center gap-3">
-            <a
-              href={`tel:${site.phone}`}
+            <CallAction
+              phone={site.phone}
               className="hidden items-center gap-2 font-bold text-ink sm:flex"
             >
               <span className="flex h-9 w-9 items-center justify-center rounded-full bg-brand-50 text-brand-600">
                 <Phone className="h-4 w-4" />
               </span>
               {site.phoneDisplay}
-            </a>
+            </CallAction>
             <Link
               href="/lien-he"
               className="hidden rounded-full bg-coral-500 px-5 py-2.5 font-semibold text-white shadow-lg shadow-coral-500/30 transition hover:bg-coral-600 sm:inline-block"

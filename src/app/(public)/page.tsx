@@ -1,4 +1,5 @@
 import Link from "next/link";
+import { CallAction } from "@/components/site/call-action";
 import {
   ArrowRight,
   Calculator,
@@ -330,9 +331,9 @@ export default async function HomePage() {
               Để lại thông tin hoặc gọi ngay — Minh Thiện báo giá chính xác nhất, tư vấn miễn phí 100%.
             </p>
             <div className="mt-7 flex flex-wrap justify-center gap-4">
-              <a href={`tel:${site.phone}`} className="flex items-center gap-2 rounded-full bg-white px-8 py-3.5 font-bold text-brand-700 shadow-lg transition hover:scale-[1.03]">
+              <CallAction phone={site.phone} className="flex items-center gap-2 rounded-full bg-white px-8 py-3.5 font-bold text-brand-700 shadow-lg transition hover:scale-[1.03]">
                 <Phone className="h-5 w-5" /> {site.phoneDisplay}
-              </a>
+              </CallAction>
               <a href={site.zalo} className="flex items-center gap-2 rounded-full bg-coral-500 px-8 py-3.5 font-semibold shadow-lg shadow-coral-500/30 transition hover:bg-coral-600">
                 <MessageCircle className="h-5 w-5" /> Chat Zalo {site.contactName}
               </a>

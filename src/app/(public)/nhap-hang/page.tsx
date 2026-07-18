@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import { Check, Phone } from "lucide-react";
 import { PageHero } from "@/components/site/page-hero";
+import { CallAction } from "@/components/site/call-action";
 import { serviceContent } from "@/lib/service-content";
 import { site } from "@/lib/site";
 
@@ -57,9 +58,9 @@ export default function ImportPage() {
             <div className="sticky top-24 rounded-3xl p-7 text-white shadow-xl shadow-brand-500/30" style={{ background: "linear-gradient(135deg,#1FB6A2,#0f7568)" }}>
               <h3 className="text-xl font-black">Cần nhập hàng?</h3>
               <p className="mt-2 text-white/80">Gửi link sản phẩm, Minh Thiện báo giá trọn gói tiền hàng + cước về Việt Nam.</p>
-              <a href={`tel:${site.phone}`} className="mt-5 flex items-center justify-center gap-2 rounded-xl bg-white py-3.5 font-bold text-brand-700">
+              <CallAction phone={site.phone} className="mt-5 flex items-center justify-center gap-2 rounded-xl bg-white py-3.5 font-bold text-brand-700">
                 <Phone className="h-5 w-5" /> {site.phoneDisplay}
-              </a>
+              </CallAction>
               <Link href="/lien-he" className="mt-3 flex items-center justify-center gap-2 rounded-xl bg-coral-500 py-3.5 font-semibold text-white hover:bg-coral-600">
                 Gửi yêu cầu báo giá
               </Link>

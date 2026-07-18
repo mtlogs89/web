@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { MapPin, Clock, MessageCircle } from "lucide-react";
 import { PageHero } from "@/components/site/page-hero";
 import { LeadForm } from "@/components/site/lead-form";
+import { CallAction } from "@/components/site/call-action";
 import { site } from "@/lib/site";
 
 export const metadata: Metadata = {
@@ -34,7 +35,7 @@ export default function ContactPage() {
                       {b.phones.map((p, i) => (
                         <span key={p}>
                           {i > 0 && " · "}
-                          <a href={`tel:${p.replace(/\./g, "")}`} className="font-semibold text-brand-600">{p}</a>
+                          <CallAction phone={p.replace(/\./g, "")} className="font-semibold text-brand-600">{p}</CallAction>
                         </span>
                       ))}
                     </p>

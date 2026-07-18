@@ -1,6 +1,7 @@
 import Link from "next/link";
 import { MapPin, Phone } from "lucide-react";
 import { Logo } from "./logo";
+import { CallAction } from "./call-action";
 import { services, site } from "@/lib/site";
 
 export function Footer() {
@@ -53,7 +54,7 @@ export function Footer() {
                       {b.phones.map((p, i) => (
                         <span key={p}>
                           {i > 0 && " · "}
-                          <a href={`tel:${p.replace(/\./g, "")}`} className="font-semibold hover:text-brand-400">{p}</a>
+                          <CallAction phone={p.replace(/\./g, "")} className="font-semibold hover:text-brand-400">{p}</CallAction>
                         </span>
                       ))}
                     </span>
