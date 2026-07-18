@@ -1,6 +1,6 @@
 "use client";
 
-import { useActionState, useState } from "react";
+import { useActionState, useMemo, useState } from "react";
 import { Save } from "lucide-react";
 import { saveArticle, type FormState } from "../../actions";
 import { RichTextEditor } from "@/components/admin/rich-text-editor";
@@ -41,6 +41,15 @@ export function ArticleEditor({
 }) {
   const [state, formAction, pending] = useActionState<FormState, FormData>(saveArticle, null);
   const [content, setContent] = useState(article?.content ?? "");
+  // Quét mọi ảnh trong nội dung bài để bấm 1 phát chọn làm ảnh đại diện.
+  const bodyImages = useMemo(() => {
+    const seen = new Set<string>();
+    for (const m of content.matchAll(/<img[^>]+src=["']([^"']+)["']/gi)) {
+      const src = m[1].trim();
+      if (src && !src.startsWith("data:")) seen.add(src);
+    }
+    return [...seen];
+  }, [content]);
   const catList = categories && categories.length > 0 ? categories : fallbackCategories;
   // Bài đang sửa có chuyên mục cũ không còn trong danh sách -> vẫn hiển thị để không mất
   const currentCat = article?.category;
@@ -101,6 +110,7 @@ export function ArticleEditor({
               defaultValue={article?.coverImage ?? ""}
               label="Ảnh đại diện bài viết"
               hint="Ảnh hiện ở đầu bài và khi chia sẻ link. Đổi theo mùa Noel/Tết/Vu Lan tùy ý."
+              suggestions={bodyImages}
             />
           </div>
           <div>

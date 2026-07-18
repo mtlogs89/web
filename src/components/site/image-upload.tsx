@@ -13,12 +13,15 @@ export function ImageUpload({
   label,
   hint,
   aspect = "video",
+  suggestions = [],
 }: {
   name: string;
   defaultValue?: string;
   label?: string;
   hint?: string;
   aspect?: "video" | "square";
+  /** Ảnh gợi ý (VD: các ảnh có sẵn trong bài) — bấm 1 phát để dùng làm ảnh đại diện. */
+  suggestions?: string[];
 }) {
   const [url, setUrl] = useState(defaultValue);
   const [busy, setBusy] = useState(false);
@@ -102,6 +105,30 @@ export function ImageUpload({
       </div>
 
       {err && <p className="mt-1.5 text-sm font-medium text-coral-600">{err}</p>}
+
+      {suggestions.length > 0 && (
+        <div className="mt-3">
+          <p className="mb-1.5 text-xs font-medium text-ink-muted">
+            Lấy nhanh ảnh có sẵn trong bài ({suggestions.length}) — bấm để chọn làm ảnh đại diện:
+          </p>
+          <div className="flex gap-2 overflow-x-auto pb-1">
+            {suggestions.map((s) => (
+              <button
+                key={s}
+                type="button"
+                onClick={() => setUrl(s)}
+                title="Dùng ảnh này làm ảnh đại diện"
+                className={`relative h-16 w-24 shrink-0 overflow-hidden rounded-lg border-2 transition ${
+                  url === s ? "border-brand-500 ring-2 ring-brand-200" : "border-transparent hover:border-brand-300"
+                }`}
+              >
+                {/* eslint-disable-next-line @next/next/no-img-element */}
+                <img src={s} alt="" className="h-full w-full object-cover" />
+              </button>
+            ))}
+          </div>
+        </div>
+      )}
     </div>
   );
 }
