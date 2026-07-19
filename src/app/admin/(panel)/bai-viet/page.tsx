@@ -7,11 +7,17 @@ export const dynamic = "force-dynamic";
 
 export default async function AdminArticles() {
   const articles = await prisma.article.findMany({ orderBy: { publishedAt: "desc" } });
+  const missingThumb = articles.filter((a) => !a.coverImage).length;
 
   return (
     <div>
       <div className="flex items-center justify-between">
-        <h1 className="text-2xl font-black text-ink">Bài viết ({articles.length})</h1>
+        <h1 className="text-2xl font-black text-ink">
+          Bài viết ({articles.length})
+          {missingThumb > 0 && (
+            <span className="ml-2 align-middle text-sm font-semibold text-amber-600">· {missingThumb} bài chưa có ảnh</span>
+          )}
+        </h1>
         <Link href="/admin/bai-viet/moi" className="flex items-center gap-2 rounded-xl bg-brand-500 px-4 py-2.5 font-semibold text-white shadow-lg shadow-brand-500/30 hover:bg-brand-600">
           <Plus className="h-5 w-5" /> Viết bài mới
         </Link>
@@ -21,6 +27,7 @@ export default async function AdminArticles() {
         <table className="w-full text-left text-sm">
           <thead className="bg-brand-50/60 text-ink-muted">
             <tr>
+              <th className="px-5 py-3 font-semibold">Ảnh</th>
               <th className="px-5 py-3 font-semibold">Tiêu đề</th>
               <th className="px-5 py-3 font-semibold">Danh mục</th>
               <th className="px-5 py-3 font-semibold">Trạng thái</th>
@@ -29,7 +36,17 @@ export default async function AdminArticles() {
           </thead>
           <tbody className="divide-y divide-brand-50">
             {articles.map((a) => (
-              <tr key={a.id}>
+              <tr key={a.id} className={a.coverImage ? "" : "bg-amber-50/40"}>
+                <td className="px-5 py-3">
+                  {a.coverImage ? (
+                    // eslint-disable-next-line @next/next/no-img-element
+                    <img src={a.coverImage} alt="" className="h-12 w-16 shrink-0 rounded-lg border border-brand-50 object-cover" />
+                  ) : (
+                    <div className="flex h-12 w-16 items-center justify-center rounded-lg border-2 border-dashed border-amber-300 bg-amber-50 text-center text-[10px] font-semibold leading-tight text-amber-600">
+                      Chưa<br />có ảnh
+                    </div>
+                  )}
+                </td>
                 <td className="px-5 py-3">
                   <div className="font-semibold text-ink">{a.title}</div>
                   <div className="text-xs text-ink-muted">/{a.slug}</div>
