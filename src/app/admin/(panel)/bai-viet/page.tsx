@@ -5,15 +5,40 @@ import { deleteArticle } from "../../actions";
 
 export const dynamic = "force-dynamic";
 
-export default async function AdminArticles() {
-  const articles = await prisma.article.findMany({ orderBy: { publishedAt: "desc" } });
+export default async function AdminArticles({
+  searchParams,
+}: {
+  searchParams: Promise<{ cat?: string }>;
+}) {
+  const { cat } = await searchParams;
+  const activeCat = cat && cat.trim() ? cat.trim() : null;
+
+  const [articles, catCounts] = await Promise.all([
+    prisma.article.findMany({
+      where: activeCat ? { category: activeCat } : {},
+      orderBy: { publishedAt: "desc" },
+    }),
+    prisma.article.groupBy({ by: ["category"], _count: { _all: true } }),
+  ]);
+
+  const total = catCounts.reduce((s, c) => s + c._count._all, 0);
   const missingThumb = articles.filter((a) => !a.coverImage).length;
+  // Chuyên mục sắp theo số bài giảm dần để mục nhiều bài lên trước.
+  const cats = [...catCounts].sort((a, b) => b._count._all - a._count._all);
+
+  const chipCls = (active: boolean) =>
+    `rounded-full px-3.5 py-1.5 text-sm font-semibold transition ${
+      active
+        ? "bg-brand-500 text-white shadow-sm shadow-brand-500/30"
+        : "border border-brand-100 bg-white text-ink-soft hover:border-brand-300 hover:text-brand-600"
+    }`;
 
   return (
     <div>
       <div className="flex items-center justify-between">
         <h1 className="text-2xl font-black text-ink">
-          Bài viết ({articles.length})
+          Bài viết ({articles.length}
+          {activeCat ? `/${total}` : ""})
           {missingThumb > 0 && (
             <span className="ml-2 align-middle text-sm font-semibold text-amber-600">· {missingThumb} bài chưa có ảnh</span>
           )}
@@ -23,7 +48,23 @@ export default async function AdminArticles() {
         </Link>
       </div>
 
-      <div className="mt-6 overflow-hidden rounded-3xl border border-brand-50 bg-white shadow-sm">
+      {/* Thanh lọc theo chuyên mục */}
+      <div className="mt-5 flex flex-wrap items-center gap-2">
+        <Link href="/admin/bai-viet" className={chipCls(!activeCat)}>
+          Tất cả ({total})
+        </Link>
+        {cats.map((c) => (
+          <Link
+            key={c.category}
+            href={`/admin/bai-viet?cat=${encodeURIComponent(c.category)}`}
+            className={chipCls(activeCat === c.category)}
+          >
+            {c.category} ({c._count._all})
+          </Link>
+        ))}
+      </div>
+
+      <div className="mt-5 overflow-hidden rounded-3xl border border-brand-50 bg-white shadow-sm">
         <table className="w-full text-left text-sm">
           <thead className="bg-brand-50/60 text-ink-muted">
             <tr>
@@ -51,7 +92,15 @@ export default async function AdminArticles() {
                   <div className="font-semibold text-ink">{a.title}</div>
                   <div className="text-xs text-ink-muted">/{a.slug}</div>
                 </td>
-                <td className="px-5 py-3 text-ink-soft">{a.category}</td>
+                <td className="px-5 py-3">
+                  <Link
+                    href={`/admin/bai-viet?cat=${encodeURIComponent(a.category)}`}
+                    className="rounded-full bg-brand-50 px-2.5 py-1 text-xs font-semibold text-brand-700 hover:bg-brand-100"
+                    title={`Lọc bài chuyên mục ${a.category}`}
+                  >
+                    {a.category}
+                  </Link>
+                </td>
                 <td className="px-5 py-3">
                   {a.published ? (
                     <span className="rounded-full bg-brand-50 px-3 py-1 text-xs font-semibold text-brand-700">Hiển thị</span>
@@ -77,7 +126,7 @@ export default async function AdminArticles() {
             ))}
           </tbody>
         </table>
-        {articles.length === 0 && <p className="px-5 py-10 text-center text-ink-muted">Chưa có bài viết.</p>}
+        {articles.length === 0 && <p className="px-5 py-10 text-center text-ink-muted">Chưa có bài viết trong chuyên mục này.</p>}
       </div>
     </div>
   );
