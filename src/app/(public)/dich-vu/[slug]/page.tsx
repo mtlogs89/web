@@ -10,6 +10,7 @@ import { services, site } from "@/lib/site";
 import { serviceContent, serviceImages } from "@/lib/service-content";
 import { GalleryGrid } from "@/components/site/gallery-grid";
 import { ServiceArticleDetail } from "@/components/site/service-article-detail";
+import { getCustomCard } from "@/lib/service-cards";
 import { gallery } from "@/lib/gallery";
 import {
   JsonLd,
@@ -29,13 +30,23 @@ export async function generateMetadata({
 }): Promise<Metadata> {
   const { slug } = await params;
   const service = services.find((s) => s.slug === slug);
-  if (!service) return { title: "Không tìm thấy dịch vụ" };
-  const detail = serviceContent[slug];
-  return {
-    title: service.title,
-    description: detail?.intro || service.short,
-    alternates: { canonical: `${site.url}/dich-vu/${slug}` },
-  };
+  if (service) {
+    const detail = serviceContent[slug];
+    return {
+      title: service.title,
+      description: detail?.intro || service.short,
+      alternates: { canonical: `${site.url}/dich-vu/${slug}` },
+    };
+  }
+  const custom = await getCustomCard(slug);
+  if (custom) {
+    return {
+      title: `Gửi hàng đi ${custom.country}`,
+      description: custom.intro || custom.short,
+      alternates: { canonical: `${site.url}/dich-vu/${slug}` },
+    };
+  }
+  return { title: "Không tìm thấy dịch vụ" };
 }
 
 function getRelatedArticles(slug: string) {
@@ -131,6 +142,42 @@ export default async function ServicePage({
   params: Promise<{ slug: string }>;
 }) {
   const { slug } = await params;
+
+  // Thẻ nước tự thêm (admin) → trang chi tiết tự sinh, tái dùng ServiceArticleDetail.
+  const custom = await getCustomCard(slug);
+  if (custom) {
+    const cUrl = `${site.url}/dich-vu/${slug}`;
+    const cTitle = `Gửi hàng đi ${custom.country}`;
+    const cBody = custom.articleSlug ? getArticleBody(custom.articleSlug) : null;
+    return (
+      <>
+        <JsonLd data={serviceJsonLd({ name: cTitle, description: custom.intro || custom.short, url: cUrl })} />
+        {cBody?.faqs.length ? <JsonLd data={faqJsonLd(cBody.faqs)} /> : null}
+        <JsonLd
+          data={breadcrumbJsonLd([
+            { name: "Trang chủ", url: site.url },
+            { name: "Dịch vụ", url: `${site.url}/gui-hang` },
+            { name: cTitle, url: cUrl },
+          ])}
+        />
+        <PageHero
+          title={cTitle}
+          subtitle={custom.intro || custom.short}
+          crumbs={[
+            { name: "Gửi hàng đi", href: "/gui-hang" },
+            { name: cTitle, href: cUrl },
+          ]}
+        />
+        <ServiceArticleDetail
+          slug={slug}
+          country={custom.country}
+          destKey={custom.destKey}
+          articleHtml={cBody?.html ?? null}
+        />
+      </>
+    );
+  }
+
   const service = services.find((s) => s.slug === slug);
   const detail = serviceContent[slug];
   if (!service || !detail) notFound();

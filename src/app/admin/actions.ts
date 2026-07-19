@@ -6,6 +6,8 @@ import { redirect } from "next/navigation";
 import { prisma } from "@/lib/prisma";
 import { setSession, clearSession, getAdminId } from "@/lib/auth";
 import { HOME_DEFAULTS, type HomeSettingKey } from "@/lib/settings";
+import { services } from "@/lib/site";
+import { type CustomCard } from "@/lib/service-cards";
 
 function slugify(text: string): string {
   const map: Record<string, string> = {
@@ -156,6 +158,63 @@ export async function saveServiceCards(_prev: FormState, formData: FormData): Pr
   revalidatePath("/gui-hang");
   revalidatePath("/admin/dich-vu");
   return { ok: true, message: "Đã lưu! Mở trang chủ để xem thay đổi." };
+}
+
+export async function saveCustomCards(_prev: FormState, formData: FormData): Promise<FormState> {
+  await ensureAdmin();
+  const result: CustomCard[] = [];
+  const taken = new Set<string>(services.map((s) => s.slug));
+
+  // Các thẻ đang có (sửa / xoá / ẩn)
+  const slugs = formData.getAll("ccard").map(String);
+  for (const slug of slugs) {
+    if (formData.get(`remove_${slug}`) === "on") continue; // xoá hẳn
+    const country = String(formData.get(`${slug}__country`) ?? "").trim();
+    if (!country) continue;
+    taken.add(slug);
+    result.push({
+      slug,
+      country,
+      short: String(formData.get(`${slug}__short`) ?? "").trim(),
+      emoji: String(formData.get(`${slug}__emoji`) ?? "").trim(),
+      intro: String(formData.get(`${slug}__intro`) ?? "").trim(),
+      articleSlug: String(formData.get(`${slug}__article`) ?? "").trim(),
+      destKey: String(formData.get(`${slug}__dest`) ?? "khac").trim() || "khac",
+      order: Number(formData.get(`${slug}__order`) ?? 100) || 100,
+      hidden: formData.get(`hidden_${slug}`) === "on",
+    });
+  }
+
+  // Thẻ mới (nếu nhập tên nước)
+  const newCountry = String(formData.get("new_country") ?? "").trim();
+  if (newCountry) {
+    const base = slugify(`gui-hang-di-${newCountry}`) || "gui-hang-di-moi";
+    let slug = base;
+    let n = 2;
+    while (taken.has(slug)) slug = `${base}-${n++}`;
+    result.push({
+      slug,
+      country: newCountry,
+      short: String(formData.get("new_short") ?? "").trim(),
+      emoji: String(formData.get("new_emoji") ?? "").trim(),
+      intro: String(formData.get("new_intro") ?? "").trim(),
+      articleSlug: String(formData.get("new_article") ?? "").trim(),
+      destKey: String(formData.get("new_dest") ?? "khac").trim() || "khac",
+      order: Number(formData.get("new_order") ?? 100) || 100,
+      hidden: false,
+    });
+  }
+
+  await prisma.siteSetting.upsert({
+    where: { key: "custom_service_cards" },
+    update: { value: JSON.stringify(result) },
+    create: { key: "custom_service_cards", value: JSON.stringify(result) },
+  });
+  revalidatePath("/");
+  revalidatePath("/gui-hang");
+  revalidatePath("/admin/dich-vu");
+  for (const c of result) revalidatePath(`/dich-vu/${c.slug}`);
+  return { ok: true, message: "Đã lưu thẻ dịch vụ! Mở trang chủ để xem." };
 }
 
 export async function saveArticle(_prev: FormState, formData: FormData): Promise<FormState> {

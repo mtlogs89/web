@@ -3,12 +3,12 @@
 import { useActionState } from "react";
 import { Save, Check, EyeOff } from "lucide-react";
 import { saveServiceCards, type FormState } from "../../actions";
-import type { ServiceCardAdmin } from "@/lib/service-cards";
+import type { SystemCardAdmin } from "@/lib/service-cards";
 
 const inputCls =
   "mt-1.5 w-full rounded-xl border border-slate-200 px-3 py-2.5 font-medium outline-none focus:border-brand-500";
 
-export function ServiceCardsForm({ cards }: { cards: ServiceCardAdmin[] }) {
+export function ServiceCardsForm({ cards }: { cards: SystemCardAdmin[] }) {
   const [state, formAction, pending] = useActionState<FormState, FormData>(saveServiceCards, null);
 
   return (
