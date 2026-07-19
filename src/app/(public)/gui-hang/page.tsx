@@ -3,7 +3,7 @@ import Link from "next/link";
 import { ArrowRight } from "lucide-react";
 import { PageHero } from "@/components/site/page-hero";
 import { ServiceMedia } from "@/components/site/service-media";
-import { services } from "@/lib/site";
+import { getServiceCards } from "@/lib/service-cards";
 
 export const metadata: Metadata = {
   title: "Gửi hàng đi quốc tế",
@@ -11,8 +11,11 @@ export const metadata: Metadata = {
     "Dịch vụ gửi hàng đi Mỹ, Úc, Canada, Châu Âu, Nhật Bản, Hàn Quốc và hơn 200 quốc gia của Minh Thiện Logistics.",
 };
 
-export default function ShippingPage() {
-  const list = services.filter((s) => s.group === "gui-hang");
+export const dynamic = "force-dynamic";
+
+export default async function ShippingPage() {
+  const cards = await getServiceCards();
+  const list = cards.filter((s) => s.group === "gui-hang");
   return (
     <>
       <PageHero

@@ -135,6 +135,29 @@ export async function saveHomeSettings(_prev: FormState, formData: FormData): Pr
   return { ok: true, message: "Đã lưu! Mở trang chủ để xem thay đổi." };
 }
 
+export async function saveServiceCards(_prev: FormState, formData: FormData): Promise<FormState> {
+  await ensureAdmin();
+  const slugs = formData.getAll("slug").map(String);
+  const overrides: Record<string, { title: string; short: string; order: number; hidden: boolean }> = {};
+  slugs.forEach((slug, i) => {
+    overrides[slug] = {
+      title: String(formData.get(`title_${slug}`) ?? "").trim(),
+      short: String(formData.get(`short_${slug}`) ?? "").trim(),
+      order: Number(formData.get(`order_${slug}`) ?? i) || i,
+      hidden: formData.get(`hidden_${slug}`) === "on",
+    };
+  });
+  await prisma.siteSetting.upsert({
+    where: { key: "service_cards" },
+    update: { value: JSON.stringify(overrides) },
+    create: { key: "service_cards", value: JSON.stringify(overrides) },
+  });
+  revalidatePath("/");
+  revalidatePath("/gui-hang");
+  revalidatePath("/admin/dich-vu");
+  return { ok: true, message: "Đã lưu! Mở trang chủ để xem thay đổi." };
+}
+
 export async function saveArticle(_prev: FormState, formData: FormData): Promise<FormState> {
   await ensureAdmin();
   const id = String(formData.get("id") || "");

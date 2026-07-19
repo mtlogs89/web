@@ -23,7 +23,8 @@ import { GalleryGrid } from "@/components/site/gallery-grid";
 import { QuoteCalculator } from "@/components/site/quote-calculator";
 import { getGalleryItems } from "@/lib/gallery";
 import { JsonLd, faqJsonLd } from "@/lib/structured-data";
-import { partners, services, site } from "@/lib/site";
+import { partners, site } from "@/lib/site";
+import { getServiceCards } from "@/lib/service-cards";
 import { getPublishedArticles } from "@/lib/articles";
 import { getHomeSettings } from "@/lib/settings";
 import { prisma } from "@/lib/prisma";
@@ -48,6 +49,7 @@ const homeFaqs = [
 export default async function HomePage() {
   const home = await getHomeSettings();
   const galleryItems = await getGalleryItems();
+  const serviceCards = await getServiceCards();
 
   // Bài viết nổi bật: theo admin chọn, thiếu thì bù bằng bài mới nhất.
   const featuredSlugs = home.home_featured_slugs.split(",").map((s) => s.trim()).filter(Boolean);
@@ -161,7 +163,7 @@ export default async function HomePage() {
           </p>
         </Reveal>
         <div className="mt-12 grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3">
-          {services.map((s, i) => {
+          {serviceCards.map((s, i) => {
             const featured = s.group === "nhap-hang";
             return (
               <Reveal key={s.slug} delay={i * 60}>
