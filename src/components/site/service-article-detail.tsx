@@ -1,12 +1,10 @@
-"use client";
-
 import Link from "next/link";
 import { ArrowRight, CheckCircle2, Phone } from "lucide-react";
 import { GalleryGrid } from "./gallery-grid";
 import { ServiceMedia } from "./service-media";
 import { QuoteCalculator } from "./quote-calculator";
 import { CallAction } from "./call-action";
-import { trackConversion } from "@/lib/google-ads";
+import { ZaloLink } from "./zalo-link";
 import { gallery } from "@/lib/gallery";
 import { services, site } from "@/lib/site";
 
@@ -94,7 +92,7 @@ export function ServiceArticleDetail({
           <p className="mx-auto mt-3 max-w-2xl leading-7 text-white/75">Gửi ảnh hàng, cân nặng dự kiến và địa chỉ người nhận để được kiểm tra và tư vấn phương án phù hợp.</p>
           <div className="mt-6 flex flex-col justify-center gap-3 sm:flex-row">
             <CallAction phone={site.phone} className="inline-flex min-h-12 items-center justify-center gap-2 rounded-full bg-coral-500 px-7 py-3 font-bold text-white hover:bg-coral-600" conversionLabel="VzBiCL7SkdUcEKnr1_49"><Phone className="h-5 w-5" /> {site.phoneDisplay}</CallAction>
-            <a href={site.zalo} onClick={() => trackConversion("G8fXCJ6D_NQcEKnr1_49")} className="inline-flex min-h-12 items-center justify-center rounded-full bg-white px-7 py-3 font-bold text-brand-800 hover:bg-brand-50">Nhắn Zalo ngay</a>
+            <ZaloLink href={site.zalo} className="inline-flex min-h-12 items-center justify-center rounded-full bg-white px-7 py-3 font-bold text-brand-800 hover:bg-brand-50" conversionLabel="G8fXCJ6D_NQcEKnr1_49">Nhắn Zalo ngay</ZaloLink>
           </div>
         </div>
 

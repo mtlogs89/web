@@ -1,15 +1,15 @@
-"use client";
-
 import type { Metadata } from "next";
 import { MapPin, Clock, MessageCircle } from "lucide-react";
 import { PageHero } from "@/components/site/page-hero";
 import { LeadForm } from "@/components/site/lead-form";
 import { CallAction } from "@/components/site/call-action";
-import { trackConversion } from "@/lib/google-ads";
+import { ZaloLink } from "@/components/site/zalo-link";
 import { site } from "@/lib/site";
 
-// Note: Metadata exported from a page file cannot be async or use dynamic features
-// So we define it separately or remove it when using "use client"
+export const metadata: Metadata = {
+  title: "Liên hệ & báo giá",
+  description: `Liên hệ ${site.name} — hotline ${site.phoneDisplay}, ${site.addressFull}. Báo giá gửi hàng quốc tế miễn phí.`,
+};
 
 export default function ContactPage() {
   return (
@@ -53,13 +53,13 @@ export default function ContactPage() {
                 <p className="text-ink-soft">{site.hours}</p>
               </div>
             </div>
-            <a
+            <ZaloLink
               href={site.zalo}
-              onClick={() => trackConversion("G8fXCJ6D_NQcEKnr1_49")}
               className="flex items-center justify-center gap-2 rounded-2xl bg-brand-500 px-6 py-4 font-semibold text-white shadow-lg shadow-brand-500/30 hover:bg-brand-600"
+              conversionLabel="G8fXCJ6D_NQcEKnr1_49"
             >
               <MessageCircle className="h-5 w-5" /> Chat Zalo ngay
-            </a>
+            </ZaloLink>
           </div>
         </div>
 
