@@ -12,12 +12,13 @@ export function trackConversion(conversionLabel: string) {
   if (typeof window === "undefined") return;
 
   // gtag được inject bởi GTM (GTM-W9TVBQKV)
-  if (!window.gtag) {
+  const gtag = (window as any).gtag;
+  if (!gtag) {
     console.warn("[trackConversion] gtag not found — GTM may not be loaded");
     return;
   }
 
-  window.gtag("event", "conversion", {
+  gtag("event", "conversion", {
     send_to: `AW-${CONVERSION_ACCOUNT_ID}/${conversionLabel}`,
     value: 1.0,
     currency: "VND",
