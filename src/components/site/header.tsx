@@ -21,6 +21,7 @@ export function Header() {
           <CallAction
             phone={site.phone}
             className="flex items-center gap-1.5 font-semibold text-sun-300 hover:text-white"
+            conversionLabel="VzBiCL7SkdUcEKnr1_49"
           >
             <Phone className="h-4 w-4" /> {site.phoneDisplay}
           </CallAction>
@@ -43,6 +44,7 @@ export function Header() {
             <CallAction
               phone={site.phone}
               className="hidden items-center gap-2 font-bold text-ink sm:flex"
+              conversionLabel="VzBiCL7SkdUcEKnr1_49"
             >
               <span className="flex h-9 w-9 items-center justify-center rounded-full bg-brand-50 text-brand-600">
                 <Phone className="h-4 w-4" />

@@ -1,6 +1,9 @@
+"use client";
+
 import { Phone } from "lucide-react";
 import { site } from "@/lib/site";
 import { CallAction } from "./call-action";
+import { trackConversion } from "@/lib/google-ads";
 
 /** Logo Zalo (bong bóng chat trắng + chữ "Zalo" xanh) — để khách nhận ra ngay là Zalo. */
 function ZaloIcon({ className }: { className?: string }) {
@@ -39,6 +42,7 @@ export function FloatingContact() {
         phone={site.phone}
         ariaLabel="Gọi điện"
         className="flex h-[54px] w-[54px] items-center justify-center rounded-full bg-coral-500 text-white shadow-lg shadow-coral-500/40"
+        conversionLabel="VzBiCL7SkdUcEKnr1_49"
       >
         <Phone className="h-6 w-6" />
       </CallAction>
@@ -47,6 +51,7 @@ export function FloatingContact() {
         href={site.zalo}
         aria-label="Chat Zalo"
         className="flex h-[54px] w-[54px] items-center justify-center rounded-full bg-[#0068FF] shadow-lg shadow-[#0068FF]/40"
+        onClick={() => trackConversion("G8fXCJ6D_NQcEKnr1_49")}
       >
         <ZaloIcon className="h-8 w-8" />
       </a>

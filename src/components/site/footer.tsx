@@ -54,7 +54,7 @@ export function Footer() {
                       {b.phones.map((p, i) => (
                         <span key={p}>
                           {i > 0 && " · "}
-                          <CallAction phone={p.replace(/\./g, "")} className="font-semibold hover:text-brand-400">{p}</CallAction>
+                          <CallAction phone={p.replace(/\./g, "")} className="font-semibold hover:text-brand-400" conversionLabel="VzBiCL7SkdUcEKnr1_49">{p}</CallAction>
                         </span>
                       ))}
                     </span>

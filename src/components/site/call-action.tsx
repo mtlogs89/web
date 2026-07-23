@@ -1,6 +1,7 @@
 "use client";
 
 import { useCallback, useEffect, useRef, useState } from "react";
+import { trackConversion } from "@/lib/google-ads";
 
 type Props = {
   /** Số để gọi/sao chép, dạng liền: 0589778989 */
@@ -10,6 +11,8 @@ type Props = {
   /** id gắn cho link tel: (vd "floating-call"). Nút sao chép nhận id + "-copy". */
   id?: string;
   ariaLabel?: string;
+  /** Google Ads conversion label (e.g., "VzBiCL7SkdUcEKnr1_49" cho Đức) — nếu có sẽ track conversion khi click */
+  conversionLabel?: string;
 };
 
 /**
@@ -27,7 +30,7 @@ type Props = {
  * Render cả hai rồi ẩn một bằng CSS (không dùng JS phát hiện thiết bị) để tránh nháy
  * giao diện và hoạt động ngay cả trước khi hydrate.
  */
-export function CallAction({ phone, className, children, id, ariaLabel }: Props) {
+export function CallAction({ phone, className, children, id, ariaLabel, conversionLabel }: Props) {
   const [copied, setCopied] = useState(false);
   const timer = useRef<ReturnType<typeof setTimeout> | null>(null);
 
@@ -37,6 +40,8 @@ export function CallAction({ phone, className, children, id, ariaLabel }: Props)
 
   const copy = useCallback(
     async (e: React.MouseEvent<HTMLButtonElement>) => {
+      if (conversionLabel) trackConversion(conversionLabel);
+
       // Đọc số từ data-phone để ContactOverride (bài viết có hotline riêng) đổi được.
       const num = e.currentTarget.dataset.phone || phone;
       try {
@@ -48,13 +53,23 @@ export function CallAction({ phone, className, children, id, ariaLabel }: Props)
       if (timer.current) clearTimeout(timer.current);
       timer.current = setTimeout(() => setCopied(false), 2000);
     },
-    [phone],
+    [phone, conversionLabel],
   );
+
+  const handleTelClick = useCallback(() => {
+    if (conversionLabel) trackConversion(conversionLabel);
+  }, [conversionLabel]);
 
   return (
     <>
       <span className="contents pointer-fine:hidden">
-        <a href={`tel:${phone}`} id={id} aria-label={ariaLabel} className={className}>
+        <a
+          href={`tel:${phone}`}
+          id={id}
+          aria-label={ariaLabel}
+          className={className}
+          onClick={handleTelClick}
+        >
           {children}
         </a>
       </span>

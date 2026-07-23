@@ -142,6 +142,7 @@ export function QuoteCalculator({ defaultDestKey }: { defaultDestKey?: string } 
               <CallAction
                 phone={site.phone}
                 className="flex items-center gap-1.5 rounded-xl bg-coral-500 px-4 py-2.5 text-sm font-semibold text-white hover:bg-coral-600"
+                conversionLabel="VzBiCL7SkdUcEKnr1_49"
               >
                 <Phone className="h-4 w-4" /> Gọi chốt giá
               </CallAction>
@@ -162,6 +163,7 @@ export function QuoteCalculator({ defaultDestKey }: { defaultDestKey?: string } 
             <CallAction
               phone={site.phone}
               className="mt-3 flex w-fit items-center gap-1.5 rounded-xl bg-coral-500 px-4 py-2.5 text-sm font-semibold text-white hover:bg-coral-600"
+              conversionLabel="VzBiCL7SkdUcEKnr1_49"
             >
               <Phone className="h-4 w-4" /> Gọi {site.phoneDisplay}
             </CallAction>
@@ -171,7 +173,7 @@ export function QuoteCalculator({ defaultDestKey }: { defaultDestKey?: string } 
         {!result && (
           <p className="text-center text-sm text-ink-soft">
             Hoặc gọi ngay{" "}
-            <CallAction phone={site.phone} className="font-bold text-brand-600">
+            <CallAction phone={site.phone} className="font-bold text-brand-600" conversionLabel="VzBiCL7SkdUcEKnr1_49">
               {site.phoneDisplay}
             </CallAction>{" "}
             ({site.contactName})

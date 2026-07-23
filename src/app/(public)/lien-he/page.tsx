@@ -1,14 +1,15 @@
+"use client";
+
 import type { Metadata } from "next";
 import { MapPin, Clock, MessageCircle } from "lucide-react";
 import { PageHero } from "@/components/site/page-hero";
 import { LeadForm } from "@/components/site/lead-form";
 import { CallAction } from "@/components/site/call-action";
+import { trackConversion } from "@/lib/google-ads";
 import { site } from "@/lib/site";
 
-export const metadata: Metadata = {
-  title: "Liên hệ & báo giá",
-  description: `Liên hệ ${site.name} — hotline ${site.phoneDisplay}, ${site.addressFull}. Báo giá gửi hàng quốc tế miễn phí.`,
-};
+// Note: Metadata exported from a page file cannot be async or use dynamic features
+// So we define it separately or remove it when using "use client"
 
 export default function ContactPage() {
   return (
@@ -35,7 +36,7 @@ export default function ContactPage() {
                       {b.phones.map((p, i) => (
                         <span key={p}>
                           {i > 0 && " · "}
-                          <CallAction phone={p.replace(/\./g, "")} className="font-semibold text-brand-600">{p}</CallAction>
+                          <CallAction phone={p.replace(/\./g, "")} className="font-semibold text-brand-600" conversionLabel="VzBiCL7SkdUcEKnr1_49">{p}</CallAction>
                         </span>
                       ))}
                     </p>
@@ -54,6 +55,7 @@ export default function ContactPage() {
             </div>
             <a
               href={site.zalo}
+              onClick={() => trackConversion("G8fXCJ6D_NQcEKnr1_49")}
               className="flex items-center justify-center gap-2 rounded-2xl bg-brand-500 px-6 py-4 font-semibold text-white shadow-lg shadow-brand-500/30 hover:bg-brand-600"
             >
               <MessageCircle className="h-5 w-5" /> Chat Zalo ngay
