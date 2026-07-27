@@ -3,9 +3,13 @@ import { writeFileSync, mkdirSync } from "fs";
 import { join } from "path";
 import OpenAI from "openai";
 
-const openai = new OpenAI({
-  apiKey: process.env.OPENAI_API_KEY,
-});
+function getOpenAI() {
+  const apiKey = process.env.OPENAI_API_KEY;
+  if (!apiKey) {
+    throw new Error("OPENAI_API_KEY not set in environment");
+  }
+  return new OpenAI({ apiKey });
+}
 
 export async function POST(request: NextRequest) {
   try {
@@ -14,6 +18,8 @@ export async function POST(request: NextRequest) {
     if (!title) {
       return NextResponse.json({ error: "Title is required" }, { status: 400 });
     }
+
+    const openai = getOpenAI();
 
     // Build prompt with article title and category
     const prompt = `Professional logistics shipping banner for article: "${title}"${
