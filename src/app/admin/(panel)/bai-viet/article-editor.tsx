@@ -1,7 +1,7 @@
 "use client";
 
-import { useActionState, useMemo, useState } from "react";
-import { Save } from "lucide-react";
+import { useActionState, useMemo, useState, useRef } from "react";
+import { Save, Wand2 } from "lucide-react";
 import { saveArticle, type FormState } from "../../actions";
 import { RichTextEditor } from "@/components/admin/rich-text-editor";
 import { ImageUpload } from "@/components/site/image-upload";
@@ -41,6 +41,12 @@ export function ArticleEditor({
 }) {
   const [state, formAction, pending] = useActionState<FormState, FormData>(saveArticle, null);
   const [content, setContent] = useState(article?.content ?? "");
+  const [coverImage, setCoverImage] = useState(article?.coverImage ?? "");
+  const [generatingThumbnail, setGeneratingThumbnail] = useState(false);
+  const [thumbnailError, setThumbnailError] = useState<string | null>(null);
+  const titleInputRef = useRef<HTMLInputElement>(null);
+  const categorySelectRef = useRef<HTMLSelectElement>(null);
+
   // Quét mọi ảnh trong nội dung bài để bấm 1 phát chọn làm ảnh đại diện.
   const bodyImages = useMemo(() => {
     const seen = new Set<string>();
@@ -50,10 +56,51 @@ export function ArticleEditor({
     }
     return [...seen];
   }, [content]);
+
   const catList = categories && categories.length > 0 ? categories : fallbackCategories;
   // Bài đang sửa có chuyên mục cũ không còn trong danh sách -> vẫn hiển thị để không mất
   const currentCat = article?.category;
   const options = currentCat && !catList.includes(currentCat) ? [currentCat, ...catList] : catList;
+
+  const handleGenerateThumbnail = async () => {
+    const title = titleInputRef.current?.value;
+    const category = categorySelectRef.current?.value;
+
+    if (!title || title.trim() === "") {
+      setThumbnailError("Vui lòng nhập tiêu đề bài viết trước");
+      return;
+    }
+
+    setGeneratingThumbnail(true);
+    setThumbnailError(null);
+
+    try {
+      const response = await fetch("/api/generate-thumbnail", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ title, category }),
+      });
+
+      if (!response.ok) {
+        const error = await response.json();
+        throw new Error(error.error || "Tạo thumbnail thất bại");
+      }
+
+      const data = await response.json();
+      if (data.success && data.thumbnailUrl) {
+        setCoverImage(data.thumbnailUrl);
+        setThumbnailError(null);
+      } else {
+        throw new Error("Không nhận được URL ảnh");
+      }
+    } catch (error) {
+      setThumbnailError(
+        error instanceof Error ? error.message : "Lỗi tạo thumbnail (kiểm tra API key OpenAI)"
+      );
+    } finally {
+      setGeneratingThumbnail(false);
+    }
+  };
 
   return (
     <form action={formAction} className="grid grid-cols-1 gap-6 lg:grid-cols-[1.6fr_1fr]">
@@ -62,7 +109,7 @@ export function ArticleEditor({
       <div className="space-y-4 rounded-3xl border border-brand-50 bg-white p-6 shadow-sm">
         <div>
           <label className={labelCls}>Tiêu đề *</label>
-          <input name="title" required defaultValue={article?.title} className={inputCls} />
+          <input ref={titleInputRef} name="title" required defaultValue={article?.title} className={inputCls} />
         </div>
         <div>
           <label className={labelCls}>Đường dẫn (slug) — để trống sẽ tự tạo từ tiêu đề</label>
@@ -97,7 +144,7 @@ export function ArticleEditor({
           </label>
           <div>
             <label className={labelCls}>Danh mục</label>
-            <select name="category" defaultValue={article?.category ?? "Kiến thức"} className={inputCls}>
+            <select ref={categorySelectRef} name="category" defaultValue={article?.category ?? "Kiến thức"} className={inputCls}>
               {options.map((c) => <option key={c}>{c}</option>)}
             </select>
             <p className="mt-1 text-xs text-ink-muted">
@@ -105,10 +152,25 @@ export function ArticleEditor({
             </p>
           </div>
           <div>
+            <div className="flex items-center justify-between gap-3 mb-2">
+              <label className={labelCls}>Ảnh đại diện bài viết</label>
+              <button
+                type="button"
+                onClick={handleGenerateThumbnail}
+                disabled={generatingThumbnail}
+                className="flex items-center gap-1.5 rounded-lg bg-brand-100 px-3 py-1.5 text-sm font-semibold text-brand-700 hover:bg-brand-200 disabled:opacity-60 transition"
+              >
+                <Wand2 className="h-4 w-4" />
+                {generatingThumbnail ? "Đang vẽ…" : "Tạo ảnh AI"}
+              </button>
+            </div>
+            {thumbnailError && (
+              <p className="mb-2 text-sm text-coral-600">{thumbnailError}</p>
+            )}
             <ImageUpload
               name="coverImage"
-              defaultValue={article?.coverImage ?? ""}
-              label="Ảnh đại diện bài viết"
+              defaultValue={coverImage}
+              label=""
               hint="Ảnh hiện ở đầu bài và khi chia sẻ link. Đổi theo mùa Noel/Tết/Vu Lan tùy ý."
               suggestions={bodyImages}
             />
