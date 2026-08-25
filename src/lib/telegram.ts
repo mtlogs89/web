@@ -30,22 +30,27 @@ export async function notifyNewLead(lead: {
     `👉 ${ADMIN_LEAD_URL}`,
   ].filter(Boolean);
 
-  try {
-    const res = await fetch(`https://api.telegram.org/bot${token}/sendMessage`, {
-      method: "POST",
-      headers: { "content-type": "application/json" },
-      body: JSON.stringify({
-        chat_id: chatId,
-        text: lines.join("\n"),
-        disable_web_page_preview: true,
-      }),
-      // Khách không phải chờ Telegram: quá 8s thì bỏ, lead đã lưu DB rồi.
-      signal: AbortSignal.timeout(8000),
-    });
-    if (!res.ok) {
-      console.error(`[telegram] notifyNewLead lỗi ${res.status}: ${(await res.text()).slice(0, 300)}`);
+  // Thử tối đa 2 lần: ngay sau khi PM2 restart, lần fetch đầu hay chết vì DNS chưa sẵn sàng.
+  for (let lan = 1; lan <= 2; lan++) {
+    try {
+      const res = await fetch(`https://api.telegram.org/bot${token}/sendMessage`, {
+        method: "POST",
+        headers: { "content-type": "application/json" },
+        body: JSON.stringify({
+          chat_id: chatId,
+          text: lines.join("\n"),
+          disable_web_page_preview: true,
+        }),
+        // Khách không phải chờ Telegram: quá 8s thì bỏ, lead đã lưu DB rồi.
+        signal: AbortSignal.timeout(8000),
+      });
+      if (res.ok) return;
+      console.error(`[telegram] notifyNewLead lỗi ${res.status} (lần ${lan}): ${(await res.text()).slice(0, 300)}`);
+    } catch (e) {
+      const err = e as Error & { cause?: { code?: string } };
+      console.error(`[telegram] notifyNewLead exception (lần ${lan}):`, err.cause?.code || err.message);
     }
-  } catch (e) {
-    console.error("[telegram] notifyNewLead exception:", (e as Error).message);
+    if (lan === 1) await new Promise((r) => setTimeout(r, 1500));
   }
+  console.error("[telegram] KHÔNG gửi được báo lead sau 2 lần — kiểm tra /admin/lead thủ công");
 }
