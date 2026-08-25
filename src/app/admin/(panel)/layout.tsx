@@ -2,6 +2,7 @@ import Link from "next/link";
 import { redirect } from "next/navigation";
 import { LayoutDashboard, Newspaper, FolderOpen, Inbox, Package, LogOut, ExternalLink, Palette, Images, Globe } from "lucide-react";
 import { getAdminId } from "@/lib/auth";
+import { prisma } from "@/lib/prisma";
 import { logout } from "../actions";
 
 const menu = [
@@ -19,6 +20,8 @@ export default async function PanelLayout({
   children,
 }: Readonly<{ children: React.ReactNode }>) {
   if (!(await getAdminId())) redirect("/admin/login");
+
+  const newLeadCount = await prisma.lead.count({ where: { status: "Mới" } });
 
   return (
     <div className="flex min-h-screen bg-brand-50/40">
@@ -39,6 +42,11 @@ export default async function PanelLayout({
               className="flex items-center gap-3 rounded-xl px-3 py-2.5 font-medium text-ink-soft transition hover:bg-brand-50 hover:text-brand-700"
             >
               <m.icon className="h-5 w-5" /> {m.label}
+              {m.href === "/admin/lead" && newLeadCount > 0 && (
+                <span className="ml-auto flex h-5 min-w-5 items-center justify-center rounded-full bg-coral-500 px-1.5 text-xs font-bold text-white">
+                  {newLeadCount}
+                </span>
+              )}
             </Link>
           ))}
         </nav>
@@ -65,8 +73,13 @@ export default async function PanelLayout({
         </div>
         <nav className="flex gap-1 overflow-x-auto border-b border-brand-50 bg-white px-4 py-2 md:hidden">
           {menu.map((m) => (
-            <Link key={m.href} href={m.href} className="whitespace-nowrap rounded-lg px-3 py-2 text-sm font-medium text-ink-soft">
+            <Link key={m.href} href={m.href} className="flex items-center gap-1.5 whitespace-nowrap rounded-lg px-3 py-2 text-sm font-medium text-ink-soft">
               {m.label}
+              {m.href === "/admin/lead" && newLeadCount > 0 && (
+                <span className="flex h-4 min-w-4 items-center justify-center rounded-full bg-coral-500 px-1 text-[10px] font-bold text-white">
+                  {newLeadCount}
+                </span>
+              )}
             </Link>
           ))}
         </nav>

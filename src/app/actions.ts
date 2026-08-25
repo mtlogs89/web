@@ -1,6 +1,7 @@
 "use server";
 
 import { prisma } from "@/lib/prisma";
+import { notifyNewLead } from "@/lib/telegram";
 
 export type LeadState = { ok: boolean; message: string } | null;
 
@@ -15,16 +16,16 @@ export async function submitLead(_prev: LeadState, formData: FormData): Promise<
     return { ok: false, message: "Số điện thoại không hợp lệ." };
   }
 
+  const route = String(formData.get("route") || "") || null;
+  const weight = String(formData.get("weight") || "") || null;
+  const cargoType = String(formData.get("cargoType") || "") || null;
+  const message = String(formData.get("message") || "") || null;
+
   await prisma.lead.create({
-    data: {
-      name,
-      phone,
-      route: String(formData.get("route") || "") || null,
-      weight: String(formData.get("weight") || "") || null,
-      cargoType: String(formData.get("cargoType") || "") || null,
-      message: String(formData.get("message") || "") || null,
-    },
+    data: { name, phone, route, weight, cargoType, message },
   });
+
+  await notifyNewLead({ name, phone, route, weight, cargoType, message });
 
   return {
     ok: true,
