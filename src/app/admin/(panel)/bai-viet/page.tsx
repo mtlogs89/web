@@ -81,7 +81,7 @@ export default async function AdminArticles({
                 <td className="px-5 py-3">
                   {a.coverImage ? (
                     // eslint-disable-next-line @next/next/no-img-element
-                    <img src={a.coverImage} alt="" className="h-12 w-16 shrink-0 rounded-lg border border-brand-50 object-cover" />
+                    <img src={a.coverImage} alt="" loading="lazy" className="h-12 w-16 shrink-0 rounded-lg border border-brand-50 object-cover" />
                   ) : (
                     <div className="flex h-12 w-16 items-center justify-center rounded-lg border-2 border-dashed border-amber-300 bg-amber-50 text-center text-[10px] font-semibold leading-tight text-amber-600">
                       Chưa<br />có ảnh
