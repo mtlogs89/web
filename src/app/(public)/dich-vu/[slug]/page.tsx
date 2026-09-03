@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import Link from "next/link";
+import Image from "next/image";
 import { notFound } from "next/navigation";
 import { Check, Phone, ArrowRight, BookOpen } from "lucide-react";
 import Database from "better-sqlite3";
@@ -237,12 +238,16 @@ export default async function ServicePage({
                     className="group overflow-hidden rounded-3xl border border-brand-50 bg-white shadow-sm transition hover:shadow-lg"
                   >
                     {article.coverImage && (
-                      // eslint-disable-next-line @next/next/no-img-element
-                      <img
-                        src={article.coverImage}
-                        alt={article.title}
-                        className="h-40 w-full object-cover transition group-hover:scale-105"
-                      />
+                      <div className="relative h-40 w-full overflow-hidden">
+                        <Image
+                          src={article.coverImage}
+                          alt={article.title}
+                          fill
+                          sizes="(min-width: 1024px) 380px, (min-width: 640px) 45vw, 100vw"
+                          loading="lazy"
+                          className="object-cover transition group-hover:scale-105"
+                        />
+                      </div>
                     )}
                     <div className="p-5">
                       <h3 className="line-clamp-2 font-bold text-ink group-hover:text-brand-600">{article.title}</h3>
@@ -260,12 +265,16 @@ export default async function ServicePage({
       ) : (
       <section className="mx-auto max-w-7xl px-6 py-12">
         {serviceImages[slug] && (
-          // eslint-disable-next-line @next/next/no-img-element
-          <img
-            src={serviceImages[slug]}
-            alt={service.title}
-            className="mb-8 h-56 w-full rounded-3xl object-cover shadow-lg shadow-brand-500/10 md:h-72"
-          />
+          <div className="relative mb-8 h-56 w-full overflow-hidden rounded-3xl shadow-lg shadow-brand-500/10 md:h-72">
+            <Image
+              src={serviceImages[slug]}
+              alt={service.title}
+              fill
+              priority
+              sizes="100vw"
+              className="object-cover"
+            />
+          </div>
         )}
         <div className="grid grid-cols-1 gap-3 sm:grid-cols-3">
           {detail.highlights.map((h) => (
@@ -334,8 +343,16 @@ export default async function ServicePage({
                   className="group overflow-hidden rounded-3xl border border-brand-50 bg-white shadow-sm transition hover:shadow-lg"
                 >
                   {article.coverImage && (
-                    // eslint-disable-next-line @next/next/no-img-element
-                    <img src={article.coverImage} alt={article.title} className="h-40 w-full object-cover transition group-hover:scale-105" />
+                    <div className="relative h-40 w-full overflow-hidden">
+                      <Image
+                        src={article.coverImage}
+                        alt={article.title}
+                        fill
+                        sizes="(min-width: 1024px) 380px, (min-width: 640px) 45vw, 100vw"
+                        loading="lazy"
+                        className="object-cover transition group-hover:scale-105"
+                      />
+                    </div>
                   )}
                   <div className="p-5">
                     <h3 className="line-clamp-2 font-bold text-ink group-hover:text-brand-600">{article.title}</h3>
@@ -377,12 +394,16 @@ export default async function ServicePage({
                   className="group overflow-hidden rounded-3xl border border-brand-50 bg-white shadow-sm transition hover:shadow-lg"
                 >
                   {article.coverImage && (
-                    // eslint-disable-next-line @next/next/no-img-element
-                    <img
-                      src={article.coverImage}
-                      alt={article.title}
-                      className="h-40 w-full object-cover transition group-hover:scale-105"
-                    />
+                    <div className="relative h-40 w-full overflow-hidden">
+                      <Image
+                        src={article.coverImage}
+                        alt={article.title}
+                        fill
+                        sizes="(min-width: 1024px) 380px, (min-width: 640px) 45vw, 100vw"
+                        loading="lazy"
+                        className="object-cover transition group-hover:scale-105"
+                      />
+                    </div>
                   )}
                   <div className="p-5">
                     <h3 className="line-clamp-2 font-bold text-ink group-hover:text-brand-600">{article.title}</h3>

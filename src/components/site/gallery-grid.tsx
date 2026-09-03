@@ -1,3 +1,4 @@
+import Image from "next/image";
 import { gallery, type GalleryItem } from "@/lib/gallery";
 
 export function GalleryGrid({
@@ -22,13 +23,16 @@ export function GalleryGrid({
             backgroundClip: "padding-box, border-box",
           }}
         >
-          {/* eslint-disable-next-line @next/next/no-img-element */}
-          <img
-            src={g.src}
-            alt={g.caption}
-            loading="lazy"
-            className={`${aspectCls} w-full object-cover transition duration-300 group-hover:scale-105`}
-          />
+          <div className={`relative ${aspectCls} w-full overflow-hidden`}>
+            <Image
+              src={g.src}
+              alt={g.caption}
+              fill
+              sizes="(min-width: 768px) 25vw, 50vw"
+              loading="lazy"
+              className="object-cover transition duration-300 group-hover:scale-105"
+            />
+          </div>
           <figcaption className="absolute inset-x-0 bottom-0 bg-gradient-to-t from-ink/80 to-transparent p-3 text-xs font-medium text-white opacity-0 transition group-hover:opacity-100">
             {g.caption}
           </figcaption>

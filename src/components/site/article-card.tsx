@@ -1,4 +1,5 @@
 import Link from "next/link";
+import Image from "next/image";
 import { Calendar } from "lucide-react";
 import { readingMinutes } from "@/lib/articles";
 
@@ -24,8 +25,15 @@ export function ArticleCard({ article, index = 0 }: { article: ArticleLike; inde
     <article className="overflow-hidden rounded-3xl border border-brand-50 bg-white shadow-sm transition hover:-translate-y-1.5 hover:shadow-xl hover:shadow-brand-500/10">
       <Link href={`/tin-tuc/${article.slug}`} className="block">
         {article.coverImage ? (
-          // eslint-disable-next-line @next/next/no-img-element
-          <img src={article.coverImage} alt={article.title} className="h-44 w-full object-cover" />
+          <div className="relative h-44 w-full">
+            <Image
+              src={article.coverImage}
+              alt={article.title}
+              fill
+              sizes="(min-width: 1024px) 380px, (min-width: 640px) 45vw, 100vw"
+              className="object-cover"
+            />
+          </div>
         ) : (
           <div className="h-44" style={{ background: grads[index % grads.length] }} />
         )}

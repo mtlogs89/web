@@ -1,4 +1,5 @@
 import Link from "next/link";
+import Image from "next/image";
 import { ArrowRight, CheckCircle2, Phone } from "lucide-react";
 import { GalleryGrid } from "./gallery-grid";
 import { ServiceMedia } from "./service-media";
@@ -67,8 +68,16 @@ export function ServiceArticleDetail({
         <div className="mt-9 grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-3">
           {GOODS.map((item) => (
             <article key={item.title} className="overflow-hidden rounded-3xl border border-brand-50 bg-white shadow-sm">
-              {/* eslint-disable-next-line @next/next/no-img-element */}
-              <img src={`/images/real/${item.img}.jpg`} alt={item.title} loading="lazy" decoding="async" className="aspect-[16/10] w-full object-cover" />
+              <div className="relative aspect-[16/10] w-full overflow-hidden">
+                <Image
+                  src={`/images/real/${item.img}.jpg`}
+                  alt={item.title}
+                  fill
+                  sizes="(min-width: 1024px) 380px, (min-width: 640px) 45vw, 100vw"
+                  loading="lazy"
+                  className="object-cover"
+                />
+              </div>
               <div className="p-5">
                 <h3 className="flex items-start gap-2 font-black text-ink"><CheckCircle2 className="mt-0.5 h-5 w-5 shrink-0 text-brand-600" /> {item.title}</h3>
                 <p className="mt-2 text-sm leading-6 text-ink-soft">{item.text}</p>

@@ -1,4 +1,5 @@
 import Link from "next/link";
+import Image from "next/image";
 import { CallAction } from "@/components/site/call-action";
 import {
   ArrowRight,
@@ -121,12 +122,16 @@ export default async function HomePage() {
 
           {/* Hero image + quote card */}
           <div className="relative">
-          {/* eslint-disable-next-line @next/next/no-img-element */}
-          <img
-            src={home.home_hero_image}
-            alt="Vận chuyển hàng hóa quốc tế"
-            className="h-64 w-full rounded-[28px] object-cover shadow-xl shadow-brand-500/20"
-          />
+          <div className="relative h-64 w-full overflow-hidden rounded-[28px] shadow-xl shadow-brand-500/20">
+            <Image
+              src={home.home_hero_image}
+              alt="Vận chuyển hàng hóa quốc tế"
+              fill
+              priority
+              sizes="(min-width: 1024px) 560px, 100vw"
+              className="object-cover"
+            />
+          </div>
           <div id="bao-gia" className="relative z-10 mx-3 -mt-20 rounded-[28px] bg-white p-7 shadow-2xl shadow-brand-500/20">
             <span className="absolute -right-3 -top-3 rounded-full bg-sun-400 px-3 py-1.5 text-xs font-bold text-white shadow">
               Miễn phí 100%
@@ -233,12 +238,16 @@ export default async function HomePage() {
             </div>
           </Reveal>
           <Reveal className="grid grid-cols-2 gap-4">
-            {/* eslint-disable-next-line @next/next/no-img-element */}
-            <img
-              src={home.home_whyus_image}
-              alt="Kho vận hành chuyên nghiệp của Minh Thiện Logistics"
-              className="col-span-2 h-52 w-full rounded-3xl object-cover shadow-lg shadow-brand-500/10"
-            />
+            <div className="relative col-span-2 h-52 w-full overflow-hidden rounded-3xl shadow-lg shadow-brand-500/10">
+              <Image
+                src={home.home_whyus_image}
+                alt="Kho vận hành chuyên nghiệp của Minh Thiện Logistics"
+                fill
+                sizes="(min-width: 1024px) 560px, 100vw"
+                loading="lazy"
+                className="object-cover"
+              />
+            </div>
             <div className="rounded-3xl bg-white p-6 shadow-sm">
               <div className="text-4xl font-black text-brand-600">99%</div>
               <div className="mt-1 text-sm text-ink-soft">Đơn giao đúng hẹn</div>
@@ -318,8 +327,15 @@ export default async function HomePage() {
       {/* CTA band */}
       <section className="mx-auto max-w-7xl px-6 pb-20">
         <div className="relative overflow-hidden rounded-[32px] p-10 text-center text-white md:p-14">
-          {/* eslint-disable-next-line @next/next/no-img-element */}
-          <img src={home.home_cta_image} alt="" aria-hidden className="absolute inset-0 h-full w-full object-cover" />
+          <Image
+            src={home.home_cta_image}
+            alt=""
+            aria-hidden
+            fill
+            sizes="100vw"
+            loading="lazy"
+            className="object-cover"
+          />
           <span className="absolute inset-0" style={{ background: "linear-gradient(120deg,rgba(15,117,104,0.92),rgba(21,148,132,0.85) 60%,rgba(31,182,162,0.80))" }} />
           {/* eslint-disable-next-line @next/next/no-img-element */}
           <img
