@@ -3,7 +3,7 @@ import Link from "next/link";
 import { ArrowRight } from "lucide-react";
 import { PageHero } from "@/components/site/page-hero";
 import { ArticleCard } from "@/components/site/article-card";
-import { getPublishedArticles, getCategories } from "@/lib/articles";
+import { getPublishedArticles, getCategories, countPublishedArticles } from "@/lib/articles";
 import { EU_COUNTRIES, EU_CATEGORY, DESTINATIONS } from "@/lib/eu-countries";
 
 export const metadata: Metadata = {
@@ -14,19 +14,38 @@ export const metadata: Metadata = {
 
 export const dynamic = "force-dynamic";
 
+const PER_PAGE = 24;
+
 export default async function NewsPage({
   searchParams,
 }: {
-  searchParams: Promise<{ cat?: string }>;
+  searchParams: Promise<{ cat?: string; page?: string }>;
 }) {
-  const { cat } = await searchParams;
-  const [articles, categories] = await Promise.all([
-    getPublishedArticles({ category: cat }),
+  const { cat, page: pageParam } = await searchParams;
+  const isEu = cat === EU_CATEGORY;
+  const page = Math.max(1, Number(pageParam) || 1);
+
+  // Chuyên mục Châu Âu cần đủ bài để dựng lưới 27 nước nên không phân trang (35 bài).
+  const [articles, categories, total] = await Promise.all([
+    getPublishedArticles(
+      isEu
+        ? { category: cat }
+        : { category: cat, take: PER_PAGE, skip: (page - 1) * PER_PAGE },
+    ),
     getCategories(),
+    isEu ? Promise.resolve(0) : countPublishedArticles(cat),
   ]);
 
-  const isEu = cat === EU_CATEGORY;
+  const totalPages = isEu ? 1 : Math.max(1, Math.ceil(total / PER_PAGE));
   const countByCat = new Map(categories.map((c) => [c.name, c.count]));
+
+  const pageHref = (p: number) => {
+    const params = new URLSearchParams();
+    if (cat) params.set("cat", cat);
+    if (p > 1) params.set("page", String(p));
+    const qs = params.toString();
+    return qs ? `/tin-tuc?${qs}` : "/tin-tuc";
+  };
 
   // Với chuyên mục Châu Âu: tách bài theo nước & các bài chung (tổng quan…)
   const euSlugs = new Set(EU_COUNTRIES.map((c) => c.slug));
@@ -149,11 +168,56 @@ export default async function NewsPage({
         ) : articles.length === 0 ? (
           <p className="py-16 text-center text-ink-muted">Chưa có bài viết trong mục này.</p>
         ) : (
-          <div className="grid grid-cols-1 gap-6 md:grid-cols-3">
-            {articles.map((a, i) => (
-              <ArticleCard key={a.id} article={a} index={i} />
-            ))}
-          </div>
+          <>
+            <div className="grid grid-cols-1 gap-6 md:grid-cols-3">
+              {articles.map((a, i) => (
+                <ArticleCard key={a.id} article={a} index={i} />
+              ))}
+            </div>
+
+            {totalPages > 1 && (
+              <>
+                <nav
+                  aria-label="Phân trang"
+                  className="mt-12 flex flex-wrap items-center justify-center gap-2"
+                >
+                  {page > 1 && (
+                    <Link
+                      href={pageHref(page - 1)}
+                      className="rounded-full border border-brand-100 bg-white px-4 py-2 text-sm font-medium text-brand-700 transition hover:border-brand-300 hover:bg-brand-50"
+                    >
+                      ← Trước
+                    </Link>
+                  )}
+                  {Array.from({ length: totalPages }, (_, i) => i + 1).map((p) => (
+                    <Link
+                      key={p}
+                      href={pageHref(p)}
+                      aria-current={p === page ? "page" : undefined}
+                      className={`min-w-10 rounded-full px-4 py-2 text-center text-sm font-medium transition ${
+                        p === page
+                          ? "bg-brand-500 text-white"
+                          : "bg-brand-50 text-brand-700 hover:bg-brand-100"
+                      }`}
+                    >
+                      {p}
+                    </Link>
+                  ))}
+                  {page < totalPages && (
+                    <Link
+                      href={pageHref(page + 1)}
+                      className="rounded-full border border-brand-100 bg-white px-4 py-2 text-sm font-medium text-brand-700 transition hover:border-brand-300 hover:bg-brand-50"
+                    >
+                      Sau →
+                    </Link>
+                  )}
+                </nav>
+                <p className="mt-4 text-center text-sm text-ink-muted">
+                  Trang {page} / {totalPages} · {total} bài viết
+                </p>
+              </>
+            )}
+          </>
         )}
       </section>
     </>

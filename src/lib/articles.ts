@@ -17,11 +17,22 @@ export function readingMinutes(html: string): number {
   return Math.max(1, Math.round(words / 200));
 }
 
-export async function getPublishedArticles(opts?: { category?: string; take?: number }) {
+export async function getPublishedArticles(opts?: {
+  category?: string;
+  take?: number;
+  skip?: number;
+}) {
   return prisma.article.findMany({
     where: { published: true, ...(opts?.category ? { category: opts.category } : {}) },
     orderBy: { publishedAt: "desc" },
     take: opts?.take,
+    skip: opts?.skip,
+  });
+}
+
+export async function countPublishedArticles(category?: string) {
+  return prisma.article.count({
+    where: { published: true, ...(category ? { category } : {}) },
   });
 }
 
