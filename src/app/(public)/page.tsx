@@ -337,12 +337,6 @@ export default async function HomePage() {
             className="object-cover"
           />
           <span className="absolute inset-0" style={{ background: "linear-gradient(120deg,rgba(15,117,104,0.92),rgba(21,148,132,0.85) 60%,rgba(31,182,162,0.80))" }} />
-          {/* eslint-disable-next-line @next/next/no-img-element */}
-          <img
-            src="/images/mascot/pose-6-giao-hang.png"
-            alt="Mascot Minh Thiện"
-            className="pointer-events-none absolute -bottom-2 left-4 z-10 hidden h-52 drop-shadow-2xl lg:block xl:left-12 xl:h-60"
-          />
           <div className="relative">
             <h2 className="text-3xl font-black md:text-4xl">Bạn cần gửi hàng đi nước ngoài?</h2>
             <p className="mx-auto mt-3 max-w-xl text-white/85">

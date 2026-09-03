@@ -1,12 +1,13 @@
 import Link from "next/link";
 
-// Logo Minh Thiện: dùng đúng file logo gốc (public/images/logo-mark.png,
+// Logo Minh Thiện: dùng đúng file logo gốc (public/images/logo-mark.webp — bản
+// 160px của logo-mark.png, giữ nguyên hình,
 // nền trong suốt) — không vẽ lại. Favicon cùng hình ở src/app/icon.png.
 export function Logo({ light = false }: { light?: boolean }) {
   return (
     <Link href="/" className="flex items-center gap-2.5" aria-label="Minh Thiện Logistics">
       {/* eslint-disable-next-line @next/next/no-img-element */}
-      <img src="/images/logo-mark.png" alt="" className="h-11 w-11" />
+      <img src="/images/logo-mark.webp" alt="" width={44} height={44} className="h-11 w-11" />
       <span className="leading-none">
         <span
           className={`block text-xl font-black tracking-tight ${

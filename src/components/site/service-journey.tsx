@@ -5,12 +5,12 @@ import { useEffect, useMemo, useRef, useState } from "react";
 type Station = { title: string; text: string; pose: string };
 
 const STATIONS: Station[] = [
-  { title: "Bạn mang hàng tới", text: "Minh Thiện nhận TẤT CẢ loại hàng từ dễ tới khó: thuốc tây, thịt – trứng – sữa, hàng pin, đông lạnh, yến sào… Mất hàng đền 100%.", pose: "/images/mascot/pose-1-cam-hang.png" },
-  { title: "Liệt kê & kiểm hàng", text: "Kiểm đếm, phân loại từng món. Yến sào nếu mất đền 30 triệu/kg; thuốc tây tỷ lệ thông quan 99.99%.", pose: "/images/mascot/pose-2-liet-ke.png" },
-  { title: "Đóng gói chuẩn quốc tế", text: "Hàng được bọc lót, đóng thùng chắc chắn, chống va đập và đúng quy cách hải quan Mỹ.", pose: "/images/mascot/pose-3-dong-goi.png" },
-  { title: "Tư vấn bảo hiểm", text: "Tư vấn mua bảo hiểm theo giá trị hàng hóa — an tâm tuyệt đối, đền bù nếu có sự cố.", pose: "/images/mascot/pose-7.png" },
-  { title: "Hàng bay đi Mỹ", text: "Làm thủ tục thông quan lô hàng đi Mỹ. Bay nhanh 3 ngày, bay chậm 8 ngày. Theo dõi đơn 24/7, đội ngũ chăm sóc tận tâm.", pose: "/images/mascot/pose-5-van-chuyen.png" },
-  { title: "Giao tận tay 🎉", text: "Giao đến tận địa chỉ người nhận trên toàn nước Mỹ. Hành trình hoàn tất!", pose: "/images/mascot/pose-6-giao-hang.png" },
+  { title: "Bạn mang hàng tới", text: "Minh Thiện nhận TẤT CẢ loại hàng từ dễ tới khó: thuốc tây, thịt – trứng – sữa, hàng pin, đông lạnh, yến sào… Mất hàng đền 100%.", pose: "/images/mascot/pose-1-cam-hang.webp" },
+  { title: "Liệt kê & kiểm hàng", text: "Kiểm đếm, phân loại từng món. Yến sào nếu mất đền 30 triệu/kg; thuốc tây tỷ lệ thông quan 99.99%.", pose: "/images/mascot/pose-2-liet-ke.webp" },
+  { title: "Đóng gói chuẩn quốc tế", text: "Hàng được bọc lót, đóng thùng chắc chắn, chống va đập và đúng quy cách hải quan Mỹ.", pose: "/images/mascot/pose-3-dong-goi.webp" },
+  { title: "Tư vấn bảo hiểm", text: "Tư vấn mua bảo hiểm theo giá trị hàng hóa — an tâm tuyệt đối, đền bù nếu có sự cố.", pose: "/images/mascot/pose-7.webp" },
+  { title: "Hàng bay đi Mỹ", text: "Làm thủ tục thông quan lô hàng đi Mỹ. Bay nhanh 3 ngày, bay chậm 8 ngày. Theo dõi đơn 24/7, đội ngũ chăm sóc tận tâm.", pose: "/images/mascot/pose-5-van-chuyen.webp" },
+  { title: "Giao tận tay 🎉", text: "Giao đến tận địa chỉ người nhận trên toàn nước Mỹ. Hành trình hoàn tất!", pose: "/images/mascot/pose-6-giao-hang.webp" },
 ];
 
 const VBW = 1000;

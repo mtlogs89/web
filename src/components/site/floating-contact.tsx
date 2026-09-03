@@ -31,12 +31,6 @@ function ZaloIcon({ className }: { className?: string }) {
 export function FloatingContact() {
   return (
     <div className="fixed bottom-5 right-5 z-50 flex flex-col items-center gap-3">
-      {/* eslint-disable-next-line @next/next/no-img-element */}
-      <img
-        src="/images/mascot.png"
-        alt="Mascot Minh Thiện Logistics"
-        className="animate-float -mb-1 hidden w-16 drop-shadow-xl md:block"
-      />
       <CallAction
         id="floating-call"
         phone={site.phone}
