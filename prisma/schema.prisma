@@ -99,3 +99,23 @@ model GalleryImage {
 
   @@index([sort])
 }
+
+/// Mỗi lần khách bấm "Tính ước tính" trên công cụ tính cước.
+/// Không lưu gì nhận dạng được khách — sessionId là chuỗi ngẫu nhiên sinh ở
+/// trình duyệt, chỉ để phân biệt "một người bấm 5 lần" với "5 người bấm".
+model QuoteLog {
+  id         String   @id @default(cuid())
+  dest       String
+  destLabel  String
+  weight     Float
+  cargo      String
+  dims       String?
+  page       String
+  /// "price" = tính ra giá, "contact" = tuyến/cân ngoài bảng giá nên phải gọi hỏi
+  mode       String
+  priceTotal Int?
+  sessionId  String?
+  createdAt  DateTime @default(now())
+
+  @@index([createdAt])
+}

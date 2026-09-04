@@ -22,16 +22,53 @@ export function QuoteCalculator({ defaultDestKey }: { defaultDestKey?: string } 
   const [result, setResult] = useState<EstimateResult | null>(null);
 
   function calc() {
-    setResult(
-      estimate({
-        destKey,
-        weightKg: Number(weight),
-        cargoKey,
-        dims: showDims
-          ? { l: Number(dims.l) || 0, w: Number(dims.w) || 0, h: Number(dims.h) || 0 }
-          : undefined,
-      })
-    );
+    const r = estimate({
+      destKey,
+      weightKg: Number(weight),
+      cargoKey,
+      dims: showDims
+        ? { l: Number(dims.l) || 0, w: Number(dims.w) || 0, h: Number(dims.h) || 0 }
+        : undefined,
+    });
+    setResult(r);
+    if (r) logEstimate(r);
+  }
+
+  /** Ghi lượt bấm để xem ở /admin/tinh-cuoc. Không chờ, hỏng thì bỏ qua. */
+  function logEstimate(r: EstimateResult) {
+    try {
+      // Chuỗi ngẫu nhiên trong phiên, chỉ để phân biệt một người bấm nhiều lần
+      // với nhiều người bấm — không nhận dạng được ai.
+      let sid: string | null = null;
+      try {
+        sid = sessionStorage.getItem("mt_quote_sid");
+        if (!sid) {
+          sid = crypto.randomUUID();
+          sessionStorage.setItem("mt_quote_sid", sid);
+        }
+      } catch {
+        // Trình duyệt chặn lưu trữ (cửa sổ ẩn danh) — vẫn ghi, chỉ là không có sid.
+      }
+
+      void fetch("/api/quote-log", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          dest: destKey,
+          destLabel: r.destLabel,
+          weight: Number(weight),
+          cargo: cargoKey,
+          dims: showDims && dims.l ? `${dims.l}x${dims.w}x${dims.h}` : null,
+          page: window.location.pathname,
+          mode: r.mode,
+          priceTotal: r.mode === "price" ? r.total : null,
+          sessionId: sid,
+        }),
+        keepalive: true,
+      }).catch(() => {});
+    } catch {
+      // Không bao giờ để việc ghi thống kê làm hỏng công cụ tính cước.
+    }
   }
 
   return (
