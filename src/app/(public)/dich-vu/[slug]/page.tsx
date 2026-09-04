@@ -11,6 +11,7 @@ import { services, site } from "@/lib/site";
 import { serviceContent, serviceImages } from "@/lib/service-content";
 import { GalleryGrid } from "@/components/site/gallery-grid";
 import { ServiceArticleDetail } from "@/components/site/service-article-detail";
+import { ContactOverride } from "@/components/site/contact-override";
 import { getCustomCard } from "@/lib/service-cards";
 import { SERVICE_PAGES, getServicePageConfig } from "@/lib/service-pages";
 import { gallery } from "@/lib/gallery";
@@ -71,14 +72,16 @@ function getRelatedArticles(articleSlugs: string[]) {
 }
 
 
-type ArticleBody = { html: string; faqs: { q: string; a: string }[] };
+type ArticleBody = { html: string; faqs: { q: string; a: string }[]; phone: string | null };
 
 function getArticleBody(articleSlug: string): ArticleBody | null {
   try {
     const db = new Database(`${process.cwd()}/prisma/dev.db`);
     const row = db.prepare(
-      "SELECT content, faqJson FROM Article WHERE slug = ? AND published = 1"
-    ).get(articleSlug) as { content: string; faqJson: string | null } | undefined;
+      "SELECT content, faqJson, phone FROM Article WHERE slug = ? AND published = 1"
+    ).get(articleSlug) as
+      | { content: string; faqJson: string | null; phone: string | null }
+      | undefined;
     db.close();
     if (!row) return null;
     let faqs: { q: string; a: string }[] = [];
@@ -89,7 +92,7 @@ function getArticleBody(articleSlug: string): ArticleBody | null {
         faqs = [];
       }
     }
-    return { html: row.content, faqs };
+    return { html: row.content, faqs, phone: row.phone || null };
   } catch (e) {
     console.error("Failed to fetch article content:", e);
     return null;
@@ -128,11 +131,13 @@ export default async function ServicePage({
             { name: cTitle, href: cUrl },
           ]}
         />
+        {cBody?.phone && <ContactOverride phone={cBody.phone} />}
         <ServiceArticleDetail
           slug={slug}
           country={custom.country}
           destKey={custom.destKey}
           articleHtml={cBody?.html ?? null}
+          phone={cBody?.phone ?? null}
         />
       </>
     );
@@ -181,11 +186,13 @@ export default async function ServicePage({
 
       {rich ? (
         <>
+          {articleBody?.phone && <ContactOverride phone={articleBody.phone} />}
           <ServiceArticleDetail
             slug={slug}
             country={rich.country}
             destKey={rich.destKey}
             articleHtml={articleBody?.html ?? null}
+            phone={articleBody?.phone ?? null}
           />
 
           {relatedArticles.length > 0 && (

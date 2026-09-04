@@ -23,13 +23,19 @@ export function ServiceArticleDetail({
   country,
   destKey,
   articleHtml,
+  phone,
 }: {
   slug: string;
   country: string;
   destKey?: string;
   articleHtml?: string | null;
+  /** Hotline riêng của bài được nhúng; bỏ trống thì dùng hotline chung. */
+  phone?: string | null;
 }) {
   const others = services.filter((service) => service.slug !== slug).slice(0, 3);
+  const callPhone = phone || site.phone;
+  const callDisplay = phone || site.phoneDisplay;
+  const zaloHref = phone ? `https://zalo.me/${phone}` : site.zalo;
 
   return (
     <>
@@ -100,8 +106,8 @@ export function ServiceArticleDetail({
           <h2 className="text-3xl font-black">Bạn cần báo giá kiện hàng đi {country}?</h2>
           <p className="mx-auto mt-3 max-w-2xl leading-7 text-white/75">Gửi ảnh hàng, cân nặng dự kiến và địa chỉ người nhận để được kiểm tra và tư vấn phương án phù hợp.</p>
           <div className="mt-6 flex flex-col justify-center gap-3 sm:flex-row">
-            <CallAction phone={site.phone} className="inline-flex min-h-12 items-center justify-center gap-2 rounded-full bg-coral-500 px-7 py-3 font-bold text-white hover:bg-coral-600" conversionLabel="VzBiCL7SkdUcEKnr1_49"><Phone className="h-5 w-5" /> {site.phoneDisplay}</CallAction>
-            <ZaloLink href={site.zalo} className="inline-flex min-h-12 items-center justify-center rounded-full bg-white px-7 py-3 font-bold text-brand-800 hover:bg-brand-50" conversionLabel="G8fXCJ6D_NQcEKnr1_49">Nhắn Zalo ngay</ZaloLink>
+            <CallAction phone={callPhone} className="inline-flex min-h-12 items-center justify-center gap-2 rounded-full bg-coral-500 px-7 py-3 font-bold text-white hover:bg-coral-600" conversionLabel="VzBiCL7SkdUcEKnr1_49"><Phone className="h-5 w-5" /> {callDisplay}</CallAction>
+            <ZaloLink href={zaloHref} className="inline-flex min-h-12 items-center justify-center rounded-full bg-white px-7 py-3 font-bold text-brand-800 hover:bg-brand-50" conversionLabel="G8fXCJ6D_NQcEKnr1_49">Nhắn Zalo ngay</ZaloLink>
           </div>
         </div>
 
