@@ -8,6 +8,7 @@ import { setSession, clearSession, getAdminId } from "@/lib/auth";
 import { HOME_DEFAULTS, type HomeSettingKey } from "@/lib/settings";
 import { services } from "@/lib/site";
 import { type CustomCard } from "@/lib/service-cards";
+import { SERVICE_PAGES } from "@/lib/service-pages";
 
 function slugify(text: string): string {
   const map: Record<string, string> = {
@@ -217,6 +218,33 @@ export async function saveCustomCards(_prev: FormState, formData: FormData): Pro
   return { ok: true, message: "Đã lưu thẻ dịch vụ! Mở trang chủ để xem." };
 }
 
+/** Chọn bài nhúng + 3 bài liên quan cho 6 trang /dich-vu/... */
+export async function saveServicePages(_prev: FormState, formData: FormData): Promise<FormState> {
+  await ensureAdmin();
+
+  await Promise.all(
+    SERVICE_PAGES.flatMap((p) => {
+      const article = String(formData.get(`article_${p.slug}`) ?? "").trim();
+      const related = formData
+        .getAll(`related_${p.slug}`)
+        .map(String)
+        .filter(Boolean)
+        .slice(0, 3)
+        .join(",");
+      return [
+        { key: `svc_${p.slug}_article`, value: article },
+        { key: `svc_${p.slug}_related`, value: related },
+      ].map(({ key, value }) =>
+        prisma.siteSetting.upsert({ where: { key }, update: { value }, create: { key, value } }),
+      );
+    }),
+  );
+
+  revalidatePath("/admin/trang-dich-vu");
+  for (const p of SERVICE_PAGES) revalidatePath(`/dich-vu/${p.slug}`);
+  return { ok: true, message: "Đã lưu! Mở lại trang dịch vụ để xem thay đổi." };
+}
+
 export async function saveArticle(_prev: FormState, formData: FormData): Promise<FormState> {
   await ensureAdmin();
   const id = String(formData.get("id") || "");
@@ -260,6 +288,9 @@ export async function saveArticle(_prev: FormState, formData: FormData): Promise
   }
   revalidatePath("/tin-tuc");
   revalidatePath("/admin/bai-viet");
+  // Bài có thể đang được nhúng trong một trang dịch vụ — các trang đó dựng tĩnh
+  // nên phải làm mới, không thì sửa bài xong trang dịch vụ vẫn hiện bản cũ.
+  for (const p of SERVICE_PAGES) revalidatePath(`/dich-vu/${p.slug}`);
   redirect("/admin/bai-viet");
 }
 

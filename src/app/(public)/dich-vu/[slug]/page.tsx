@@ -12,6 +12,7 @@ import { serviceContent, serviceImages } from "@/lib/service-content";
 import { GalleryGrid } from "@/components/site/gallery-grid";
 import { ServiceArticleDetail } from "@/components/site/service-article-detail";
 import { getCustomCard } from "@/lib/service-cards";
+import { SERVICE_PAGES, getServicePageConfig } from "@/lib/service-pages";
 import { gallery } from "@/lib/gallery";
 import {
   JsonLd,
@@ -50,41 +51,7 @@ export async function generateMetadata({
   return { title: "Không tìm thấy dịch vụ" };
 }
 
-function getRelatedArticles(slug: string) {
-  const articleMapping: Record<string, string[]> = {
-    "gui-hang-di-my": [
-      "gui-hang-di-my-tong-quan",
-      "gui-hang-di-my-nhan-tat-ca-hang-kho",
-      "gui-hang-cong-kenh-di-my-tinh-cuoc",
-    ],
-    "gui-hang-di-uc": [
-      "gui-hang-di-uc-tong-quan",
-      "gui-thuc-pham-kho-di-uc-kiem-dich",
-      "gui-hang-cam-di-uc-danh-sach",
-    ],
-    "gui-hang-di-canada": [
-      "gui-hang-di-canada-tong-quan",
-      "gui-thuc-pham-kho-di-canada",
-      "gui-hang-di-canada-mat-bao-lau",
-    ],
-    "gui-hang-di-chau-au": [
-      "gui-hang-di-chau-au-tong-quan",
-      "gui-hang-di-germany",
-      "gui-hang-di-france",
-    ],
-    "gui-hang-di-nhat": [
-      "gui-hang-di-nhat-tong-quan",
-      "gui-do-an-cho-thuc-tap-sinh-nhat",
-      "gui-hang-cam-di-nhat-danh-sach",
-    ],
-    "gui-hang-di-han": [
-      "gui-hang-di-han-tong-quan",
-      "gui-do-an-cho-lao-dong-han-quoc",
-      "gui-qua-cho-co-dau-viet-o-han",
-    ],
-  };
-
-  const articleSlugs = articleMapping[slug] || [];
+function getRelatedArticles(articleSlugs: string[]) {
   if (articleSlugs.length === 0) return [];
 
   try {
@@ -94,23 +61,15 @@ function getRelatedArticles(slug: string) {
       `SELECT slug, title, excerpt, coverImage FROM Article WHERE slug IN (${placeholders})`
     ).all(...articleSlugs) as Array<{ slug: string; title: string; excerpt: string; coverImage: string }>;
     db.close();
-    return rows;
+    // Giữ đúng thứ tự đã cấu hình trong /admin/trang-dich-vu.
+    const bySlug = new Map(rows.map((r) => [r.slug, r]));
+    return articleSlugs.map((s) => bySlug.get(s)).filter((r) => r != null);
   } catch (e) {
     console.error("Failed to fetch articles:", e);
     return [];
   }
 }
 
-// Các trang dịch vụ dùng bố cục "nhúng bài đầy đủ + công cụ tính".
-// country: nhãn hiển thị; article: slug bài nhúng; destKey: nước mặc định cho công cụ tính.
-const RICH_PAGES: Record<string, { country: string; article: string; destKey: string }> = {
-  "gui-hang-di-my": { country: "Mỹ", article: "gui-hang-di-my-huong-dan-toan-tap", destKey: "my" },
-  "gui-hang-di-uc": { country: "Úc", article: "gui-hang-di-uc-tong-quan", destKey: "uc" },
-  "gui-hang-di-canada": { country: "Canada", article: "gui-hang-di-canada-tong-quan", destKey: "canada" },
-  "gui-hang-di-chau-au": { country: "Châu Âu", article: "gui-hang-di-chau-au-tong-quan", destKey: "khac" },
-  "gui-hang-di-nhat": { country: "Nhật", article: "gui-hang-di-nhat-tong-quan", destKey: "khac" },
-  "gui-hang-di-han": { country: "Hàn", article: "gui-hang-di-han-tong-quan", destKey: "khac" },
-};
 
 type ArticleBody = { html: string; faqs: { q: string; a: string }[] };
 
@@ -186,10 +145,15 @@ export default async function ServicePage({
   const url = `${site.url}/dich-vu/${slug}`;
   const others = services.filter((s) => s.slug !== slug).slice(0, 3);
 
-  const rich = RICH_PAGES[slug];
+  // Bài nhúng + bài liên quan lấy từ /admin/trang-dich-vu (mặc định trong lib/service-pages).
+  const cfg = await getServicePageConfig(slug);
+  const meta = SERVICE_PAGES.find((p) => p.slug === slug);
+  const rich = cfg && meta ? { ...meta, article: cfg.article } : null;
   const articleBody = rich ? getArticleBody(rich.article) : null;
   // Bài đã nhúng ở thân trang thì bỏ khỏi mục "Bài viết liên quan" để không lặp.
-  const relatedArticles = getRelatedArticles(slug).filter((a) => a.slug !== rich?.article);
+  const relatedArticles = getRelatedArticles(cfg?.related ?? []).filter(
+    (a) => a.slug !== rich?.article,
+  );
 
   // FAQ hiển thị trên các trang rich là FAQ trong bài, nên schema phải lấy đúng bộ đó.
   const faqsForSchema = articleBody?.faqs.length ? articleBody.faqs : detail.faqs;
