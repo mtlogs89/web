@@ -22,6 +22,7 @@ import { ServiceMedia } from "@/components/site/service-media";
 import { ArticleCard } from "@/components/site/article-card";
 import { GalleryGrid } from "@/components/site/gallery-grid";
 import { QuoteCalculator } from "@/components/site/quote-calculator";
+import { getDestinations } from "@/lib/price-tables";
 import { getGalleryItems } from "@/lib/gallery";
 import { JsonLd, faqJsonLd } from "@/lib/structured-data";
 import { partners, site } from "@/lib/site";
@@ -51,6 +52,7 @@ export default async function HomePage() {
   const home = await getHomeSettings();
   const galleryItems = await getGalleryItems();
   const serviceCards = await getServiceCards();
+  const dests = await getDestinations();
 
   // Bài viết nổi bật: theo admin chọn, thiếu thì bù bằng bài mới nhất.
   const featuredSlugs = home.home_featured_slugs.split(",").map((s) => s.trim()).filter(Boolean);
@@ -136,7 +138,7 @@ export default async function HomePage() {
             <span className="absolute -right-3 -top-3 rounded-full bg-sun-400 px-3 py-1.5 text-xs font-bold text-white shadow">
               Miễn phí 100%
             </span>
-            <QuoteCalculator />
+            <QuoteCalculator dests={dests} />
           </div>
           </div>
         </div>

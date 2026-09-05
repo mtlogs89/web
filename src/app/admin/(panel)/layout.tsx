@@ -1,6 +1,6 @@
 import Link from "next/link";
 import { redirect } from "next/navigation";
-import { LayoutDashboard, Newspaper, FolderOpen, Inbox, Package, LogOut, ExternalLink, Palette, Images, Globe, FileText, Calculator } from "lucide-react";
+import { LayoutDashboard, Newspaper, FolderOpen, Inbox, Package, LogOut, ExternalLink, Palette, Images, Globe, FileText, Calculator, Tag } from "lucide-react";
 import { getAdminId } from "@/lib/auth";
 import { prisma } from "@/lib/prisma";
 import { logout } from "../actions";
@@ -10,6 +10,7 @@ const menu = [
   { href: "/admin/giao-dien", label: "Giao diện trang chủ", icon: Palette },
   { href: "/admin/dich-vu", label: "Thẻ dịch vụ", icon: Globe },
   { href: "/admin/trang-dich-vu", label: "Trang dịch vụ", icon: FileText },
+  { href: "/admin/bang-gia", label: "Bảng giá", icon: Tag },
   { href: "/admin/thu-vien", label: "Thư viện ảnh", icon: Images },
   { href: "/admin/bai-viet", label: "Bài viết", icon: Newspaper },
   { href: "/admin/chuyen-muc", label: "Chuyên mục", icon: FolderOpen },

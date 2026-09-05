@@ -4,6 +4,7 @@ import { ArrowRight, CheckCircle2, Phone } from "lucide-react";
 import { GalleryGrid } from "./gallery-grid";
 import { ServiceMedia } from "./service-media";
 import { QuoteCalculator } from "./quote-calculator";
+import { getDestinations } from "@/lib/price-tables";
 import { CallAction } from "./call-action";
 import { ZaloLink } from "./zalo-link";
 import { gallery } from "@/lib/gallery";
@@ -18,7 +19,7 @@ const GOODS = [
   { img: "kho-bo-ga", title: "Hàng cần kiểm tra riêng", text: "Sản phẩm có nguồn gốc động vật hoặc thành phần đặc biệt cần tư vấn trước." },
 ];
 
-export function ServiceArticleDetail({
+export async function ServiceArticleDetail({
   slug,
   country,
   destKey,
@@ -33,6 +34,7 @@ export function ServiceArticleDetail({
   phone?: string | null;
 }) {
   const others = services.filter((service) => service.slug !== slug).slice(0, 3);
+  const dests = await getDestinations();
   const callPhone = phone || site.phone;
   const callDisplay = phone || site.phoneDisplay;
   const zaloHref = phone ? `https://zalo.me/${phone}` : site.zalo;
@@ -60,7 +62,7 @@ export function ServiceArticleDetail({
             </p>
           </div>
           <div className="mt-8 rounded-[28px] bg-white p-6 shadow-xl shadow-brand-500/10 sm:p-8">
-            <QuoteCalculator defaultDestKey={destKey} />
+            <QuoteCalculator defaultDestKey={destKey} dests={dests} />
           </div>
         </div>
       </section>

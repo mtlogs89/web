@@ -170,8 +170,15 @@ function ceilHalf(n: number) {
   return Math.ceil(n / 0.5) * 0.5;
 }
 
-export function estimate(input: EstimateInput): EstimateResult | null {
-  const dest = destinations.find((d) => d.key === input.destKey);
+/**
+ * @param destList bảng giá dùng để tính. Bỏ trống thì dùng bảng cứng bên dưới;
+ *   trang web truyền vào bảng đã nạp từ file ở /admin/bang-gia.
+ */
+export function estimate(
+  input: EstimateInput,
+  destList: Destination[] = destinations,
+): EstimateResult | null {
+  const dest = destList.find((d) => d.key === input.destKey);
   if (!dest) return null;
 
   const actual = Math.max(0, Number(input.weightKg) || 0);

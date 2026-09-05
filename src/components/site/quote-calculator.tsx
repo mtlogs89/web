@@ -3,14 +3,29 @@
 import { useState } from "react";
 import Link from "next/link";
 import { Bolt, ArrowRight, Calculator, Phone } from "lucide-react";
-import { destinations, cargoTypes, estimate, vnd, type EstimateResult } from "@/lib/pricing";
+import {
+  destinations as fallbackDestinations,
+  cargoTypes,
+  estimate,
+  vnd,
+  type Destination,
+  type EstimateResult,
+} from "@/lib/pricing";
 import { CallAction } from "./call-action";
 import { site } from "@/lib/site";
 
 const inputCls =
   "mt-1.5 w-full rounded-xl border border-slate-200 px-3 py-3 font-medium outline-none focus:border-brand-500";
 
-export function QuoteCalculator({ defaultDestKey }: { defaultDestKey?: string } = {}) {
+export function QuoteCalculator({
+  defaultDestKey,
+  dests,
+}: {
+  defaultDestKey?: string;
+  /** Bảng giá đã nạp từ /admin/bang-gia; bỏ trống thì dùng bảng cứng. */
+  dests?: Destination[];
+} = {}) {
+  const destinations = dests ?? fallbackDestinations;
   const initialDest = destinations.some((d) => d.key === defaultDestKey)
     ? (defaultDestKey as string)
     : destinations[0].key;
@@ -22,14 +37,17 @@ export function QuoteCalculator({ defaultDestKey }: { defaultDestKey?: string } 
   const [result, setResult] = useState<EstimateResult | null>(null);
 
   function calc() {
-    const r = estimate({
-      destKey,
-      weightKg: Number(weight),
-      cargoKey,
-      dims: showDims
-        ? { l: Number(dims.l) || 0, w: Number(dims.w) || 0, h: Number(dims.h) || 0 }
-        : undefined,
-    });
+    const r = estimate(
+      {
+        destKey,
+        weightKg: Number(weight),
+        cargoKey,
+        dims: showDims
+          ? { l: Number(dims.l) || 0, w: Number(dims.w) || 0, h: Number(dims.h) || 0 }
+          : undefined,
+      },
+      destinations,
+    );
     setResult(r);
     if (r) logEstimate(r);
   }

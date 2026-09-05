@@ -9,6 +9,13 @@ import { HOME_DEFAULTS, type HomeSettingKey } from "@/lib/settings";
 import { services } from "@/lib/site";
 import { type CustomCard } from "@/lib/service-cards";
 import { SERVICE_PAGES } from "@/lib/service-pages";
+import { STEP_KG } from "@/lib/pricing";
+import {
+  parsePriceFile,
+  savePriceOverride,
+  clearPriceOverride,
+  type ParseResult,
+} from "@/lib/price-tables";
 
 function slugify(text: string): string {
   const map: Record<string, string> = {
@@ -243,6 +250,86 @@ export async function saveServicePages(_prev: FormState, formData: FormData): Pr
   revalidatePath("/admin/trang-dich-vu");
   for (const p of SERVICE_PAGES) revalidatePath(`/dich-vu/${p.slug}`);
   return { ok: true, message: "Đã lưu! Mở lại trang dịch vụ để xem thay đổi." };
+}
+
+export type PricePreviewState =
+  | { ok: true; destKey: string; fileName: string; result: ParseResult }
+  | { ok: false; message: string }
+  | null;
+
+/** Bước 1: đọc file, KHÔNG ghi gì — để user xem trước rồi mới quyết. */
+export async function previewPriceFile(
+  _prev: PricePreviewState,
+  formData: FormData,
+): Promise<PricePreviewState> {
+  await ensureAdmin();
+  const destKey = String(formData.get("destKey") ?? "");
+  const file = formData.get("file");
+  if (!destKey) return { ok: false, message: "Chưa chọn tuyến." };
+  if (!(file instanceof File) || file.size === 0) return { ok: false, message: "Chưa chọn file." };
+  if (file.size > 5 * 1024 * 1024) return { ok: false, message: "File quá lớn (tối đa 5MB)." };
+
+  try {
+    const buf = Buffer.from(await file.arrayBuffer());
+    const result = await parsePriceFile(buf, file.name);
+    if (result.rows.length === 0) {
+      return { ok: false, message: result.warnings[0] ?? "Không đọc được dòng giá nào trong file." };
+    }
+    return { ok: true, destKey, fileName: file.name, result };
+  } catch (e) {
+    console.error("previewPriceFile failed:", e);
+    return { ok: false, message: "Không mở được file. Cần file Excel (.xlsx) hoặc CSV." };
+  }
+}
+
+/** Bước 2: user bấm xác nhận thì mới ghi vào DB. */
+export async function savePriceTable(_prev: FormState, formData: FormData): Promise<FormState> {
+  await ensureAdmin();
+  const destKey = String(formData.get("destKey") ?? "");
+  const fileName = String(formData.get("fileName") ?? "");
+  if (!destKey) return { ok: false, message: "Thiếu tuyến." };
+
+  let prices: number[];
+  try {
+    prices = JSON.parse(String(formData.get("prices") ?? "[]"));
+  } catch {
+    return { ok: false, message: "Dữ liệu giá không hợp lệ." };
+  }
+  if (!Array.isArray(prices) || prices.length !== STEP_KG.length) {
+    return { ok: false, message: `Bảng giá phải đủ ${STEP_KG.length} mốc cân.` };
+  }
+  if (prices.some((n) => !Number.isFinite(n) || n <= 0)) {
+    return { ok: false, message: "Có mốc chưa có giá — điền đủ rồi lưu lại." };
+  }
+
+  const over20Raw = String(formData.get("over20PerKg") ?? "").replace(/[.,\s]/g, "");
+  const over20PerKg = over20Raw ? Number(over20Raw) : null;
+  if (over20PerKg != null && (!Number.isFinite(over20PerKg) || over20PerKg <= 0)) {
+    return { ok: false, message: "Giá trên 20kg không hợp lệ." };
+  }
+
+  await savePriceOverride(destKey, {
+    prices: prices.map((n) => Math.round(n)),
+    over20PerKg,
+    fileName,
+    updatedAt: new Date().toISOString(),
+  });
+
+  revalidatePath("/");
+  revalidatePath("/admin/bang-gia");
+  for (const p of SERVICE_PAGES) revalidatePath(`/dich-vu/${p.slug}`);
+  return { ok: true, message: "Đã áp bảng giá mới. Mở web xem thử nhé." };
+}
+
+/** Quay lại bảng giá gốc nằm trong code. */
+export async function resetPriceTable(formData: FormData) {
+  await ensureAdmin();
+  const destKey = String(formData.get("destKey") ?? "");
+  if (!destKey) return;
+  await clearPriceOverride(destKey);
+  revalidatePath("/");
+  revalidatePath("/admin/bang-gia");
+  for (const p of SERVICE_PAGES) revalidatePath(`/dich-vu/${p.slug}`);
 }
 
 export async function saveArticle(_prev: FormState, formData: FormData): Promise<FormState> {
