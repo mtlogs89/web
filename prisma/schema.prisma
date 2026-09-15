@@ -119,3 +119,19 @@ model QuoteLog {
 
   @@index([createdAt])
 }
+
+/// Khách làm gì SAU khi xem giá trên công cụ tính cước: bấm Zalo, bấm Gọi, hay
+/// để lại SĐT. Nối với QuoteLog qua sessionId để đo "tính giá xong rồi liên hệ".
+model QuoteAction {
+  id        String   @id @default(cuid())
+  sessionId String?
+  /// "zalo" | "call" | "lead"
+  action    String
+  dest      String?
+  weight    Float?
+  page      String
+  createdAt DateTime @default(now())
+
+  @@index([createdAt])
+  @@index([sessionId])
+}

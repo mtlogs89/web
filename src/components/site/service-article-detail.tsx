@@ -4,6 +4,7 @@ import { ArrowRight, CheckCircle2, Phone } from "lucide-react";
 import { GalleryGrid } from "./gallery-grid";
 import { ServiceMedia } from "./service-media";
 import { QuoteCalculator } from "./quote-calculator";
+import { ArticleContent } from "./article-content";
 import { getDestinations } from "@/lib/price-tables";
 import { CallAction } from "./call-action";
 import { ZaloLink } from "./zalo-link";
@@ -43,12 +44,15 @@ export async function ServiceArticleDetail({
     <>
       {articleHtml && (
         <section className="mx-auto max-w-4xl px-4 py-10 sm:px-6 sm:py-14">
-          <div
-            className="prose-mt rounded-3xl bg-white px-5 py-8 shadow-[0_24px_60px_-34px_rgba(20,50,58,0.28)] ring-1 ring-brand-100/70 sm:px-10 sm:py-12"
-            dangerouslySetInnerHTML={{
-              __html: articleHtml.replace(/<img /g, '<img loading="lazy" decoding="async" '),
-            }}
-          />
+          <div className="rounded-3xl bg-white px-5 py-8 shadow-[0_24px_60px_-34px_rgba(20,50,58,0.28)] ring-1 ring-brand-100/70 sm:px-10 sm:py-12">
+            <ArticleContent
+              html={articleHtml}
+              country={country}
+              destKey={destKey}
+              dests={dests}
+              phone={phone}
+            />
+          </div>
         </section>
       )}
 
@@ -62,7 +66,7 @@ export async function ServiceArticleDetail({
             </p>
           </div>
           <div className="mt-8 rounded-[28px] bg-white p-6 shadow-xl shadow-brand-500/10 sm:p-8">
-            <QuoteCalculator defaultDestKey={destKey} dests={dests} />
+            <QuoteCalculator defaultDestKey={destKey} dests={dests} phone={phone} />
           </div>
         </div>
       </section>

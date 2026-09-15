@@ -39,10 +39,6 @@ export function PriceTableForm({ dests }: { dests: DestLite[] }) {
     previewPriceFile,
     null,
   );
-  const [saveState, saveAction, saving] = useActionState<FormState, FormData>(
-    savePriceTable,
-    null,
-  );
 
   const dest = dests.find((d) => d.key === destKey);
   // Giá web đang dùng: bảng đã up nếu có, không thì bảng gốc trong code.
@@ -191,54 +187,88 @@ export function PriceTableForm({ dests }: { dests: DestLite[] }) {
             </table>
           </div>
 
-          <form action={saveAction} className="mt-5 space-y-4">
-            <input type="hidden" name="destKey" value={destKey} />
-            <input type="hidden" name="fileName" value={p.fileName} />
-            <input type="hidden" name="prices" value={JSON.stringify(steps)} />
-
-            <div>
-              <label className="text-sm font-semibold text-ink-soft">
-                Giá hàng trên 20kg (đồng mỗi ký)
-              </label>
-              <p className="text-xs text-ink-muted">
-                Để trống thì khách gửi trên 20kg sẽ được mời gọi hỏi thay vì thấy giá.
-              </p>
-              <input
-                name="over20PerKg"
-                defaultValue={p.result.suggestedOver20PerKg ?? over20DangDung ?? ""}
-                placeholder="ví dụ 238000"
-                className="mt-1.5 w-full max-w-xs rounded-xl border border-slate-200 px-3 py-2.5 font-medium outline-none focus:border-brand-500"
-              />
-            </div>
-
-            {!duLieuDu && (
-              <p className="flex items-center gap-2 font-semibold text-coral-500">
-                <AlertTriangle className="h-4 w-4" /> File thiếu mốc cân nên chưa lưu được. Bổ sung
-                đủ 40 mốc từ 0,5kg đến 20kg rồi up lại.
-              </p>
-            )}
-
-            <div className="flex flex-wrap items-center gap-3">
-              <button
-                type="submit"
-                disabled={saving || !duLieuDu}
-                className="flex items-center gap-2 rounded-full bg-brand-500 px-6 py-3 font-bold text-white shadow-lg shadow-brand-500/30 transition hover:bg-brand-600 disabled:opacity-50"
-              >
-                <ArrowRight className="h-5 w-5" />
-                {saving ? "Đang lưu…" : "Áp bảng giá này cho web"}
-              </button>
-              {saveState?.ok && (
-                <span className="flex items-center gap-1.5 font-semibold text-brand-600">
-                  <Check className="h-5 w-5" /> {saveState.message}
-                </span>
-              )}
-              {saveState && !saveState.ok && (
-                <span className="font-semibold text-coral-500">{saveState.message}</span>
-              )}
-            </div>
-          </form>
+          <SaveBox
+            key={`${destKey}|${p.fileName}|${JSON.stringify(steps)}`}
+            destKey={destKey}
+            fileName={p.fileName}
+            steps={steps}
+            defaultOver20={p.result.suggestedOver20PerKg ?? over20DangDung ?? null}
+            duLieuDu={duLieuDu}
+          />
         </section>
       )}
     </div>
+  );
+}
+
+/**
+ * Nút lưu tách riêng và gắn key theo tuyến + file: đổi tuyến hay đọc file khác
+ * thì khung này dựng lại từ đầu, không còn hiện "Đã áp" của lần lưu trước.
+ */
+function SaveBox({
+  destKey,
+  fileName,
+  steps,
+  defaultOver20,
+  duLieuDu,
+}: {
+  destKey: string;
+  fileName: string;
+  steps: (number | null)[];
+  defaultOver20: number | null;
+  duLieuDu: boolean;
+}) {
+  const [saveState, saveAction, saving] = useActionState<FormState, FormData>(
+    savePriceTable,
+    null,
+  );
+
+  return (
+    <form action={saveAction} className="mt-5 space-y-4">
+      <input type="hidden" name="destKey" value={destKey} />
+      <input type="hidden" name="fileName" value={fileName} />
+      <input type="hidden" name="prices" value={JSON.stringify(steps)} />
+
+      <div>
+        <label className="text-sm font-semibold text-ink-soft">
+          Giá hàng trên 20kg (đồng mỗi ký)
+        </label>
+        <p className="text-xs text-ink-muted">
+          Để trống thì khách gửi trên 20kg sẽ được mời gọi hỏi thay vì thấy giá.
+        </p>
+        <input
+          name="over20PerKg"
+          defaultValue={defaultOver20 ?? ""}
+          placeholder="ví dụ 238000"
+          className="mt-1.5 w-full max-w-xs rounded-xl border border-slate-200 px-3 py-2.5 font-medium outline-none focus:border-brand-500"
+        />
+      </div>
+
+      {!duLieuDu && (
+        <p className="flex items-center gap-2 font-semibold text-coral-500">
+          <AlertTriangle className="h-4 w-4" /> File thiếu mốc cân nên chưa lưu được. Bổ sung
+          đủ 40 mốc từ 0,5kg đến 20kg rồi up lại.
+        </p>
+      )}
+
+      <div className="flex flex-wrap items-center gap-3">
+        <button
+          type="submit"
+          disabled={saving || !duLieuDu || saveState?.ok === true}
+          className="flex items-center gap-2 rounded-full bg-brand-500 px-6 py-3 font-bold text-white shadow-lg shadow-brand-500/30 transition hover:bg-brand-600 disabled:opacity-50"
+        >
+          <ArrowRight className="h-5 w-5" />
+          {saving ? "Đang lưu…" : saveState?.ok ? "Đã áp" : "Áp bảng giá này cho web"}
+        </button>
+        {saveState?.ok && (
+          <span className="flex items-center gap-1.5 font-semibold text-brand-600">
+            <Check className="h-5 w-5" /> {saveState.message}
+          </span>
+        )}
+        {saveState && !saveState.ok && (
+          <span className="font-semibold text-coral-500">{saveState.message}</span>
+        )}
+      </div>
+    </form>
   );
 }

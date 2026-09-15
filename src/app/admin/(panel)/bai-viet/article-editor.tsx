@@ -121,6 +121,11 @@ export function ArticleEditor({
         </div>
         <div>
           <label className={labelCls}>Nội dung *</label>
+          <p className="mb-2 text-xs text-ink-muted">
+            Muốn chèn công cụ tính cước giữa bài: gõ{" "}
+            <code className="rounded bg-brand-50 px-1.5 py-0.5 font-bold text-brand-700">[[tinh-cuoc]]</code>{" "}
+            vào một dòng riêng ở chỗ muốn hiện.
+          </p>
           <RichTextEditor value={content} onChange={setContent} />
           <input type="hidden" name="content" value={content} required />
         </div>

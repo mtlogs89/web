@@ -1,5 +1,5 @@
 import { prisma } from "@/lib/prisma";
-import { Calculator, Users, Phone, TrendingUp } from "lucide-react";
+import { Calculator, Users, Phone, TrendingUp, MessageCircle, UserCheck } from "lucide-react";
 
 export const dynamic = "force-dynamic";
 
@@ -70,7 +70,7 @@ export default async function TinhCuocPage() {
   const homNay = new Date(now.getFullYear(), now.getMonth(), now.getDate());
   const bayNgay = new Date(homNay.getTime() - 6 * 86400000);
 
-  const [tong, soHomNay, so7Ngay, rows, moiNhat] = await Promise.all([
+  const [tong, soHomNay, so7Ngay, rows, moiNhat, hanhDong] = await Promise.all([
     prisma.quoteLog.count(),
     prisma.quoteLog.count({ where: { createdAt: { gte: homNay } } }),
     prisma.quoteLog.count({ where: { createdAt: { gte: bayNgay } } }),
@@ -82,7 +82,37 @@ export default async function TinhCuocPage() {
       orderBy: { createdAt: "desc" },
       take: 50,
     }),
+    prisma.quoteAction.findMany({
+      where: { createdAt: { gte: bayNgay } },
+      select: { sessionId: true, action: true },
+    }),
   ]);
+
+  // Phễu: trong số người đã tính giá 7 ngày qua, bao nhiêu người bấm liên hệ.
+  const phienTinh = new Set(rows.map((r) => r.sessionId).filter((s): s is string => !!s));
+  const demPhien = (loai?: string) =>
+    new Set(
+      hanhDong
+        .filter((a) => a.sessionId && phienTinh.has(a.sessionId) && (!loai || a.action === loai))
+        .map((a) => a.sessionId),
+    ).size;
+  const soLienHe = demPhien();
+  const tyLeLienHe = phienTinh.size ? Math.round((soLienHe / phienTinh.size) * 100) : 0;
+
+  // Cột "Sau đó" của bảng 50 lượt: phiên đó đã làm gì.
+  const sidGanDay = [...new Set(moiNhat.map((r) => r.sessionId).filter((s): s is string => !!s))];
+  const hanhDongGanDay = sidGanDay.length
+    ? await prisma.quoteAction.findMany({
+        where: { sessionId: { in: sidGanDay } },
+        select: { sessionId: true, action: true },
+      })
+    : [];
+  const sauDo = new Map<string, Set<string>>();
+  for (const a of hanhDongGanDay) {
+    if (!a.sessionId) continue;
+    if (!sauDo.has(a.sessionId)) sauDo.set(a.sessionId, new Set());
+    sauDo.get(a.sessionId)!.add(a.action);
+  }
 
   // Số người khác nhau trong 7 ngày (lượt không có sessionId tính là một người riêng).
   const soNguoi = new Set(rows.map((r, i) => r.sessionId ?? `khach-${i}`)).size;
@@ -134,6 +164,36 @@ export default async function TinhCuocPage() {
               value={soNguoi}
               hint={so7Ngay > 0 ? `trung bình ${(so7Ngay / Math.max(soNguoi, 1)).toFixed(1)} lượt/người` : undefined}
             />
+          </div>
+
+          <div className="mt-4 rounded-2xl border border-brand-100 bg-white p-5 shadow-sm">
+            <div className="flex flex-wrap items-end justify-between gap-3">
+              <div>
+                <div className="flex items-center gap-2 text-sm font-semibold text-ink-soft">
+                  <UserCheck className="h-4 w-4 text-brand-500" /> Tính giá xong rồi liên hệ (7 ngày)
+                </div>
+                <div className="mt-1 text-3xl font-black text-ink">
+                  {soLienHe}
+                  <span className="text-lg font-bold text-ink-muted"> / {phienTinh.size} người</span>
+                </div>
+              </div>
+              <div className="text-4xl font-black text-brand-600">{tyLeLienHe}%</div>
+            </div>
+            <div className="mt-3 flex flex-wrap gap-2 text-sm">
+              <span className="flex items-center gap-1.5 rounded-full bg-[#0068FF]/10 px-3 py-1 font-semibold text-[#0057d6]">
+                <MessageCircle className="h-3.5 w-3.5" /> Nhắn Zalo: {demPhien("zalo")}
+              </span>
+              <span className="flex items-center gap-1.5 rounded-full bg-coral-50 px-3 py-1 font-semibold text-coral-600">
+                <Phone className="h-3.5 w-3.5" /> Bấm Gọi: {demPhien("call")}
+              </span>
+              <span className="flex items-center gap-1.5 rounded-full bg-brand-50 px-3 py-1 font-semibold text-brand-700">
+                <UserCheck className="h-3.5 w-3.5" /> Để lại SĐT: {demPhien("lead")}
+              </span>
+            </div>
+            <p className="mt-2 text-xs text-ink-muted">
+              Chỉ đếm từ ngày bật đo trở đi. Một người bấm nhiều nút được tính một lần ở tổng. Trên
+              máy tính, &ldquo;Bấm Gọi&rdquo; là sao chép số.
+            </p>
           </div>
 
           {soPhaiGoi > 0 && (
@@ -190,6 +250,7 @@ export default async function TinhCuocPage() {
                     <th className="px-4 py-3">Loại hàng</th>
                     <th className="px-4 py-3">Ước tính</th>
                     <th className="px-4 py-3">Từ trang</th>
+                    <th className="px-4 py-3">Sau đó</th>
                   </tr>
                 </thead>
                 <tbody>
@@ -213,6 +274,19 @@ export default async function TinhCuocPage() {
                       </td>
                       <td className="max-w-48 truncate px-4 py-3 text-xs text-ink-muted">
                         {r.page}
+                      </td>
+                      <td className="whitespace-nowrap px-4 py-3 text-xs font-semibold">
+                        {(() => {
+                          const a = r.sessionId ? sauDo.get(r.sessionId) : undefined;
+                          if (!a || a.size === 0) return <span className="text-ink-muted">—</span>;
+                          return (
+                            <span className="flex gap-1.5">
+                              {a.has("zalo") && <span className="text-[#0057d6]">Zalo</span>}
+                              {a.has("call") && <span className="text-coral-600">Gọi</span>}
+                              {a.has("lead") && <span className="text-brand-700">Để SĐT</span>}
+                            </span>
+                          );
+                        })()}
                       </td>
                     </tr>
                   ))}

@@ -30,7 +30,7 @@ function ZaloIcon({ className }: { className?: string }) {
 
 export function FloatingContact() {
   return (
-    <div className="fixed bottom-5 right-5 z-50 flex flex-col items-center gap-3">
+    <div id="floating-contact" className="fixed bottom-5 right-5 z-50 flex flex-col items-center gap-3">
       <CallAction
         id="floating-call"
         phone={site.phone}

@@ -13,6 +13,8 @@ import {
 } from "@/lib/structured-data";
 import { site } from "@/lib/site";
 import { ContactOverride } from "@/components/site/contact-override";
+import { ArticleContent, QUOTE_TOKEN, destFromCategory } from "@/components/site/article-content";
+import { getDestinations } from "@/lib/price-tables";
 
 export const dynamic = "force-dynamic";
 
@@ -53,6 +55,10 @@ export default async function ArticlePage({
   const date = new Date(article.publishedAt).toLocaleDateString("vi-VN");
   const phone = article.phone || site.phone;
   const phoneDisplay = article.phone || site.phoneDisplay;
+  // Bảng giá chỉ cần khi bài có chèn công cụ tính cước.
+  const coCongCuTinh = article.content.includes(QUOTE_TOKEN);
+  const dests = coCongCuTinh ? await getDestinations() : undefined;
+  const { destKey, country } = destFromCategory(article.category);
 
   return (
     <>
@@ -103,13 +109,15 @@ export default async function ArticlePage({
           />
         )}
 
-        <div
-          className="prose-mt mt-8"
-          dangerouslySetInnerHTML={{
-            // Ảnh trong bài chỉ tải khi khách cuộn tới (đỡ nặng trang)
-            __html: article.content.replace(/<img /g, '<img loading="lazy" decoding="async" '),
-          }}
-        />
+        <div className="mt-8">
+          <ArticleContent
+            html={article.content}
+            country={country}
+            destKey={destKey}
+            dests={dests}
+            phone={article.phone}
+          />
+        </div>
 
         {faqs.length > 0 && (
           <section className="mt-12">

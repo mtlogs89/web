@@ -208,3 +208,39 @@ body {
 .prose-mt table { width: 100%; border-collapse: collapse; margin: 1.25rem 0; }
 .prose-mt th, .prose-mt td { border: 1px solid var(--color-brand-100); padding: 10px 12px; text-align: left; }
 .prose-mt th { background: var(--color-brand-50); color: var(--color-ink); }
+
+/* Ô ưu đãi "gọi ngay" nảy lên sau khi khách tính giá (quote-calculator). */
+@keyframes offer-pop {
+  0% { opacity: 0; transform: scale(0.92) translateY(6px); }
+  60% { opacity: 1; transform: scale(1.03); }
+  100% { opacity: 1; transform: scale(1); }
+}
+.offer-pop { animation: offer-pop 0.45s ease-out both; }
+@media (prefers-reduced-motion: reduce) {
+  .offer-pop { animation: none; }
+}
+
+/* Vệt sáng lướt qua vé ưu đãi + nút Gọi ngay "thở" nhẹ để hút mắt. */
+@keyframes offer-shine {
+  0% { transform: translateX(0); }
+  55%, 100% { transform: translateX(400%); }
+}
+.offer-shine { animation: offer-shine 3s ease-in-out 0.7s infinite; }
+@keyframes cta-pulse {
+  0% { box-shadow: 0 0 0 0 rgb(31 182 162 / 0.5); }
+  70% { box-shadow: 0 0 0 12px rgb(31 182 162 / 0); }
+  100% { box-shadow: 0 0 0 0 rgb(31 182 162 / 0); }
+}
+.cta-pulse { animation: cta-pulse 2.2s ease-out infinite; }
+@media (prefers-reduced-motion: reduce) {
+  .offer-shine, .cta-pulse { animation: none; }
+}
+
+/* Ẩn 2 nút Gọi/Zalo nổi khi khung liên hệ của công cụ tính cước đang hiện
+   (quote-calculator bật/tắt class hide-floating) — tránh đè nút trên điện thoại. */
+#floating-contact { transition: opacity 0.2s ease, transform 0.2s ease; }
+html.hide-floating #floating-contact {
+  opacity: 0;
+  transform: translateY(16px);
+  pointer-events: none;
+}
