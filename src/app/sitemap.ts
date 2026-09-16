@@ -1,6 +1,7 @@
 import type { MetadataRoute } from "next";
 import { services, site } from "@/lib/site";
 import { prisma } from "@/lib/prisma";
+import { EMPTY_BODY } from "@/lib/articles";
 
 export const dynamic = "force-dynamic";
 
@@ -26,7 +27,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   let articleRoutes: MetadataRoute.Sitemap = [];
   try {
     const articles = await prisma.article.findMany({
-      where: { published: true },
+      where: { published: true, NOT: { content: EMPTY_BODY } },
       select: { slug: true, updatedAt: true },
       orderBy: { publishedAt: "desc" },
     });

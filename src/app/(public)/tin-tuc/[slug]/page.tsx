@@ -1,10 +1,17 @@
 import type { Metadata } from "next";
 import Link from "next/link";
-import { notFound } from "next/navigation";
-import { Calendar, Phone } from "lucide-react";
+import { notFound, permanentRedirect } from "next/navigation";
+import { ArrowRight, Calendar, Phone } from "lucide-react";
 import { PageHero } from "@/components/site/page-hero";
 import { CallAction } from "@/components/site/call-action";
-import { getArticleBySlug, parseFaq, readingMinutes } from "@/lib/articles";
+import {
+  findSimilarSlug,
+  getArticleBySlug,
+  getRelatedArticles,
+  parseFaq,
+  readingMinutes,
+} from "@/lib/articles";
+import { detectTopic, topicOfCategory } from "@/lib/topics";
 import {
   JsonLd,
   articleJsonLd,
@@ -48,7 +55,14 @@ export default async function ArticlePage({
 }) {
   const { slug } = await params;
   const article = await getArticleBySlug(slug);
-  if (!article || !article.published) notFound();
+  if (!article || !article.published) {
+    // Link cũ trỏ tới bài đã đổi slug → đưa về bài gần nghĩa nhất / trang tuyến.
+    const similar = await findSimilarSlug(slug);
+    if (similar) permanentRedirect(`/tin-tuc/${similar}`);
+    const topic = detectTopic(slug);
+    if (topic) permanentRedirect(topic.hub);
+    notFound();
+  }
 
   const faqs = parseFaq(article.faqJson);
   const url = `${site.url}/tin-tuc/${article.slug}`;
@@ -59,6 +73,9 @@ export default async function ArticlePage({
   const coCongCuTinh = article.content.includes(QUOTE_TOKEN);
   const dests = coCongCuTinh ? await getDestinations() : undefined;
   const { destKey, country } = destFromCategory(article.category);
+  const topic = topicOfCategory(article.category);
+  const categoryHref = `/tin-tuc?cat=${encodeURIComponent(article.category)}`;
+  const related = await getRelatedArticles(article);
 
   return (
     <>
@@ -68,6 +85,8 @@ export default async function ArticlePage({
           title: article.title,
           description: article.excerpt || article.title,
           url,
+          section: article.category,
+          keywords: article.tags || undefined,
           image: article.coverImage || undefined,
           datePublished: new Date(article.publishedAt).toISOString(),
           dateModified: new Date(article.updatedAt).toISOString(),
@@ -78,6 +97,7 @@ export default async function ArticlePage({
         data={breadcrumbJsonLd([
           { name: "Trang chủ", url: site.url },
           { name: "Tin tức", url: `${site.url}/tin-tuc` },
+          { name: article.category, url: `${site.url}${categoryHref}` },
           { name: article.title, url },
         ])}
       />
@@ -86,7 +106,7 @@ export default async function ArticlePage({
         title={article.title}
         crumbs={[
           { name: "Tin tức", href: "/tin-tuc" },
-          { name: article.category, href: `/tin-tuc?cat=${encodeURIComponent(article.category)}` },
+          { name: article.category, href: categoryHref },
         ]}
       />
 
@@ -99,6 +119,14 @@ export default async function ArticlePage({
             <Calendar className="h-4 w-4" /> {date} · {readingMinutes(article.content)} phút đọc
           </span>
         </div>
+
+        {article.excerpt && (
+          // AEO: câu trả lời ngắn ngay đầu bài — Google/ChatGPT hay trích đoạn này.
+          <p className="mt-6 rounded-2xl border-l-4 border-brand-500 bg-brand-50 px-5 py-4 font-medium text-ink">
+            <strong className="text-brand-700">Tóm tắt nhanh: </strong>
+            {article.excerpt}
+          </p>
+        )}
 
         {article.coverImage && (
           // eslint-disable-next-line @next/next/no-img-element
@@ -134,6 +162,47 @@ export default async function ArticlePage({
               ))}
             </div>
           </section>
+        )}
+
+        {(topic || related.length > 0) && (
+          <nav aria-label="Bài viết liên quan" className="mt-12">
+            {topic && (
+              <Link
+                href={topic.hub}
+                className="flex items-center justify-between gap-3 rounded-2xl border border-brand-100 bg-white p-5 font-bold text-brand-700 shadow-sm hover:border-brand-300"
+              >
+                <span>
+                  {topic.hub.startsWith("/dich-vu") ? "Dịch vụ" : "Tất cả bài"}{" "}
+                  {topic.category.toLowerCase()}
+                  {topic.hub.startsWith("/dich-vu") ? ": bảng giá, thời gian, hàng nhận gửi" : ""}
+                </span>
+                <ArrowRight className="h-5 w-5 shrink-0" />
+              </Link>
+            )}
+            {related.length > 0 && (
+              <>
+                <h2 className="mt-8 text-2xl font-black text-ink">Bài viết liên quan</h2>
+                <ul className="mt-5 grid gap-3 sm:grid-cols-2">
+                  {related.map((r) => (
+                    <li key={r.slug}>
+                      <Link
+                        href={`/tin-tuc/${r.slug}`}
+                        className="block h-full rounded-2xl border border-brand-50 bg-white p-4 shadow-sm hover:border-brand-200"
+                      >
+                        <span className="font-bold text-ink">{r.title}</span>
+                        {r.excerpt && (
+                          <span className="mt-1 line-clamp-2 block text-sm text-ink-muted">{r.excerpt}</span>
+                        )}
+                      </Link>
+                    </li>
+                  ))}
+                </ul>
+                <Link href={categoryHref} className="mt-4 inline-block font-semibold text-brand-600 hover:underline">
+                  Xem tất cả bài {article.category.toLowerCase()} →
+                </Link>
+              </>
+            )}
+          </nav>
         )}
 
         <div className="mt-12 rounded-3xl bg-brand-50 p-7 text-center">

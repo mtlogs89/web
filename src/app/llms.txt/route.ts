@@ -1,21 +1,35 @@
 import { site } from "@/lib/site";
 import { services } from "@/lib/site";
 import { prisma } from "@/lib/prisma";
+import { EMPTY_BODY } from "@/lib/articles";
+import { topicOfCategory } from "@/lib/topics";
 
 export const dynamic = "force-dynamic";
 
 export async function GET() {
+  // AEO: liệt kê ĐỦ bài, gom theo tuyến — AI đọc 1 file là biết site có gì cho từng nước.
   let articleLines = "";
   try {
     const articles = await prisma.article.findMany({
-      where: { published: true },
-      select: { slug: true, title: true, excerpt: true },
+      where: { published: true, NOT: { content: EMPTY_BODY } },
+      select: { slug: true, title: true, excerpt: true, category: true },
       orderBy: { publishedAt: "desc" },
-      take: 30,
     });
-    articleLines = articles
-      .map((a) => `- [${a.title}](${site.url}/tin-tuc/${a.slug})${a.excerpt ? `: ${a.excerpt}` : ""}`)
-      .join("\n");
+    const groups = new Map<string, typeof articles>();
+    for (const a of articles) {
+      if (!groups.has(a.category)) groups.set(a.category, []);
+      groups.get(a.category)!.push(a);
+    }
+    articleLines = [...groups.entries()]
+      .sort((a, b) => b[1].length - a[1].length)
+      .map(([cat, list]) => {
+        const hub = topicOfCategory(cat)?.hub ?? `/tin-tuc?cat=${encodeURIComponent(cat)}`;
+        const lines = list
+          .map((a) => `- [${a.title}](${site.url}/tin-tuc/${a.slug})${a.excerpt ? `: ${a.excerpt}` : ""}`)
+          .join("\n");
+        return `### ${cat}\nTrang chính: ${site.url}${hub}\n${lines}`;
+      })
+      .join("\n\n");
   } catch {
     articleLines = "";
   }

@@ -45,4 +45,7 @@ export const DESTINATIONS: { category: string; label: string; flagImg: string }[
   { category: "Gửi hàng đi Canada", label: "Canada", flagImg: "/images/flags/ca.png" },
   { category: "Gửi hàng đi Nhật Bản", label: "Nhật Bản", flagImg: "/images/flags/jp.png" },
   { category: "Gửi hàng đi Hàn Quốc", label: "Hàn Quốc", flagImg: "/images/flags/kr.png" },
+  { category: "Gửi hàng đi Singapore", label: "Singapore", flagImg: "/images/flags/sg.png" },
+  { category: "Gửi hàng đi Malaysia", label: "Malaysia", flagImg: "/images/flags/my.png" },
+  { category: "Gửi hàng đi Thái Lan", label: "Thái Lan", flagImg: "/images/flags/th.png" },
 ];

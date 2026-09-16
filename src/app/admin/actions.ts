@@ -338,6 +338,11 @@ export async function saveArticle(_prev: FormState, formData: FormData): Promise
   const title = String(formData.get("title") || "").trim();
   const content = String(formData.get("content") || "").trim();
   if (!title || !content) return { ok: false, message: "Cần tiêu đề và nội dung." };
+  // Robot đăng bài từng lưu 15 bài thân trống "<p></p>" (ô soạn thảo chưa nhận nội dung).
+  const plainText = content.replace(/<[^>]+>/g, " ").replace(/&nbsp;/g, " ").trim();
+  if (formData.get("published") === "on" && plainText.length < 200) {
+    return { ok: false, message: "Nội dung bài gần như trống — chưa thể xuất bản. Bỏ tick “Hiển thị công khai” nếu muốn lưu nháp." };
+  }
 
   const slug = slugify(String(formData.get("slug") || "") || title);
   const faqRaw = String(formData.get("faqJson") || "").trim();

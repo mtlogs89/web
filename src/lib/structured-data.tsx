@@ -18,10 +18,11 @@ export function organizationJsonLd() {
   return {
     "@context": "https://schema.org",
     "@type": "Organization",
+    "@id": `${site.url}/#organization`,
     name: site.name,
     legalName: site.legalName,
     url: site.url,
-    logo: `${site.url}/logo.png`,
+    logo: `${site.url}/images/logo-full.png`,
     telephone: `+84${site.phone.replace(/^0/, "")}`,
     foundingDate: String(site.foundingYear),
     ...(sameAs.length ? { sameAs } : {}),
@@ -40,11 +41,13 @@ export function localBusinessJsonLd() {
   return {
     "@context": "https://schema.org",
     "@type": "MovingCompany",
+    "@id": `${site.url}/#business`,
+    parentOrganization: { "@id": `${site.url}/#organization` },
     name: site.name,
     legalName: site.legalName,
     url: site.url,
     telephone: `+84${site.phone.replace(/^0/, "")}`,
-    image: `${site.url}/og.png`,
+    image: `${site.url}/images/og-cover.jpg`,
     description: site.description,
     address: {
       "@type": "PostalAddress",
@@ -106,6 +109,8 @@ export function articleJsonLd(input: {
   image?: string;
   datePublished: string;
   dateModified?: string;
+  section?: string;
+  keywords?: string;
 }) {
   return {
     "@context": "https://schema.org",
@@ -116,11 +121,14 @@ export function articleJsonLd(input: {
     datePublished: input.datePublished,
     dateModified: input.dateModified ?? input.datePublished,
     mainEntityOfPage: input.url,
-    author: { "@type": "Organization", name: site.name },
+    inLanguage: "vi-VN",
+    ...(input.section ? { articleSection: input.section } : {}),
+    ...(input.keywords ? { keywords: input.keywords } : {}),
+    author: { "@type": "Organization", name: site.name, url: site.url },
     publisher: {
       "@type": "Organization",
       name: site.name,
-      logo: { "@type": "ImageObject", url: `${site.url}/logo.png` },
+      logo: { "@type": "ImageObject", url: `${site.url}/images/logo-full.png` },
     },
   };
 }

@@ -5,12 +5,35 @@ import { PageHero } from "@/components/site/page-hero";
 import { ArticleCard } from "@/components/site/article-card";
 import { getPublishedArticles, getCategories, countPublishedArticles } from "@/lib/articles";
 import { EU_COUNTRIES, EU_CATEGORY, DESTINATIONS } from "@/lib/eu-countries";
+import { site } from "@/lib/site";
 
-export const metadata: Metadata = {
-  title: "Tin tức & cẩm nang gửi hàng quốc tế",
-  description:
-    "Cẩm nang, kinh nghiệm và hướng dẫn gửi hàng đi Mỹ, Úc, Châu Âu, nhập hàng Trung Quốc từ Minh Thiện Logistics.",
-};
+// Mỗi chuyên mục là 1 trang trụ cột riêng: tiêu đề + canonical riêng để Google/AI
+// không coi 13 trang ?cat= là trùng lặp với /tin-tuc.
+export async function generateMetadata({
+  searchParams,
+}: {
+  searchParams: Promise<{ cat?: string; page?: string }>;
+}): Promise<Metadata> {
+  const { cat, page } = await searchParams;
+  const p = Math.max(1, Number(page) || 1);
+  // Mã hoá giống link nội bộ (%20, không phải +) để canonical trùng khớp link.
+  const qs = [cat && `cat=${encodeURIComponent(cat)}`, p > 1 && `page=${p}`].filter(Boolean).join("&");
+  const canonical = `${site.url}/tin-tuc${qs ? `?${qs}` : ""}`;
+  const suffix = p > 1 ? ` – trang ${p}` : "";
+  if (!cat) {
+    return {
+      title: `Tin tức & cẩm nang gửi hàng quốc tế${suffix}`,
+      description:
+        "Cẩm nang, kinh nghiệm và hướng dẫn gửi hàng đi Mỹ, Úc, Canada, Châu Âu, Nhật, Hàn, Singapore, Malaysia, Thái Lan và nhập hàng Trung Quốc từ Minh Thiện Logistics.",
+      alternates: { canonical },
+    };
+  }
+  return {
+    title: `${cat}: cẩm nang, thủ tục hải quan, hàng cấm${suffix}`,
+    description: `Tổng hợp bài hướng dẫn ${cat.toLowerCase()}: thời gian, cách đóng gói, hàng được và không được gửi, thủ tục hải quan — Minh Thiện Logistics, hotline ${site.phoneDisplay}.`,
+    alternates: { canonical },
+  };
+}
 
 export const dynamic = "force-dynamic";
 
@@ -64,7 +87,7 @@ export default async function NewsPage({
         {!cat && (
           <div className="mb-10">
             <h2 className="mb-4 text-xl font-black text-ink">Cẩm nang theo điểm đến</h2>
-            <div className="grid grid-cols-2 gap-3 sm:grid-cols-3 lg:grid-cols-6">
+            <div className="grid grid-cols-3 gap-3 lg:grid-cols-9">
               {DESTINATIONS.map((d) => (
                 <Link
                   key={d.category}
