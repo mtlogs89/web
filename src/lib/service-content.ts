@@ -1,3 +1,4 @@
+import { transitAnswer } from "./transit";
 export type ServiceDetail = {
   intro: string;
   highlights: { title: string; desc: string }[];
@@ -22,11 +23,11 @@ export const serviceContent: Record<string, ServiceDetail> = {
     highlights: [
       { title: "Khai báo FDA", desc: "Hỗ trợ thủ tục cho thực phẩm, mỹ phẩm để thông quan nhanh." },
       { title: "Toàn nước Mỹ", desc: "Giao tới California, Texas, New York, Florida và mọi bang." },
-      { title: "3–7 ngày", desc: "Thời gian vận chuyển nhanh, theo dõi đơn 24/7." },
+      { title: "3–5 ngày", desc: "Đi nhanh 3–5 ngày, tiết kiệm 8–12 ngày làm việc, theo dõi đơn 24/7." },
     ],
     items: ["Thực phẩm khô, đặc sản", "Thuốc, thực phẩm chức năng", "Quà tặng, đồ cá nhân", "Hàng kinh doanh, mẫu hàng"],
     faqs: [
-      { q: "Gửi hàng đi Mỹ mất bao lâu?", a: "Dịch vụ nhanh thường dự kiến 3–5 ngày, dịch vụ tiết kiệm khoảng 8–12 ngày. Thời gian có thể thay đổi theo địa chỉ giao, lịch bay và quá trình kiểm tra hải quan." },
+      { q: "Gửi hàng đi Mỹ mất bao lâu?", a: transitAnswer("Mỹ") },
       { q: "Có gửi được thực phẩm đi Mỹ không?", a: "Nhiều loại thực phẩm khô, đóng gói thương mại và còn hạn sử dụng có thể được tiếp nhận. Cần kiểm tra thành phần, nhãn và quy định áp dụng cho từng sản phẩm trước khi gửi." },
       { q: "Cước gửi hàng đi Mỹ tính thế nào?", a: "Cước thường tính theo mức lớn hơn giữa trọng lượng thực tế và trọng lượng quy đổi từ kích thước kiện. Loại hàng, địa chỉ giao và dịch vụ nhanh hay tiết kiệm cũng ảnh hưởng đến giá." },
       { q: "Có nhận hàng và đóng gói tại nhà không?", a: "Minh Thiện hỗ trợ sắp xếp nhận hàng tùy khu vực. Hàng sẽ được kiểm tra và tư vấn cách đóng gói phù hợp trước khi vận chuyển." },
@@ -44,7 +45,7 @@ export const serviceContent: Record<string, ServiceDetail> = {
     ],
     items: ["Thực phẩm khô, đặc sản", "Quần áo, đồ dùng cá nhân", "Quà tặng cho du học sinh", "Hàng kinh doanh"],
     faqs: [
-      { q: "Gửi hàng đi Úc mất bao lâu?", a: "Khoảng 4–8 ngày tùy bang và dịch vụ." },
+      { q: "Gửi hàng đi Úc mất bao lâu?", a: transitAnswer("Úc") },
       { q: "Gửi thực phẩm đi Úc có bị kiểm tra không?", a: "Úc kiểm soát thực phẩm nghiêm; Minh Thiện tư vấn mặt hàng được phép và cách khai báo." },
     ],
   },
@@ -58,7 +59,7 @@ export const serviceContent: Record<string, ServiceDetail> = {
     ],
     items: ["Thực phẩm khô", "Quà tặng, đồ cá nhân", "Hàng cho du học sinh", "Hàng kinh doanh nhỏ"],
     faqs: [
-      { q: "Gửi hàng đi Canada bao lâu tới?", a: "Khoảng 5–9 ngày tùy thành phố và dịch vụ." },
+      { q: "Gửi hàng đi Canada mất bao lâu?", a: transitAnswer("Canada") },
     ],
   },
   "gui-hang-di-chau-au": {

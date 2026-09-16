@@ -80,6 +80,21 @@ export async function getRelatedArticles(
     .map((x) => x.r);
 }
 
+/**
+ * Bài đã gộp vào bài khác (ẩn, không xoá): SiteSetting "article_redirects" = {"slug-cũ": "slug-chính"}.
+ * Ghi bởi script gộp bài — xem scripts/sua-noi-dung-20260916.py.
+ */
+export async function getArticleRedirect(slug: string): Promise<string | null> {
+  const row = await prisma.siteSetting.findUnique({ where: { key: "article_redirects" } });
+  if (!row) return null;
+  try {
+    const map = JSON.parse(row.value) as Record<string, string>;
+    return typeof map[slug] === "string" ? map[slug] : null;
+  } catch {
+    return null;
+  }
+}
+
 /** Link tới slug không còn tồn tại → tìm bài đang có gần nghĩa nhất (cùng tuyến) để 301. */
 export async function findSimilarSlug(slug: string): Promise<string | null> {
   const rows = await prisma.article.findMany({

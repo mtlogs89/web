@@ -64,6 +64,10 @@ export function Footer() {
               </li>
             ))}
           </ul>
+          <div className="mt-4 flex flex-wrap gap-x-4 gap-y-1 text-sm">
+            <a href={site.facebook} target="_blank" rel="noopener" className="font-semibold hover:text-brand-400">Facebook</a>
+            <a href={site.googleMaps} target="_blank" rel="noopener" className="font-semibold hover:text-brand-400">Chỉ đường Google Maps</a>
+          </div>
         </div>
       </div>
 

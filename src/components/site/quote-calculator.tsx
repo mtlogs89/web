@@ -1,5 +1,8 @@
 "use client";
 
+// Tuyến có dịch vụ đi nhanh 3–5 ngày (lib/transit.ts).
+const FAST_ROUTES = new Set(["my", "canada", "uc"]);
+
 import { useActionState, useEffect, useRef, useState } from "react";
 import Link from "next/link";
 import { Bolt, ArrowRight, Calculator, Phone, PhoneCall, MessageCircle, CheckCircle2 } from "lucide-react";
@@ -196,7 +199,10 @@ export function QuoteCalculator({
             </div>
             <div className="mt-1 text-2xl font-black text-brand-700">{vnd(result.total)}</div>
             <div className="mt-1 flex flex-wrap gap-x-3 text-sm text-ink-soft">
-              <span>Thời gian: {result.transit[0]}–{result.transit[1]} ngày</span>
+              <span>
+                Thời gian: {result.transit[0]}–{result.transit[1]} ngày
+                {FAST_ROUTES.has(destKey) && " làm việc · cần gấp đi nhanh 3–5 ngày"}
+              </span>
               {result.baoThue && <span className="text-brand-600">· Đã bao thuế nhập khẩu</span>}
             </div>
             {result.surchargeApplied > 0 && (

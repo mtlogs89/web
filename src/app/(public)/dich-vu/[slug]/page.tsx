@@ -16,6 +16,7 @@ import { getCustomCard } from "@/lib/service-cards";
 import { SERVICE_PAGES, getServicePageConfig } from "@/lib/service-pages";
 import { gallery } from "@/lib/gallery";
 import { getDestinations } from "@/lib/price-tables";
+import { TRANSIT_SHORT } from "@/lib/transit";
 import {
   JsonLd,
   serviceJsonLd,
@@ -181,8 +182,7 @@ export default async function ServicePage({
       ? {
           low: dest.table.prices[0],
           high: dest.table.prices[dest.table.prices.length - 1],
-          // Chưa ghi số ngày: bảng giá và FAQ trang đang lệch nhau, chờ chốt số đúng.
-          note: `Cước trọn gói tham khảo từ 0,5kg đến 20kg${dest.baoThue ? ", đã bao thuế" : ""}. Hàng trên 20kg liên hệ.`,
+          note: `Cước trọn gói tham khảo từ 0,5kg đến 20kg${dest.baoThue ? ", đã bao thuế" : ""}, ${TRANSIT_SHORT}. Hàng trên 20kg liên hệ.`,
         }
       : undefined;
 

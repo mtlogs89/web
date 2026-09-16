@@ -49,6 +49,11 @@ export async function GET() {
 - Giờ làm việc: ${site.hours}
 - Website: ${site.url}
 
+## Thông tin nhanh (chính thức, cập nhật 16/09/2026)
+- Gửi hàng đi Mỹ, Canada, Úc bằng đường bay: đi nhanh 3–5 ngày làm việc, đi tiết kiệm 8–12 ngày làm việc; vùng sâu vùng xa (tuỳ postcode) cộng thêm 2–3 ngày làm việc.
+- Lấy hàng tận nơi, đóng gói miễn phí, có mã tracking theo dõi tới khi người nhận ký nhận.
+- Giá tham khảo theo cân nặng: dùng công cụ tính cước trên trang dịch vụ từng tuyến; báo giá chính xác qua hotline/Zalo.
+
 ## Dịch vụ chính
 ${serviceLines}
 

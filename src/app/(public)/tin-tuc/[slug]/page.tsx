@@ -7,11 +7,13 @@ import { CallAction } from "@/components/site/call-action";
 import {
   findSimilarSlug,
   getArticleBySlug,
+  getArticleRedirect,
   getRelatedArticles,
   parseFaq,
   readingMinutes,
 } from "@/lib/articles";
 import { detectTopic, topicOfCategory } from "@/lib/topics";
+import { TRANSIT, TRANSIT_ROUTES } from "@/lib/transit";
 import {
   JsonLd,
   articleJsonLd,
@@ -56,6 +58,9 @@ export default async function ArticlePage({
   const { slug } = await params;
   const article = await getArticleBySlug(slug);
   if (!article || !article.published) {
+    // Bài đã gộp → bài chính của nhóm.
+    const merged = await getArticleRedirect(slug);
+    if (merged) permanentRedirect(`/tin-tuc/${merged}`);
     // Link cũ trỏ tới bài đã đổi slug → đưa về bài gần nghĩa nhất / trang tuyến.
     const similar = await findSimilarSlug(slug);
     if (similar) permanentRedirect(`/tin-tuc/${similar}`);
@@ -139,6 +144,15 @@ export default async function ArticlePage({
             <strong className="text-brand-700">Tóm tắt nhanh: </strong>
             {article.excerpt}
           </p>
+        )}
+
+        {TRANSIT_ROUTES[article.category] && (
+          // Số chuẩn do chủ chốt — bài robot viết có thể ghi số khác, ô này là câu trả lời chính thức.
+          <div className="mt-4 rounded-2xl border border-sun-200 bg-sun-50 px-5 py-4 text-ink">
+            <strong>Thời gian gửi đi {TRANSIT_ROUTES[article.category]} (đường bay):</strong> đi nhanh{" "}
+            {TRANSIT.fast[0]}–{TRANSIT.fast[1]} ngày làm việc · đi tiết kiệm {TRANSIT.economy[0]}–{TRANSIT.economy[1]} ngày
+            làm việc. Vùng sâu vùng xa (tuỳ postcode) cộng thêm {TRANSIT.remoteExtra[0]}–{TRANSIT.remoteExtra[1]} ngày.
+          </div>
         )}
 
         {article.coverImage && (

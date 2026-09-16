@@ -41,7 +41,7 @@ export const destinations: Destination[] = [
   {
     key: "my",
     label: "Mỹ (USA)",
-    transit: [8, 12],
+    transit: [8, 12], // tiết kiệm; đi nhanh 3–5 ngày (xem lib/transit.ts)
     baoThue: true,
     table: {
       type: "steps",
@@ -75,7 +75,7 @@ export const destinations: Destination[] = [
   {
     key: "canada",
     label: "Canada",
-    transit: [10, 12],
+    transit: [8, 12], // tiết kiệm; đi nhanh 3–5 ngày (xem lib/transit.ts)
     baoThue: false,
     table: {
       type: "steps",
@@ -92,7 +92,7 @@ export const destinations: Destination[] = [
   {
     key: "uc",
     label: "Úc (Australia)",
-    transit: [7, 9],
+    transit: [8, 12], // tiết kiệm; đi nhanh 3–5 ngày (xem lib/transit.ts)
     baoThue: false,
     table: {
       type: "steps",

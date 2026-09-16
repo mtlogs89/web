@@ -17,9 +17,11 @@ export const site = {
   },
   addressFull: "5/5 Nguyễn Văn Vĩnh, P. Tân Sơn Nhất, TP. Hồ Chí Minh",
   hours: "T2–CN: 8:00 – 21:00",
-  geo: { lat: 10.8231, lng: 106.6297 },
+  // Toạ độ lấy từ ghim Google Maps chủ gửi 16/09/2026.
+  geo: { lat: 10.8064838, lng: 106.6621715 },
+  googleMaps: "https://maps.app.goo.gl/T229ah7i89mfNCz49",
   zalo: "https://zalo.me/0589778989",
-  facebook: "#",
+  facebook: "https://www.facebook.com/minhthienlogistics",
   foundingYear: 2018,
   branches: [
     {

@@ -40,7 +40,7 @@ const homeFaqs = [
   },
   {
     q: "Thời gian gửi hàng đi quốc tế mất bao lâu?",
-    a: "Tùy tuyến và loại dịch vụ, hàng thường tới tay người nhận trong khoảng 3–7 ngày. Nhân viên sẽ lấy hàng tận nơi trong vòng 24 giờ sau khi bạn đặt.",
+    a: `Đi Mỹ, Canada, Úc bằng đường bay: đi nhanh 3–5 ngày làm việc, đi tiết kiệm 8–12 ngày làm việc; vùng sâu vùng xa (tuỳ postcode) cộng thêm 2–3 ngày. Tuyến khác tuỳ nước — gọi ${site.phoneDisplay} để biết chính xác. Nhân viên lấy hàng tận nơi trong vòng 24 giờ sau khi bạn đặt.`,
   },
   {
     q: "Làm sao để nhận báo giá gửi hàng?",
@@ -263,8 +263,8 @@ export default async function HomePage() {
               <div className="mt-1 text-sm text-white/90">Lấy hàng tận nơi</div>
             </div>
             <div className="rounded-3xl bg-white p-6 shadow-sm">
-              <div className="text-4xl font-black text-sun-500">3–7</div>
-              <div className="mt-1 text-sm text-ink-soft">Ngày tới tay người nhận</div>
+              <div className="text-4xl font-black text-sun-500">3–5</div>
+              <div className="mt-1 text-sm text-ink-soft">Ngày đi nhanh Mỹ · Canada · Úc</div>
             </div>
           </Reveal>
         </div>

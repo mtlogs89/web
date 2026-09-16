@@ -14,7 +14,7 @@ export function websiteJsonLd() {
 
 /** Organization schema — thực thể doanh nghiệp + liên kết mạng xã hội (E-E-A-T cho GEO). */
 export function organizationJsonLd() {
-  const sameAs = [site.facebook, site.zalo].filter((u) => u && u !== "#");
+  const sameAs = [site.facebook, site.googleMaps, site.zalo];
   return {
     "@context": "https://schema.org",
     "@type": "Organization",
@@ -25,7 +25,7 @@ export function organizationJsonLd() {
     logo: `${site.url}/images/logo-full.png`,
     telephone: `+84${site.phone.replace(/^0/, "")}`,
     foundingDate: String(site.foundingYear),
-    ...(sameAs.length ? { sameAs } : {}),
+    sameAs,
     contactPoint: {
       "@type": "ContactPoint",
       telephone: `+84${site.phone.replace(/^0/, "")}`,
@@ -38,7 +38,7 @@ export function organizationJsonLd() {
 
 /**
  * Schema.org LocalBusiness — trụ sở + từng chi nhánh (AEO/GEO: "gửi hàng quốc tế ở Nha Trang").
- * Không ghi toạ độ: số cũ là tâm TP.HCM chứ không phải địa chỉ thật — sai còn tệ hơn thiếu.
+ * Toạ độ lấy từ ghim Google Maps thật (số cũ là tâm TP.HCM).
  */
 export function localBusinessJsonLd() {
   const tel = (p: string) => `+84${p.replace(/\D/g, "").replace(/^0/, "")}`;
@@ -61,6 +61,9 @@ export function localBusinessJsonLd() {
       addressLocality: site.address.city,
       addressCountry: site.address.country,
     },
+    geo: { "@type": "GeoCoordinates", latitude: site.geo.lat, longitude: site.geo.lng },
+    hasMap: site.googleMaps,
+    sameAs: [site.facebook, site.googleMaps],
     openingHours: "Mo-Su 08:00-21:00",
     areaServed: "Worldwide",
     foundingDate: String(site.foundingYear),
