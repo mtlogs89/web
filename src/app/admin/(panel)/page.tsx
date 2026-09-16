@@ -1,10 +1,17 @@
 import Link from "next/link";
 import { Newspaper, Inbox, Package, Plus } from "lucide-react";
 import { prisma } from "@/lib/prisma";
+import { TrafficDashboard } from "@/components/admin/traffic-dashboard";
 
 export const dynamic = "force-dynamic";
 
-export default async function AdminDashboard() {
+export default async function AdminDashboard({
+  searchParams,
+}: {
+  searchParams: Promise<{ d?: string }>;
+}) {
+  const d = Number((await searchParams).d);
+  const days = [1, 7, 30].includes(d) ? d : 7;
   const [articles, published, leadsNew, orders, recentLeads] = await Promise.all([
     prisma.article.count(),
     prisma.article.count({ where: { published: true } }),
@@ -60,6 +67,8 @@ export default async function AdminDashboard() {
         )}
         <Link href="/admin/lead" className="mt-4 inline-block text-sm font-semibold text-brand-600">Xem tất cả →</Link>
       </div>
+
+      <TrafficDashboard days={days} />
     </div>
   );
 }

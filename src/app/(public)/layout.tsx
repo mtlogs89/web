@@ -1,6 +1,7 @@
 import { Header } from "@/components/site/header";
 import { Footer } from "@/components/site/footer";
 import { FloatingContact } from "@/components/site/floating-contact";
+import { SiteAnalytics } from "@/components/site/site-analytics";
 
 export default function PublicLayout({
   children,
@@ -11,6 +12,7 @@ export default function PublicLayout({
       <main className="flex-1">{children}</main>
       <Footer />
       <FloatingContact />
+      <SiteAnalytics />
     </>
   );
 }

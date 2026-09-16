@@ -90,7 +90,7 @@ export async function POST(req: Request) {
     create: data,
   });
 
-  if (article.published) await pingIndexNow([`/tin-tuc/${article.slug}`, "/tin-tuc"]);
+  if (article.published) void pingIndexNow([`/tin-tuc/${article.slug}`, "/tin-tuc"]);
 
   return NextResponse.json({
     ok: true,

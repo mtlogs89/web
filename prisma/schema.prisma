@@ -135,3 +135,58 @@ model QuoteAction {
   @@index([createdAt])
   @@index([sessionId])
 }
+
+/// 1 lượt xem trang của khách thật (bộ đo chạy bằng JS nên bot không đếm vào).
+/// Không lưu IP / tên / số điện thoại.
+model Visit {
+  id          String   @id
+  sessionId   String
+  /// Ngẫu nhiên trong localStorage — chỉ để biết khách quay lại, không nhận dạng được ai.
+  visitorId   String?
+  path        String
+  title       String?
+  /// Nguồn của CẢ PHIÊN: google-ads | google | chatgpt | perplexity | gemini | copilot | claude | facebook | zalo | coccoc | direct | other
+  source      String
+  refHost     String?
+  landing     Boolean  @default(false)
+  device      String
+  durationSec Int      @default(0)
+  maxScroll   Int      @default(0)
+  /// Tiêu đề mục (H2) xa nhất khách đọc tới trước khi rời trang
+  lastSection String?
+  createdAt   DateTime @default(now())
+
+  @@index([createdAt])
+  @@index([sessionId])
+  @@index([path])
+}
+
+/// Khách bấm gì: call | copy-phone | zalo | link-out | form
+model VisitEvent {
+  id        String   @id @default(cuid())
+  sessionId String
+  visitId   String?
+  path      String
+  type      String
+  /// Nút nằm ở đâu (id khối gần nhất, vd floating-call) hoặc chữ trên nút
+  label     String?
+  createdAt DateTime @default(now())
+
+  @@index([createdAt])
+  @@index([sessionId])
+}
+
+/// Bot tìm kiếm / AI đọc trang nào, gom theo ngày từ log nginx (scripts/ai-crawl-sync.py).
+model AiCrawl {
+  id       String  @id @default(cuid())
+  day      String
+  bot      String
+  /// user = có người đang hỏi AI và AI mở trang ra đọc | search = lập chỉ mục để trích dẫn | training = lấy dữ liệu huấn luyện
+  kind     String
+  path     String
+  hits     Int
+  verified Boolean
+
+  @@unique([day, bot, path])
+  @@index([day])
+}
