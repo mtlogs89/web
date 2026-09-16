@@ -67,6 +67,11 @@ export default async function ArticlePage({
   const faqs = parseFaq(article.faqJson);
   const url = `${site.url}/tin-tuc/${article.slug}`;
   const date = new Date(article.publishedAt).toLocaleDateString("vi-VN");
+  // Chỉ hiện "Cập nhật" khi sửa sau ngày đăng từ 1 ngày trở lên.
+  const updated =
+    article.updatedAt.getTime() - article.publishedAt.getTime() > 86_400_000
+      ? article.updatedAt
+      : null;
   const phone = article.phone || site.phone;
   const phoneDisplay = article.phone || site.phoneDisplay;
   // Bảng giá chỉ cần khi bài có chèn công cụ tính cước.
@@ -116,7 +121,15 @@ export default async function ArticlePage({
             {article.category}
           </span>
           <span className="flex items-center gap-1.5">
-            <Calendar className="h-4 w-4" /> {date} · {readingMinutes(article.content)} phút đọc
+            <Calendar className="h-4 w-4" />
+            <time dateTime={article.publishedAt.toISOString()}>{date}</time>
+            {updated && (
+              <>
+                {" "}· Cập nhật{" "}
+                <time dateTime={updated.toISOString()}>{updated.toLocaleDateString("vi-VN")}</time>
+              </>
+            )}{" "}
+            · {readingMinutes(article.content)} phút đọc
           </span>
         </div>
 

@@ -8,7 +8,7 @@ export const dynamic = "force-dynamic";
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   const now = new Date();
 
-  const staticRoutes = ["", "/gui-hang", "/nhap-hang", "/thu-vien", "/tin-tuc", "/tra-cuu", "/lien-he"].map(
+  const staticRoutes = ["", "/gioi-thieu", "/gui-hang", "/nhap-hang", "/thu-vien", "/tin-tuc", "/tra-cuu", "/lien-he"].map(
     (path) => ({
       url: `${site.url}${path}`,
       lastModified: now,
@@ -41,5 +41,26 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     // DB chưa sẵn sàng (vd lúc build) — bỏ qua, vẫn có route tĩnh
   }
 
-  return [...staticRoutes, ...serviceRoutes, ...articleRoutes];
+  // Trang chuyên mục (/tin-tuc?cat=) là trang trụ cột của từng tuyến — cho Google/AI biết.
+  let categoryRoutes: MetadataRoute.Sitemap = [];
+  try {
+    const cats = await prisma.article.groupBy({
+      by: ["category"],
+      where: { published: true },
+      _max: { updatedAt: true },
+      _count: { _all: true },
+    });
+    categoryRoutes = cats
+      .filter((c) => c._count._all >= 3)
+      .map((c) => ({
+        url: `${site.url}/tin-tuc?cat=${encodeURIComponent(c.category)}`,
+        lastModified: c._max.updatedAt ?? now,
+        changeFrequency: "weekly" as const,
+        priority: 0.7,
+      }));
+  } catch {
+    // như trên
+  }
+
+  return [...staticRoutes, ...serviceRoutes, ...categoryRoutes, ...articleRoutes];
 }

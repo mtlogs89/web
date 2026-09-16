@@ -31,6 +31,7 @@ export function Footer() {
         <div>
           <div className="mb-4 font-semibold text-white">Hỗ trợ</div>
           <ul className="space-y-2.5 text-sm">
+            <li><Link href="/gioi-thieu" className="hover:text-brand-400">Giới thiệu công ty</Link></li>
             <li><Link href="/tin-tuc" className="hover:text-brand-400">Tin tức & kinh nghiệm</Link></li>
             <li><Link href="/tra-cuu" className="hover:text-brand-400">Tra cứu đơn hàng</Link></li>
             <li><Link href="/lien-he" className="hover:text-brand-400">Báo giá</Link></li>

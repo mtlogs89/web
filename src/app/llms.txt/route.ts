@@ -60,6 +60,7 @@ ${serviceLines}
 ${articleLines || "- (đang cập nhật)"}
 
 ## Liên kết
+- Giới thiệu công ty: ${site.url}/gioi-thieu
 - Tin tức & cẩm nang: ${site.url}/tin-tuc
 - Tra cứu đơn hàng: ${site.url}/tra-cuu
 - Liên hệ / báo giá: ${site.url}/lien-he

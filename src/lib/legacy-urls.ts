@@ -11,6 +11,9 @@ export function legacyFallback(path: string): string {
   const p = path.toLowerCase();
   if (p.startsWith("/author/") || /^\/(index|sitemap|login|admin)\.html$/.test(p)) return "/";
   if (p === "/lien-he.html") return "/lien-he";
+  if (p === "/dich-vu") return "/gui-hang";
+  if (p === "/tracking" || p.startsWith("/tracking/")) return "/tra-cuu";
+  if (p === "/tuyen-dung") return "/lien-he";
   if (p.startsWith("/nhap-hang-") || p.includes("nhap-hang")) return "/nhap-hang";
   if (/^\/(huong-dan|kinh-nghiem|kien-thuc)\//.test(p) && /taobao|1688|wechat|trung-quoc|quang-chau|order/.test(p)) {
     return "/nhap-hang";

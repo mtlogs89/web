@@ -4,6 +4,7 @@ import bcrypt from "bcryptjs";
 import { revalidatePath } from "next/cache";
 import { redirect } from "next/navigation";
 import { prisma } from "@/lib/prisma";
+import { pingIndexNow } from "@/lib/indexnow";
 import { setSession, clearSession, getAdminId } from "@/lib/auth";
 import { HOME_DEFAULTS, type HomeSettingKey } from "@/lib/settings";
 import { services } from "@/lib/site";
@@ -383,6 +384,7 @@ export async function saveArticle(_prev: FormState, formData: FormData): Promise
   // Bài có thể đang được nhúng trong một trang dịch vụ — các trang đó dựng tĩnh
   // nên phải làm mới, không thì sửa bài xong trang dịch vụ vẫn hiện bản cũ.
   for (const p of SERVICE_PAGES) revalidatePath(`/dich-vu/${p.slug}`);
+  if (data.published) await pingIndexNow([`/tin-tuc/${slug}`, "/tin-tuc", "/llms.txt"]);
   redirect("/admin/bai-viet");
 }
 

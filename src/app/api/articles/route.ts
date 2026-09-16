@@ -1,5 +1,6 @@
 import { NextResponse } from "next/server";
 import { prisma } from "@/lib/prisma";
+import { pingIndexNow } from "@/lib/indexnow";
 import { generateThumbnail } from "@/lib/ai-thumbnail";
 
 export const dynamic = "force-dynamic";
@@ -88,6 +89,8 @@ export async function POST(req: Request) {
     update: data,
     create: data,
   });
+
+  if (article.published) await pingIndexNow([`/tin-tuc/${article.slug}`, "/tin-tuc"]);
 
   return NextResponse.json({
     ok: true,

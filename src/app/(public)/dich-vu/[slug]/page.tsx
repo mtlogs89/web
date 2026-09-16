@@ -15,12 +15,23 @@ import { ContactOverride } from "@/components/site/contact-override";
 import { getCustomCard } from "@/lib/service-cards";
 import { SERVICE_PAGES, getServicePageConfig } from "@/lib/service-pages";
 import { gallery } from "@/lib/gallery";
+import { getDestinations } from "@/lib/price-tables";
 import {
   JsonLd,
   serviceJsonLd,
   faqJsonLd,
   breadcrumbJsonLd,
 } from "@/lib/structured-data";
+
+const AREA_SERVED: Record<string, object> = {
+  "gui-hang-di-my": { "@type": "Country", name: "United States" },
+  "gui-hang-di-uc": { "@type": "Country", name: "Australia" },
+  "gui-hang-di-canada": { "@type": "Country", name: "Canada" },
+  "gui-hang-di-chau-au": { "@type": "Place", name: "European Union" },
+  "gui-hang-di-nhat": { "@type": "Country", name: "Japan" },
+  "gui-hang-di-han": { "@type": "Country", name: "South Korea" },
+  "nhap-hang-mua-ho": { "@type": "Country", name: "Vietnam" },
+};
 
 export function generateStaticParams() {
   return services.map((s) => ({ slug: s.slug }));
@@ -163,9 +174,29 @@ export default async function ServicePage({
   // FAQ hiển thị trên các trang rich là FAQ trong bài, nên schema phải lấy đúng bộ đó.
   const faqsForSchema = articleBody?.faqs.length ? articleBody.faqs : detail.faqs;
 
+  // Giá cho schema lấy đúng bảng của công cụ tính trên trang (chỉ tuyến có bảng theo mốc cân).
+  const dest = rich ? (await getDestinations()).find((d) => d.key === rich.destKey) : undefined;
+  const schemaPrice =
+    dest && dest.table.type === "steps"
+      ? {
+          low: dest.table.prices[0],
+          high: dest.table.prices[dest.table.prices.length - 1],
+          // Chưa ghi số ngày: bảng giá và FAQ trang đang lệch nhau, chờ chốt số đúng.
+          note: `Cước trọn gói tham khảo từ 0,5kg đến 20kg${dest.baoThue ? ", đã bao thuế" : ""}. Hàng trên 20kg liên hệ.`,
+        }
+      : undefined;
+
   return (
     <>
-      <JsonLd data={serviceJsonLd({ name: service.title, description: detail.intro, url })} />
+      <JsonLd
+        data={serviceJsonLd({
+          name: service.title,
+          description: detail.intro,
+          url,
+          areaServed: AREA_SERVED[slug],
+          price: schemaPrice,
+        })}
+      />
       <JsonLd data={faqJsonLd(faqsForSchema)} />
       <JsonLd
         data={breadcrumbJsonLd([

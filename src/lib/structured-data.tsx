@@ -36,8 +36,12 @@ export function organizationJsonLd() {
   };
 }
 
-/** Schema.org LocalBusiness — giúp Google/AI hiểu đây là doanh nghiệp địa phương (AEO/GEO). */
+/**
+ * Schema.org LocalBusiness — trụ sở + từng chi nhánh (AEO/GEO: "gửi hàng quốc tế ở Nha Trang").
+ * Không ghi toạ độ: số cũ là tâm TP.HCM chứ không phải địa chỉ thật — sai còn tệ hơn thiếu.
+ */
 export function localBusinessJsonLd() {
+  const tel = (p: string) => `+84${p.replace(/\D/g, "").replace(/^0/, "")}`;
   return {
     "@context": "https://schema.org",
     "@type": "MovingCompany",
@@ -46,8 +50,10 @@ export function localBusinessJsonLd() {
     name: site.name,
     legalName: site.legalName,
     url: site.url,
-    telephone: `+84${site.phone.replace(/^0/, "")}`,
+    telephone: tel(site.phone),
+    email: site.email,
     image: `${site.url}/images/og-cover.jpg`,
+    logo: `${site.url}/images/logo-full.png`,
     description: site.description,
     address: {
       "@type": "PostalAddress",
@@ -55,14 +61,16 @@ export function localBusinessJsonLd() {
       addressLocality: site.address.city,
       addressCountry: site.address.country,
     },
-    geo: {
-      "@type": "GeoCoordinates",
-      latitude: site.geo.lat,
-      longitude: site.geo.lng,
-    },
     openingHours: "Mo-Su 08:00-21:00",
     areaServed: "Worldwide",
     foundingDate: String(site.foundingYear),
+    department: site.branches.slice(1).map((b) => ({
+      "@type": "MovingCompany",
+      name: `${site.name} – ${b.name}`,
+      address: { "@type": "PostalAddress", streetAddress: b.address, addressCountry: "VN" },
+      ...(b.phones[0] ? { telephone: tel(b.phones[0]) } : {}),
+      openingHours: "Mo-Su 08:00-21:00",
+    })),
   };
 }
 
@@ -71,6 +79,10 @@ export function serviceJsonLd(input: {
   name: string;
   description: string;
   url: string;
+  /** Nước/khu vực nhận hàng, vd { "@type": "Country", name: "United States" }. */
+  areaServed?: object;
+  /** Khoảng giá (VNĐ) đúng bảng mà công cụ tính cước trên trang đang dùng. */
+  price?: { low: number; high: number; note: string };
 }) {
   return {
     "@context": "https://schema.org",
@@ -79,12 +91,20 @@ export function serviceJsonLd(input: {
     name: input.name,
     description: input.description,
     url: input.url,
-    provider: {
-      "@type": "MovingCompany",
-      name: site.name,
-      telephone: `+84${site.phone.replace(/^0/, "")}`,
-    },
-    areaServed: "Worldwide",
+    provider: { "@id": `${site.url}/#business` },
+    areaServed: input.areaServed ?? "Worldwide",
+    ...(input.price
+      ? {
+          offers: {
+            "@type": "AggregateOffer",
+            priceCurrency: "VND",
+            lowPrice: input.price.low,
+            highPrice: input.price.high,
+            description: input.price.note,
+            url: input.url,
+          },
+        }
+      : {}),
   };
 }
 

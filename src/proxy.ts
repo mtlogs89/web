@@ -15,7 +15,7 @@ export function proxy(request: NextRequest) {
 export const config = {
   // Chỉ chạy trên các tiền tố của web cũ — không đụng trang mới.
   matcher: [
-    "/(gui-hang-di-.*|ui-hang-di-.*|gui-hang/.+|nhap-hang-.*|thong-tin|thong-tin/.*|huong-dan|huong-dan/.*|kien-thuc|kien-thuc/.*|kinh-nghiem|kinh-nghiem/.*|bang-gia|bang-gia/.*|author/.*|index\\.html|sitemap\\.html|login\\.html|admin\\.html|lien-he\\.html)",
+    "/(gui-hang-di-.*|ui-hang-di-.*|gui-hang/.+|nhap-hang-.*|thong-tin|thong-tin/.*|huong-dan|huong-dan/.*|kien-thuc|kien-thuc/.*|kinh-nghiem|kinh-nghiem/.*|bang-gia|bang-gia/.*|author/.*|index\\.html|sitemap\\.html|login\\.html|admin\\.html|lien-he\\.html|page/.+|tracking|tracking/.*|tuyen-dung|dich-vu)",
     "/dich-vu/:slug/:rest+",
   ],
 };
