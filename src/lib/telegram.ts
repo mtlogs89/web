@@ -30,8 +30,12 @@ export async function notifyNewLead(lead: {
     `👉 ${ADMIN_LEAD_URL}`,
   ].filter(Boolean);
 
-  // Thử tối đa 2 lần: ngay sau khi PM2 restart, lần fetch đầu hay chết vì DNS chưa sẵn sàng.
-  for (let lan = 1; lan <= 2; lan++) {
+  // Mạng máy chủ → Telegram thỉnh thoảng chập (ETIMEDOUT) vài chục giây, và lần fetch đầu ngay sau
+  // PM2 restart hay chết vì DNS chưa sẵn sàng. Nên thử lại dãn dần trong ~2 phút rồi mới bỏ.
+  // Hàm này chạy sau khi đã trả lời khách (gọi qua after()), khách không phải chờ.
+  const choTruoc = [0, 3, 10, 30, 60]; // giây chờ trước mỗi lần thử
+  for (let lan = 1; lan <= choTruoc.length; lan++) {
+    if (choTruoc[lan - 1]) await new Promise((r) => setTimeout(r, choTruoc[lan - 1] * 1000));
     try {
       const res = await fetch(`https://api.telegram.org/bot${token}/sendMessage`, {
         method: "POST",
@@ -41,16 +45,19 @@ export async function notifyNewLead(lead: {
           text: lines.join("\n"),
           disable_web_page_preview: true,
         }),
-        // Khách không phải chờ Telegram: quá 8s thì bỏ, lead đã lưu DB rồi.
-        signal: AbortSignal.timeout(8000),
+        signal: AbortSignal.timeout(10000),
       });
-      if (res.ok) return;
+      if (res.ok) {
+        if (lan > 1) console.warn(`[telegram] báo lead gửi được ở lần ${lan}`);
+        return;
+      }
       console.error(`[telegram] notifyNewLead lỗi ${res.status} (lần ${lan}): ${(await res.text()).slice(0, 300)}`);
+      // 4xx (sai token/chat id) thì thử lại cũng vô ích, trừ 429 (bị giới hạn tốc độ).
+      if (res.status >= 400 && res.status < 500 && res.status !== 429) break;
     } catch (e) {
       const err = e as Error & { cause?: { code?: string } };
       console.error(`[telegram] notifyNewLead exception (lần ${lan}):`, err.cause?.code || err.message);
     }
-    if (lan === 1) await new Promise((r) => setTimeout(r, 1500));
   }
-  console.error("[telegram] KHÔNG gửi được báo lead sau 2 lần — kiểm tra /admin/lead thủ công");
+  console.error("[telegram] KHÔNG gửi được báo lead sau nhiều lần — kiểm tra /admin/lead thủ công");
 }

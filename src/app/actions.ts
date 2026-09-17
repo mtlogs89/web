@@ -1,5 +1,6 @@
 "use server";
 
+import { after } from "next/server";
 import { prisma } from "@/lib/prisma";
 import { notifyNewLead } from "@/lib/telegram";
 
@@ -25,7 +26,8 @@ export async function submitLead(_prev: LeadState, formData: FormData): Promise<
     data: { name, phone, route, weight, cargoType, message },
   });
 
-  await notifyNewLead({ name, phone, route, weight, cargoType, message });
+  // Báo Telegram chạy nền sau khi trả lời khách — có thử lại tới ~2 phút khi mạng chập.
+  after(() => notifyNewLead({ name, phone, route, weight, cargoType, message }));
 
   return {
     ok: true,
@@ -96,7 +98,8 @@ export async function submitQuoteLead(
     console.error("quoteAction lead failed:", e);
   }
 
-  await notifyNewLead({ name, phone, route, weight, cargoType, message });
+  // Báo Telegram chạy nền sau khi trả lời khách — có thử lại tới ~2 phút khi mạng chập.
+  after(() => notifyNewLead({ name, phone, route, weight, cargoType, message }));
 
   const h = gioViet();
   return {
