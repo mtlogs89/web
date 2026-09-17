@@ -28,6 +28,7 @@ const catHub = (category: string) => `/tin-tuc?cat=${encodeURIComponent(category
 export const TOPICS: Topic[] = [
   { category: "Gửi hàng đi Singapore", label: "Singapore", hub: catHub("Gửi hàng đi Singapore"), keywords: /singapore/ },
   { category: "Gửi hàng đi Malaysia", label: "Malaysia", hub: catHub("Gửi hàng đi Malaysia"), keywords: /malaysia|kuala-lumpur|penang|johor/ },
+  { category: "Gửi hàng đi Đài Loan", label: "Đài Loan", hub: catHub("Gửi hàng đi Đài Loan"), keywords: /dai-loan|dai-bac|kaohsiung|dai-trung|dao-vien|taiwan/ },
   { category: "Gửi hàng đi Thái Lan", label: "Thái Lan", hub: catHub("Gửi hàng đi Thái Lan"), keywords: /thai-lan|bangkok|chiang-mai|pattaya/ },
   { category: "Gửi hàng đi Canada", label: "Canada", hub: "/dich-vu/gui-hang-di-canada", keywords: /canada|toronto|vancouver|montreal|calgary|ottawa|edmonton/ },
   { category: "Gửi hàng đi Úc", label: "Úc", hub: "/dich-vu/gui-hang-di-uc", keywords: /(^|-)(di|o|sang)-uc($|-)|australia|sydney|melbourne|brisbane|perth|adelaide/ },

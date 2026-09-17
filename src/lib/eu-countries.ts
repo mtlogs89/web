@@ -48,4 +48,5 @@ export const DESTINATIONS: { category: string; label: string; flagImg: string }[
   { category: "Gửi hàng đi Singapore", label: "Singapore", flagImg: "/images/flags/sg.png" },
   { category: "Gửi hàng đi Malaysia", label: "Malaysia", flagImg: "/images/flags/my.png" },
   { category: "Gửi hàng đi Thái Lan", label: "Thái Lan", flagImg: "/images/flags/th.png" },
+  { category: "Gửi hàng đi Đài Loan", label: "Đài Loan", flagImg: "/images/flags/tw.png" },
 ];

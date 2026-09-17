@@ -87,7 +87,7 @@ export default async function NewsPage({
         {!cat && (
           <div className="mb-10">
             <h2 className="mb-4 text-xl font-black text-ink">Cẩm nang theo điểm đến</h2>
-            <div className="grid grid-cols-3 gap-3 lg:grid-cols-9">
+            <div className="grid grid-cols-3 gap-3 sm:grid-cols-5 lg:grid-cols-10">
               {DESTINATIONS.map((d) => (
                 <Link
                   key={d.category}

@@ -17,7 +17,7 @@ export const TRANSIT_ROUTES: Record<string, string> = {
 
 /**
  * Thời gian theo từng chuyên mục (tuyến) — chủ điền trong bảng xác nhận 16–17/09/2026.
- * Nhật, Hàn, Malaysia, Thái Lan: KHÔNG có dịch vụ đi tiết kiệm. Đài Loan chưa có số.
+ * Nhật, Hàn, Malaysia, Thái Lan, Đài Loan: KHÔNG có dịch vụ đi tiết kiệm.
  */
 export const ROUTE_TRANSIT: Record<string, { name: string; text: string }> = {
   "Gửi hàng đi Mỹ": { name: "Mỹ", text: "đi nhanh 3–5 ngày làm việc · đi tiết kiệm 8–12 ngày làm việc. Vùng sâu vùng xa (tuỳ postcode) cộng thêm 2–3 ngày" },
@@ -30,6 +30,7 @@ export const ROUTE_TRANSIT: Record<string, { name: string; text: string }> = {
   "Gửi hàng đi Singapore": { name: "Singapore", text: "đi nhanh 1 ngày làm việc · đi tiết kiệm 4 ngày làm việc" },
   "Gửi hàng đi Malaysia": { name: "Malaysia", text: "chỉ có dịch vụ đi nhanh, 3–5 ngày làm việc" },
   "Gửi hàng đi Thái Lan": { name: "Thái Lan", text: "chỉ có dịch vụ đi nhanh, 5–7 ngày làm việc" },
+  "Gửi hàng đi Đài Loan": { name: "Đài Loan", text: "chỉ có dịch vụ đi nhanh, 3–5 ngày làm việc" },
 };
 
 /** Trang dịch vụ → chuyên mục, để schema giá lấy đúng thời gian của tuyến. */
