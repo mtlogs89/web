@@ -15,6 +15,33 @@ export const TRANSIT_ROUTES: Record<string, string> = {
   "Gửi hàng đi Úc": "Úc",
 };
 
+/**
+ * Thời gian theo từng chuyên mục (tuyến) — chủ điền trong bảng xác nhận 16–17/09/2026.
+ * Nhật, Hàn, Malaysia, Thái Lan: KHÔNG có dịch vụ đi tiết kiệm. Đài Loan chưa có số.
+ */
+export const ROUTE_TRANSIT: Record<string, { name: string; text: string }> = {
+  "Gửi hàng đi Mỹ": { name: "Mỹ", text: "đi nhanh 3–5 ngày làm việc · đi tiết kiệm 8–12 ngày làm việc. Vùng sâu vùng xa (tuỳ postcode) cộng thêm 2–3 ngày" },
+  "Gửi hàng đi Canada": { name: "Canada", text: "đi nhanh 3–5 ngày làm việc · đi tiết kiệm 8–12 ngày làm việc. Vùng sâu vùng xa (tuỳ postcode) cộng thêm 2–3 ngày" },
+  "Gửi hàng đi Úc": { name: "Úc", text: "đi nhanh 3–5 ngày làm việc · đi tiết kiệm 8–12 ngày làm việc. Vùng sâu vùng xa (tuỳ postcode) cộng thêm 2–3 ngày" },
+  "Gửi hàng đi Châu Âu": { name: "Châu Âu", text: "đi nhanh 5–7 ngày làm việc · đi tiết kiệm 8–15 ngày làm việc, tuỳ quốc gia" },
+  "Gửi hàng đi Đức": { name: "Đức", text: "đi nhanh 5–7 ngày làm việc · đi tiết kiệm 8–15 ngày làm việc" },
+  "Gửi hàng đi Nhật Bản": { name: "Nhật Bản", text: "chỉ có dịch vụ đi nhanh, 5–7 ngày làm việc" },
+  "Gửi hàng đi Hàn Quốc": { name: "Hàn Quốc", text: "chỉ có dịch vụ đi nhanh, 3–5 ngày làm việc" },
+  "Gửi hàng đi Singapore": { name: "Singapore", text: "đi nhanh 1 ngày làm việc · đi tiết kiệm 4 ngày làm việc" },
+  "Gửi hàng đi Malaysia": { name: "Malaysia", text: "chỉ có dịch vụ đi nhanh, 3–5 ngày làm việc" },
+  "Gửi hàng đi Thái Lan": { name: "Thái Lan", text: "chỉ có dịch vụ đi nhanh, 5–7 ngày làm việc" },
+};
+
+/** Trang dịch vụ → chuyên mục, để schema giá lấy đúng thời gian của tuyến. */
+export const SERVICE_ROUTE: Record<string, string> = {
+  "gui-hang-di-my": "Gửi hàng đi Mỹ",
+  "gui-hang-di-canada": "Gửi hàng đi Canada",
+  "gui-hang-di-uc": "Gửi hàng đi Úc",
+  "gui-hang-di-chau-au": "Gửi hàng đi Châu Âu",
+  "gui-hang-di-nhat": "Gửi hàng đi Nhật Bản",
+  "gui-hang-di-han": "Gửi hàng đi Hàn Quốc",
+};
+
 /** Lưu ý mặt hàng theo tuyến — chủ xác nhận 17/09/2026. */
 export const ROUTE_GOODS_NOTE: Record<string, string> = {
   "Gửi hàng đi Úc":

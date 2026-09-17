@@ -13,7 +13,7 @@ import {
   readingMinutes,
 } from "@/lib/articles";
 import { detectTopic, topicOfCategory } from "@/lib/topics";
-import { ROUTE_GOODS_NOTE, TRANSIT, TRANSIT_ROUTES } from "@/lib/transit";
+import { ROUTE_GOODS_NOTE, ROUTE_TRANSIT } from "@/lib/transit";
 import {
   JsonLd,
   articleJsonLd,
@@ -146,12 +146,11 @@ export default async function ArticlePage({
           </p>
         )}
 
-        {TRANSIT_ROUTES[article.category] && (
+        {ROUTE_TRANSIT[article.category] && (
           // Số chuẩn do chủ chốt — bài robot viết có thể ghi số khác, ô này là câu trả lời chính thức.
           <div className="mt-4 rounded-2xl border border-sun-200 bg-sun-50 px-5 py-4 text-ink">
-            <strong>Thời gian gửi đi {TRANSIT_ROUTES[article.category]} (đường bay):</strong> đi nhanh{" "}
-            {TRANSIT.fast[0]}–{TRANSIT.fast[1]} ngày làm việc · đi tiết kiệm {TRANSIT.economy[0]}–{TRANSIT.economy[1]} ngày
-            làm việc. Vùng sâu vùng xa (tuỳ postcode) cộng thêm {TRANSIT.remoteExtra[0]}–{TRANSIT.remoteExtra[1]} ngày.
+            <strong>Thời gian gửi đi {ROUTE_TRANSIT[article.category].name} (đường bay):</strong>{" "}
+            {ROUTE_TRANSIT[article.category].text}.
             {ROUTE_GOODS_NOTE[article.category] && (
               <span className="mt-2 block">
                 <strong>Mặt hàng:</strong> {ROUTE_GOODS_NOTE[article.category]}
