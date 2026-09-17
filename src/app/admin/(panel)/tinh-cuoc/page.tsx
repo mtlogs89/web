@@ -1,4 +1,5 @@
 import { prisma } from "@/lib/prisma";
+import { QuoteCharts } from "@/components/admin/quote-charts";
 import { Calculator, Users, Phone, TrendingUp, MessageCircle, UserCheck } from "lucide-react";
 
 export const dynamic = "force-dynamic";
@@ -70,7 +71,8 @@ export default async function TinhCuocPage() {
   const homNay = new Date(now.getFullYear(), now.getMonth(), now.getDate());
   const bayNgay = new Date(homNay.getTime() - 6 * 86400000);
 
-  const [tong, soHomNay, so7Ngay, rows, moiNhat, hanhDong] = await Promise.all([
+  const SO_NGAY_BIEU_DO = 14;
+  const [tong, soHomNay, so7Ngay, rows, moiNhat, hanhDong, luotBieuDo] = await Promise.all([
     prisma.quoteLog.count(),
     prisma.quoteLog.count({ where: { createdAt: { gte: homNay } } }),
     prisma.quoteLog.count({ where: { createdAt: { gte: bayNgay } } }),
@@ -85,6 +87,11 @@ export default async function TinhCuocPage() {
     prisma.quoteAction.findMany({
       where: { createdAt: { gte: bayNgay } },
       select: { sessionId: true, action: true },
+    }),
+    // Lấy dư 1 ngày để ngày đầu biểu đồ đủ số dù máy chủ và giờ VN lệch múi.
+    prisma.quoteLog.findMany({
+      where: { createdAt: { gte: new Date(now.getTime() - (SO_NGAY_BIEU_DO + 1) * 86400000) } },
+      select: { id: true, createdAt: true, sessionId: true },
     }),
   ]);
 
@@ -163,6 +170,14 @@ export default async function TinhCuocPage() {
               label="Số người (7 ngày)"
               value={soNguoi}
               hint={so7Ngay > 0 ? `trung bình ${(so7Ngay / Math.max(soNguoi, 1)).toFixed(1)} lượt/người` : undefined}
+            />
+          </div>
+
+          <div className="mt-6">
+            <QuoteCharts
+              now={now.getTime()}
+              soNgay={SO_NGAY_BIEU_DO}
+              hits={luotBieuDo.map((r) => ({ t: r.createdAt.getTime(), s: r.sessionId ?? r.id }))}
             />
           </div>
 
