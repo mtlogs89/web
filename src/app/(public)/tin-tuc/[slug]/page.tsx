@@ -13,7 +13,7 @@ import {
   readingMinutes,
 } from "@/lib/articles";
 import { detectTopic, topicOfCategory } from "@/lib/topics";
-import { TRANSIT, TRANSIT_ROUTES } from "@/lib/transit";
+import { ROUTE_GOODS_NOTE, TRANSIT, TRANSIT_ROUTES } from "@/lib/transit";
 import {
   JsonLd,
   articleJsonLd,
@@ -152,6 +152,11 @@ export default async function ArticlePage({
             <strong>Thời gian gửi đi {TRANSIT_ROUTES[article.category]} (đường bay):</strong> đi nhanh{" "}
             {TRANSIT.fast[0]}–{TRANSIT.fast[1]} ngày làm việc · đi tiết kiệm {TRANSIT.economy[0]}–{TRANSIT.economy[1]} ngày
             làm việc. Vùng sâu vùng xa (tuỳ postcode) cộng thêm {TRANSIT.remoteExtra[0]}–{TRANSIT.remoteExtra[1]} ngày.
+            {ROUTE_GOODS_NOTE[article.category] && (
+              <span className="mt-2 block">
+                <strong>Mặt hàng:</strong> {ROUTE_GOODS_NOTE[article.category]}
+              </span>
+            )}
           </div>
         )}
 

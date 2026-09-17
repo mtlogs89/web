@@ -15,6 +15,12 @@ export const TRANSIT_ROUTES: Record<string, string> = {
   "Gửi hàng đi Úc": "Úc",
 };
 
+/** Lưu ý mặt hàng theo tuyến — chủ xác nhận 17/09/2026. */
+export const ROUTE_GOODS_NOTE: Record<string, string> = {
+  "Gửi hàng đi Úc":
+    "Thịt khô, giò chả, sữa, trứng: Minh Thiện vẫn nhận gửi (phụ thu theo kg), nhưng Úc kiểm dịch nhóm này rất chặt nên có rủi ro hàng bị giữ hoặc tiêu huỷ ở đầu Úc. Hạt giống, cây cảnh, đồ dính đất: không nhận.",
+};
+
 const r = (x: readonly [number, number]) => `${x[0]}–${x[1]}`;
 
 export const TRANSIT_SHORT = `đi nhanh ${r(TRANSIT.fast)} ngày, đi tiết kiệm ${r(TRANSIT.economy)} ngày làm việc`;
