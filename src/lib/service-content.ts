@@ -72,7 +72,7 @@ export const serviceContent: Record<string, ServiceDetail> = {
     ],
     items: ["Quà tặng, đồ cá nhân", "Thực phẩm khô được phép", "Hàng mẫu, hàng thương mại", "Tài liệu, chứng từ"],
     faqs: [
-      { q: "Gửi hàng đi Châu Âu mất bao lâu?", a: "Khoảng 4–8 ngày tùy quốc gia." },
+      { q: "Gửi hàng đi Châu Âu mất bao lâu?", a: "Đi nhanh 5–7 ngày, đi tiết kiệm 8–15 ngày làm việc tuỳ quốc gia." },
     ],
   },
   "gui-hang-di-nhat": {
@@ -85,15 +85,15 @@ export const serviceContent: Record<string, ServiceDetail> = {
     ],
     items: ["Đồ ăn, thực phẩm khô", "Thuốc, đồ dùng cá nhân", "Quà tặng", "Hàng kinh doanh"],
     faqs: [
-      { q: "Gửi hàng đi Nhật Bản mất bao lâu?", a: "Khoảng 3–6 ngày tùy loại dịch vụ." },
+      { q: "Gửi hàng đi Nhật Bản mất bao lâu?", a: "Tuyến Nhật chỉ có dịch vụ đi nhanh: 5–7 ngày làm việc." },
       { q: "Gửi đồ ăn cho du học sinh ở Nhật được không?", a: "Được với đồ khô đóng gói kỹ; nên tránh đồ tươi và khai báo rõ ràng." },
     ],
   },
   "gui-hang-di-han": {
     intro:
-      "Gửi hàng đi Hàn Quốc 3–6 ngày, giao tận nhà Seoul, Busan, Incheon, Daegu và các khu công nghiệp Ansan, Hwaseong. Chuyên thùng đồ ăn quê cho lao động EPS, du học sinh và các gia đình Việt–Hàn: lấy hàng tận nơi, đóng gói miễn phí, khai báo chuẩn — tuyệt đối không để lọt hàng cấm ảnh hưởng visa người nhận.",
+      "Gửi hàng đi Hàn Quốc 3–5 ngày làm việc, giao tận nhà Seoul, Busan, Incheon, Daegu và các khu công nghiệp Ansan, Hwaseong. Chuyên thùng đồ ăn quê cho lao động EPS, du học sinh và các gia đình Việt–Hàn: lấy hàng tận nơi, đóng gói miễn phí, khai báo chuẩn — tuyệt đối không để lọt hàng cấm ảnh hưởng visa người nhận.",
     highlights: [
-      { title: "Bay 3–6 ngày", desc: "Chuyến dày TP.HCM – Incheon, tracking 24/7 tới khi ký nhận." },
+      { title: "Bay 3–5 ngày", desc: "Chuyến dày TP.HCM – Incheon, tracking 24/7 tới khi ký nhận." },
       { title: "Chuyên EPS & gia đình Việt–Hàn", desc: "Giao tận nhà trọ, KTX công ty ở Ansan, Hwaseong và toàn quốc." },
       { title: "Lọc hàng cấm miễn phí", desc: "Hàn phạt sản phẩm thịt tới chục triệu won — Minh Thiện kiểm từng món trước khi bay." },
     ],
@@ -104,7 +104,7 @@ export const serviceContent: Record<string, ServiceDetail> = {
       "Quần áo, mỹ phẩm, đồ dùng cá nhân",
     ],
     faqs: [
-      { q: "Gửi hàng đi Hàn Quốc mất bao lâu?", a: "3–6 ngày làm việc tuỳ thành phố: Seoul/Gyeonggi nhận sớm nhất, Busan thêm khoảng 1 ngày. Có tracking theo dõi 24/7." },
+      { q: "Gửi hàng đi Hàn Quốc mất bao lâu?", a: "Tuyến Hàn chỉ có dịch vụ đi nhanh: 3–5 ngày làm việc. Có tracking theo dõi 24/7." },
       { q: "Gửi đồ ăn cho người lao động EPS ở Ansan được không?", a: "Được — đây là tuyến quen của Minh Thiện: giao tận nhà trọ, KTX công ty. Cần địa chỉ tiếng Hàn nguyên văn và số điện thoại 010 của người nhận." },
       { q: "Vì sao không được gửi khô bò, lạp xưởng đi Hàn?", a: "Hàn cấm nghiêm mọi sản phẩm thịt (phòng dịch tả heo châu Phi), phạt tới cả chục triệu won và ảnh hưởng hồ sơ visa người nhận. Thay bằng cá khô, tôm khô, mực khô hút chân không — đi êm 100%." },
       { q: "Gửi quà Tết đi Hàn cần lưu ý gì?", a: "Tết Việt trùng Seollal Hàn — bưu vận Hàn quá tải trước lễ cả tuần. Nên gửi trước Tết 3 tuần để chắc chắn kịp giao thừa." },
