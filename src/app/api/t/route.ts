@@ -18,7 +18,11 @@ const int = (v: unknown, max: number) => {
  * Nhận số liệu từ bộ đo SiteAnalytics. Route công khai: chỉ nhận đúng trường cần,
  * cắt độ dài, không lưu IP. Luôn trả 204 — hỏng thì mất thống kê, khách không biết gì.
  */
+// Bot chạy được JavaScript (crawler Facebook, trình duyệt tự động…) — không phải khách.
+const BOT_UA = /bot|crawl|spider|slurp|meta-externalagent|facebookexternalhit|headless|lighthouse|preview|python|curl|wget/i;
+
 export async function POST(req: Request) {
+  if (BOT_UA.test(req.headers.get("user-agent") ?? "")) return new Response(null, { status: 204 });
   try {
     const b = JSON.parse(await req.text()) as Record<string, unknown>;
     const sid = str(b.sid, 64);
