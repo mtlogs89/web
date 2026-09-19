@@ -106,17 +106,13 @@ export default async function HomePage() {
                 <Package className="h-5 w-5" /> Xem dịch vụ
               </Link>
             </div>
-            <div className="mt-10 grid max-w-md grid-cols-3 gap-6">
+            <div className="mt-10 grid max-w-xs grid-cols-2 gap-6">
               <div>
                 <div className="text-3xl font-black text-brand-600">200+</div>
                 <div className="text-sm text-ink-soft">Quốc gia</div>
               </div>
               <div>
-                <div className="text-3xl font-black text-coral-500">10K+</div>
-                <div className="text-sm text-ink-soft">Đơn / tháng</div>
-              </div>
-              <div>
-                <div className="text-3xl font-black text-sun-500">8+</div>
+                <div className="text-3xl font-black text-sun-500">{site.experienceYears}+</div>
                 <div className="text-sm text-ink-soft">Năm kinh nghiệm</div>
               </div>
             </div>

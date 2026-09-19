@@ -24,7 +24,6 @@ export function organizationJsonLd() {
     url: site.url,
     logo: `${site.url}/images/logo-full.png`,
     telephone: `+84${site.phone.replace(/^0/, "")}`,
-    foundingDate: String(site.foundingYear),
     sameAs,
     contactPoint: {
       "@type": "ContactPoint",
@@ -66,7 +65,6 @@ export function localBusinessJsonLd() {
     sameAs: [site.facebook, site.googleMaps],
     openingHours: "Mo-Su 08:00-21:00",
     areaServed: "Worldwide",
-    foundingDate: String(site.foundingYear),
     department: site.branches.slice(1).map((b) => ({
       "@type": "MovingCompany",
       name: `${site.name} – ${b.name}`,

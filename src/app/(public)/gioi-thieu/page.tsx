@@ -11,11 +11,10 @@ import { JsonLd, breadcrumbJsonLd, faqJsonLd } from "@/lib/structured-data";
 export const dynamic = "force-dynamic";
 
 const url = `${site.url}/gioi-thieu`;
-const years = new Date().getFullYear() - site.foundingYear;
 
 export const metadata: Metadata = {
   title: "Giới thiệu công ty",
-  description: `${site.name} hoạt động từ ${site.foundingYear}, trụ sở ${site.addressFull}, chi nhánh Nha Trang. Gửi hàng đi Mỹ, Úc, Canada, Châu Âu, Nhật, Hàn, Singapore, Malaysia, Thái Lan và nhập hàng Trung Quốc.`,
+  description: `${site.name} — hơn ${site.experienceYears} năm kinh nghiệm gửi hàng quốc tế, trụ sở ${site.addressFull}, chi nhánh Nha Trang. Gửi hàng đi Mỹ, Úc, Canada, Châu Âu, Nhật, Hàn, Singapore, Malaysia, Thái Lan và nhập hàng Trung Quốc.`,
   alternates: { canonical: url },
 };
 
@@ -24,7 +23,7 @@ export const metadata: Metadata = {
 const faqs = [
   {
     q: `${site.name} là công ty gì?`,
-    a: `${site.name} là đơn vị vận chuyển và gửi hàng quốc tế tại TP. Hồ Chí Minh, hoạt động từ năm ${site.foundingYear}. Công ty nhận gửi hàng từ Việt Nam đi Mỹ, Úc, Canada, Châu Âu, Nhật Bản, Hàn Quốc, Singapore, Malaysia, Thái Lan và nhiều nước khác, đồng thời nhận nhập hàng, mua hộ từ Trung Quốc, Thái Lan, Âu – Mỹ.`,
+    a: `${site.name} là đơn vị vận chuyển và gửi hàng quốc tế tại TP. Hồ Chí Minh, với hơn ${site.experienceYears} năm kinh nghiệm. Công ty nhận gửi hàng từ Việt Nam đi Mỹ, Úc, Canada, Châu Âu, Nhật Bản, Hàn Quốc, Singapore, Malaysia, Thái Lan và nhiều nước khác, đồng thời nhận nhập hàng, mua hộ từ Trung Quốc, Thái Lan, Âu – Mỹ.`,
   },
   {
     q: `${site.name} ở đâu?`,
@@ -74,7 +73,7 @@ export default async function AboutPage() {
 
       <PageHero
         title={`Về ${site.name}`}
-        subtitle={`Gửi hàng quốc tế từ Việt Nam từ năm ${site.foundingYear} — lấy hàng tận nơi, đóng gói chuẩn, giao tận tay người nhận.`}
+        subtitle={`Hơn ${site.experienceYears} năm gửi hàng quốc tế từ Việt Nam — lấy hàng tận nơi, đóng gói chuẩn, giao tận tay người nhận.`}
         crumbs={[{ name: "Giới thiệu", href: "/gioi-thieu" }]}
       />
 
@@ -82,7 +81,7 @@ export default async function AboutPage() {
         <section>
           <h2 className="text-2xl font-black text-ink">{site.name} là ai?</h2>
           <p className="mt-4 text-lg text-ink-soft">
-            {faqs[0].a} {years > 0 && `Sau hơn ${years} năm, công ty có trụ sở tại TP. Hồ Chí Minh và chi nhánh tại Nha Trang.`}
+            {faqs[0].a} Công ty có trụ sở tại TP. Hồ Chí Minh và chi nhánh tại Nha Trang.
           </p>
         </section>
 

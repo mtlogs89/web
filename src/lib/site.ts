@@ -22,7 +22,8 @@ export const site = {
   googleMaps: "https://maps.app.goo.gl/T229ah7i89mfNCz49",
   zalo: "https://zalo.me/0589778989",
   facebook: "https://www.facebook.com/minhthienlogistics",
-  foundingYear: 2018,
+  // Chủ chốt 19/09/2026: ghi "hơn 10 năm kinh nghiệm", KHÔNG ghi năm thành lập.
+  experienceYears: 10,
   branches: [
     {
       name: "Trụ sở TP. Hồ Chí Minh",
