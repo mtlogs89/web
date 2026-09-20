@@ -120,27 +120,3 @@ export function tomTatThe(excerpt?: string | null, metaDescription?: string | nu
   if (cat.length >= 40 && !(dungChung && meta)) return cat;
   return meta || cat;
 }
-
-/**
- * Tách tóm tắt đầu bài thành từng phần để vẽ cho dễ đọc.
- *
- * Chủ chốt 17/09/2026 viết theo dạng nhãn: "<câu mở>. Thời gian: … Giá: … (giá tạm ước
- * tính…). Nội dung bài: …". Đổ nguyên cục ra một đoạn thì thành bức tường chữ, lại trùng
- * với ô vàng thời gian ngay bên dưới. Hàm này KHÔNG sửa chữ, chỉ cắt ra để vẽ thành dòng.
- * Bài nào không theo dạng nhãn thì `mo` giữ nguyên cả câu, các phần kia rỗng.
- */
-export function tachTomTat(excerpt?: string | null) {
-  const t = (excerpt ?? "").trim();
-  const lay = (nhan: string) => {
-    const i = t.search(new RegExp(`(^|\\s)${nhan}:`));
-    if (i < 0) return "";
-    const sau = t.slice(i).replace(new RegExp(`^\\s*${nhan}:\\s*`), "");
-    const het = sau.search(/\s(?=Thời gian:|Giá:|Nội dung bài:)/);
-    return (het < 0 ? sau : sau.slice(0, het)).trim();
-  };
-  return {
-    mo: t.split(/\s(?=Thời gian:|Giá:|Nội dung bài:)/)[0].trim(),
-    thoiGian: lay("Thời gian"),
-    gia: lay("Giá"),
-  };
-}

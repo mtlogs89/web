@@ -11,7 +11,6 @@ import {
   getRelatedArticles,
   parseFaq,
   readingMinutes,
-  tachTomTat,
   tomTatThe,
 } from "@/lib/articles";
 import { detectTopic, topicOfCategory } from "@/lib/topics";
@@ -140,33 +139,13 @@ export default async function ArticlePage({
           </span>
         </div>
 
-        {article.excerpt && (() => {
+        {article.excerpt && (
           // AEO: câu trả lời ngắn ngay đầu bài — Google/ChatGPT hay trích đoạn này.
-          // Vẽ thành từng dòng có nhãn cho dễ đọc; dòng thời gian bỏ đi khi ô vàng ngay
-          // dưới đã nói rồi, khỏi lặp hai lần liền nhau.
-          const tt = tachTomTat(article.excerpt);
-          const lapThoiGian = Boolean(ROUTE_TRANSIT[article.category]);
-          const dong = [
-            ...(tt.thoiGian && !lapThoiGian ? [{ nhan: "Thời gian", giaTri: tt.thoiGian }] : []),
-            ...(tt.gia ? [{ nhan: "Giá", giaTri: tt.gia }] : []),
-          ];
-          return (
-            <div className="mt-6 rounded-2xl border-l-4 border-brand-500 bg-brand-50 px-5 py-4 text-ink">
-              <p className="text-xs font-black uppercase tracking-wide text-brand-700">Tóm tắt nhanh</p>
-              <p className="mt-1 font-medium">{tt.mo}</p>
-              {dong.length > 0 && (
-                <dl className="mt-3 space-y-1.5 border-t border-brand-100 pt-3 text-sm">
-                  {dong.map((d) => (
-                    <div key={d.nhan} className="sm:flex sm:gap-2">
-                      <dt className="shrink-0 font-semibold text-brand-700 sm:w-20">{d.nhan}</dt>
-                      <dd className="text-ink-soft">{d.giaTri}</dd>
-                    </div>
-                  ))}
-                </dl>
-              )}
-            </div>
-          );
-        })()}
+          <p className="mt-6 rounded-2xl border-l-4 border-brand-500 bg-brand-50 px-5 py-4 font-medium text-ink">
+            <strong className="text-brand-700">Tóm tắt nhanh: </strong>
+            {article.excerpt}
+          </p>
+        )}
 
         {ROUTE_TRANSIT[article.category] && (
           // Số chuẩn do chủ chốt — bài robot viết có thể ghi số khác, ô này là câu trả lời chính thức.
