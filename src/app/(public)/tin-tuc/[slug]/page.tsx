@@ -11,6 +11,7 @@ import {
   getRelatedArticles,
   parseFaq,
   readingMinutes,
+  tomTatThe,
 } from "@/lib/articles";
 import { detectTopic, topicOfCategory } from "@/lib/topics";
 import { ROUTE_GOODS_NOTE, ROUTE_TRANSIT } from "@/lib/transit";
@@ -221,8 +222,10 @@ export default async function ArticlePage({
                         className="block h-full rounded-2xl border border-brand-50 bg-white p-4 shadow-sm hover:border-brand-200"
                       >
                         <span className="font-bold text-ink">{r.title}</span>
-                        {r.excerpt && (
-                          <span className="mt-1 line-clamp-2 block text-sm text-ink-muted">{r.excerpt}</span>
+                        {tomTatThe(r.excerpt, r.metaDescription) && (
+                          <span className="mt-1 line-clamp-2 text-sm text-ink-muted">
+                            {tomTatThe(r.excerpt, r.metaDescription)}
+                          </span>
                         )}
                       </Link>
                     </li>

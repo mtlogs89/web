@@ -1,7 +1,7 @@
 import Link from "next/link";
 import Image from "next/image";
 import { Calendar } from "lucide-react";
-import { readingMinutes } from "@/lib/articles";
+import { readingMinutes, tomTatThe } from "@/lib/articles";
 
 const grads = [
   "linear-gradient(135deg,#1FB6A2,#0f7568)",
@@ -13,6 +13,7 @@ type ArticleLike = {
   slug: string;
   title: string;
   excerpt: string | null;
+  metaDescription?: string | null;
   category: string;
   coverImage: string | null;
   content: string;
@@ -42,7 +43,11 @@ export function ArticleCard({ article, index = 0 }: { article: ArticleLike; inde
             {article.category}
           </span>
           <h3 className="mt-3 text-lg font-bold leading-snug text-ink">{article.title}</h3>
-          {article.excerpt && <p className="mt-2 line-clamp-2 text-sm text-ink-soft">{article.excerpt}</p>}
+          {tomTatThe(article.excerpt, article.metaDescription) && (
+            <p className="mt-2 line-clamp-2 text-sm text-ink-soft">
+              {tomTatThe(article.excerpt, article.metaDescription)}
+            </p>
+          )}
           <div className="mt-4 flex items-center gap-2 text-xs text-ink-muted">
             <Calendar className="h-3.5 w-3.5" /> {date} · {readingMinutes(article.content)} phút đọc
           </div>

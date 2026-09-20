@@ -68,7 +68,7 @@ export async function getRelatedArticles(
       category: { in: [article.category, "Kiến thức"] },
       NOT: { content: EMPTY_BODY },
     },
-    select: { slug: true, title: true, excerpt: true, category: true, publishedAt: true },
+    select: { slug: true, title: true, excerpt: true, metaDescription: true, category: true, publishedAt: true },
     orderBy: { publishedAt: "desc" },
   });
   const mine = slugTokens(article.slug);
@@ -102,4 +102,21 @@ export async function findSimilarSlug(slug: string): Promise<string | null> {
     select: { slug: true, title: true, category: true },
   });
   return bestSlugMatch(slug, rows);
+}
+
+/**
+ * Tóm tắt ngắn cho THẺ bài (lưới "Bài viết liên quan", danh sách tin tức).
+ *
+ * Ô `excerpt` là bản tóm tắt đầu bài chủ duyệt 17/09/2026, có đủ nhãn "Thời gian: …" và
+ * "Giá: …". Ở đầu bài thì đúng, nhưng trên thẻ thì mọi bài cùng tuyến có thời gian và giá
+ * y hệt nhau ⇒ 6 thẻ đọc như một. Thẻ chỉ lấy câu đầu — câu nói riêng về mặt hàng của bài
+ * đó — và bỏ phần nhãn. Ngắn quá thì lấy mô tả SEO thay, vì nó viết riêng cho từng bài.
+ */
+export function tomTatThe(excerpt?: string | null, metaDescription?: string | null): string {
+  const cat = (excerpt ?? "").split(/\s(?=Thời gian:|Giá:|Nội dung bài:)/)[0].trim();
+  const meta = (metaDescription ?? "").trim();
+  // Bài tổng quan có câu đầu dùng chung cho cả tuyến — dùng mô tả SEO cho thẻ đỡ trùng.
+  const dungChung = /lấy hàng tận nơi, đóng gói miễn phí/.test(cat);
+  if (cat.length >= 40 && !(dungChung && meta)) return cat;
+  return meta || cat;
 }
