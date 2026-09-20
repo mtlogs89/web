@@ -1,0 +1,2932 @@
+[
+ {
+  "ten": "Mỹ",
+  "slug": "my",
+  "hang": [
+   {
+    "ten": "Đồ khô, đặc sản quê",
+    "nhom": "THỰC PHẨM",
+    "viDu": "bánh tráng, gạo, hạt điều, trái cây sấy, mì gói",
+    "trangThai": "nhan",
+    "ghiChu": ""
+   },
+   {
+    "ten": "Cá khô, mực khô",
+    "nhom": "THỰC PHẨM",
+    "viDu": "",
+    "trangThai": "nhan",
+    "ghiChu": ""
+   },
+   {
+    "ten": "Tôm khô",
+    "nhom": "THỰC PHẨM",
+    "viDu": "",
+    "trangThai": "nhan",
+    "ghiChu": ""
+   },
+   {
+    "ten": "Nước mắm, mắm các loại",
+    "nhom": "THỰC PHẨM",
+    "viDu": "mắm tôm, mắm nêm, mắm cá",
+    "trangThai": "nhan",
+    "ghiChu": "Phụ thu chất lỏng 300.000đ/kiện"
+   },
+   {
+    "ten": "Giò chả, chả lụa",
+    "nhom": "THỰC PHẨM",
+    "viDu": "đã chín, hút chân không",
+    "trangThai": "dieu-kien",
+    "ghiChu": "Đi được nhưng có rủi ro đầu Mỹ. Phụ thu theo từng kí hàng."
+   },
+   {
+    "ten": "Thịt khô, khô bò, lạp xưởng, chà bông",
+    "nhom": "THỰC PHẨM",
+    "viDu": "sản phẩm từ thịt",
+    "trangThai": "dieu-kien",
+    "ghiChu": "Đi được nhưng có rủi ro đầu Mỹ. Phụ thu theo từng kí hàng."
+   },
+   {
+    "ten": "Hải sản, thực phẩm đông lạnh",
+    "nhom": "THỰC PHẨM",
+    "viDu": "",
+    "trangThai": "dieu-kien",
+    "ghiChu": "Đi 3-5 ngày. Chỉ nhận hải sản đông lạnh."
+   },
+   {
+    "ten": "Bánh kẹo, mứt Tết",
+    "nhom": "THỰC PHẨM",
+    "viDu": "",
+    "trangThai": "nhan",
+    "ghiChu": ""
+   },
+   {
+    "ten": "Cà phê",
+    "nhom": "THỰC PHẨM",
+    "viDu": "bột, hạt, hoà tan",
+    "trangThai": "nhan",
+    "ghiChu": ""
+   },
+   {
+    "ten": "Trà",
+    "nhom": "THỰC PHẨM",
+    "viDu": "trà khô, trà túi lọc",
+    "trangThai": "nhan",
+    "ghiChu": ""
+   },
+   {
+    "ten": "Sữa, trứng và đồ làm từ sữa",
+    "nhom": "THỰC PHẨM",
+    "viDu": "sữa bột, bánh có trứng",
+    "trangThai": "dieu-kien",
+    "ghiChu": "Đi được nhưng có rủi ro đầu Mỹ. Phụ thu theo từng kí hàng."
+   },
+   {
+    "ten": "Bột trà sữa",
+    "nhom": "THỰC PHẨM",
+    "viDu": "bột kem pha trà sữa (vd Frima creamer 1kg)",
+    "trangThai": "dieu-kien",
+    "ghiChu": "Có phụ thu 500.000đ/kiện. KHÔNG bao đầu nhập Mỹ — báo khách trước hàng có thể bị giữ."
+   },
+   {
+    "ten": "Rau củ, trái cây tươi",
+    "nhom": "THỰC PHẨM",
+    "viDu": "",
+    "trangThai": "khong",
+    "ghiChu": ""
+   },
+   {
+    "ten": "Gia vị, nước sốt đóng chai",
+    "nhom": "THỰC PHẨM",
+    "viDu": "tương ớt, dầu hào, sa tế",
+    "trangThai": "dieu-kien",
+    "ghiChu": "Phụ thu chất lỏng 300.000đ/kiện."
+   },
+   {
+    "ten": "Hành phi",
+    "nhom": "THỰC PHẨM",
+    "viDu": "hành phi đóng hũ",
+    "trangThai": "nhan",
+    "ghiChu": ""
+   },
+   {
+    "ten": "Thuốc tây",
+    "nhom": "THUỐC, SỨC KHOẺ, LÀM ĐẸP",
+    "viDu": "",
+    "trangThai": "dieu-kien",
+    "ghiChu": "Đi được nhưng có rủi ro đầu Mỹ. Phụ thu theo từng kí hàng."
+   },
+   {
+    "ten": "Thuốc Nam, thuốc Bắc",
+    "nhom": "THUỐC, SỨC KHOẺ, LÀM ĐẸP",
+    "viDu": "thảo mộc khô, cao",
+    "trangThai": "dieu-kien",
+    "ghiChu": "Đi được nhưng có rủi ro đầu Mỹ. Phụ thu theo từng kí hàng."
+   },
+   {
+    "ten": "Thực phẩm chức năng",
+    "nhom": "THUỐC, SỨC KHOẺ, LÀM ĐẸP",
+    "viDu": "",
+    "trangThai": "dieu-kien",
+    "ghiChu": "Đi được nhưng có rủi ro đầu Mỹ. Phụ thu theo từng kí hàng."
+   },
+   {
+    "ten": "Yến sào",
+    "nhom": "THUỐC, SỨC KHOẺ, LÀM ĐẸP",
+    "viDu": "yến tinh chế",
+    "trangThai": "nhan",
+    "ghiChu": ""
+   },
+   {
+    "ten": "Sâm, đông trùng hạ thảo",
+    "nhom": "THUỐC, SỨC KHOẺ, LÀM ĐẸP",
+    "viDu": "",
+    "trangThai": "nhan",
+    "ghiChu": ""
+   },
+   {
+    "ten": "Sâm ngâm mật ong",
+    "nhom": "THUỐC, SỨC KHOẺ, LÀM ĐẸP",
+    "viDu": "hũ sâm ngâm mật ong (chất lỏng)",
+    "trangThai": "nhan",
+    "ghiChu": "Phụ thu 300.000đ/kiện"
+   },
+   {
+    "ten": "Mỹ phẩm",
+    "nhom": "THUỐC, SỨC KHOẺ, LÀM ĐẸP",
+    "viDu": "kem, son, serum",
+    "trangThai": "nhan",
+    "ghiChu": "Phụ thu theo từng kí hàng."
+   },
+   {
+    "ten": "Móng tay giả (nail box)",
+    "nhom": "THUỐC, SỨC KHOẺ, LÀM ĐẸP",
+    "viDu": "móng úp, nailbox, móng gắn sẵn",
+    "trangThai": "nhan",
+    "ghiChu": ""
+   },
+   {
+    "ten": "Nước hoa",
+    "nhom": "THUỐC, SỨC KHOẺ, LÀM ĐẸP",
+    "viDu": "nước hoa chai (vd Parfums de Marly Delina 75ml)",
+    "trangThai": "dieu-kien",
+    "ghiChu": "Phụ thu 50.000đ/chai + 300.000đ/kiện. KHÔNG bao đầu nhập Mỹ — báo khách trước hàng có thể bị giữ/tiêu huỷ."
+   },
+   {
+    "ten": "Đồ có cồn",
+    "nhom": "THUỐC, SỨC KHOẺ, LÀM ĐẸP",
+    "viDu": "",
+    "trangThai": "nhan",
+    "ghiChu": "Phụ thu theo từng kí hàng."
+   },
+   {
+    "ten": "Quần áo, giày dép, túi xách",
+    "nhom": "ĐỒ DÙNG, HÀNG HOÁ",
+    "viDu": "",
+    "trangThai": "nhan",
+    "ghiChu": ""
+   },
+   {
+    "ten": "Đồng hồ đeo tay",
+    "nhom": "ĐỒ DÙNG, HÀNG HOÁ",
+    "viDu": "đồng hồ thời trang, đồng hồ có pin",
+    "trangThai": "nhan",
+    "ghiChu": "Phụ thu 50.000đ/cái + 300.000đ/kiện."
+   },
+   {
+    "ten": "Điện thoại, laptop, đồ điện tử có pin",
+    "nhom": "ĐỒ DÙNG, HÀNG HOÁ",
+    "viDu": "pin gắn trong máy",
+    "trangThai": "dieu-kien",
+    "ghiChu": "Đi được nhưng có rủi ro đầu Mỹ."
+   },
+   {
+    "ten": "Pin rời, sạc dự phòng",
+    "nhom": "ĐỒ DÙNG, HÀNG HOÁ",
+    "viDu": "",
+    "trangThai": "khong",
+    "ghiChu": ""
+   },
+   {
+    "ten": "Pin năng lượng mặt trời",
+    "nhom": "ĐỒ DÙNG, HÀNG HOÁ",
+    "viDu": "đèn năng lượng mặt trời, tấm pin solar",
+    "trangThai": "nhan",
+    "ghiChu": "Phụ thu 300.000đ/kiện"
+   },
+   {
+    "ten": "Hàng nặng, cồng kềnh",
+    "nhom": "ĐỒ DÙNG, HÀNG HOÁ",
+    "viDu": "nội thất, bàn thờ, tủ",
+    "trangThai": "nhan",
+    "ghiChu": ""
+   },
+   {
+    "ten": "Nhạc cụ",
+    "nhom": "ĐỒ DÙNG, HÀNG HOÁ",
+    "viDu": "đàn, trống",
+    "trangThai": "nhan",
+    "ghiChu": ""
+   },
+   {
+    "ten": "Máy âm li (amply)",
+    "nhom": "ĐỒ DÙNG, HÀNG HOÁ",
+    "viDu": "âm li, amply nghe nhạc",
+    "trangThai": "nhan",
+    "ghiChu": "Phụ thu 200.000đ/cái."
+   },
+   {
+    "ten": "Máy móc, linh kiện",
+    "nhom": "ĐỒ DÙNG, HÀNG HOÁ",
+    "viDu": "",
+    "trangThai": "nhan",
+    "ghiChu": ""
+   },
+   {
+    "ten": "Máy phân tích vật chất",
+    "nhom": "ĐỒ DÙNG, HÀNG HOÁ",
+    "viDu": "máy phân tích, máy đo chuyên dụng (vd XOS Petra)",
+    "trangThai": "nhan",
+    "ghiChu": "Phụ thu 1.000.000đ/máy"
+   },
+   {
+    "ten": "Sách vở, tài liệu",
+    "nhom": "ĐỒ DÙNG, HÀNG HOÁ",
+    "viDu": "sách, vở, tài liệu, giấy tờ in",
+    "trangThai": "nhan",
+    "ghiChu": "Phụ thu 10.000đ/kg"
+   },
+   {
+    "ten": "Hàng mẫu (sample) cho doanh nghiệp",
+    "nhom": "ĐỒ DÙNG, HÀNG HOÁ",
+    "viDu": "",
+    "trangThai": "nhan",
+    "ghiChu": ""
+   },
+   {
+    "ten": "Hàng kinh doanh số lượng lớn",
+    "nhom": "ĐỒ DÙNG, HÀNG HOÁ",
+    "viDu": "",
+    "trangThai": "nhan",
+    "ghiChu": ""
+   },
+   {
+    "ten": "Hạt giống, cây cảnh, đồ dính đất",
+    "nhom": "ĐỒ DÙNG, HÀNG HOÁ",
+    "viDu": "",
+    "trangThai": "nhan",
+    "ghiChu": ""
+   },
+   {
+    "ten": "Rượu, bia",
+    "nhom": "ĐỒ DÙNG, HÀNG HOÁ",
+    "viDu": "",
+    "trangThai": "khong",
+    "ghiChu": ""
+   },
+   {
+    "ten": "Thuốc lá",
+    "nhom": "ĐỒ DÙNG, HÀNG HOÁ",
+    "viDu": "",
+    "trangThai": "khong",
+    "ghiChu": ""
+   }
+  ]
+ },
+ {
+  "ten": "Canada",
+  "slug": "canada",
+  "hang": [
+   {
+    "ten": "Đồ khô, đặc sản quê",
+    "nhom": "THỰC PHẨM",
+    "viDu": "bánh tráng, gạo, hạt điều, trái cây sấy, mì gói",
+    "trangThai": "nhan",
+    "ghiChu": ""
+   },
+   {
+    "ten": "Cá khô, mực khô",
+    "nhom": "THỰC PHẨM",
+    "viDu": "",
+    "trangThai": "nhan",
+    "ghiChu": ""
+   },
+   {
+    "ten": "Tôm khô",
+    "nhom": "THỰC PHẨM",
+    "viDu": "",
+    "trangThai": "nhan",
+    "ghiChu": ""
+   },
+   {
+    "ten": "Nước mắm, mắm các loại",
+    "nhom": "THỰC PHẨM",
+    "viDu": "mắm tôm, mắm nêm, mắm cá",
+    "trangThai": "nhan",
+    "ghiChu": "Phụ thu chất lỏng 300.000đ/kiện"
+   },
+   {
+    "ten": "Giò chả, chả lụa",
+    "nhom": "THỰC PHẨM",
+    "viDu": "đã chín, hút chân không",
+    "trangThai": "dieu-kien",
+    "ghiChu": "Đi được nhưng có rủi ro đầu Canada. Phụ thu theo từng kí hàng."
+   },
+   {
+    "ten": "Thịt khô, khô bò, lạp xưởng, chà bông",
+    "nhom": "THỰC PHẨM",
+    "viDu": "sản phẩm từ thịt",
+    "trangThai": "dieu-kien",
+    "ghiChu": "Đi được nhưng có rủi ro đầu Canada. Phụ thu theo từng kí hàng."
+   },
+   {
+    "ten": "Hải sản, thực phẩm đông lạnh",
+    "nhom": "THỰC PHẨM",
+    "viDu": "",
+    "trangThai": "dieu-kien",
+    "ghiChu": "Đi 3-5 ngày. Chỉ nhận hải sản đông lạnh."
+   },
+   {
+    "ten": "Bánh kẹo, mứt Tết",
+    "nhom": "THỰC PHẨM",
+    "viDu": "",
+    "trangThai": "nhan",
+    "ghiChu": ""
+   },
+   {
+    "ten": "Cà phê",
+    "nhom": "THỰC PHẨM",
+    "viDu": "bột, hạt, hoà tan",
+    "trangThai": "nhan",
+    "ghiChu": ""
+   },
+   {
+    "ten": "Trà",
+    "nhom": "THỰC PHẨM",
+    "viDu": "trà khô, trà túi lọc",
+    "trangThai": "nhan",
+    "ghiChu": ""
+   },
+   {
+    "ten": "Sữa, trứng và đồ làm từ sữa",
+    "nhom": "THỰC PHẨM",
+    "viDu": "sữa bột, bánh có trứng",
+    "trangThai": "dieu-kien",
+    "ghiChu": "Đi được nhưng có rủi ro đầu Canada. Phụ thu theo từng kí hàng."
+   },
+   {
+    "ten": "Bột trà sữa",
+    "nhom": "THỰC PHẨM",
+    "viDu": "bột kem pha trà sữa (vd Frima creamer 1kg)",
+    "trangThai": "chua-ro",
+    "ghiChu": ""
+   },
+   {
+    "ten": "Rau củ, trái cây tươi",
+    "nhom": "THỰC PHẨM",
+    "viDu": "",
+    "trangThai": "khong",
+    "ghiChu": ""
+   },
+   {
+    "ten": "Gia vị, nước sốt đóng chai",
+    "nhom": "THỰC PHẨM",
+    "viDu": "tương ớt, dầu hào, sa tế",
+    "trangThai": "dieu-kien",
+    "ghiChu": "Phụ thu chất lỏng 300.000đ/kiện."
+   },
+   {
+    "ten": "Hành phi",
+    "nhom": "THỰC PHẨM",
+    "viDu": "hành phi đóng hũ",
+    "trangThai": "nhan",
+    "ghiChu": ""
+   },
+   {
+    "ten": "Thuốc tây",
+    "nhom": "THUỐC, SỨC KHOẺ, LÀM ĐẸP",
+    "viDu": "",
+    "trangThai": "dieu-kien",
+    "ghiChu": "Đi được nhưng có rủi ro đầu Canada. Phụ thu theo từng kí hàng."
+   },
+   {
+    "ten": "Thuốc Nam, thuốc Bắc",
+    "nhom": "THUỐC, SỨC KHOẺ, LÀM ĐẸP",
+    "viDu": "thảo mộc khô, cao",
+    "trangThai": "dieu-kien",
+    "ghiChu": "Đi được nhưng có rủi ro đầu Canada. Phụ thu theo từng kí hàng."
+   },
+   {
+    "ten": "Thực phẩm chức năng",
+    "nhom": "THUỐC, SỨC KHOẺ, LÀM ĐẸP",
+    "viDu": "",
+    "trangThai": "dieu-kien",
+    "ghiChu": "Đi được nhưng có rủi ro đầu Canada. Phụ thu theo từng kí hàng."
+   },
+   {
+    "ten": "Yến sào",
+    "nhom": "THUỐC, SỨC KHOẺ, LÀM ĐẸP",
+    "viDu": "yến tinh chế",
+    "trangThai": "nhan",
+    "ghiChu": ""
+   },
+   {
+    "ten": "Sâm, đông trùng hạ thảo",
+    "nhom": "THUỐC, SỨC KHOẺ, LÀM ĐẸP",
+    "viDu": "",
+    "trangThai": "nhan",
+    "ghiChu": ""
+   },
+   {
+    "ten": "Sâm ngâm mật ong",
+    "nhom": "THUỐC, SỨC KHOẺ, LÀM ĐẸP",
+    "viDu": "hũ sâm ngâm mật ong (chất lỏng)",
+    "trangThai": "nhan",
+    "ghiChu": "Phụ thu 300.000đ/kiện"
+   },
+   {
+    "ten": "Mỹ phẩm",
+    "nhom": "THUỐC, SỨC KHOẺ, LÀM ĐẸP",
+    "viDu": "kem, son, serum",
+    "trangThai": "nhan",
+    "ghiChu": "Phụ thu theo từng kí hàng."
+   },
+   {
+    "ten": "Móng tay giả (nail box)",
+    "nhom": "THUỐC, SỨC KHOẺ, LÀM ĐẸP",
+    "viDu": "móng úp, nailbox, móng gắn sẵn",
+    "trangThai": "nhan",
+    "ghiChu": ""
+   },
+   {
+    "ten": "Nước hoa",
+    "nhom": "THUỐC, SỨC KHOẺ, LÀM ĐẸP",
+    "viDu": "nước hoa chai (vd Parfums de Marly Delina 75ml)",
+    "trangThai": "nhan",
+    "ghiChu": "Phụ thu 50.000đ/chai + 300.000đ/kiện."
+   },
+   {
+    "ten": "Đồ có cồn",
+    "nhom": "THUỐC, SỨC KHOẺ, LÀM ĐẸP",
+    "viDu": "",
+    "trangThai": "nhan",
+    "ghiChu": "Phụ thu theo từng kí hàng."
+   },
+   {
+    "ten": "Quần áo, giày dép, túi xách",
+    "nhom": "ĐỒ DÙNG, HÀNG HOÁ",
+    "viDu": "",
+    "trangThai": "nhan",
+    "ghiChu": ""
+   },
+   {
+    "ten": "Đồng hồ đeo tay",
+    "nhom": "ĐỒ DÙNG, HÀNG HOÁ",
+    "viDu": "đồng hồ thời trang, đồng hồ có pin",
+    "trangThai": "nhan",
+    "ghiChu": "Phụ thu 50.000đ/cái + 300.000đ/kiện."
+   },
+   {
+    "ten": "Điện thoại, laptop, đồ điện tử có pin",
+    "nhom": "ĐỒ DÙNG, HÀNG HOÁ",
+    "viDu": "pin gắn trong máy",
+    "trangThai": "dieu-kien",
+    "ghiChu": "Đi được nhưng có rủi ro đầu Canada."
+   },
+   {
+    "ten": "Pin rời, sạc dự phòng",
+    "nhom": "ĐỒ DÙNG, HÀNG HOÁ",
+    "viDu": "",
+    "trangThai": "khong",
+    "ghiChu": ""
+   },
+   {
+    "ten": "Pin năng lượng mặt trời",
+    "nhom": "ĐỒ DÙNG, HÀNG HOÁ",
+    "viDu": "đèn năng lượng mặt trời, tấm pin solar",
+    "trangThai": "nhan",
+    "ghiChu": "Phụ thu 300.000đ/kiện"
+   },
+   {
+    "ten": "Hàng nặng, cồng kềnh",
+    "nhom": "ĐỒ DÙNG, HÀNG HOÁ",
+    "viDu": "nội thất, bàn thờ, tủ",
+    "trangThai": "nhan",
+    "ghiChu": ""
+   },
+   {
+    "ten": "Nhạc cụ",
+    "nhom": "ĐỒ DÙNG, HÀNG HOÁ",
+    "viDu": "đàn, trống",
+    "trangThai": "nhan",
+    "ghiChu": ""
+   },
+   {
+    "ten": "Máy âm li (amply)",
+    "nhom": "ĐỒ DÙNG, HÀNG HOÁ",
+    "viDu": "âm li, amply nghe nhạc",
+    "trangThai": "nhan",
+    "ghiChu": "Phụ thu 200.000đ/cái."
+   },
+   {
+    "ten": "Máy móc, linh kiện",
+    "nhom": "ĐỒ DÙNG, HÀNG HOÁ",
+    "viDu": "",
+    "trangThai": "nhan",
+    "ghiChu": ""
+   },
+   {
+    "ten": "Máy phân tích vật chất",
+    "nhom": "ĐỒ DÙNG, HÀNG HOÁ",
+    "viDu": "máy phân tích, máy đo chuyên dụng (vd XOS Petra)",
+    "trangThai": "chua-ro",
+    "ghiChu": ""
+   },
+   {
+    "ten": "Sách vở, tài liệu",
+    "nhom": "ĐỒ DÙNG, HÀNG HOÁ",
+    "viDu": "sách, vở, tài liệu, giấy tờ in",
+    "trangThai": "nhan",
+    "ghiChu": "Phụ thu 10.000đ/kg"
+   },
+   {
+    "ten": "Hàng mẫu (sample) cho doanh nghiệp",
+    "nhom": "ĐỒ DÙNG, HÀNG HOÁ",
+    "viDu": "",
+    "trangThai": "nhan",
+    "ghiChu": ""
+   },
+   {
+    "ten": "Hàng kinh doanh số lượng lớn",
+    "nhom": "ĐỒ DÙNG, HÀNG HOÁ",
+    "viDu": "",
+    "trangThai": "nhan",
+    "ghiChu": ""
+   },
+   {
+    "ten": "Hạt giống, cây cảnh, đồ dính đất",
+    "nhom": "ĐỒ DÙNG, HÀNG HOÁ",
+    "viDu": "",
+    "trangThai": "nhan",
+    "ghiChu": ""
+   },
+   {
+    "ten": "Rượu, bia",
+    "nhom": "ĐỒ DÙNG, HÀNG HOÁ",
+    "viDu": "",
+    "trangThai": "khong",
+    "ghiChu": ""
+   },
+   {
+    "ten": "Thuốc lá",
+    "nhom": "ĐỒ DÙNG, HÀNG HOÁ",
+    "viDu": "",
+    "trangThai": "khong",
+    "ghiChu": ""
+   }
+  ]
+ },
+ {
+  "ten": "Úc",
+  "slug": "uc",
+  "hang": [
+   {
+    "ten": "Đồ khô, đặc sản quê",
+    "nhom": "THỰC PHẨM",
+    "viDu": "bánh tráng, gạo, hạt điều, trái cây sấy, mì gói",
+    "trangThai": "nhan",
+    "ghiChu": ""
+   },
+   {
+    "ten": "Cá khô, mực khô",
+    "nhom": "THỰC PHẨM",
+    "viDu": "",
+    "trangThai": "nhan",
+    "ghiChu": ""
+   },
+   {
+    "ten": "Tôm khô",
+    "nhom": "THỰC PHẨM",
+    "viDu": "",
+    "trangThai": "nhan",
+    "ghiChu": ""
+   },
+   {
+    "ten": "Nước mắm, mắm các loại",
+    "nhom": "THỰC PHẨM",
+    "viDu": "mắm tôm, mắm nêm, mắm cá",
+    "trangThai": "nhan",
+    "ghiChu": "Phụ thu chất lỏng 300.000đ/kiện"
+   },
+   {
+    "ten": "Giò chả, chả lụa",
+    "nhom": "THỰC PHẨM",
+    "viDu": "đã chín, hút chân không",
+    "trangThai": "dieu-kien",
+    "ghiChu": "Đi được nhưng có rủi ro đầu Úc. Phụ thu theo từng kí hàng."
+   },
+   {
+    "ten": "Thịt khô, khô bò, lạp xưởng, chà bông",
+    "nhom": "THỰC PHẨM",
+    "viDu": "sản phẩm từ thịt",
+    "trangThai": "dieu-kien",
+    "ghiChu": "Đi được nhưng có rủi ro đầu Úc. Phụ thu theo từng kí hàng."
+   },
+   {
+    "ten": "Hải sản, thực phẩm đông lạnh",
+    "nhom": "THỰC PHẨM",
+    "viDu": "",
+    "trangThai": "dieu-kien",
+    "ghiChu": "Đi 3-5 ngày. Chỉ nhận hải sản đông lạnh."
+   },
+   {
+    "ten": "Bánh kẹo, mứt Tết",
+    "nhom": "THỰC PHẨM",
+    "viDu": "",
+    "trangThai": "nhan",
+    "ghiChu": ""
+   },
+   {
+    "ten": "Cà phê",
+    "nhom": "THỰC PHẨM",
+    "viDu": "bột, hạt, hoà tan",
+    "trangThai": "nhan",
+    "ghiChu": ""
+   },
+   {
+    "ten": "Trà",
+    "nhom": "THỰC PHẨM",
+    "viDu": "trà khô, trà túi lọc",
+    "trangThai": "nhan",
+    "ghiChu": ""
+   },
+   {
+    "ten": "Sữa, trứng và đồ làm từ sữa",
+    "nhom": "THỰC PHẨM",
+    "viDu": "sữa bột, bánh có trứng",
+    "trangThai": "dieu-kien",
+    "ghiChu": "Đi được nhưng có rủi ro đầu Úc. Phụ thu theo từng kí hàng."
+   },
+   {
+    "ten": "Bột trà sữa",
+    "nhom": "THỰC PHẨM",
+    "viDu": "bột kem pha trà sữa (vd Frima creamer 1kg)",
+    "trangThai": "chua-ro",
+    "ghiChu": ""
+   },
+   {
+    "ten": "Rau củ, trái cây tươi",
+    "nhom": "THỰC PHẨM",
+    "viDu": "",
+    "trangThai": "khong",
+    "ghiChu": ""
+   },
+   {
+    "ten": "Gia vị, nước sốt đóng chai",
+    "nhom": "THỰC PHẨM",
+    "viDu": "tương ớt, dầu hào, sa tế",
+    "trangThai": "dieu-kien",
+    "ghiChu": "Phụ thu chất lỏng 300.000đ/kiện."
+   },
+   {
+    "ten": "Hành phi",
+    "nhom": "THỰC PHẨM",
+    "viDu": "hành phi đóng hũ",
+    "trangThai": "nhan",
+    "ghiChu": ""
+   },
+   {
+    "ten": "Thuốc tây",
+    "nhom": "THUỐC, SỨC KHOẺ, LÀM ĐẸP",
+    "viDu": "",
+    "trangThai": "dieu-kien",
+    "ghiChu": "Đi được nhưng có rủi ro đầu Úc. Phụ thu theo từng kí hàng."
+   },
+   {
+    "ten": "Thuốc Nam, thuốc Bắc",
+    "nhom": "THUỐC, SỨC KHOẺ, LÀM ĐẸP",
+    "viDu": "thảo mộc khô, cao",
+    "trangThai": "dieu-kien",
+    "ghiChu": "Đi được nhưng có rủi ro đầu Úc. Phụ thu theo từng kí hàng."
+   },
+   {
+    "ten": "Thực phẩm chức năng",
+    "nhom": "THUỐC, SỨC KHOẺ, LÀM ĐẸP",
+    "viDu": "",
+    "trangThai": "dieu-kien",
+    "ghiChu": "Đi được nhưng có rủi ro đầu Úc. Phụ thu theo từng kí hàng."
+   },
+   {
+    "ten": "Yến sào",
+    "nhom": "THUỐC, SỨC KHOẺ, LÀM ĐẸP",
+    "viDu": "yến tinh chế",
+    "trangThai": "nhan",
+    "ghiChu": ""
+   },
+   {
+    "ten": "Sâm, đông trùng hạ thảo",
+    "nhom": "THUỐC, SỨC KHOẺ, LÀM ĐẸP",
+    "viDu": "",
+    "trangThai": "nhan",
+    "ghiChu": ""
+   },
+   {
+    "ten": "Sâm ngâm mật ong",
+    "nhom": "THUỐC, SỨC KHOẺ, LÀM ĐẸP",
+    "viDu": "hũ sâm ngâm mật ong (chất lỏng)",
+    "trangThai": "nhan",
+    "ghiChu": "Phụ thu 300.000đ/kiện"
+   },
+   {
+    "ten": "Mỹ phẩm",
+    "nhom": "THUỐC, SỨC KHOẺ, LÀM ĐẸP",
+    "viDu": "kem, son, serum",
+    "trangThai": "nhan",
+    "ghiChu": "Phụ thu theo từng kí hàng."
+   },
+   {
+    "ten": "Móng tay giả (nail box)",
+    "nhom": "THUỐC, SỨC KHOẺ, LÀM ĐẸP",
+    "viDu": "móng úp, nailbox, móng gắn sẵn",
+    "trangThai": "nhan",
+    "ghiChu": ""
+   },
+   {
+    "ten": "Nước hoa",
+    "nhom": "THUỐC, SỨC KHOẺ, LÀM ĐẸP",
+    "viDu": "nước hoa chai (vd Parfums de Marly Delina 75ml)",
+    "trangThai": "nhan",
+    "ghiChu": "Phụ thu 50.000đ/chai + 300.000đ/kiện."
+   },
+   {
+    "ten": "Đồ có cồn",
+    "nhom": "THUỐC, SỨC KHOẺ, LÀM ĐẸP",
+    "viDu": "",
+    "trangThai": "nhan",
+    "ghiChu": "Phụ thu theo từng kí hàng."
+   },
+   {
+    "ten": "Quần áo, giày dép, túi xách",
+    "nhom": "ĐỒ DÙNG, HÀNG HOÁ",
+    "viDu": "",
+    "trangThai": "nhan",
+    "ghiChu": ""
+   },
+   {
+    "ten": "Đồng hồ đeo tay",
+    "nhom": "ĐỒ DÙNG, HÀNG HOÁ",
+    "viDu": "đồng hồ thời trang, đồng hồ có pin",
+    "trangThai": "nhan",
+    "ghiChu": "Phụ thu 50.000đ/cái + 300.000đ/kiện."
+   },
+   {
+    "ten": "Điện thoại, laptop, đồ điện tử có pin",
+    "nhom": "ĐỒ DÙNG, HÀNG HOÁ",
+    "viDu": "pin gắn trong máy",
+    "trangThai": "dieu-kien",
+    "ghiChu": "Đi được nhưng có rủi ro đầu Úc."
+   },
+   {
+    "ten": "Pin rời, sạc dự phòng",
+    "nhom": "ĐỒ DÙNG, HÀNG HOÁ",
+    "viDu": "",
+    "trangThai": "khong",
+    "ghiChu": ""
+   },
+   {
+    "ten": "Pin năng lượng mặt trời",
+    "nhom": "ĐỒ DÙNG, HÀNG HOÁ",
+    "viDu": "đèn năng lượng mặt trời, tấm pin solar",
+    "trangThai": "nhan",
+    "ghiChu": "Phụ thu 300.000đ/kiện"
+   },
+   {
+    "ten": "Hàng nặng, cồng kềnh",
+    "nhom": "ĐỒ DÙNG, HÀNG HOÁ",
+    "viDu": "nội thất, bàn thờ, tủ",
+    "trangThai": "nhan",
+    "ghiChu": ""
+   },
+   {
+    "ten": "Nhạc cụ",
+    "nhom": "ĐỒ DÙNG, HÀNG HOÁ",
+    "viDu": "đàn, trống",
+    "trangThai": "nhan",
+    "ghiChu": ""
+   },
+   {
+    "ten": "Máy âm li (amply)",
+    "nhom": "ĐỒ DÙNG, HÀNG HOÁ",
+    "viDu": "âm li, amply nghe nhạc",
+    "trangThai": "nhan",
+    "ghiChu": "Phụ thu 200.000đ/cái."
+   },
+   {
+    "ten": "Máy móc, linh kiện",
+    "nhom": "ĐỒ DÙNG, HÀNG HOÁ",
+    "viDu": "",
+    "trangThai": "nhan",
+    "ghiChu": ""
+   },
+   {
+    "ten": "Máy phân tích vật chất",
+    "nhom": "ĐỒ DÙNG, HÀNG HOÁ",
+    "viDu": "máy phân tích, máy đo chuyên dụng (vd XOS Petra)",
+    "trangThai": "chua-ro",
+    "ghiChu": ""
+   },
+   {
+    "ten": "Sách vở, tài liệu",
+    "nhom": "ĐỒ DÙNG, HÀNG HOÁ",
+    "viDu": "sách, vở, tài liệu, giấy tờ in",
+    "trangThai": "nhan",
+    "ghiChu": "Phụ thu 10.000đ/kg"
+   },
+   {
+    "ten": "Hàng mẫu (sample) cho doanh nghiệp",
+    "nhom": "ĐỒ DÙNG, HÀNG HOÁ",
+    "viDu": "",
+    "trangThai": "nhan",
+    "ghiChu": ""
+   },
+   {
+    "ten": "Hàng kinh doanh số lượng lớn",
+    "nhom": "ĐỒ DÙNG, HÀNG HOÁ",
+    "viDu": "",
+    "trangThai": "nhan",
+    "ghiChu": ""
+   },
+   {
+    "ten": "Hạt giống, cây cảnh, đồ dính đất",
+    "nhom": "ĐỒ DÙNG, HÀNG HOÁ",
+    "viDu": "",
+    "trangThai": "khong",
+    "ghiChu": "Úc cấm theo luật kiểm dịch (biosecurity)."
+   },
+   {
+    "ten": "Rượu, bia",
+    "nhom": "ĐỒ DÙNG, HÀNG HOÁ",
+    "viDu": "",
+    "trangThai": "khong",
+    "ghiChu": ""
+   },
+   {
+    "ten": "Thuốc lá",
+    "nhom": "ĐỒ DÙNG, HÀNG HOÁ",
+    "viDu": "",
+    "trangThai": "khong",
+    "ghiChu": ""
+   }
+  ]
+ },
+ {
+  "ten": "Châu Âu",
+  "slug": "chau-au",
+  "hang": [
+   {
+    "ten": "Đồ khô, đặc sản quê",
+    "nhom": "THỰC PHẨM",
+    "viDu": "bánh tráng, gạo, hạt điều, trái cây sấy, mì gói",
+    "trangThai": "nhan",
+    "ghiChu": ""
+   },
+   {
+    "ten": "Cá khô, mực khô",
+    "nhom": "THỰC PHẨM",
+    "viDu": "",
+    "trangThai": "nhan",
+    "ghiChu": ""
+   },
+   {
+    "ten": "Tôm khô",
+    "nhom": "THỰC PHẨM",
+    "viDu": "",
+    "trangThai": "nhan",
+    "ghiChu": ""
+   },
+   {
+    "ten": "Nước mắm, mắm các loại",
+    "nhom": "THỰC PHẨM",
+    "viDu": "mắm tôm, mắm nêm, mắm cá",
+    "trangThai": "nhan",
+    "ghiChu": "Phụ thu chất lỏng 300.000đ/kiện"
+   },
+   {
+    "ten": "Giò chả, chả lụa",
+    "nhom": "THỰC PHẨM",
+    "viDu": "đã chín, hút chân không",
+    "trangThai": "dieu-kien",
+    "ghiChu": "Đi được nhưng có rủi ro đầu Châu Âu. Phụ thu theo từng kí hàng."
+   },
+   {
+    "ten": "Thịt khô, khô bò, lạp xưởng, chà bông",
+    "nhom": "THỰC PHẨM",
+    "viDu": "sản phẩm từ thịt",
+    "trangThai": "dieu-kien",
+    "ghiChu": "Đi được nhưng có rủi ro đầu Châu Âu. Phụ thu theo từng kí hàng."
+   },
+   {
+    "ten": "Hải sản, thực phẩm đông lạnh",
+    "nhom": "THỰC PHẨM",
+    "viDu": "",
+    "trangThai": "dieu-kien",
+    "ghiChu": "Đi 3-5 ngày. Chỉ nhận hải sản đông lạnh."
+   },
+   {
+    "ten": "Bánh kẹo, mứt Tết",
+    "nhom": "THỰC PHẨM",
+    "viDu": "",
+    "trangThai": "nhan",
+    "ghiChu": ""
+   },
+   {
+    "ten": "Cà phê",
+    "nhom": "THỰC PHẨM",
+    "viDu": "bột, hạt, hoà tan",
+    "trangThai": "nhan",
+    "ghiChu": ""
+   },
+   {
+    "ten": "Trà",
+    "nhom": "THỰC PHẨM",
+    "viDu": "trà khô, trà túi lọc",
+    "trangThai": "nhan",
+    "ghiChu": ""
+   },
+   {
+    "ten": "Sữa, trứng và đồ làm từ sữa",
+    "nhom": "THỰC PHẨM",
+    "viDu": "sữa bột, bánh có trứng",
+    "trangThai": "dieu-kien",
+    "ghiChu": "Đi được nhưng có rủi ro đầu Châu Âu. Phụ thu theo từng kí hàng."
+   },
+   {
+    "ten": "Bột trà sữa",
+    "nhom": "THỰC PHẨM",
+    "viDu": "bột kem pha trà sữa (vd Frima creamer 1kg)",
+    "trangThai": "chua-ro",
+    "ghiChu": ""
+   },
+   {
+    "ten": "Rau củ, trái cây tươi",
+    "nhom": "THỰC PHẨM",
+    "viDu": "",
+    "trangThai": "khong",
+    "ghiChu": ""
+   },
+   {
+    "ten": "Gia vị, nước sốt đóng chai",
+    "nhom": "THỰC PHẨM",
+    "viDu": "tương ớt, dầu hào, sa tế",
+    "trangThai": "dieu-kien",
+    "ghiChu": "Phụ thu chất lỏng 300.000đ/kiện."
+   },
+   {
+    "ten": "Hành phi",
+    "nhom": "THỰC PHẨM",
+    "viDu": "hành phi đóng hũ",
+    "trangThai": "nhan",
+    "ghiChu": ""
+   },
+   {
+    "ten": "Thuốc tây",
+    "nhom": "THUỐC, SỨC KHOẺ, LÀM ĐẸP",
+    "viDu": "",
+    "trangThai": "dieu-kien",
+    "ghiChu": "Đi được nhưng có rủi ro đầu Châu Âu. Phụ thu theo từng kí hàng."
+   },
+   {
+    "ten": "Thuốc Nam, thuốc Bắc",
+    "nhom": "THUỐC, SỨC KHOẺ, LÀM ĐẸP",
+    "viDu": "thảo mộc khô, cao",
+    "trangThai": "dieu-kien",
+    "ghiChu": "Đi được nhưng có rủi ro đầu Châu Âu. Phụ thu theo từng kí hàng."
+   },
+   {
+    "ten": "Thực phẩm chức năng",
+    "nhom": "THUỐC, SỨC KHOẺ, LÀM ĐẸP",
+    "viDu": "",
+    "trangThai": "dieu-kien",
+    "ghiChu": "Đi được nhưng có rủi ro đầu Châu Âu. Phụ thu theo từng kí hàng."
+   },
+   {
+    "ten": "Yến sào",
+    "nhom": "THUỐC, SỨC KHOẺ, LÀM ĐẸP",
+    "viDu": "yến tinh chế",
+    "trangThai": "nhan",
+    "ghiChu": ""
+   },
+   {
+    "ten": "Sâm, đông trùng hạ thảo",
+    "nhom": "THUỐC, SỨC KHOẺ, LÀM ĐẸP",
+    "viDu": "",
+    "trangThai": "nhan",
+    "ghiChu": ""
+   },
+   {
+    "ten": "Sâm ngâm mật ong",
+    "nhom": "THUỐC, SỨC KHOẺ, LÀM ĐẸP",
+    "viDu": "hũ sâm ngâm mật ong (chất lỏng)",
+    "trangThai": "nhan",
+    "ghiChu": "Phụ thu 300.000đ/kiện"
+   },
+   {
+    "ten": "Mỹ phẩm",
+    "nhom": "THUỐC, SỨC KHOẺ, LÀM ĐẸP",
+    "viDu": "kem, son, serum",
+    "trangThai": "nhan",
+    "ghiChu": "Phụ thu theo từng kí hàng."
+   },
+   {
+    "ten": "Móng tay giả (nail box)",
+    "nhom": "THUỐC, SỨC KHOẺ, LÀM ĐẸP",
+    "viDu": "móng úp, nailbox, móng gắn sẵn",
+    "trangThai": "nhan",
+    "ghiChu": ""
+   },
+   {
+    "ten": "Nước hoa",
+    "nhom": "THUỐC, SỨC KHOẺ, LÀM ĐẸP",
+    "viDu": "nước hoa chai (vd Parfums de Marly Delina 75ml)",
+    "trangThai": "nhan",
+    "ghiChu": "Phụ thu 50.000đ/chai + 300.000đ/kiện."
+   },
+   {
+    "ten": "Đồ có cồn",
+    "nhom": "THUỐC, SỨC KHOẺ, LÀM ĐẸP",
+    "viDu": "",
+    "trangThai": "nhan",
+    "ghiChu": "Phụ thu theo từng kí hàng."
+   },
+   {
+    "ten": "Quần áo, giày dép, túi xách",
+    "nhom": "ĐỒ DÙNG, HÀNG HOÁ",
+    "viDu": "",
+    "trangThai": "nhan",
+    "ghiChu": ""
+   },
+   {
+    "ten": "Đồng hồ đeo tay",
+    "nhom": "ĐỒ DÙNG, HÀNG HOÁ",
+    "viDu": "đồng hồ thời trang, đồng hồ có pin",
+    "trangThai": "nhan",
+    "ghiChu": "Phụ thu 50.000đ/cái + 300.000đ/kiện."
+   },
+   {
+    "ten": "Điện thoại, laptop, đồ điện tử có pin",
+    "nhom": "ĐỒ DÙNG, HÀNG HOÁ",
+    "viDu": "pin gắn trong máy",
+    "trangThai": "dieu-kien",
+    "ghiChu": "Đi được nhưng có rủi ro đầu Châu Âu."
+   },
+   {
+    "ten": "Pin rời, sạc dự phòng",
+    "nhom": "ĐỒ DÙNG, HÀNG HOÁ",
+    "viDu": "",
+    "trangThai": "khong",
+    "ghiChu": ""
+   },
+   {
+    "ten": "Pin năng lượng mặt trời",
+    "nhom": "ĐỒ DÙNG, HÀNG HOÁ",
+    "viDu": "đèn năng lượng mặt trời, tấm pin solar",
+    "trangThai": "nhan",
+    "ghiChu": "Phụ thu 300.000đ/kiện"
+   },
+   {
+    "ten": "Hàng nặng, cồng kềnh",
+    "nhom": "ĐỒ DÙNG, HÀNG HOÁ",
+    "viDu": "nội thất, bàn thờ, tủ",
+    "trangThai": "nhan",
+    "ghiChu": ""
+   },
+   {
+    "ten": "Nhạc cụ",
+    "nhom": "ĐỒ DÙNG, HÀNG HOÁ",
+    "viDu": "đàn, trống",
+    "trangThai": "nhan",
+    "ghiChu": ""
+   },
+   {
+    "ten": "Máy âm li (amply)",
+    "nhom": "ĐỒ DÙNG, HÀNG HOÁ",
+    "viDu": "âm li, amply nghe nhạc",
+    "trangThai": "nhan",
+    "ghiChu": "Phụ thu 200.000đ/cái."
+   },
+   {
+    "ten": "Máy móc, linh kiện",
+    "nhom": "ĐỒ DÙNG, HÀNG HOÁ",
+    "viDu": "",
+    "trangThai": "nhan",
+    "ghiChu": ""
+   },
+   {
+    "ten": "Máy phân tích vật chất",
+    "nhom": "ĐỒ DÙNG, HÀNG HOÁ",
+    "viDu": "máy phân tích, máy đo chuyên dụng (vd XOS Petra)",
+    "trangThai": "chua-ro",
+    "ghiChu": ""
+   },
+   {
+    "ten": "Sách vở, tài liệu",
+    "nhom": "ĐỒ DÙNG, HÀNG HOÁ",
+    "viDu": "sách, vở, tài liệu, giấy tờ in",
+    "trangThai": "nhan",
+    "ghiChu": "Phụ thu 10.000đ/kg"
+   },
+   {
+    "ten": "Hàng mẫu (sample) cho doanh nghiệp",
+    "nhom": "ĐỒ DÙNG, HÀNG HOÁ",
+    "viDu": "",
+    "trangThai": "nhan",
+    "ghiChu": ""
+   },
+   {
+    "ten": "Hàng kinh doanh số lượng lớn",
+    "nhom": "ĐỒ DÙNG, HÀNG HOÁ",
+    "viDu": "",
+    "trangThai": "nhan",
+    "ghiChu": ""
+   },
+   {
+    "ten": "Hạt giống, cây cảnh, đồ dính đất",
+    "nhom": "ĐỒ DÙNG, HÀNG HOÁ",
+    "viDu": "",
+    "trangThai": "nhan",
+    "ghiChu": ""
+   },
+   {
+    "ten": "Rượu, bia",
+    "nhom": "ĐỒ DÙNG, HÀNG HOÁ",
+    "viDu": "",
+    "trangThai": "khong",
+    "ghiChu": ""
+   },
+   {
+    "ten": "Thuốc lá",
+    "nhom": "ĐỒ DÙNG, HÀNG HOÁ",
+    "viDu": "",
+    "trangThai": "khong",
+    "ghiChu": ""
+   }
+  ]
+ },
+ {
+  "ten": "Nhật",
+  "slug": "nhat",
+  "hang": [
+   {
+    "ten": "Đồ khô, đặc sản quê",
+    "nhom": "THỰC PHẨM",
+    "viDu": "bánh tráng, gạo, hạt điều, trái cây sấy, mì gói",
+    "trangThai": "nhan",
+    "ghiChu": ""
+   },
+   {
+    "ten": "Cá khô, mực khô",
+    "nhom": "THỰC PHẨM",
+    "viDu": "",
+    "trangThai": "nhan",
+    "ghiChu": ""
+   },
+   {
+    "ten": "Tôm khô",
+    "nhom": "THỰC PHẨM",
+    "viDu": "",
+    "trangThai": "nhan",
+    "ghiChu": ""
+   },
+   {
+    "ten": "Nước mắm, mắm các loại",
+    "nhom": "THỰC PHẨM",
+    "viDu": "mắm tôm, mắm nêm, mắm cá",
+    "trangThai": "nhan",
+    "ghiChu": ""
+   },
+   {
+    "ten": "Giò chả, chả lụa",
+    "nhom": "THỰC PHẨM",
+    "viDu": "đã chín, hút chân không",
+    "trangThai": "nhan",
+    "ghiChu": "Có rủi ro bị hải quan Nhật giữ. Minh Thiện vẫn nhận và lo giấy tờ, nhưng báo trước rủi ro cho khách."
+   },
+   {
+    "ten": "Thịt khô, khô bò, lạp xưởng, chà bông",
+    "nhom": "THỰC PHẨM",
+    "viDu": "sản phẩm từ thịt",
+    "trangThai": "nhan",
+    "ghiChu": "Có rủi ro bị hải quan Nhật giữ. Minh Thiện vẫn nhận và lo giấy tờ, nhưng báo trước rủi ro cho khách."
+   },
+   {
+    "ten": "Hải sản, thực phẩm đông lạnh",
+    "nhom": "THỰC PHẨM",
+    "viDu": "",
+    "trangThai": "nhan",
+    "ghiChu": "Bao đông lạnh tới tận cửa nhà khách. Ngoài ra, còn có thể giao hàng hẹn giờ. Rất tiện lợi cho khách hàng."
+   },
+   {
+    "ten": "Bánh kẹo, mứt Tết",
+    "nhom": "THỰC PHẨM",
+    "viDu": "",
+    "trangThai": "nhan",
+    "ghiChu": ""
+   },
+   {
+    "ten": "Cà phê",
+    "nhom": "THỰC PHẨM",
+    "viDu": "bột, hạt, hoà tan",
+    "trangThai": "nhan",
+    "ghiChu": ""
+   },
+   {
+    "ten": "Trà",
+    "nhom": "THỰC PHẨM",
+    "viDu": "trà khô, trà túi lọc",
+    "trangThai": "nhan",
+    "ghiChu": ""
+   },
+   {
+    "ten": "Sữa, trứng và đồ làm từ sữa",
+    "nhom": "THỰC PHẨM",
+    "viDu": "sữa bột, bánh có trứng",
+    "trangThai": "nhan",
+    "ghiChu": ""
+   },
+   {
+    "ten": "Bột trà sữa",
+    "nhom": "THỰC PHẨM",
+    "viDu": "bột kem pha trà sữa (vd Frima creamer 1kg)",
+    "trangThai": "chua-ro",
+    "ghiChu": ""
+   },
+   {
+    "ten": "Rau củ, trái cây tươi",
+    "nhom": "THỰC PHẨM",
+    "viDu": "",
+    "trangThai": "khong",
+    "ghiChu": ""
+   },
+   {
+    "ten": "Gia vị, nước sốt đóng chai",
+    "nhom": "THỰC PHẨM",
+    "viDu": "tương ớt, dầu hào, sa tế",
+    "trangThai": "nhan",
+    "ghiChu": ""
+   },
+   {
+    "ten": "Hành phi",
+    "nhom": "THỰC PHẨM",
+    "viDu": "hành phi đóng hũ",
+    "trangThai": "nhan",
+    "ghiChu": ""
+   },
+   {
+    "ten": "Thuốc tây",
+    "nhom": "THUỐC, SỨC KHOẺ, LÀM ĐẸP",
+    "viDu": "",
+    "trangThai": "nhan",
+    "ghiChu": ""
+   },
+   {
+    "ten": "Thuốc Nam, thuốc Bắc",
+    "nhom": "THUỐC, SỨC KHOẺ, LÀM ĐẸP",
+    "viDu": "thảo mộc khô, cao",
+    "trangThai": "nhan",
+    "ghiChu": ""
+   },
+   {
+    "ten": "Thực phẩm chức năng",
+    "nhom": "THUỐC, SỨC KHOẺ, LÀM ĐẸP",
+    "viDu": "",
+    "trangThai": "nhan",
+    "ghiChu": ""
+   },
+   {
+    "ten": "Yến sào",
+    "nhom": "THUỐC, SỨC KHOẺ, LÀM ĐẸP",
+    "viDu": "yến tinh chế",
+    "trangThai": "nhan",
+    "ghiChu": ""
+   },
+   {
+    "ten": "Sâm, đông trùng hạ thảo",
+    "nhom": "THUỐC, SỨC KHOẺ, LÀM ĐẸP",
+    "viDu": "",
+    "trangThai": "nhan",
+    "ghiChu": ""
+   },
+   {
+    "ten": "Sâm ngâm mật ong",
+    "nhom": "THUỐC, SỨC KHOẺ, LÀM ĐẸP",
+    "viDu": "hũ sâm ngâm mật ong (chất lỏng)",
+    "trangThai": "nhan",
+    "ghiChu": "Phụ thu 300.000đ/kiện"
+   },
+   {
+    "ten": "Mỹ phẩm",
+    "nhom": "THUỐC, SỨC KHOẺ, LÀM ĐẸP",
+    "viDu": "kem, son, serum",
+    "trangThai": "nhan",
+    "ghiChu": ""
+   },
+   {
+    "ten": "Móng tay giả (nail box)",
+    "nhom": "THUỐC, SỨC KHOẺ, LÀM ĐẸP",
+    "viDu": "móng úp, nailbox, móng gắn sẵn",
+    "trangThai": "nhan",
+    "ghiChu": ""
+   },
+   {
+    "ten": "Nước hoa",
+    "nhom": "THUỐC, SỨC KHOẺ, LÀM ĐẸP",
+    "viDu": "nước hoa chai (vd Parfums de Marly Delina 75ml)",
+    "trangThai": "nhan",
+    "ghiChu": "Phụ thu 50.000đ/chai + 300.000đ/kiện."
+   },
+   {
+    "ten": "Đồ có cồn",
+    "nhom": "THUỐC, SỨC KHOẺ, LÀM ĐẸP",
+    "viDu": "",
+    "trangThai": "nhan",
+    "ghiChu": ""
+   },
+   {
+    "ten": "Quần áo, giày dép, túi xách",
+    "nhom": "ĐỒ DÙNG, HÀNG HOÁ",
+    "viDu": "",
+    "trangThai": "nhan",
+    "ghiChu": ""
+   },
+   {
+    "ten": "Đồng hồ đeo tay",
+    "nhom": "ĐỒ DÙNG, HÀNG HOÁ",
+    "viDu": "đồng hồ thời trang, đồng hồ có pin",
+    "trangThai": "nhan",
+    "ghiChu": "Phụ thu 50.000đ/cái + 300.000đ/kiện."
+   },
+   {
+    "ten": "Điện thoại, laptop, đồ điện tử có pin",
+    "nhom": "ĐỒ DÙNG, HÀNG HOÁ",
+    "viDu": "pin gắn trong máy",
+    "trangThai": "nhan",
+    "ghiChu": ""
+   },
+   {
+    "ten": "Pin rời, sạc dự phòng",
+    "nhom": "ĐỒ DÙNG, HÀNG HOÁ",
+    "viDu": "",
+    "trangThai": "khong",
+    "ghiChu": ""
+   },
+   {
+    "ten": "Pin năng lượng mặt trời",
+    "nhom": "ĐỒ DÙNG, HÀNG HOÁ",
+    "viDu": "đèn năng lượng mặt trời, tấm pin solar",
+    "trangThai": "chua-ro",
+    "ghiChu": ""
+   },
+   {
+    "ten": "Hàng nặng, cồng kềnh",
+    "nhom": "ĐỒ DÙNG, HÀNG HOÁ",
+    "viDu": "nội thất, bàn thờ, tủ",
+    "trangThai": "nhan",
+    "ghiChu": ""
+   },
+   {
+    "ten": "Nhạc cụ",
+    "nhom": "ĐỒ DÙNG, HÀNG HOÁ",
+    "viDu": "đàn, trống",
+    "trangThai": "nhan",
+    "ghiChu": ""
+   },
+   {
+    "ten": "Máy âm li (amply)",
+    "nhom": "ĐỒ DÙNG, HÀNG HOÁ",
+    "viDu": "âm li, amply nghe nhạc",
+    "trangThai": "nhan",
+    "ghiChu": "Phụ thu 200.000đ/cái."
+   },
+   {
+    "ten": "Máy móc, linh kiện",
+    "nhom": "ĐỒ DÙNG, HÀNG HOÁ",
+    "viDu": "",
+    "trangThai": "nhan",
+    "ghiChu": ""
+   },
+   {
+    "ten": "Máy phân tích vật chất",
+    "nhom": "ĐỒ DÙNG, HÀNG HOÁ",
+    "viDu": "máy phân tích, máy đo chuyên dụng (vd XOS Petra)",
+    "trangThai": "chua-ro",
+    "ghiChu": ""
+   },
+   {
+    "ten": "Sách vở, tài liệu",
+    "nhom": "ĐỒ DÙNG, HÀNG HOÁ",
+    "viDu": "sách, vở, tài liệu, giấy tờ in",
+    "trangThai": "nhan",
+    "ghiChu": "Phụ thu 10.000đ/kg"
+   },
+   {
+    "ten": "Hàng mẫu (sample) cho doanh nghiệp",
+    "nhom": "ĐỒ DÙNG, HÀNG HOÁ",
+    "viDu": "",
+    "trangThai": "nhan",
+    "ghiChu": ""
+   },
+   {
+    "ten": "Hàng kinh doanh số lượng lớn",
+    "nhom": "ĐỒ DÙNG, HÀNG HOÁ",
+    "viDu": "",
+    "trangThai": "nhan",
+    "ghiChu": ""
+   },
+   {
+    "ten": "Hạt giống, cây cảnh, đồ dính đất",
+    "nhom": "ĐỒ DÙNG, HÀNG HOÁ",
+    "viDu": "",
+    "trangThai": "nhan",
+    "ghiChu": "Có rủi ro bị hải quan Nhật giữ. Minh Thiện vẫn nhận và lo giấy tờ, nhưng báo trước rủi ro cho khách."
+   },
+   {
+    "ten": "Rượu, bia",
+    "nhom": "ĐỒ DÙNG, HÀNG HOÁ",
+    "viDu": "",
+    "trangThai": "khong",
+    "ghiChu": ""
+   },
+   {
+    "ten": "Thuốc lá",
+    "nhom": "ĐỒ DÙNG, HÀNG HOÁ",
+    "viDu": "",
+    "trangThai": "khong",
+    "ghiChu": ""
+   }
+  ]
+ },
+ {
+  "ten": "Hàn",
+  "slug": "han",
+  "hang": [
+   {
+    "ten": "Đồ khô, đặc sản quê",
+    "nhom": "THỰC PHẨM",
+    "viDu": "bánh tráng, gạo, hạt điều, trái cây sấy, mì gói",
+    "trangThai": "nhan",
+    "ghiChu": ""
+   },
+   {
+    "ten": "Cá khô, mực khô",
+    "nhom": "THỰC PHẨM",
+    "viDu": "",
+    "trangThai": "nhan",
+    "ghiChu": ""
+   },
+   {
+    "ten": "Tôm khô",
+    "nhom": "THỰC PHẨM",
+    "viDu": "",
+    "trangThai": "nhan",
+    "ghiChu": ""
+   },
+   {
+    "ten": "Nước mắm, mắm các loại",
+    "nhom": "THỰC PHẨM",
+    "viDu": "mắm tôm, mắm nêm, mắm cá",
+    "trangThai": "nhan",
+    "ghiChu": ""
+   },
+   {
+    "ten": "Giò chả, chả lụa",
+    "nhom": "THỰC PHẨM",
+    "viDu": "đã chín, hút chân không",
+    "trangThai": "dieu-kien",
+    "ghiChu": "Có rủi ro bị hải quan Hàn giữ. Minh Thiện vẫn nhận và tư vấn cách gửi, nhưng báo trước rủi ro cho khách."
+   },
+   {
+    "ten": "Thịt khô, khô bò, lạp xưởng, chà bông",
+    "nhom": "THỰC PHẨM",
+    "viDu": "sản phẩm từ thịt",
+    "trangThai": "dieu-kien",
+    "ghiChu": "Có rủi ro bị hải quan Hàn giữ. Minh Thiện vẫn nhận và tư vấn cách gửi, nhưng báo trước rủi ro cho khách."
+   },
+   {
+    "ten": "Hải sản, thực phẩm đông lạnh",
+    "nhom": "THỰC PHẨM",
+    "viDu": "",
+    "trangThai": "nhan",
+    "ghiChu": ""
+   },
+   {
+    "ten": "Bánh kẹo, mứt Tết",
+    "nhom": "THỰC PHẨM",
+    "viDu": "",
+    "trangThai": "nhan",
+    "ghiChu": ""
+   },
+   {
+    "ten": "Cà phê",
+    "nhom": "THỰC PHẨM",
+    "viDu": "bột, hạt, hoà tan",
+    "trangThai": "nhan",
+    "ghiChu": ""
+   },
+   {
+    "ten": "Trà",
+    "nhom": "THỰC PHẨM",
+    "viDu": "trà khô, trà túi lọc",
+    "trangThai": "nhan",
+    "ghiChu": ""
+   },
+   {
+    "ten": "Sữa, trứng và đồ làm từ sữa",
+    "nhom": "THỰC PHẨM",
+    "viDu": "sữa bột, bánh có trứng",
+    "trangThai": "dieu-kien",
+    "ghiChu": "Có rủi ro bị hải quan Hàn giữ. Minh Thiện vẫn nhận và tư vấn cách gửi, nhưng báo trước rủi ro cho khách."
+   },
+   {
+    "ten": "Bột trà sữa",
+    "nhom": "THỰC PHẨM",
+    "viDu": "bột kem pha trà sữa (vd Frima creamer 1kg)",
+    "trangThai": "chua-ro",
+    "ghiChu": ""
+   },
+   {
+    "ten": "Rau củ, trái cây tươi",
+    "nhom": "THỰC PHẨM",
+    "viDu": "",
+    "trangThai": "dieu-kien",
+    "ghiChu": "Có rủi ro bị hải quan Hàn giữ. Minh Thiện vẫn nhận và tư vấn cách gửi, nhưng báo trước rủi ro cho khách."
+   },
+   {
+    "ten": "Gia vị, nước sốt đóng chai",
+    "nhom": "THỰC PHẨM",
+    "viDu": "tương ớt, dầu hào, sa tế",
+    "trangThai": "nhan",
+    "ghiChu": ""
+   },
+   {
+    "ten": "Hành phi",
+    "nhom": "THỰC PHẨM",
+    "viDu": "hành phi đóng hũ",
+    "trangThai": "nhan",
+    "ghiChu": ""
+   },
+   {
+    "ten": "Thuốc tây",
+    "nhom": "THUỐC, SỨC KHOẺ, LÀM ĐẸP",
+    "viDu": "",
+    "trangThai": "nhan",
+    "ghiChu": ""
+   },
+   {
+    "ten": "Thuốc Nam, thuốc Bắc",
+    "nhom": "THUỐC, SỨC KHOẺ, LÀM ĐẸP",
+    "viDu": "thảo mộc khô, cao",
+    "trangThai": "nhan",
+    "ghiChu": ""
+   },
+   {
+    "ten": "Thực phẩm chức năng",
+    "nhom": "THUỐC, SỨC KHOẺ, LÀM ĐẸP",
+    "viDu": "",
+    "trangThai": "nhan",
+    "ghiChu": ""
+   },
+   {
+    "ten": "Yến sào",
+    "nhom": "THUỐC, SỨC KHOẺ, LÀM ĐẸP",
+    "viDu": "yến tinh chế",
+    "trangThai": "nhan",
+    "ghiChu": ""
+   },
+   {
+    "ten": "Sâm, đông trùng hạ thảo",
+    "nhom": "THUỐC, SỨC KHOẺ, LÀM ĐẸP",
+    "viDu": "",
+    "trangThai": "nhan",
+    "ghiChu": ""
+   },
+   {
+    "ten": "Sâm ngâm mật ong",
+    "nhom": "THUỐC, SỨC KHOẺ, LÀM ĐẸP",
+    "viDu": "hũ sâm ngâm mật ong (chất lỏng)",
+    "trangThai": "nhan",
+    "ghiChu": "Phụ thu 300.000đ/kiện"
+   },
+   {
+    "ten": "Mỹ phẩm",
+    "nhom": "THUỐC, SỨC KHOẺ, LÀM ĐẸP",
+    "viDu": "kem, son, serum",
+    "trangThai": "nhan",
+    "ghiChu": ""
+   },
+   {
+    "ten": "Móng tay giả (nail box)",
+    "nhom": "THUỐC, SỨC KHOẺ, LÀM ĐẸP",
+    "viDu": "móng úp, nailbox, móng gắn sẵn",
+    "trangThai": "nhan",
+    "ghiChu": ""
+   },
+   {
+    "ten": "Nước hoa",
+    "nhom": "THUỐC, SỨC KHOẺ, LÀM ĐẸP",
+    "viDu": "nước hoa chai (vd Parfums de Marly Delina 75ml)",
+    "trangThai": "nhan",
+    "ghiChu": "Phụ thu 50.000đ/chai + 300.000đ/kiện."
+   },
+   {
+    "ten": "Đồ có cồn",
+    "nhom": "THUỐC, SỨC KHOẺ, LÀM ĐẸP",
+    "viDu": "",
+    "trangThai": "nhan",
+    "ghiChu": ""
+   },
+   {
+    "ten": "Quần áo, giày dép, túi xách",
+    "nhom": "ĐỒ DÙNG, HÀNG HOÁ",
+    "viDu": "",
+    "trangThai": "nhan",
+    "ghiChu": ""
+   },
+   {
+    "ten": "Đồng hồ đeo tay",
+    "nhom": "ĐỒ DÙNG, HÀNG HOÁ",
+    "viDu": "đồng hồ thời trang, đồng hồ có pin",
+    "trangThai": "dieu-kien",
+    "ghiChu": "Hàn KHÔNG nhận pin — phải tháo pin ra trước khi gửi. Phụ thu 50.000đ/cái + 300.000đ/kiện."
+   },
+   {
+    "ten": "Điện thoại, laptop, đồ điện tử có pin",
+    "nhom": "ĐỒ DÙNG, HÀNG HOÁ",
+    "viDu": "pin gắn trong máy",
+    "trangThai": "dieu-kien",
+    "ghiChu": "Hàng giá trị cao, hải quan Hàn thường yêu cầu đóng thuế. Gọi hotline để được tư vấn trước khi gửi."
+   },
+   {
+    "ten": "Pin rời, sạc dự phòng",
+    "nhom": "ĐỒ DÙNG, HÀNG HOÁ",
+    "viDu": "",
+    "trangThai": "khong",
+    "ghiChu": ""
+   },
+   {
+    "ten": "Pin năng lượng mặt trời",
+    "nhom": "ĐỒ DÙNG, HÀNG HOÁ",
+    "viDu": "đèn năng lượng mặt trời, tấm pin solar",
+    "trangThai": "chua-ro",
+    "ghiChu": ""
+   },
+   {
+    "ten": "Hàng nặng, cồng kềnh",
+    "nhom": "ĐỒ DÙNG, HÀNG HOÁ",
+    "viDu": "nội thất, bàn thờ, tủ",
+    "trangThai": "nhan",
+    "ghiChu": ""
+   },
+   {
+    "ten": "Nhạc cụ",
+    "nhom": "ĐỒ DÙNG, HÀNG HOÁ",
+    "viDu": "đàn, trống",
+    "trangThai": "nhan",
+    "ghiChu": ""
+   },
+   {
+    "ten": "Máy âm li (amply)",
+    "nhom": "ĐỒ DÙNG, HÀNG HOÁ",
+    "viDu": "âm li, amply nghe nhạc",
+    "trangThai": "nhan",
+    "ghiChu": "Phụ thu 200.000đ/cái."
+   },
+   {
+    "ten": "Máy móc, linh kiện",
+    "nhom": "ĐỒ DÙNG, HÀNG HOÁ",
+    "viDu": "",
+    "trangThai": "nhan",
+    "ghiChu": ""
+   },
+   {
+    "ten": "Máy phân tích vật chất",
+    "nhom": "ĐỒ DÙNG, HÀNG HOÁ",
+    "viDu": "máy phân tích, máy đo chuyên dụng (vd XOS Petra)",
+    "trangThai": "chua-ro",
+    "ghiChu": ""
+   },
+   {
+    "ten": "Sách vở, tài liệu",
+    "nhom": "ĐỒ DÙNG, HÀNG HOÁ",
+    "viDu": "sách, vở, tài liệu, giấy tờ in",
+    "trangThai": "nhan",
+    "ghiChu": "Phụ thu 10.000đ/kg"
+   },
+   {
+    "ten": "Hàng mẫu (sample) cho doanh nghiệp",
+    "nhom": "ĐỒ DÙNG, HÀNG HOÁ",
+    "viDu": "",
+    "trangThai": "nhan",
+    "ghiChu": ""
+   },
+   {
+    "ten": "Hàng kinh doanh số lượng lớn",
+    "nhom": "ĐỒ DÙNG, HÀNG HOÁ",
+    "viDu": "",
+    "trangThai": "nhan",
+    "ghiChu": ""
+   },
+   {
+    "ten": "Hạt giống, cây cảnh, đồ dính đất",
+    "nhom": "ĐỒ DÙNG, HÀNG HOÁ",
+    "viDu": "",
+    "trangThai": "dieu-kien",
+    "ghiChu": "Có rủi ro bị hải quan Hàn giữ. Minh Thiện vẫn nhận và tư vấn cách gửi, nhưng báo trước rủi ro cho khách."
+   },
+   {
+    "ten": "Rượu, bia",
+    "nhom": "ĐỒ DÙNG, HÀNG HOÁ",
+    "viDu": "",
+    "trangThai": "khong",
+    "ghiChu": ""
+   },
+   {
+    "ten": "Thuốc lá",
+    "nhom": "ĐỒ DÙNG, HÀNG HOÁ",
+    "viDu": "",
+    "trangThai": "khong",
+    "ghiChu": ""
+   }
+  ]
+ },
+ {
+  "ten": "Singapore",
+  "slug": "singapore",
+  "hang": [
+   {
+    "ten": "Đồ khô, đặc sản quê",
+    "nhom": "THỰC PHẨM",
+    "viDu": "bánh tráng, gạo, hạt điều, trái cây sấy, mì gói",
+    "trangThai": "nhan",
+    "ghiChu": ""
+   },
+   {
+    "ten": "Cá khô, mực khô",
+    "nhom": "THỰC PHẨM",
+    "viDu": "",
+    "trangThai": "nhan",
+    "ghiChu": ""
+   },
+   {
+    "ten": "Tôm khô",
+    "nhom": "THỰC PHẨM",
+    "viDu": "",
+    "trangThai": "nhan",
+    "ghiChu": ""
+   },
+   {
+    "ten": "Nước mắm, mắm các loại",
+    "nhom": "THỰC PHẨM",
+    "viDu": "mắm tôm, mắm nêm, mắm cá",
+    "trangThai": "nhan",
+    "ghiChu": ""
+   },
+   {
+    "ten": "Giò chả, chả lụa",
+    "nhom": "THỰC PHẨM",
+    "viDu": "đã chín, hút chân không",
+    "trangThai": "nhan",
+    "ghiChu": ""
+   },
+   {
+    "ten": "Thịt khô, khô bò, lạp xưởng, chà bông",
+    "nhom": "THỰC PHẨM",
+    "viDu": "sản phẩm từ thịt",
+    "trangThai": "nhan",
+    "ghiChu": ""
+   },
+   {
+    "ten": "Hải sản, thực phẩm đông lạnh",
+    "nhom": "THỰC PHẨM",
+    "viDu": "",
+    "trangThai": "nhan",
+    "ghiChu": ""
+   },
+   {
+    "ten": "Bánh kẹo, mứt Tết",
+    "nhom": "THỰC PHẨM",
+    "viDu": "",
+    "trangThai": "nhan",
+    "ghiChu": ""
+   },
+   {
+    "ten": "Cà phê",
+    "nhom": "THỰC PHẨM",
+    "viDu": "bột, hạt, hoà tan",
+    "trangThai": "nhan",
+    "ghiChu": ""
+   },
+   {
+    "ten": "Trà",
+    "nhom": "THỰC PHẨM",
+    "viDu": "trà khô, trà túi lọc",
+    "trangThai": "nhan",
+    "ghiChu": ""
+   },
+   {
+    "ten": "Sữa, trứng và đồ làm từ sữa",
+    "nhom": "THỰC PHẨM",
+    "viDu": "sữa bột, bánh có trứng",
+    "trangThai": "nhan",
+    "ghiChu": ""
+   },
+   {
+    "ten": "Bột trà sữa",
+    "nhom": "THỰC PHẨM",
+    "viDu": "bột kem pha trà sữa (vd Frima creamer 1kg)",
+    "trangThai": "chua-ro",
+    "ghiChu": ""
+   },
+   {
+    "ten": "Rau củ, trái cây tươi",
+    "nhom": "THỰC PHẨM",
+    "viDu": "",
+    "trangThai": "nhan",
+    "ghiChu": ""
+   },
+   {
+    "ten": "Gia vị, nước sốt đóng chai",
+    "nhom": "THỰC PHẨM",
+    "viDu": "tương ớt, dầu hào, sa tế",
+    "trangThai": "nhan",
+    "ghiChu": ""
+   },
+   {
+    "ten": "Hành phi",
+    "nhom": "THỰC PHẨM",
+    "viDu": "hành phi đóng hũ",
+    "trangThai": "nhan",
+    "ghiChu": ""
+   },
+   {
+    "ten": "Thuốc tây",
+    "nhom": "THUỐC, SỨC KHOẺ, LÀM ĐẸP",
+    "viDu": "",
+    "trangThai": "nhan",
+    "ghiChu": ""
+   },
+   {
+    "ten": "Thuốc Nam, thuốc Bắc",
+    "nhom": "THUỐC, SỨC KHOẺ, LÀM ĐẸP",
+    "viDu": "thảo mộc khô, cao",
+    "trangThai": "nhan",
+    "ghiChu": ""
+   },
+   {
+    "ten": "Thực phẩm chức năng",
+    "nhom": "THUỐC, SỨC KHOẺ, LÀM ĐẸP",
+    "viDu": "",
+    "trangThai": "nhan",
+    "ghiChu": ""
+   },
+   {
+    "ten": "Yến sào",
+    "nhom": "THUỐC, SỨC KHOẺ, LÀM ĐẸP",
+    "viDu": "yến tinh chế",
+    "trangThai": "nhan",
+    "ghiChu": ""
+   },
+   {
+    "ten": "Sâm, đông trùng hạ thảo",
+    "nhom": "THUỐC, SỨC KHOẺ, LÀM ĐẸP",
+    "viDu": "",
+    "trangThai": "nhan",
+    "ghiChu": ""
+   },
+   {
+    "ten": "Sâm ngâm mật ong",
+    "nhom": "THUỐC, SỨC KHOẺ, LÀM ĐẸP",
+    "viDu": "hũ sâm ngâm mật ong (chất lỏng)",
+    "trangThai": "nhan",
+    "ghiChu": "Phụ thu 300.000đ/kiện"
+   },
+   {
+    "ten": "Mỹ phẩm",
+    "nhom": "THUỐC, SỨC KHOẺ, LÀM ĐẸP",
+    "viDu": "kem, son, serum",
+    "trangThai": "nhan",
+    "ghiChu": ""
+   },
+   {
+    "ten": "Móng tay giả (nail box)",
+    "nhom": "THUỐC, SỨC KHOẺ, LÀM ĐẸP",
+    "viDu": "móng úp, nailbox, móng gắn sẵn",
+    "trangThai": "nhan",
+    "ghiChu": ""
+   },
+   {
+    "ten": "Nước hoa",
+    "nhom": "THUỐC, SỨC KHOẺ, LÀM ĐẸP",
+    "viDu": "nước hoa chai (vd Parfums de Marly Delina 75ml)",
+    "trangThai": "nhan",
+    "ghiChu": "Phụ thu 50.000đ/chai + 300.000đ/kiện."
+   },
+   {
+    "ten": "Đồ có cồn",
+    "nhom": "THUỐC, SỨC KHOẺ, LÀM ĐẸP",
+    "viDu": "",
+    "trangThai": "nhan",
+    "ghiChu": ""
+   },
+   {
+    "ten": "Quần áo, giày dép, túi xách",
+    "nhom": "ĐỒ DÙNG, HÀNG HOÁ",
+    "viDu": "",
+    "trangThai": "nhan",
+    "ghiChu": ""
+   },
+   {
+    "ten": "Đồng hồ đeo tay",
+    "nhom": "ĐỒ DÙNG, HÀNG HOÁ",
+    "viDu": "đồng hồ thời trang, đồng hồ có pin",
+    "trangThai": "nhan",
+    "ghiChu": "Phụ thu 50.000đ/cái + 300.000đ/kiện."
+   },
+   {
+    "ten": "Điện thoại, laptop, đồ điện tử có pin",
+    "nhom": "ĐỒ DÙNG, HÀNG HOÁ",
+    "viDu": "pin gắn trong máy",
+    "trangThai": "nhan",
+    "ghiChu": ""
+   },
+   {
+    "ten": "Pin rời, sạc dự phòng",
+    "nhom": "ĐỒ DÙNG, HÀNG HOÁ",
+    "viDu": "",
+    "trangThai": "khong",
+    "ghiChu": ""
+   },
+   {
+    "ten": "Pin năng lượng mặt trời",
+    "nhom": "ĐỒ DÙNG, HÀNG HOÁ",
+    "viDu": "đèn năng lượng mặt trời, tấm pin solar",
+    "trangThai": "chua-ro",
+    "ghiChu": ""
+   },
+   {
+    "ten": "Hàng nặng, cồng kềnh",
+    "nhom": "ĐỒ DÙNG, HÀNG HOÁ",
+    "viDu": "nội thất, bàn thờ, tủ",
+    "trangThai": "nhan",
+    "ghiChu": ""
+   },
+   {
+    "ten": "Nhạc cụ",
+    "nhom": "ĐỒ DÙNG, HÀNG HOÁ",
+    "viDu": "đàn, trống",
+    "trangThai": "nhan",
+    "ghiChu": ""
+   },
+   {
+    "ten": "Máy âm li (amply)",
+    "nhom": "ĐỒ DÙNG, HÀNG HOÁ",
+    "viDu": "âm li, amply nghe nhạc",
+    "trangThai": "nhan",
+    "ghiChu": "Phụ thu 200.000đ/cái."
+   },
+   {
+    "ten": "Máy móc, linh kiện",
+    "nhom": "ĐỒ DÙNG, HÀNG HOÁ",
+    "viDu": "",
+    "trangThai": "nhan",
+    "ghiChu": ""
+   },
+   {
+    "ten": "Máy phân tích vật chất",
+    "nhom": "ĐỒ DÙNG, HÀNG HOÁ",
+    "viDu": "máy phân tích, máy đo chuyên dụng (vd XOS Petra)",
+    "trangThai": "chua-ro",
+    "ghiChu": ""
+   },
+   {
+    "ten": "Sách vở, tài liệu",
+    "nhom": "ĐỒ DÙNG, HÀNG HOÁ",
+    "viDu": "sách, vở, tài liệu, giấy tờ in",
+    "trangThai": "nhan",
+    "ghiChu": "Phụ thu 10.000đ/kg"
+   },
+   {
+    "ten": "Hàng mẫu (sample) cho doanh nghiệp",
+    "nhom": "ĐỒ DÙNG, HÀNG HOÁ",
+    "viDu": "",
+    "trangThai": "nhan",
+    "ghiChu": ""
+   },
+   {
+    "ten": "Hàng kinh doanh số lượng lớn",
+    "nhom": "ĐỒ DÙNG, HÀNG HOÁ",
+    "viDu": "",
+    "trangThai": "nhan",
+    "ghiChu": ""
+   },
+   {
+    "ten": "Hạt giống, cây cảnh, đồ dính đất",
+    "nhom": "ĐỒ DÙNG, HÀNG HOÁ",
+    "viDu": "",
+    "trangThai": "nhan",
+    "ghiChu": ""
+   },
+   {
+    "ten": "Rượu, bia",
+    "nhom": "ĐỒ DÙNG, HÀNG HOÁ",
+    "viDu": "",
+    "trangThai": "nhan",
+    "ghiChu": ""
+   },
+   {
+    "ten": "Thuốc lá",
+    "nhom": "ĐỒ DÙNG, HÀNG HOÁ",
+    "viDu": "",
+    "trangThai": "khong",
+    "ghiChu": ""
+   }
+  ]
+ },
+ {
+  "ten": "Malaysia",
+  "slug": "malaysia",
+  "hang": [
+   {
+    "ten": "Đồ khô, đặc sản quê",
+    "nhom": "THỰC PHẨM",
+    "viDu": "bánh tráng, gạo, hạt điều, trái cây sấy, mì gói",
+    "trangThai": "nhan",
+    "ghiChu": ""
+   },
+   {
+    "ten": "Cá khô, mực khô",
+    "nhom": "THỰC PHẨM",
+    "viDu": "",
+    "trangThai": "nhan",
+    "ghiChu": ""
+   },
+   {
+    "ten": "Tôm khô",
+    "nhom": "THỰC PHẨM",
+    "viDu": "",
+    "trangThai": "nhan",
+    "ghiChu": ""
+   },
+   {
+    "ten": "Nước mắm, mắm các loại",
+    "nhom": "THỰC PHẨM",
+    "viDu": "mắm tôm, mắm nêm, mắm cá",
+    "trangThai": "nhan",
+    "ghiChu": ""
+   },
+   {
+    "ten": "Giò chả, chả lụa",
+    "nhom": "THỰC PHẨM",
+    "viDu": "đã chín, hút chân không",
+    "trangThai": "nhan",
+    "ghiChu": ""
+   },
+   {
+    "ten": "Thịt khô, khô bò, lạp xưởng, chà bông",
+    "nhom": "THỰC PHẨM",
+    "viDu": "sản phẩm từ thịt",
+    "trangThai": "nhan",
+    "ghiChu": ""
+   },
+   {
+    "ten": "Hải sản, thực phẩm đông lạnh",
+    "nhom": "THỰC PHẨM",
+    "viDu": "",
+    "trangThai": "nhan",
+    "ghiChu": ""
+   },
+   {
+    "ten": "Bánh kẹo, mứt Tết",
+    "nhom": "THỰC PHẨM",
+    "viDu": "",
+    "trangThai": "nhan",
+    "ghiChu": ""
+   },
+   {
+    "ten": "Cà phê",
+    "nhom": "THỰC PHẨM",
+    "viDu": "bột, hạt, hoà tan",
+    "trangThai": "nhan",
+    "ghiChu": ""
+   },
+   {
+    "ten": "Trà",
+    "nhom": "THỰC PHẨM",
+    "viDu": "trà khô, trà túi lọc",
+    "trangThai": "nhan",
+    "ghiChu": ""
+   },
+   {
+    "ten": "Sữa, trứng và đồ làm từ sữa",
+    "nhom": "THỰC PHẨM",
+    "viDu": "sữa bột, bánh có trứng",
+    "trangThai": "nhan",
+    "ghiChu": ""
+   },
+   {
+    "ten": "Bột trà sữa",
+    "nhom": "THỰC PHẨM",
+    "viDu": "bột kem pha trà sữa (vd Frima creamer 1kg)",
+    "trangThai": "chua-ro",
+    "ghiChu": ""
+   },
+   {
+    "ten": "Rau củ, trái cây tươi",
+    "nhom": "THỰC PHẨM",
+    "viDu": "",
+    "trangThai": "nhan",
+    "ghiChu": ""
+   },
+   {
+    "ten": "Gia vị, nước sốt đóng chai",
+    "nhom": "THỰC PHẨM",
+    "viDu": "tương ớt, dầu hào, sa tế",
+    "trangThai": "nhan",
+    "ghiChu": ""
+   },
+   {
+    "ten": "Hành phi",
+    "nhom": "THỰC PHẨM",
+    "viDu": "hành phi đóng hũ",
+    "trangThai": "nhan",
+    "ghiChu": ""
+   },
+   {
+    "ten": "Thuốc tây",
+    "nhom": "THUỐC, SỨC KHOẺ, LÀM ĐẸP",
+    "viDu": "",
+    "trangThai": "nhan",
+    "ghiChu": ""
+   },
+   {
+    "ten": "Thuốc Nam, thuốc Bắc",
+    "nhom": "THUỐC, SỨC KHOẺ, LÀM ĐẸP",
+    "viDu": "thảo mộc khô, cao",
+    "trangThai": "nhan",
+    "ghiChu": ""
+   },
+   {
+    "ten": "Thực phẩm chức năng",
+    "nhom": "THUỐC, SỨC KHOẺ, LÀM ĐẸP",
+    "viDu": "",
+    "trangThai": "nhan",
+    "ghiChu": ""
+   },
+   {
+    "ten": "Yến sào",
+    "nhom": "THUỐC, SỨC KHOẺ, LÀM ĐẸP",
+    "viDu": "yến tinh chế",
+    "trangThai": "nhan",
+    "ghiChu": ""
+   },
+   {
+    "ten": "Sâm, đông trùng hạ thảo",
+    "nhom": "THUỐC, SỨC KHOẺ, LÀM ĐẸP",
+    "viDu": "",
+    "trangThai": "nhan",
+    "ghiChu": ""
+   },
+   {
+    "ten": "Sâm ngâm mật ong",
+    "nhom": "THUỐC, SỨC KHOẺ, LÀM ĐẸP",
+    "viDu": "hũ sâm ngâm mật ong (chất lỏng)",
+    "trangThai": "nhan",
+    "ghiChu": "Phụ thu 300.000đ/kiện"
+   },
+   {
+    "ten": "Mỹ phẩm",
+    "nhom": "THUỐC, SỨC KHOẺ, LÀM ĐẸP",
+    "viDu": "kem, son, serum",
+    "trangThai": "nhan",
+    "ghiChu": ""
+   },
+   {
+    "ten": "Móng tay giả (nail box)",
+    "nhom": "THUỐC, SỨC KHOẺ, LÀM ĐẸP",
+    "viDu": "móng úp, nailbox, móng gắn sẵn",
+    "trangThai": "nhan",
+    "ghiChu": ""
+   },
+   {
+    "ten": "Nước hoa",
+    "nhom": "THUỐC, SỨC KHOẺ, LÀM ĐẸP",
+    "viDu": "nước hoa chai (vd Parfums de Marly Delina 75ml)",
+    "trangThai": "nhan",
+    "ghiChu": "Phụ thu 50.000đ/chai + 300.000đ/kiện."
+   },
+   {
+    "ten": "Đồ có cồn",
+    "nhom": "THUỐC, SỨC KHOẺ, LÀM ĐẸP",
+    "viDu": "",
+    "trangThai": "nhan",
+    "ghiChu": ""
+   },
+   {
+    "ten": "Quần áo, giày dép, túi xách",
+    "nhom": "ĐỒ DÙNG, HÀNG HOÁ",
+    "viDu": "",
+    "trangThai": "nhan",
+    "ghiChu": ""
+   },
+   {
+    "ten": "Đồng hồ đeo tay",
+    "nhom": "ĐỒ DÙNG, HÀNG HOÁ",
+    "viDu": "đồng hồ thời trang, đồng hồ có pin",
+    "trangThai": "nhan",
+    "ghiChu": "Phụ thu 50.000đ/cái + 300.000đ/kiện."
+   },
+   {
+    "ten": "Điện thoại, laptop, đồ điện tử có pin",
+    "nhom": "ĐỒ DÙNG, HÀNG HOÁ",
+    "viDu": "pin gắn trong máy",
+    "trangThai": "nhan",
+    "ghiChu": ""
+   },
+   {
+    "ten": "Pin rời, sạc dự phòng",
+    "nhom": "ĐỒ DÙNG, HÀNG HOÁ",
+    "viDu": "",
+    "trangThai": "khong",
+    "ghiChu": ""
+   },
+   {
+    "ten": "Pin năng lượng mặt trời",
+    "nhom": "ĐỒ DÙNG, HÀNG HOÁ",
+    "viDu": "đèn năng lượng mặt trời, tấm pin solar",
+    "trangThai": "chua-ro",
+    "ghiChu": ""
+   },
+   {
+    "ten": "Hàng nặng, cồng kềnh",
+    "nhom": "ĐỒ DÙNG, HÀNG HOÁ",
+    "viDu": "nội thất, bàn thờ, tủ",
+    "trangThai": "nhan",
+    "ghiChu": ""
+   },
+   {
+    "ten": "Nhạc cụ",
+    "nhom": "ĐỒ DÙNG, HÀNG HOÁ",
+    "viDu": "đàn, trống",
+    "trangThai": "nhan",
+    "ghiChu": ""
+   },
+   {
+    "ten": "Máy âm li (amply)",
+    "nhom": "ĐỒ DÙNG, HÀNG HOÁ",
+    "viDu": "âm li, amply nghe nhạc",
+    "trangThai": "nhan",
+    "ghiChu": "Phụ thu 200.000đ/cái."
+   },
+   {
+    "ten": "Máy móc, linh kiện",
+    "nhom": "ĐỒ DÙNG, HÀNG HOÁ",
+    "viDu": "",
+    "trangThai": "nhan",
+    "ghiChu": ""
+   },
+   {
+    "ten": "Máy phân tích vật chất",
+    "nhom": "ĐỒ DÙNG, HÀNG HOÁ",
+    "viDu": "máy phân tích, máy đo chuyên dụng (vd XOS Petra)",
+    "trangThai": "chua-ro",
+    "ghiChu": ""
+   },
+   {
+    "ten": "Sách vở, tài liệu",
+    "nhom": "ĐỒ DÙNG, HÀNG HOÁ",
+    "viDu": "sách, vở, tài liệu, giấy tờ in",
+    "trangThai": "nhan",
+    "ghiChu": "Phụ thu 10.000đ/kg"
+   },
+   {
+    "ten": "Hàng mẫu (sample) cho doanh nghiệp",
+    "nhom": "ĐỒ DÙNG, HÀNG HOÁ",
+    "viDu": "",
+    "trangThai": "nhan",
+    "ghiChu": ""
+   },
+   {
+    "ten": "Hàng kinh doanh số lượng lớn",
+    "nhom": "ĐỒ DÙNG, HÀNG HOÁ",
+    "viDu": "",
+    "trangThai": "nhan",
+    "ghiChu": ""
+   },
+   {
+    "ten": "Hạt giống, cây cảnh, đồ dính đất",
+    "nhom": "ĐỒ DÙNG, HÀNG HOÁ",
+    "viDu": "",
+    "trangThai": "nhan",
+    "ghiChu": ""
+   },
+   {
+    "ten": "Rượu, bia",
+    "nhom": "ĐỒ DÙNG, HÀNG HOÁ",
+    "viDu": "",
+    "trangThai": "nhan",
+    "ghiChu": ""
+   },
+   {
+    "ten": "Thuốc lá",
+    "nhom": "ĐỒ DÙNG, HÀNG HOÁ",
+    "viDu": "",
+    "trangThai": "khong",
+    "ghiChu": ""
+   }
+  ]
+ },
+ {
+  "ten": "Thái Lan",
+  "slug": "thai-lan",
+  "hang": [
+   {
+    "ten": "Đồ khô, đặc sản quê",
+    "nhom": "THỰC PHẨM",
+    "viDu": "bánh tráng, gạo, hạt điều, trái cây sấy, mì gói",
+    "trangThai": "nhan",
+    "ghiChu": ""
+   },
+   {
+    "ten": "Cá khô, mực khô",
+    "nhom": "THỰC PHẨM",
+    "viDu": "",
+    "trangThai": "nhan",
+    "ghiChu": ""
+   },
+   {
+    "ten": "Tôm khô",
+    "nhom": "THỰC PHẨM",
+    "viDu": "",
+    "trangThai": "nhan",
+    "ghiChu": ""
+   },
+   {
+    "ten": "Nước mắm, mắm các loại",
+    "nhom": "THỰC PHẨM",
+    "viDu": "mắm tôm, mắm nêm, mắm cá",
+    "trangThai": "nhan",
+    "ghiChu": ""
+   },
+   {
+    "ten": "Giò chả, chả lụa",
+    "nhom": "THỰC PHẨM",
+    "viDu": "đã chín, hút chân không",
+    "trangThai": "nhan",
+    "ghiChu": ""
+   },
+   {
+    "ten": "Thịt khô, khô bò, lạp xưởng, chà bông",
+    "nhom": "THỰC PHẨM",
+    "viDu": "sản phẩm từ thịt",
+    "trangThai": "nhan",
+    "ghiChu": ""
+   },
+   {
+    "ten": "Hải sản, thực phẩm đông lạnh",
+    "nhom": "THỰC PHẨM",
+    "viDu": "",
+    "trangThai": "nhan",
+    "ghiChu": ""
+   },
+   {
+    "ten": "Bánh kẹo, mứt Tết",
+    "nhom": "THỰC PHẨM",
+    "viDu": "",
+    "trangThai": "nhan",
+    "ghiChu": ""
+   },
+   {
+    "ten": "Cà phê",
+    "nhom": "THỰC PHẨM",
+    "viDu": "bột, hạt, hoà tan",
+    "trangThai": "nhan",
+    "ghiChu": ""
+   },
+   {
+    "ten": "Trà",
+    "nhom": "THỰC PHẨM",
+    "viDu": "trà khô, trà túi lọc",
+    "trangThai": "nhan",
+    "ghiChu": ""
+   },
+   {
+    "ten": "Sữa, trứng và đồ làm từ sữa",
+    "nhom": "THỰC PHẨM",
+    "viDu": "sữa bột, bánh có trứng",
+    "trangThai": "nhan",
+    "ghiChu": ""
+   },
+   {
+    "ten": "Bột trà sữa",
+    "nhom": "THỰC PHẨM",
+    "viDu": "bột kem pha trà sữa (vd Frima creamer 1kg)",
+    "trangThai": "chua-ro",
+    "ghiChu": ""
+   },
+   {
+    "ten": "Rau củ, trái cây tươi",
+    "nhom": "THỰC PHẨM",
+    "viDu": "",
+    "trangThai": "nhan",
+    "ghiChu": ""
+   },
+   {
+    "ten": "Gia vị, nước sốt đóng chai",
+    "nhom": "THỰC PHẨM",
+    "viDu": "tương ớt, dầu hào, sa tế",
+    "trangThai": "nhan",
+    "ghiChu": ""
+   },
+   {
+    "ten": "Hành phi",
+    "nhom": "THỰC PHẨM",
+    "viDu": "hành phi đóng hũ",
+    "trangThai": "nhan",
+    "ghiChu": ""
+   },
+   {
+    "ten": "Thuốc tây",
+    "nhom": "THUỐC, SỨC KHOẺ, LÀM ĐẸP",
+    "viDu": "",
+    "trangThai": "nhan",
+    "ghiChu": ""
+   },
+   {
+    "ten": "Thuốc Nam, thuốc Bắc",
+    "nhom": "THUỐC, SỨC KHOẺ, LÀM ĐẸP",
+    "viDu": "thảo mộc khô, cao",
+    "trangThai": "nhan",
+    "ghiChu": ""
+   },
+   {
+    "ten": "Thực phẩm chức năng",
+    "nhom": "THUỐC, SỨC KHOẺ, LÀM ĐẸP",
+    "viDu": "",
+    "trangThai": "nhan",
+    "ghiChu": ""
+   },
+   {
+    "ten": "Yến sào",
+    "nhom": "THUỐC, SỨC KHOẺ, LÀM ĐẸP",
+    "viDu": "yến tinh chế",
+    "trangThai": "nhan",
+    "ghiChu": ""
+   },
+   {
+    "ten": "Sâm, đông trùng hạ thảo",
+    "nhom": "THUỐC, SỨC KHOẺ, LÀM ĐẸP",
+    "viDu": "",
+    "trangThai": "nhan",
+    "ghiChu": ""
+   },
+   {
+    "ten": "Sâm ngâm mật ong",
+    "nhom": "THUỐC, SỨC KHOẺ, LÀM ĐẸP",
+    "viDu": "hũ sâm ngâm mật ong (chất lỏng)",
+    "trangThai": "nhan",
+    "ghiChu": "Phụ thu 300.000đ/kiện"
+   },
+   {
+    "ten": "Mỹ phẩm",
+    "nhom": "THUỐC, SỨC KHOẺ, LÀM ĐẸP",
+    "viDu": "kem, son, serum",
+    "trangThai": "nhan",
+    "ghiChu": ""
+   },
+   {
+    "ten": "Móng tay giả (nail box)",
+    "nhom": "THUỐC, SỨC KHOẺ, LÀM ĐẸP",
+    "viDu": "móng úp, nailbox, móng gắn sẵn",
+    "trangThai": "nhan",
+    "ghiChu": ""
+   },
+   {
+    "ten": "Nước hoa",
+    "nhom": "THUỐC, SỨC KHOẺ, LÀM ĐẸP",
+    "viDu": "nước hoa chai (vd Parfums de Marly Delina 75ml)",
+    "trangThai": "nhan",
+    "ghiChu": "Phụ thu 50.000đ/chai + 300.000đ/kiện."
+   },
+   {
+    "ten": "Đồ có cồn",
+    "nhom": "THUỐC, SỨC KHOẺ, LÀM ĐẸP",
+    "viDu": "",
+    "trangThai": "nhan",
+    "ghiChu": ""
+   },
+   {
+    "ten": "Quần áo, giày dép, túi xách",
+    "nhom": "ĐỒ DÙNG, HÀNG HOÁ",
+    "viDu": "",
+    "trangThai": "nhan",
+    "ghiChu": ""
+   },
+   {
+    "ten": "Đồng hồ đeo tay",
+    "nhom": "ĐỒ DÙNG, HÀNG HOÁ",
+    "viDu": "đồng hồ thời trang, đồng hồ có pin",
+    "trangThai": "nhan",
+    "ghiChu": "Phụ thu 50.000đ/cái + 300.000đ/kiện."
+   },
+   {
+    "ten": "Điện thoại, laptop, đồ điện tử có pin",
+    "nhom": "ĐỒ DÙNG, HÀNG HOÁ",
+    "viDu": "pin gắn trong máy",
+    "trangThai": "nhan",
+    "ghiChu": ""
+   },
+   {
+    "ten": "Pin rời, sạc dự phòng",
+    "nhom": "ĐỒ DÙNG, HÀNG HOÁ",
+    "viDu": "",
+    "trangThai": "nhan",
+    "ghiChu": ""
+   },
+   {
+    "ten": "Pin năng lượng mặt trời",
+    "nhom": "ĐỒ DÙNG, HÀNG HOÁ",
+    "viDu": "đèn năng lượng mặt trời, tấm pin solar",
+    "trangThai": "chua-ro",
+    "ghiChu": ""
+   },
+   {
+    "ten": "Hàng nặng, cồng kềnh",
+    "nhom": "ĐỒ DÙNG, HÀNG HOÁ",
+    "viDu": "nội thất, bàn thờ, tủ",
+    "trangThai": "nhan",
+    "ghiChu": ""
+   },
+   {
+    "ten": "Nhạc cụ",
+    "nhom": "ĐỒ DÙNG, HÀNG HOÁ",
+    "viDu": "đàn, trống",
+    "trangThai": "nhan",
+    "ghiChu": ""
+   },
+   {
+    "ten": "Máy âm li (amply)",
+    "nhom": "ĐỒ DÙNG, HÀNG HOÁ",
+    "viDu": "âm li, amply nghe nhạc",
+    "trangThai": "nhan",
+    "ghiChu": "Phụ thu 200.000đ/cái."
+   },
+   {
+    "ten": "Máy móc, linh kiện",
+    "nhom": "ĐỒ DÙNG, HÀNG HOÁ",
+    "viDu": "",
+    "trangThai": "nhan",
+    "ghiChu": ""
+   },
+   {
+    "ten": "Máy phân tích vật chất",
+    "nhom": "ĐỒ DÙNG, HÀNG HOÁ",
+    "viDu": "máy phân tích, máy đo chuyên dụng (vd XOS Petra)",
+    "trangThai": "chua-ro",
+    "ghiChu": ""
+   },
+   {
+    "ten": "Sách vở, tài liệu",
+    "nhom": "ĐỒ DÙNG, HÀNG HOÁ",
+    "viDu": "sách, vở, tài liệu, giấy tờ in",
+    "trangThai": "nhan",
+    "ghiChu": "Phụ thu 10.000đ/kg"
+   },
+   {
+    "ten": "Hàng mẫu (sample) cho doanh nghiệp",
+    "nhom": "ĐỒ DÙNG, HÀNG HOÁ",
+    "viDu": "",
+    "trangThai": "nhan",
+    "ghiChu": ""
+   },
+   {
+    "ten": "Hàng kinh doanh số lượng lớn",
+    "nhom": "ĐỒ DÙNG, HÀNG HOÁ",
+    "viDu": "",
+    "trangThai": "nhan",
+    "ghiChu": ""
+   },
+   {
+    "ten": "Hạt giống, cây cảnh, đồ dính đất",
+    "nhom": "ĐỒ DÙNG, HÀNG HOÁ",
+    "viDu": "",
+    "trangThai": "nhan",
+    "ghiChu": ""
+   },
+   {
+    "ten": "Rượu, bia",
+    "nhom": "ĐỒ DÙNG, HÀNG HOÁ",
+    "viDu": "",
+    "trangThai": "nhan",
+    "ghiChu": ""
+   },
+   {
+    "ten": "Thuốc lá",
+    "nhom": "ĐỒ DÙNG, HÀNG HOÁ",
+    "viDu": "",
+    "trangThai": "nhan",
+    "ghiChu": ""
+   }
+  ]
+ },
+ {
+  "ten": "Đài Loan",
+  "slug": "dai-loan",
+  "hang": [
+   {
+    "ten": "Đồ khô, đặc sản quê",
+    "nhom": "THỰC PHẨM",
+    "viDu": "bánh tráng, gạo, hạt điều, trái cây sấy, mì gói",
+    "trangThai": "nhan",
+    "ghiChu": ""
+   },
+   {
+    "ten": "Cá khô, mực khô",
+    "nhom": "THỰC PHẨM",
+    "viDu": "",
+    "trangThai": "nhan",
+    "ghiChu": ""
+   },
+   {
+    "ten": "Tôm khô",
+    "nhom": "THỰC PHẨM",
+    "viDu": "",
+    "trangThai": "nhan",
+    "ghiChu": ""
+   },
+   {
+    "ten": "Nước mắm, mắm các loại",
+    "nhom": "THỰC PHẨM",
+    "viDu": "mắm tôm, mắm nêm, mắm cá",
+    "trangThai": "nhan",
+    "ghiChu": ""
+   },
+   {
+    "ten": "Giò chả, chả lụa",
+    "nhom": "THỰC PHẨM",
+    "viDu": "đã chín, hút chân không",
+    "trangThai": "khong",
+    "ghiChu": ""
+   },
+   {
+    "ten": "Thịt khô, khô bò, lạp xưởng, chà bông",
+    "nhom": "THỰC PHẨM",
+    "viDu": "sản phẩm từ thịt",
+    "trangThai": "khong",
+    "ghiChu": ""
+   },
+   {
+    "ten": "Hải sản, thực phẩm đông lạnh",
+    "nhom": "THỰC PHẨM",
+    "viDu": "",
+    "trangThai": "dieu-kien",
+    "ghiChu": "Tuỳ thời điểm trong năm, không phải lúc nào cũng nhận"
+   },
+   {
+    "ten": "Bánh kẹo, mứt Tết",
+    "nhom": "THỰC PHẨM",
+    "viDu": "",
+    "trangThai": "nhan",
+    "ghiChu": ""
+   },
+   {
+    "ten": "Cà phê",
+    "nhom": "THỰC PHẨM",
+    "viDu": "bột, hạt, hoà tan",
+    "trangThai": "nhan",
+    "ghiChu": ""
+   },
+   {
+    "ten": "Trà",
+    "nhom": "THỰC PHẨM",
+    "viDu": "trà khô, trà túi lọc",
+    "trangThai": "nhan",
+    "ghiChu": ""
+   },
+   {
+    "ten": "Sữa, trứng và đồ làm từ sữa",
+    "nhom": "THỰC PHẨM",
+    "viDu": "sữa bột, bánh có trứng",
+    "trangThai": "nhan",
+    "ghiChu": ""
+   },
+   {
+    "ten": "Bột trà sữa",
+    "nhom": "THỰC PHẨM",
+    "viDu": "bột kem pha trà sữa (vd Frima creamer 1kg)",
+    "trangThai": "chua-ro",
+    "ghiChu": ""
+   },
+   {
+    "ten": "Rau củ, trái cây tươi",
+    "nhom": "THỰC PHẨM",
+    "viDu": "",
+    "trangThai": "khong",
+    "ghiChu": "Tuỳ thời điểm trong năm, không phải lúc nào cũng nhận"
+   },
+   {
+    "ten": "Gia vị, nước sốt đóng chai",
+    "nhom": "THỰC PHẨM",
+    "viDu": "tương ớt, dầu hào, sa tế",
+    "trangThai": "nhan",
+    "ghiChu": ""
+   },
+   {
+    "ten": "Hành phi",
+    "nhom": "THỰC PHẨM",
+    "viDu": "hành phi đóng hũ",
+    "trangThai": "nhan",
+    "ghiChu": ""
+   },
+   {
+    "ten": "Thuốc tây",
+    "nhom": "THUỐC, SỨC KHOẺ, LÀM ĐẸP",
+    "viDu": "",
+    "trangThai": "nhan",
+    "ghiChu": ""
+   },
+   {
+    "ten": "Thuốc Nam, thuốc Bắc",
+    "nhom": "THUỐC, SỨC KHOẺ, LÀM ĐẸP",
+    "viDu": "thảo mộc khô, cao",
+    "trangThai": "nhan",
+    "ghiChu": ""
+   },
+   {
+    "ten": "Thực phẩm chức năng",
+    "nhom": "THUỐC, SỨC KHOẺ, LÀM ĐẸP",
+    "viDu": "",
+    "trangThai": "nhan",
+    "ghiChu": ""
+   },
+   {
+    "ten": "Yến sào",
+    "nhom": "THUỐC, SỨC KHOẺ, LÀM ĐẸP",
+    "viDu": "yến tinh chế",
+    "trangThai": "nhan",
+    "ghiChu": ""
+   },
+   {
+    "ten": "Sâm, đông trùng hạ thảo",
+    "nhom": "THUỐC, SỨC KHOẺ, LÀM ĐẸP",
+    "viDu": "",
+    "trangThai": "nhan",
+    "ghiChu": ""
+   },
+   {
+    "ten": "Sâm ngâm mật ong",
+    "nhom": "THUỐC, SỨC KHOẺ, LÀM ĐẸP",
+    "viDu": "hũ sâm ngâm mật ong (chất lỏng)",
+    "trangThai": "nhan",
+    "ghiChu": "Phụ thu 300.000đ/kiện"
+   },
+   {
+    "ten": "Mỹ phẩm",
+    "nhom": "THUỐC, SỨC KHOẺ, LÀM ĐẸP",
+    "viDu": "kem, son, serum",
+    "trangThai": "nhan",
+    "ghiChu": ""
+   },
+   {
+    "ten": "Móng tay giả (nail box)",
+    "nhom": "THUỐC, SỨC KHOẺ, LÀM ĐẸP",
+    "viDu": "móng úp, nailbox, móng gắn sẵn",
+    "trangThai": "nhan",
+    "ghiChu": ""
+   },
+   {
+    "ten": "Nước hoa",
+    "nhom": "THUỐC, SỨC KHOẺ, LÀM ĐẸP",
+    "viDu": "nước hoa chai (vd Parfums de Marly Delina 75ml)",
+    "trangThai": "nhan",
+    "ghiChu": "Phụ thu 50.000đ/chai + 300.000đ/kiện."
+   },
+   {
+    "ten": "Đồ có cồn",
+    "nhom": "THUỐC, SỨC KHOẺ, LÀM ĐẸP",
+    "viDu": "",
+    "trangThai": "nhan",
+    "ghiChu": ""
+   },
+   {
+    "ten": "Quần áo, giày dép, túi xách",
+    "nhom": "ĐỒ DÙNG, HÀNG HOÁ",
+    "viDu": "",
+    "trangThai": "nhan",
+    "ghiChu": ""
+   },
+   {
+    "ten": "Đồng hồ đeo tay",
+    "nhom": "ĐỒ DÙNG, HÀNG HOÁ",
+    "viDu": "đồng hồ thời trang, đồng hồ có pin",
+    "trangThai": "nhan",
+    "ghiChu": "Phụ thu 50.000đ/cái + 300.000đ/kiện."
+   },
+   {
+    "ten": "Điện thoại, laptop, đồ điện tử có pin",
+    "nhom": "ĐỒ DÙNG, HÀNG HOÁ",
+    "viDu": "pin gắn trong máy",
+    "trangThai": "nhan",
+    "ghiChu": ""
+   },
+   {
+    "ten": "Pin rời, sạc dự phòng",
+    "nhom": "ĐỒ DÙNG, HÀNG HOÁ",
+    "viDu": "",
+    "trangThai": "khong",
+    "ghiChu": ""
+   },
+   {
+    "ten": "Pin năng lượng mặt trời",
+    "nhom": "ĐỒ DÙNG, HÀNG HOÁ",
+    "viDu": "đèn năng lượng mặt trời, tấm pin solar",
+    "trangThai": "chua-ro",
+    "ghiChu": ""
+   },
+   {
+    "ten": "Hàng nặng, cồng kềnh",
+    "nhom": "ĐỒ DÙNG, HÀNG HOÁ",
+    "viDu": "nội thất, bàn thờ, tủ",
+    "trangThai": "nhan",
+    "ghiChu": ""
+   },
+   {
+    "ten": "Nhạc cụ",
+    "nhom": "ĐỒ DÙNG, HÀNG HOÁ",
+    "viDu": "đàn, trống",
+    "trangThai": "nhan",
+    "ghiChu": ""
+   },
+   {
+    "ten": "Máy âm li (amply)",
+    "nhom": "ĐỒ DÙNG, HÀNG HOÁ",
+    "viDu": "âm li, amply nghe nhạc",
+    "trangThai": "nhan",
+    "ghiChu": "Phụ thu 200.000đ/cái."
+   },
+   {
+    "ten": "Máy móc, linh kiện",
+    "nhom": "ĐỒ DÙNG, HÀNG HOÁ",
+    "viDu": "",
+    "trangThai": "nhan",
+    "ghiChu": ""
+   },
+   {
+    "ten": "Máy phân tích vật chất",
+    "nhom": "ĐỒ DÙNG, HÀNG HOÁ",
+    "viDu": "máy phân tích, máy đo chuyên dụng (vd XOS Petra)",
+    "trangThai": "chua-ro",
+    "ghiChu": ""
+   },
+   {
+    "ten": "Sách vở, tài liệu",
+    "nhom": "ĐỒ DÙNG, HÀNG HOÁ",
+    "viDu": "sách, vở, tài liệu, giấy tờ in",
+    "trangThai": "nhan",
+    "ghiChu": "Phụ thu 10.000đ/kg"
+   },
+   {
+    "ten": "Hàng mẫu (sample) cho doanh nghiệp",
+    "nhom": "ĐỒ DÙNG, HÀNG HOÁ",
+    "viDu": "",
+    "trangThai": "nhan",
+    "ghiChu": ""
+   },
+   {
+    "ten": "Hàng kinh doanh số lượng lớn",
+    "nhom": "ĐỒ DÙNG, HÀNG HOÁ",
+    "viDu": "",
+    "trangThai": "nhan",
+    "ghiChu": ""
+   },
+   {
+    "ten": "Hạt giống, cây cảnh, đồ dính đất",
+    "nhom": "ĐỒ DÙNG, HÀNG HOÁ",
+    "viDu": "",
+    "trangThai": "nhan",
+    "ghiChu": ""
+   },
+   {
+    "ten": "Rượu, bia",
+    "nhom": "ĐỒ DÙNG, HÀNG HOÁ",
+    "viDu": "",
+    "trangThai": "khong",
+    "ghiChu": ""
+   },
+   {
+    "ten": "Thuốc lá",
+    "nhom": "ĐỒ DÙNG, HÀNG HOÁ",
+    "viDu": "",
+    "trangThai": "khong",
+    "ghiChu": ""
+   }
+  ]
+ }
+]

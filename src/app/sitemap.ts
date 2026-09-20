@@ -2,13 +2,14 @@ import type { MetadataRoute } from "next";
 import { services, site } from "@/lib/site";
 import { prisma } from "@/lib/prisma";
 import { EMPTY_BODY } from "@/lib/articles";
+import { TUYEN_HANG } from "@/lib/hang-tuyen";
 
 export const dynamic = "force-dynamic";
 
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   const now = new Date();
 
-  const staticRoutes = ["", "/gioi-thieu", "/gui-hang", "/nhap-hang", "/thu-vien", "/tin-tuc", "/tra-cuu", "/lien-he"].map(
+  const staticRoutes = ["", "/gioi-thieu", "/gui-hang", "/nhap-hang", "/thu-vien", "/tin-tuc", "/tra-cuu", "/lien-he", "/hang-gui-duoc"].map(
     (path) => ({
       url: `${site.url}${path}`,
       lastModified: now,
@@ -16,6 +17,13 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
       priority: path === "" ? 1 : 0.8,
     })
   );
+
+  const hangRoutes = TUYEN_HANG.map((t) => ({
+    url: `${site.url}/hang-gui-duoc/${t.slug}`,
+    lastModified: now,
+    changeFrequency: "monthly" as const,
+    priority: 0.7,
+  }));
 
   const serviceRoutes = services.map((s) => ({
     url: `${site.url}/dich-vu/${s.slug}`,
@@ -62,5 +70,5 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     // như trên
   }
 
-  return [...staticRoutes, ...serviceRoutes, ...categoryRoutes, ...articleRoutes];
+  return [...staticRoutes, ...hangRoutes, ...serviceRoutes, ...categoryRoutes, ...articleRoutes];
 }

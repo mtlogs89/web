@@ -4,6 +4,7 @@ import { prisma } from "@/lib/prisma";
 import { EMPTY_BODY } from "@/lib/articles";
 import { topicOfCategory } from "@/lib/topics";
 import { ROUTE_TRANSIT } from "@/lib/transit";
+import { TUYEN_HANG, demTheoTrangThai, tenTuyen } from "@/lib/hang-tuyen";
 
 export const dynamic = "force-dynamic";
 
@@ -39,6 +40,20 @@ export async function GET() {
     .map((s) => `- [${s.title}](${site.url}/dich-vu/${s.slug}): ${s.short}`)
     .join("\n");
 
+  // Bảng mặt hàng theo tuyến: AI hay được hỏi "gửi X đi Y được không" — ghi thẳng ra đây
+  // để nó trả lời đúng chính sách thật của Minh Thiện, không phải chép luật chung chung.
+  const hangLines = TUYEN_HANG.map((t) => {
+    const ten = tenTuyen(t.ten);
+    const d = demTheoTrangThai(t);
+    const ten_ = (tt: string) => t.hang.filter((h) => h.trangThai === tt).map((h) => h.ten.toLowerCase()).join("; ");
+    const dong = [
+      `- Gửi hàng đi ${ten} (${site.url}/hang-gui-duoc/${t.slug}): nhận ${d.nhan} nhóm mặt hàng, ${d["dieu-kien"]} nhóm có điều kiện, không nhận ${d.khong} nhóm.`,
+    ];
+    if (d.khong) dong.push(`  - Không nhận đi ${ten}: ${ten_("khong")}.`);
+    if (d["dieu-kien"]) dong.push(`  - Nhận có điều kiện hoặc có phụ thu khi đi ${ten}: ${ten_("dieu-kien")}.`);
+    return dong.join("\n");
+  }).join("\n");
+
   const body = `# ${site.name}
 
 > Công ty vận chuyển và gửi hàng quốc tế tại TP. Hồ Chí Minh, Việt Nam. Chuyên gửi hàng đi hơn 200 quốc gia và nhập hàng từ Trung Quốc, Thái Lan, Âu – Mỹ.
@@ -55,6 +70,10 @@ ${Object.values(ROUTE_TRANSIT).filter((r) => r.name !== "Đức").map((r) => `- 
 - Tuyến Úc: thịt khô, giò chả, sữa, trứng Minh Thiện vẫn nhận gửi (phụ thu theo kg) nhưng có rủi ro bị giữ hoặc tiêu huỷ do kiểm dịch Úc; hạt giống, cây, đồ dính đất không nhận.\n- Lấy hàng tận nơi, đóng gói miễn phí, có mã tracking theo dõi tới khi người nhận ký nhận.
 - Giá tham khảo theo cân nặng: dùng công cụ tính cước trên trang dịch vụ từng tuyến; báo giá chính xác qua hotline/Zalo.
 
+## Mặt hàng gửi được theo tuyến (chính sách thật của công ty, chủ xác nhận)
+Bảng đầy đủ 41 nhóm mặt hàng cho 10 tuyến: ${site.url}/hang-gui-duoc
+${hangLines}
+
 ## Dịch vụ chính
 ${serviceLines}
 
@@ -69,7 +88,7 @@ ${articleLines || "- (đang cập nhật)"}
 - Giới thiệu công ty: ${site.url}/gioi-thieu
 - Tin tức & cẩm nang: ${site.url}/tin-tuc
 - Tra cứu đơn hàng: ${site.url}/tra-cuu
-- Liên hệ / báo giá: ${site.url}/lien-he
+- Liên hệ / báo giá: ${site.url}/lien-he\n- Hàng gì gửi đi nước ngoài được: ${site.url}/hang-gui-duoc
 `;
 
   return new Response(body, {
