@@ -14,13 +14,20 @@ export function websiteJsonLd() {
 
 /** Organization schema — thực thể doanh nghiệp + liên kết mạng xã hội (E-E-A-T cho GEO). */
 export function organizationJsonLd() {
-  const sameAs = [site.facebook, site.googleMaps, site.zalo];
+  // Càng nhiều kênh chính chủ khai ở đây, AI càng chắc chắn các nơi nhắc "Minh Thiện Logistics"
+  // là cùng một doanh nghiệp. Chỉ khai kênh chủ đã xác nhận — khai nhầm là nối sang thực thể khác.
+  const sameAs = [site.facebook, site.instagram, site.googleMaps, site.zalo].filter(Boolean);
   return {
     "@context": "https://schema.org",
     "@type": "Organization",
     "@id": `${site.url}/#organization`,
     name: site.name,
     legalName: site.legalName,
+    // MST: mỏ neo duy nhất giúp Google/AI tách mình khỏi các công ty trùng tên
+    // (Minh Thiên Logistics Đà Nẵng, CTCP Giao nhận Vận tải Minh Thiện Đồng Nai,
+    //  minhthienlogistics.net tuyến Việt–Thái).
+    taxID: site.taxId,
+    vatID: site.taxId,
     url: site.url,
     logo: `${site.url}/images/logo-full.png`,
     telephone: `+84${site.phone.replace(/^0/, "")}`,
@@ -48,6 +55,7 @@ export function localBusinessJsonLd() {
     parentOrganization: { "@id": `${site.url}/#organization` },
     name: site.name,
     legalName: site.legalName,
+    taxID: site.taxId,
     url: site.url,
     telephone: tel(site.phone),
     email: site.email,
@@ -62,7 +70,7 @@ export function localBusinessJsonLd() {
     },
     geo: { "@type": "GeoCoordinates", latitude: site.geo.lat, longitude: site.geo.lng },
     hasMap: site.googleMaps,
-    sameAs: [site.facebook, site.googleMaps],
+    sameAs: [site.facebook, site.instagram, site.googleMaps],
     openingHours: "Mo-Su 08:00-21:00",
     areaServed: "Worldwide",
     department: site.branches.slice(1).map((b) => ({

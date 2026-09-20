@@ -1,7 +1,11 @@
 export const site = {
   name: "Minh Thiện Logistics",
   shortName: "Minh Thiện",
-  legalName: "Công ty Minh Thiện Logistics",
+  // Tên pháp nhân + MST lấy từ Giấy chứng nhận ĐKDN (Sở Tài chính TP.HCM, cấp 30/10/2025).
+  // "Minh Thiện Logistics" là tên thương hiệu; pháp nhân đứng sau là Minh Thiện Station.
+  // MST là thứ duy nhất phân biệt tuyệt đối mình với 3 công ty trùng tên (xem structured-data.tsx).
+  legalName: "Công ty TNHH Minh Thiện Station",
+  taxId: "0319241592",
   url: process.env.NEXT_PUBLIC_SITE_URL || "https://minhthienlogs.com",
   description:
     "Minh Thiện Logistics — dịch vụ vận chuyển, gửi hàng quốc tế tới hơn 200 quốc gia: Mỹ, Úc, Canada, Châu Âu, Nhật, Hàn… và nhập hàng Trung Quốc, Thái Lan. Tư vấn miễn phí, báo giá nhanh.",
@@ -22,6 +26,9 @@ export const site = {
   googleMaps: "https://maps.app.goo.gl/T229ah7i89mfNCz49",
   zalo: "https://zalo.me/0589778989",
   facebook: "https://www.facebook.com/minhthienlogistics",
+  // Kênh mạng xã hội chính chủ — khai vào sameAs để Google/AI ghép mọi kênh về MỘT thực thể
+  // (chủ xác nhận 20/09/2026). Threads @hallo.chaune KHÔNG phải của mình, đừng khai.
+  instagram: "https://www.instagram.com/minhthienlogs_89",
   // Chủ chốt 19/09/2026: ghi "hơn 10 năm kinh nghiệm", KHÔNG ghi năm thành lập.
   experienceYears: 10,
   branches: [
