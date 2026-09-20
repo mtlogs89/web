@@ -68,7 +68,7 @@ export async function getRelatedArticles(
       category: { in: [article.category, "Kiến thức"] },
       NOT: { content: EMPTY_BODY },
     },
-    select: { slug: true, title: true, excerpt: true, metaDescription: true, category: true, publishedAt: true },
+    select: { slug: true, title: true, excerpt: true, metaDescription: true, coverImage: true, category: true, publishedAt: true },
     orderBy: { publishedAt: "desc" },
   });
   const mine = slugTokens(article.slug);

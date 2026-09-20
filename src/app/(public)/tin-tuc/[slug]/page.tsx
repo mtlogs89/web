@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import Link from "next/link";
+import Image from "next/image";
 import { notFound, permanentRedirect } from "next/navigation";
 import { ArrowRight, Calendar, Phone } from "lucide-react";
 import { PageHero } from "@/components/site/page-hero";
@@ -219,14 +220,27 @@ export default async function ArticlePage({
                     <li key={r.slug}>
                       <Link
                         href={`/tin-tuc/${r.slug}`}
-                        className="block h-full rounded-2xl border border-brand-50 bg-white p-4 shadow-sm hover:border-brand-200"
+                        className="flex h-full gap-3 rounded-2xl border border-brand-50 bg-white p-3 shadow-sm transition hover:border-brand-200 hover:shadow-md"
                       >
-                        <span className="font-bold text-ink">{r.title}</span>
-                        {tomTatThe(r.excerpt, r.metaDescription) && (
-                          <span className="mt-1 line-clamp-2 text-sm text-ink-muted">
-                            {tomTatThe(r.excerpt, r.metaDescription)}
-                          </span>
-                        )}
+                        <span className="relative h-24 w-24 shrink-0 overflow-hidden rounded-xl bg-brand-50">
+                          {r.coverImage && (
+                            <Image
+                              src={r.coverImage}
+                              alt={r.title}
+                              fill
+                              sizes="96px"
+                              className="object-cover"
+                            />
+                          )}
+                        </span>
+                        <span className="min-w-0 flex-1 py-0.5">
+                          <span className="line-clamp-2 font-bold text-ink">{r.title}</span>
+                          {tomTatThe(r.excerpt, r.metaDescription) && (
+                            <span className="mt-1 line-clamp-2 text-sm text-ink-muted">
+                              {tomTatThe(r.excerpt, r.metaDescription)}
+                            </span>
+                          )}
+                        </span>
                       </Link>
                     </li>
                   ))}
