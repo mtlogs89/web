@@ -33,6 +33,8 @@ args = ap.parse_args()
 
 VN = timezone(timedelta(hours=7))
 NGAY = args.ngay or datetime.now(VN).strftime("%d/%b/%Y")
+# Log nginx ghi tháng kiểu Anh (20/Sep/2026); tin nhắn cho chủ đọc thì viết kiểu Việt.
+NGAY_VN = datetime.strptime(NGAY, "%d/%b/%Y").strftime("%d/%m/%Y")
 
 # Dải IP Google dùng để tự kiểm tra trang đích quảng cáo — không phải khách, không tính tiền.
 GOOGLE = ("2001:4860:", "66.249.", "64.233.", "72.14.", "74.125.", "209.85.", "216.239.", "142.250.", "172.217.")
@@ -99,9 +101,10 @@ def main():
 
     if not nghi_ngo:
         return
-    dong = [f"⚠️ <b>Nghi click tặc Google Ads</b> — ngày {NGAY}", ""]
+    dong = [f"⚠️ <b>Nghi click tặc Google Ads</b> — ngày {NGAY_VN}", ""]
     for so, ip in nghi_ngo[:10]:
-        dong.append(f"• <code>{ip}</code> — <b>{so}</b> cú bấm → {', '.join(sorted(trang[ip])[:2])}")
+        duong = " · ".join(f"<code>{p}</code>" for p in sorted(trang[ip])[:2])
+        dong.append(f"• <code>{ip}</code> — <b>{so}</b> cú bấm → {duong}")
     dong += ["", f"Tổng hôm nay: {tong} cú bấm từ {len(bam)} IP.",
              "Chặn: Google Ads → Cài đặt chiến dịch → Loại trừ IP."]
     tin = "\n".join(dong)
