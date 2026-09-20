@@ -190,3 +190,20 @@ model AiCrawl {
   @@unique([day, bot, path])
   @@index([day])
 }
+
+/// Số liệu Google Search Console (scripts/gsc-sync.py kéo hằng ngày qua tài khoản máy chỉ-xem).
+/// Mỗi dòng = 1 ngày × 1 câu khách gõ × 1 trang của web hiện ra.
+/// Dòng page = "*" (query rỗng) là TỔNG cả ngày — gồm cả các câu Google giấu vì quá ít người gõ.
+model SearchQuery {
+  id          String @id @default(cuid())
+  day         String
+  query       String
+  page        String
+  clicks      Int
+  impressions Int
+  /// Hạng trung bình trong ngày (1 = đứng đầu Google)
+  position    Float
+
+  @@unique([day, query, page])
+  @@index([day])
+}
