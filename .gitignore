@@ -46,3 +46,4 @@ next-env.d.ts
 # Database (server-only, never overwrite)
 prisma/*.db
 prisma/*.db.bak*
+__pycache__/
