@@ -293,6 +293,22 @@ export default async function ServicePage({
               </div>
             </section>
           )}
+
+          {latestGuides.length > 0 && (
+            <section className="mx-auto max-w-6xl px-4 pb-14 sm:px-6">
+              <h2 className="text-2xl font-black text-ink">Cẩm nang mới nhất</h2>
+              <p className="mt-2 text-ink-soft">Kinh nghiệm, thủ tục và bảng so sánh cập nhật cho tuyến này.</p>
+              <ul className="mt-5 grid gap-x-8 gap-y-2 sm:grid-cols-2">
+                {latestGuides.map((g) => (
+                  <li key={g.slug}>
+                    <Link href={`/tin-tuc/${g.slug}`} className="text-ink-soft hover:text-brand-600 hover:underline">
+                      {g.title}
+                    </Link>
+                  </li>
+                ))}
+              </ul>
+            </section>
+          )}
         </>
       ) : (
       <section className="mx-auto max-w-7xl px-6 py-12">
