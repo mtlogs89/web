@@ -38,6 +38,8 @@ export function generateStaticParams() {
   return services.map((s) => ({ slug: s.slug }));
 }
 
+export const revalidate = 3600; // làm mới mỗi giờ để bài mới kịp có link
+
 export async function generateMetadata({
   params,
 }: {
@@ -62,6 +64,30 @@ export async function generateMetadata({
     };
   }
   return { title: "Không tìm thấy dịch vụ" };
+}
+
+/**
+ * Bài mới nhất của tuyến, để trang dịch vụ luôn có link tới bài vừa đăng.
+ *
+ * Lý do: 26/09/2026 hỏi Search Console thì Google trả lời các bài mới "Đã phát hiện –
+ * hiện chưa được lập chỉ mục", chưa hề crawl; trong khi /hang-gui-duoc được link từ
+ * chân trang mọi trang thì đã lập chỉ mục. Khác biệt là LINK NỘI BỘ. Trang dịch vụ là
+ * trang khách vào nhiều nhất nên link từ đây có sức nặng nhất.
+ */
+function getLatestGuides(category: string, exclude: string[], take = 8) {
+  if (!category) return [];
+  try {
+    const db = new Database(`${process.cwd()}/prisma/dev.db`);
+    const rows = db.prepare(
+      `SELECT slug, title FROM Article
+       WHERE published = 1 AND category = ? AND content <> ''
+       ORDER BY publishedAt DESC LIMIT ?`
+    ).all(category, take + exclude.length) as Array<{ slug: string; title: string }>;
+    db.close();
+    return rows.filter((r) => !exclude.includes(r.slug)).slice(0, take);
+  } catch {
+    return [];
+  }
 }
 
 function getRelatedArticles(articleSlugs: string[]) {
@@ -170,6 +196,10 @@ export default async function ServicePage({
   // Bài đã nhúng ở thân trang thì bỏ khỏi mục "Bài viết liên quan" để không lặp.
   const relatedArticles = getRelatedArticles(cfg?.related ?? []).filter(
     (a) => a.slug !== rich?.article,
+  );
+  const latestGuides = getLatestGuides(
+    SERVICE_ROUTE[slug] ?? "",
+    [rich?.article ?? "", ...relatedArticles.map((a) => a.slug)].filter(Boolean),
   );
 
   // FAQ hiển thị trên các trang rich là FAQ trong bài, nên schema phải lấy đúng bộ đó.
@@ -330,6 +360,22 @@ export default async function ServicePage({
             </div>
           </aside>
         </div>
+
+        {latestGuides.length > 0 && (
+          <div className="mt-14">
+            <h2 className="text-2xl font-black text-ink">Cẩm nang mới nhất</h2>
+            <p className="mt-2 text-ink-soft">Kinh nghiệm, thủ tục và bảng so sánh cập nhật cho tuyến này.</p>
+            <ul className="mt-5 grid gap-x-8 gap-y-2 sm:grid-cols-2">
+              {latestGuides.map((g) => (
+                <li key={g.slug}>
+                  <Link href={`/tin-tuc/${g.slug}`} className="text-ink-soft hover:text-brand-600 hover:underline">
+                    {g.title}
+                  </Link>
+                </li>
+              ))}
+            </ul>
+          </div>
+        )}
 
         {relatedArticles.length > 0 && (
           <div className="mt-14">
