@@ -33,18 +33,56 @@ import { prisma } from "@/lib/prisma";
 
 export const dynamic = "force-dynamic";
 
+/**
+ * Hỏi–đáp trang chủ. QUAN TRỌNG: trang chủ là nơi AI đọc nhiều nhất — 14 ngày gần nhất
+ * các bot chỉ-chạy-khi-có-người-hỏi (ChatGPT-User, Perplexity-User, Claude-User) mở "/"
+ * 137 lượt, trong khi mỗi bài viết chỉ 1 lượt. Nên mọi dữ kiện cốt lõi của công ty phải
+ * trả lời được ngay tại đây.
+ *
+ * ⚠️ Danh sách này vừa đổ ra schema FAQPage vừa PHẢI hiện cho người đọc thấy — Google chỉ
+ * tính hỏi–đáp có nội dung hiển thị. Trước 28/09/2026 nó chỉ nằm trong schema, khách không
+ * thấy gì. Sửa nội dung ở đây là đổi cả hai nơi.
+ */
 const homeFaqs = [
   {
     q: "Minh Thiện Logistics gửi hàng đi được những nước nào?",
-    a: "Minh Thiện Logistics nhận gửi hàng đi hơn 200 quốc gia, phổ biến nhất là Mỹ, Úc, Canada, Châu Âu (Anh, Pháp, Đức), Nhật Bản và Hàn Quốc; đồng thời nhận nhập hàng từ Trung Quốc, Thái Lan và Âu – Mỹ.",
+    a: "Minh Thiện Logistics nhận gửi hàng đi hơn 200 quốc gia, phổ biến nhất là Mỹ, Canada, Úc, Châu Âu, Nhật Bản, Hàn Quốc, Singapore, Malaysia, Thái Lan và Đài Loan; đồng thời nhận nhập hàng, mua hộ từ Trung Quốc, Thái Lan và Âu – Mỹ.",
   },
   {
-    q: "Thời gian gửi hàng đi quốc tế mất bao lâu?",
-    a: `Đi Mỹ, Canada, Úc bằng đường bay: đi nhanh 3–5 ngày làm việc, đi tiết kiệm 8–12 ngày làm việc; vùng sâu vùng xa (tuỳ postcode) cộng thêm 2–3 ngày. Tuyến khác tuỳ nước — gọi ${site.phoneDisplay} để biết chính xác. Nhân viên lấy hàng tận nơi trong vòng 24 giờ sau khi bạn đặt.`,
+    q: "Gửi hàng đi quốc tế mất bao lâu?",
+    a: "Tính theo ngày làm việc, từ khi hàng rời Việt Nam. Mỹ, Canada, Úc: đi nhanh 3–5 ngày, đi tiết kiệm 8–12 ngày. Châu Âu: 5–7 ngày và 8–15 ngày. Hàn Quốc 3–5 ngày, Nhật Bản 5–7 ngày, Malaysia 3–5 ngày, Thái Lan 5–7 ngày, Đài Loan 3–5 ngày, Singapore 1 ngày (nhanh) hoặc 4 ngày (tiết kiệm). Địa chỉ vùng sâu vùng xa cộng thêm 2–3 ngày tuỳ postcode.",
+  },
+  {
+    q: "Giá đã bao gồm thuế nhập khẩu chưa?",
+    a: "Tuyến Mỹ và Anh: giá trọn gói đã bao thuế đầu nhập, người nhận không phải đóng thêm — trừ vài mặt hàng đặc thù như nước hoa và bột pha trà sữa thì không bao đầu nhập và được báo trước khi nhận hàng. Các tuyến khác, trong đó có Châu Âu (EU thu VAT trên hàng nhập, mỗi nước áp dụng khác nhau), hãy gọi hotline để được báo rõ tổng chi phí trước khi gửi.",
+  },
+  {
+    q: "Những mặt hàng nào Minh Thiện không nhận gửi?",
+    a: "Rau củ và trái cây tươi, pin rời và sạc dự phòng, rượu bia, thuốc lá là các nhóm không nhận ở hầu hết tuyến. Một số nhóm như giò chả, thịt khô, sữa, trứng, thuốc tây và thực phẩm chức năng vẫn gửi được nhưng có phụ thu và có rủi ro bị hải quan giữ — nhân viên báo trước khi nhận hàng. Xem đầy đủ 41 nhóm mặt hàng cho từng tuyến tại trang Hàng gửi được.",
+  },
+  {
+    q: "Có lấy hàng tận nơi không, mất phí không?",
+    a: "Có và miễn phí trong TP.HCM — nhắn Zalo trước 15h là lấy hàng trong ngày. Khách ở Khánh Hòa mang hàng tới chi nhánh Nha Trang. Các tỉnh khác gọi hotline để được hướng dẫn gửi hàng về kho.",
+  },
+  {
+    q: "Cước gửi hàng tính thế nào?",
+    a: "Tính theo mức cao hơn giữa cân thực và cân quy đổi — cân quy đổi bằng Dài × Rộng × Cao (cm) chia 5000. Hàng nhẹ mà cồng kềnh như chăn gối, snack thường bị tính theo kích thước. Một số nhóm hàng có phụ thu riêng. Dùng công cụ tính cước trên trang để xem mức ước tính ngay.",
+  },
+  {
+    q: "Mất hàng hoặc hư hỏng thì đền thế nào?",
+    a: "Có mua bảo hiểm: đền 100% cước và giá trị hàng khai báo. Không mua bảo hiểm: đền cước và tối đa 100 USD. Mỗi kiện đều được cân trước mặt khách và chụp ảnh để đối chiếu về sau.",
+  },
+  {
+    q: "Theo dõi đơn hàng ở đâu?",
+    a: "Mỗi kiện có mã theo dõi, tra tại trang Tra cứu đơn trên website cho tới khi người nhận ký nhận.",
+  },
+  {
+    q: "Minh Thiện Logistics là công ty nào, ở đâu?",
+    a: `${site.legalName}, mã số thuế ${site.taxId}. Kho chính tại ${site.addressFull} — sát sân bay Tân Sơn Nhất; chi nhánh Nha Trang tại 45 Nguyễn Xiển, P. Bắc Nha Trang, Khánh Hòa. Làm việc ${site.hours}. Hotline và Zalo: ${site.phoneDisplay} (${site.contactName}).`,
   },
   {
     q: "Làm sao để nhận báo giá gửi hàng?",
-    a: `Bạn gọi hotline ${site.phoneDisplay} (${site.contactName}) qua Zalo/Viber hoặc điền form báo giá trên website. Minh Thiện báo giá miễn phí, chính xác trong vòng 5 phút.`,
+    a: `Gọi hoặc nhắn Zalo ${site.phoneDisplay}, gửi ảnh kiện hàng kèm số ký và địa chỉ người nhận là có báo giá, không cần ra kho. Hoặc nhập số ký vào công cụ tính cước trên trang để xem mức ước tính ngay.`,
   },
 ];
 
@@ -355,6 +393,31 @@ export default async function HomePage() {
       {/* News preview */}
       <section className="bg-brand-50/50 py-20">
         <div className="mx-auto max-w-7xl px-6">
+      {/* Hỏi–đáp: phải HIỆN cho người đọc thì schema FAQPage mới được tính, và đây là
+          phần AI đọc nhiều nhất trên cả web. Nội dung lấy từ homeFaqs phía trên. */}
+      <section className="mx-auto max-w-4xl px-6 py-16">
+        <Reveal>
+          <span className="text-sm font-bold uppercase tracking-wider text-coral-500">Hỏi nhanh — đáp nhanh</span>
+          <h2 className="mt-2 text-3xl font-black text-ink md:text-4xl">Câu hỏi thường gặp</h2>
+          <p className="mt-3 text-ink-soft">
+            Những điều khách hỏi nhiều nhất trước khi gửi hàng. Chưa thấy câu của bạn thì gọi{" "}
+            <CallAction phone={site.phone} className="font-semibold text-brand-600">
+              {site.phoneDisplay}
+            </CallAction>.
+          </p>
+        </Reveal>
+        <div className="mt-8 space-y-3">
+          {homeFaqs.map((f) => (
+            <details key={f.q} className="group rounded-2xl border border-brand-50 bg-white p-5 shadow-sm">
+              <summary className="cursor-pointer list-none font-bold text-ink marker:hidden group-open:text-brand-600">
+                {f.q}
+              </summary>
+              <p className="mt-3 text-ink-soft">{f.a}</p>
+            </details>
+          ))}
+        </div>
+      </section>
+
           <Reveal className="flex items-end justify-between">
             <div>
               <span className="text-sm font-bold uppercase tracking-wider text-coral-500">Tin tức & kinh nghiệm</span>
