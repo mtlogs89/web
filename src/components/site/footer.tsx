@@ -34,6 +34,7 @@ export function Footer() {
             <li><Link href="/gioi-thieu" className="hover:text-brand-400">Giới thiệu công ty</Link></li>
             <li><Link href="/tin-tuc" className="hover:text-brand-400">Tin tức & kinh nghiệm</Link></li>
             <li><Link href="/hang-gui-duoc" className="hover:text-brand-400">Hàng gì gửi đi được?</Link></li>
+            <li><Link href="/thoi-gian-giao-thuc-te" className="hover:text-brand-400">Thời gian giao thực tế</Link></li>
             <li><Link href="/tra-cuu" className="hover:text-brand-400">Tra cứu đơn hàng</Link></li>
             <li><Link href="/lien-he" className="hover:text-brand-400">Báo giá</Link></li>
             <li><Link href="/nhap-hang" className="hover:text-brand-400">Mua hộ Taobao / Amazon</Link></li>

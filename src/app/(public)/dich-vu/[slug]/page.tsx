@@ -17,6 +17,7 @@ import { SERVICE_PAGES, getServicePageConfig } from "@/lib/service-pages";
 import { gallery } from "@/lib/gallery";
 import { getDestinations } from "@/lib/price-tables";
 import { ROUTE_TRANSIT, SERVICE_ROUTE } from "@/lib/transit";
+import { laySoGiao, dongTheoTuyen, cauTomTat } from "@/lib/delivery-stats";
 import {
   JsonLd,
   serviceJsonLd,
@@ -74,20 +75,61 @@ export async function generateMetadata({
  * chân trang mọi trang thì đã lập chỉ mục. Khác biệt là LINK NỘI BỘ. Trang dịch vụ là
  * trang khách vào nhiều nhất nên link từ đây có sức nặng nhất.
  */
+type Guide = { slug: string; title: string; coverImage: string };
+
 function getLatestGuides(category: string, exclude: string[], take = 8) {
   if (!category) return [];
   try {
     const db = new Database(`${process.cwd()}/prisma/dev.db`);
     const rows = db.prepare(
-      `SELECT slug, title FROM Article
+      `SELECT slug, title, coverImage FROM Article
        WHERE published = 1 AND category = ? AND content <> ''
        ORDER BY publishedAt DESC LIMIT ?`
-    ).all(category, take + exclude.length) as Array<{ slug: string; title: string }>;
+    ).all(category, take + exclude.length) as Guide[];
     db.close();
-    return rows.filter((r) => !exclude.includes(r.slug)).slice(0, take);
+    return rows
+      .filter((r) => !exclude.includes(r.slug))
+      .slice(0, take)
+      // 4 bài cũ lưu ảnh bìa dạng https://minhthienlogs.com/uploads/... — next/image chỉ
+      // cho Unsplash ở remotePatterns, nên đổi về đường dẫn tương đối kẻo ảnh lỗi 400.
+      .map((r) => ({ ...r, coverImage: (r.coverImage || "").replace(/^https?:\/\/(www\.)?minhthienlogs\.com/, "") }));
   } catch {
     return [];
   }
+}
+
+/** Thẻ có ảnh bìa cho khối "Cẩm nang mới nhất" — dùng chung cho cả nhánh rich lẫn nhánh thường. */
+function GuideGrid({ guides }: { guides: Guide[] }) {
+  return (
+    <ul className="mt-6 grid grid-cols-2 gap-4 lg:grid-cols-4">
+      {guides.map((g) => (
+        <li key={g.slug}>
+          <Link
+            href={`/tin-tuc/${g.slug}`}
+            className="group block h-full overflow-hidden rounded-2xl border border-brand-50 bg-white shadow-sm transition hover:shadow-lg"
+          >
+            <div className="relative aspect-[16/10] w-full overflow-hidden bg-brand-50">
+              {g.coverImage ? (
+                <Image
+                  src={g.coverImage}
+                  alt={g.title}
+                  fill
+                  sizes="(min-width: 1024px) 280px, 50vw"
+                  loading="lazy"
+                  className="object-cover transition group-hover:scale-105"
+                />
+              ) : (
+                <BookOpen className="absolute left-1/2 top-1/2 h-8 w-8 -translate-x-1/2 -translate-y-1/2 text-brand-300" />
+              )}
+            </div>
+            <h3 className="line-clamp-3 p-3 text-sm font-bold leading-snug text-ink group-hover:text-brand-600 sm:p-4 sm:text-base">
+              {g.title}
+            </h3>
+          </Link>
+        </li>
+      ))}
+    </ul>
+  );
 }
 
 function getRelatedArticles(articleSlugs: string[]) {
@@ -197,6 +239,10 @@ export default async function ServicePage({
   const relatedArticles = getRelatedArticles(cfg?.related ?? []).filter(
     (a) => a.slug !== rich?.article,
   );
+  // Số đo thật của đúng tuyến này, nếu đã đủ dữ liệu.
+  const tenTuyenNgan = ROUTE_TRANSIT[SERVICE_ROUTE[slug] ?? ""]?.name ?? "";
+  const dongGiao = dongTheoTuyen(await laySoGiao(), tenTuyenNgan);
+
   const latestGuides = getLatestGuides(
     SERVICE_ROUTE[slug] ?? "",
     [rich?.article ?? "", ...relatedArticles.map((a) => a.slug)].filter(Boolean),
@@ -298,6 +344,26 @@ export default async function ServicePage({
             </section>
           )}
 
+          {dongGiao.length > 0 && (
+            <section className="mx-auto max-w-6xl px-4 pt-4 sm:px-6">
+              <div className="rounded-3xl border border-brand-100 bg-brand-50/60 p-6">
+                <h2 className="text-xl font-black text-ink">Thời gian giao thực tế tuyến {tenTuyenNgan}</h2>
+                <p className="mt-2 text-ink-soft">{cauTomTat(dongGiao, tenTuyenNgan)}</p>
+                <ul className="mt-3 space-y-1 text-sm text-ink-soft">
+                  {dongGiao.map((d) => (
+                    <li key={d.nhom}>
+                      <strong className="text-ink">{d.tenNhom}:</strong> trung vị {d.trungVi} ngày làm việc trên {d.soKien} kiện đã giao,{" "}
+                      {d.trongHan}% trong hạn công bố {d.henLo}–{d.henHi} ngày.
+                    </li>
+                  ))}
+                </ul>
+                <Link href="/thoi-gian-giao-thuc-te" className="mt-3 inline-block font-semibold text-brand-600 hover:underline">
+                  Xem cách đo và số liệu đầy đủ →
+                </Link>
+              </div>
+            </section>
+          )}
+
           {faqCanVe.length > 0 && (
             <section className="mx-auto max-w-4xl px-4 py-14 sm:px-6">
               <h2 className="text-2xl font-black text-ink">Câu hỏi thường gặp</h2>
@@ -318,15 +384,7 @@ export default async function ServicePage({
             <section className="mx-auto max-w-6xl px-4 pb-14 sm:px-6">
               <h2 className="text-2xl font-black text-ink">Cẩm nang mới nhất</h2>
               <p className="mt-2 text-ink-soft">Kinh nghiệm, thủ tục và bảng so sánh cập nhật cho tuyến này.</p>
-              <ul className="mt-5 grid gap-x-8 gap-y-2 sm:grid-cols-2">
-                {latestGuides.map((g) => (
-                  <li key={g.slug}>
-                    <Link href={`/tin-tuc/${g.slug}`} className="text-ink-soft hover:text-brand-600 hover:underline">
-                      {g.title}
-                    </Link>
-                  </li>
-                ))}
-              </ul>
+              <GuideGrid guides={latestGuides} />
             </section>
           )}
         </>
@@ -401,15 +459,7 @@ export default async function ServicePage({
           <div className="mt-14">
             <h2 className="text-2xl font-black text-ink">Cẩm nang mới nhất</h2>
             <p className="mt-2 text-ink-soft">Kinh nghiệm, thủ tục và bảng so sánh cập nhật cho tuyến này.</p>
-            <ul className="mt-5 grid gap-x-8 gap-y-2 sm:grid-cols-2">
-              {latestGuides.map((g) => (
-                <li key={g.slug}>
-                  <Link href={`/tin-tuc/${g.slug}`} className="text-ink-soft hover:text-brand-600 hover:underline">
-                    {g.title}
-                  </Link>
-                </li>
-              ))}
-            </ul>
+            <GuideGrid guides={latestGuides} />
           </div>
         )}
 
