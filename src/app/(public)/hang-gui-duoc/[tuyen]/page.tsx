@@ -8,6 +8,7 @@ import { site } from "@/lib/site";
 import { ROUTE_TRANSIT } from "@/lib/transit";
 import { TOPICS } from "@/lib/topics";
 import { JsonLd, breadcrumbJsonLd, faqJsonLd } from "@/lib/structured-data";
+import { LICH_BAY } from "@/lib/lich-bay";
 import { TUYEN_HANG, TUYEN_CHUYEN_MUC, NHAN, type MatHang, type TrangThai, cauTraLoi, demTheoTrangThai, layTuyen, tenTuyen } from "@/lib/hang-tuyen";
 
 /**
@@ -134,6 +135,17 @@ export default async function TrangHangTuyen({ params }: { params: Promise<{ tuy
           </p>
         )}
 
+        {LICH_BAY[t.ten] && (
+          <div className="mt-4 rounded-2xl border border-brand-100 bg-white p-4 shadow-sm">
+            <p className="font-semibold text-ink">Lịch bay và giờ chốt hàng đi {ten}</p>
+            <p className="mt-1 text-ink-soft">
+              Tuyến này có chuyến bay <strong className="text-ink">{LICH_BAY[t.ten].bay}</strong>, nhận chốt hàng{" "}
+              <strong className="text-ink">{LICH_BAY[t.ten].chot}</strong>. Thời gian vận chuyển tính từ khi hàng rời
+              Việt Nam, nên hàng chốt sau giờ này sẽ đi chuyến kế tiếp.
+            </p>
+          </div>
+        )}
+
         {khongNhan.length > 0 && (
           <div className="mt-4 rounded-2xl border border-coral-100 bg-coral-50 p-4">
             <p className="font-semibold text-coral-600">Không nhận gửi đi {ten}</p>
@@ -191,6 +203,23 @@ export default async function TrangHangTuyen({ params }: { params: Promise<{ tuy
                 Dịch vụ gửi hàng đi {ten}
               </Link>
             )}
+          </div>
+        </div>
+
+        <div className="mt-10">
+          <h2 className="text-xl font-black text-ink">Câu hỏi thường gặp về hàng gửi đi {ten}</h2>
+          <p className="mt-1 text-sm text-ink-muted">
+            Bấm vào từng câu để xem trả lời. Đây cũng là nội dung trợ lý AI đọc được khi có người hỏi.
+          </p>
+          <div className="mt-4 space-y-2">
+            {faqs.map((f) => (
+              <details key={f.q} className="group rounded-2xl border border-brand-50 bg-white p-4 shadow-sm">
+                <summary className="cursor-pointer list-none font-semibold text-ink marker:hidden group-open:text-brand-600">
+                  {f.q}
+                </summary>
+                <p className="mt-2 text-sm text-ink-soft">{f.a}</p>
+              </details>
+            ))}
           </div>
         </div>
 
