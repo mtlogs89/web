@@ -204,6 +204,10 @@ export default async function ServicePage({
 
   // FAQ hiển thị trên các trang rich là FAQ trong bài, nên schema phải lấy đúng bộ đó.
   const faqsForSchema = articleBody?.faqs.length ? articleBody.faqs : detail.faqs;
+  // Hỏi–đáp khai ra schema thì PHẢI hiện cho người đọc, nếu không Google không tính.
+  // Thân bài nhúng của trang Mỹ đã có sẵn mục này; 5 trang còn lại thì chưa nên phải tự vẽ.
+  const faqDaCoTrongBai = /Câu hỏi thường gặp/i.test(articleBody?.html ?? "");
+  const faqCanVe = faqDaCoTrongBai ? [] : faqsForSchema;
 
   // Giá cho schema lấy đúng bảng của công cụ tính trên trang (chỉ tuyến có bảng theo mốc cân).
   const dest = rich ? (await getDestinations()).find((d) => d.key === rich.destKey) : undefined;
@@ -289,6 +293,22 @@ export default async function ServicePage({
                       </div>
                     </div>
                   </Link>
+                ))}
+              </div>
+            </section>
+          )}
+
+          {faqCanVe.length > 0 && (
+            <section className="mx-auto max-w-4xl px-4 py-14 sm:px-6">
+              <h2 className="text-2xl font-black text-ink">Câu hỏi thường gặp</h2>
+              <div className="mt-6 space-y-3">
+                {faqCanVe.map((f) => (
+                  <details key={f.q} className="group rounded-2xl border border-brand-50 bg-white p-5 shadow-sm">
+                    <summary className="cursor-pointer list-none font-bold text-ink marker:hidden group-open:text-brand-600">
+                      {f.q}
+                    </summary>
+                    <p className="mt-3 text-ink-soft">{f.a}</p>
+                  </details>
                 ))}
               </div>
             </section>
