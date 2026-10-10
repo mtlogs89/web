@@ -95,7 +95,9 @@ export default async function TrangThoiGianGiao() {
             temporalCoverage: so.kyTu && so.kyDen ? `${so.kyTu}/${so.kyDen}` : undefined,
             dateModified: so.capNhat,
             isAccessibleForFree: true,
+            license: "https://creativecommons.org/licenses/by/4.0/",
             creator: { "@type": "Organization", name: site.name, url: site.url },
+            publisher: { "@type": "Organization", name: site.name, url: site.url },
             variableMeasured: [
               { "@type": "PropertyValue", name: "Trung vị thời gian giao", unitText: "ngày làm việc" },
               { "@type": "PropertyValue", name: "Tỉ lệ giao trong hạn công bố", unitText: "%" },
