@@ -82,6 +82,9 @@ export async function POST(req: Request) {
     metaDescription: body.metaDescription ? String(body.metaDescription) : null,
     faqJson: body.faqs ? JSON.stringify(body.faqs) : null,
     published: body.published === false ? false : true,
+    // Chỉ ghi đè hotline riêng khi người gọi có gửi, để lần cập nhật sau
+    // không xoá mất số đã đặt tay trong trang quản trị.
+    ...(body.phone === undefined ? {} : { phone: body.phone ? String(body.phone) : null }),
   };
 
   const article = await prisma.article.upsert({
