@@ -1,4 +1,4 @@
-import Image from "next/image";
+import Image from "@/components/site/anh-nen";
 import { gallery, type GalleryItem } from "@/lib/gallery";
 
 export function GalleryGrid({

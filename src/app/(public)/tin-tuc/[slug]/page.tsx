@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 import Link from "next/link";
-import Image from "next/image";
+import Image from "@/components/site/anh-nen";
 import { notFound, permanentRedirect } from "next/navigation";
 import { ArrowRight, Calendar, Phone } from "lucide-react";
 import { PageHero } from "@/components/site/page-hero";

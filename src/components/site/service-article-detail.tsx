@@ -1,5 +1,5 @@
 import Link from "next/link";
-import Image from "next/image";
+import Image from "@/components/site/anh-nen";
 import { ArrowRight, CheckCircle2, Phone } from "lucide-react";
 import { GalleryGrid } from "./gallery-grid";
 import { ServiceMedia } from "./service-media";

@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 import Link from "next/link";
-import Image from "next/image";
+import Image from "@/components/site/anh-nen";
 import { notFound } from "next/navigation";
 import { Check, Phone, ArrowRight, BookOpen } from "lucide-react";
 import Database from "better-sqlite3";
