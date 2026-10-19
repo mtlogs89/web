@@ -12,6 +12,10 @@ export const site = {
   phone: "0589778989",
   phoneDisplay: "0589.77.89.89",
   contactName: "Ms Min",
+  // Hotline thứ 2 trên nút gọi nổi + số của mọi bài Úc (chủ thêm 19/10/2026).
+  phone2: "0397790199",
+  phone2Display: "039.779.0199",
+  contactName2: "Ms Vy",
   email: "info@minhthienlogs.com",
   address: {
     street: "5/5 Nguyễn Văn Vĩnh",

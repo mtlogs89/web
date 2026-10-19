@@ -28,26 +28,71 @@ function ZaloIcon({ className }: { className?: string }) {
   );
 }
 
+/**
+ * Một nút gọi: số hiện ở nhãn bên trái + vòng tròn điện thoại. Cả cụm bấm được.
+ * Có 2 hotline nên phải ghi số ra, khách mới biết nút nào gọi ai.
+ */
+function HotlineButton({
+  id,
+  phone,
+  display,
+  name,
+  circleClass,
+}: {
+  id: string;
+  phone: string;
+  display: string;
+  name: string;
+  circleClass: string;
+}) {
+  return (
+    <CallAction
+      id={id}
+      phone={phone}
+      ariaLabel={`Gọi ${name} ${display}`}
+      className="flex items-center gap-2"
+      conversionLabel="VzBiCL7SkdUcEKnr1_49"
+    >
+      <span className="rounded-full bg-white/95 px-2.5 py-1 text-right leading-tight shadow-md ring-1 ring-black/5 sm:px-3 sm:py-1.5">
+        <span data-name-for={id} className="block text-[9px] font-medium text-slate-500 sm:text-[10px]">
+          {name}
+        </span>
+        <span data-label-for={id} className="block text-xs font-bold whitespace-nowrap text-ink sm:text-sm">
+          {display}
+        </span>
+      </span>
+      <span className={`flex h-12 w-12 shrink-0 items-center justify-center rounded-full text-white shadow-lg sm:h-[54px] sm:w-[54px] ${circleClass}`}>
+        <Phone className="h-5 w-5 sm:h-6 sm:w-6" />
+      </span>
+    </CallAction>
+  );
+}
+
 export function FloatingContact() {
   return (
-    <div id="floating-contact" className="fixed bottom-5 right-5 z-50 flex flex-col items-center gap-3">
-      <CallAction
+    <div id="floating-contact" className="fixed bottom-4 right-3 z-50 flex flex-col items-end gap-2 sm:bottom-5 sm:right-5 sm:gap-3">
+      <HotlineButton
         id="floating-call"
         phone={site.phone}
-        ariaLabel="Gọi điện"
-        className="flex h-[54px] w-[54px] items-center justify-center rounded-full bg-coral-500 text-white shadow-lg shadow-coral-500/40"
-        conversionLabel="VzBiCL7SkdUcEKnr1_49"
-      >
-        <Phone className="h-6 w-6" />
-      </CallAction>
+        display={site.phoneDisplay}
+        name={`Hotline · ${site.contactName}`}
+        circleClass="bg-coral-500 shadow-coral-500/40"
+      />
+      <HotlineButton
+        id="floating-call2"
+        phone={site.phone2}
+        display={site.phone2Display}
+        name={`Hotline · ${site.contactName2}`}
+        circleClass="bg-brand-500 shadow-brand-500/40"
+      />
       <a
         id="floating-zalo"
         href={site.zalo}
         aria-label="Chat Zalo"
-        className="flex h-[54px] w-[54px] items-center justify-center rounded-full bg-[#0068FF] shadow-lg shadow-[#0068FF]/40"
+        className="flex h-12 w-12 items-center justify-center rounded-full bg-[#0068FF] shadow-lg shadow-[#0068FF]/40 sm:h-[54px] sm:w-[54px]"
         onClick={() => trackConversion("G8fXCJ6D_NQcEKnr1_49")}
       >
-        <ZaloIcon className="h-8 w-8" />
+        <ZaloIcon className="h-7 w-7 sm:h-8 sm:w-8" />
       </a>
     </div>
   );

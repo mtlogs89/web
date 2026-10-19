@@ -80,7 +80,7 @@ export default async function ArticlePage({
       ? article.updatedAt
       : null;
   const phone = article.phone || site.phone;
-  const phoneDisplay = article.phone || site.phoneDisplay;
+  const phoneDisplay = article.phone === site.phone2 ? site.phone2Display : article.phone || site.phoneDisplay;
   // Bảng giá chỉ cần khi bài có chèn công cụ tính cước.
   const coCongCuTinh = article.content.includes(QUOTE_TOKEN);
   const dests = coCongCuTinh ? await getDestinations() : undefined;

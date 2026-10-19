@@ -37,7 +37,7 @@ export async function ServiceArticleDetail({
   const others = services.filter((service) => service.slug !== slug).slice(0, 3);
   const dests = await getDestinations();
   const callPhone = phone || site.phone;
-  const callDisplay = phone || site.phoneDisplay;
+  const callDisplay = phone === site.phone2 ? site.phone2Display : phone || site.phoneDisplay;
   const zaloHref = phone ? `https://zalo.me/${phone}` : site.zalo;
 
   return (
