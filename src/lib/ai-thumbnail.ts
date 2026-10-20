@@ -1,7 +1,9 @@
 import { writeFile, mkdir } from "fs/promises";
 import { join } from "path";
 import sharp from "sharp";
-import OpenAI from "openai";
+// Bản OpenAI SDK đang cài khai báo index.d.mts nhưng không đóng gói file đó. Entry .js vẫn
+// là API chính thức và TypeScript tìm được index.d.ts đi kèm, nên build không bị kẹt type-check.
+import OpenAI from "openai/index.js";
 
 /**
  * Vẽ ảnh đại diện bài viết bằng OpenAI.
