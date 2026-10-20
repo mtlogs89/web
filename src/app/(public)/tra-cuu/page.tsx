@@ -13,9 +13,9 @@ export const dynamic = "force-dynamic";
 export default async function TrackPage({
   searchParams,
 }: {
-  searchParams: Promise<{ code?: string }>;
+  searchParams: Promise<{ code?: string; sdt?: string }>;
 }) {
-  const { code } = await searchParams;
+  const { code, sdt } = await searchParams;
 
   return (
     <>
@@ -25,7 +25,7 @@ export default async function TrackPage({
         crumbs={[{ name: "Tra cứu đơn", href: "/tra-cuu" }]}
       />
       <section className="mx-auto max-w-3xl px-6 py-12">
-        <OrderTracker initialCode={code || ""} />
+        <OrderTracker initialCode={code || ""} initialPhone={sdt || ""} />
       </section>
     </>
   );

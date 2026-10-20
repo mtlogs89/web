@@ -1,6 +1,6 @@
 "use client";
 
-import { useRef, useState, type FormEvent } from "react";
+import { useEffect, useRef, useState, type FormEvent } from "react";
 import {
   Search,
   PackageCheck,
@@ -79,9 +79,15 @@ function Info({ label, value }: { label: string; value: string }) {
   );
 }
 
-export function OrderTracker({ initialCode = "" }: { initialCode?: string }) {
+/**
+ * Link gửi sẵn cho khách: /tra-cuu?code=MT-0001026&sdt=87 → điền sẵn mã + 2 số cuối SĐT và
+ * TỰ TRA luôn, khách bấm link là thấy hành trình (chủ yêu cầu 20/10/2026). 2 số cuối vẫn là
+ * khoá kiểm tra như cũ — link chỉ gửi riêng cho đúng khách đó.
+ */
+export function OrderTracker({ initialCode = "", initialPhone = "" }: { initialCode?: string; initialPhone?: string }) {
   const [code, setCode] = useState(initialCode);
-  const [digits, setDigits] = useState<[string, string]>(["", ""]);
+  const sdt2 = initialPhone.replace(/\D/g, "").slice(-2);
+  const [digits, setDigits] = useState<[string, string]>(sdt2.length === 2 ? [sdt2[0], sdt2[1]] : ["", ""]);
   const [loading, setLoading] = useState(false);
   const [result, setResult] = useState<TrackResult | null>(null);
   const [external, setExternal] = useState<string | null>(null);
@@ -110,8 +116,7 @@ export function OrderTracker({ initialCode = "" }: { initialCode?: string }) {
     }
   }
 
-  async function onSubmit(e: FormEvent) {
-    e.preventDefault();
+  async function traCuu() {
     if (!trimmed) return;
 
     // Mã hãng ngoài → không gọi API nội bộ, chỉ hiện link tra cứu hãng.
@@ -142,6 +147,21 @@ export function OrderTracker({ initialCode = "" }: { initialCode?: string }) {
       setLoading(false);
     }
   }
+
+  async function onSubmit(e: FormEvent) {
+    e.preventDefault();
+    await traCuu();
+  }
+
+  // Mở từ link có sẵn mã (+ 2 số cuối với mã nội bộ) → tra luôn, không bắt khách bấm nút.
+  const daTuTra = useRef(false);
+  useEffect(() => {
+    if (daTuTra.current || !canSubmit || !initialCode) return;
+    daTuTra.current = true;
+    void traCuu();
+    // Chỉ chạy một lần lúc mở trang.
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   const order = result?.ok ? result.order : undefined;
   const events = result?.ok ? result.events ?? [] : [];
