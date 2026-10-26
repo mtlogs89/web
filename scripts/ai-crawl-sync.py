@@ -14,7 +14,10 @@ from collections import Counter
 from datetime import datetime
 
 DB = sys.argv[1] if len(sys.argv) > 1 else "/var/www/minhthien-web/prisma/dev.db"
-HOST = "minhthienlogs.com"
+# Chỉ đếm web công khai. Trước đây lọc bằng `HOST not in host` — mà chuỗi
+# "minhthienlogs.com" NẰM TRONG "app.minhthienlogs.com" và "beta.minhthienlogs.com",
+# nên app nội bộ và bản beta bị đếm lẫn vào, thổi phồng số ~30%.
+HOSTS_WEB = {"minhthienlogs.com", "www.minhthienlogs.com"}
 
 # (tên hiển thị, mẫu user-agent, loại, file IP chính thức)
 BOTS = [
@@ -73,7 +76,7 @@ def main():
                 host = re.search(r"host=(\S+)", m["rest"])
                 path = m["path"].split("?")[0]
                 if host:
-                    if HOST not in host.group(1):
+                    if host.group(1).lower() not in HOSTS_WEB:
                         continue
                     if path.startswith(("/_next", "/images", "/uploads", "/api")):
                         continue
