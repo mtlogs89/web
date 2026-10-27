@@ -1,14 +1,22 @@
 "use client";
 
-import { useActionState } from "react";
+import { useActionState, useEffect, useRef } from "react";
 import { Send, CheckCircle2 } from "lucide-react";
 import { submitLead, type LeadState } from "@/app/actions";
+import { trackLeadCreated } from "@/lib/openai-pixel";
 
 const inputCls =
   "mt-1.5 w-full rounded-xl border border-slate-200 px-3 py-3 font-medium outline-none focus:border-brand-500";
 
 export function LeadForm() {
   const [state, formAction, pending] = useActionState<LeadState, FormData>(submitLead, null);
+  const reported = useRef(false);
+
+  useEffect(() => {
+    if (!state?.ok || reported.current) return;
+    reported.current = true;
+    trackLeadCreated();
+  }, [state]);
 
   if (state?.ok) {
     return (

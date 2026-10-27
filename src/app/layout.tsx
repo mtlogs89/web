@@ -3,6 +3,7 @@ import Script from "next/script";
 import { Be_Vietnam_Pro } from "next/font/google";
 import "./globals.css";
 import { JsonLd, localBusinessJsonLd, websiteJsonLd, organizationJsonLd } from "@/lib/structured-data";
+import { openaiPixelInstallScript } from "@/lib/openai-pixel";
 import { site } from "@/lib/site";
 
 // Google Tag Manager — đo chuyển đổi (conversion) cho marketing/Ads.
@@ -53,6 +54,16 @@ export default function RootLayout({
 }: Readonly<{ children: React.ReactNode }>) {
   return (
     <html lang="vi" className={`${beVietnam.variable} h-full antialiased`}>
+      <head>
+        {/*
+          ChatGPT Ads pixel — đúng snippet Ads Manager, một lần mỗi lần tải trang.
+          Đặt ở <head> để bắt oppref lúc trình duyệt đọc HTML, trước React.
+          next/script beforeInteractive trên bản Next này chỉ xếp mã vào hàng
+          đợi __next_s và chạy sau khi tải bundle, nên không dùng cho pixel.
+          GTM bên dưới giữ nguyên, chạy song song.
+        */}
+        <script id="openai-ads-pixel" dangerouslySetInnerHTML={{ __html: openaiPixelInstallScript() }} />
+      </head>
       <body className="flex min-h-full flex-col bg-white text-ink">
         {/* Google Tag Manager (noscript) — ngay sau <body> */}
         <noscript>

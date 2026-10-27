@@ -17,6 +17,7 @@ import {
 import { CallAction } from "./call-action";
 import { ZaloLink } from "./zalo-link";
 import { submitQuoteLead, type QuoteLeadState } from "@/app/actions";
+import { trackLeadCreated } from "@/lib/openai-pixel";
 import { site } from "@/lib/site";
 
 const inputCls =
@@ -363,6 +364,12 @@ function AfterQuote({
     submitQuoteLead,
     null,
   );
+  const leadReported = useRef(false);
+  useEffect(() => {
+    if (!state?.ok || leadReported.current) return;
+    leadReported.current = true;
+    trackLeadCreated();
+  }, [state]);
   const [sid, setSid] = useState("");
   const [page, setPage] = useState("");
   const [ngoaiGio, setNgoaiGio] = useState(false);
