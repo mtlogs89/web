@@ -21,7 +21,7 @@ export default async function GalleryPage() {
         crumbs={[{ name: "Thư viện", href: "/thu-vien" }]}
       />
       <section className="mx-auto max-w-7xl px-6 py-12">
-        <GalleryGrid items={items} />
+        <GalleryGrid items={items} eager={8} />
       </section>
     </>
   );
