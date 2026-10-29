@@ -1,5 +1,6 @@
 "use client";
 
+import { usePathname } from "next/navigation";
 import { Phone } from "lucide-react";
 import { site } from "@/lib/site";
 import { CallAction } from "./call-action";
@@ -68,7 +69,12 @@ function HotlineButton({
   );
 }
 
+// Trang chỉ giữ 1 hotline chung (0589.77.89.89), ẩn số Ms Vy — chủ chốt 29/10/2026.
+const CHI_HOTLINE_CHUNG = new Set(["/dich-vu/gui-hang-di-my"]);
+
 export function FloatingContact() {
+  const pathname = usePathname();
+  const anSo2 = CHI_HOTLINE_CHUNG.has(pathname);
   return (
     <div id="floating-contact" className="fixed bottom-4 right-3 z-50 flex flex-col items-end gap-2 sm:bottom-5 sm:right-5 sm:gap-3">
       <HotlineButton
@@ -78,13 +84,15 @@ export function FloatingContact() {
         name={`Hotline · ${site.contactName}`}
         circleClass="bg-coral-500 shadow-coral-500/40"
       />
-      <HotlineButton
-        id="floating-call2"
-        phone={site.phone2}
-        display={site.phone2Display}
-        name={`Hotline · ${site.contactName2}`}
-        circleClass="bg-brand-500 shadow-brand-500/40"
-      />
+      {!anSo2 && (
+        <HotlineButton
+          id="floating-call2"
+          phone={site.phone2}
+          display={site.phone2Display}
+          name={`Hotline · ${site.contactName2}`}
+          circleClass="bg-brand-500 shadow-brand-500/40"
+        />
+      )}
       <a
         id="floating-zalo"
         href={site.zalo}
