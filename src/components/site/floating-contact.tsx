@@ -3,6 +3,7 @@
 import { usePathname } from "next/navigation";
 import { Phone } from "lucide-react";
 import { site } from "@/lib/site";
+import { landingMy } from "@/lib/landing-my";
 import { CallAction } from "./call-action";
 import { trackConversion } from "@/lib/google-ads";
 
@@ -75,6 +76,11 @@ const CHI_HOTLINE_CHUNG = new Set(["/dich-vu/gui-hang-di-my"]);
 export function FloatingContact() {
   const pathname = usePathname();
   const anSo2 = CHI_HOTLINE_CHUNG.has(pathname);
+  // Trang quảng cáo có thanh Gọi/Zalo dính đáy. Ẩn nút nổi để khỏi đè và khỏi hiện số khác.
+  // Khoảng trống cuối trang để chân trang cuộn lên trên thanh đó.
+  if (pathname === landingMy.path) {
+    return <div aria-hidden className="h-[calc(6.5rem+env(safe-area-inset-bottom))] md:hidden" />;
+  }
   return (
     <div id="floating-contact" className="fixed bottom-4 right-3 z-50 flex flex-col items-end gap-2 sm:bottom-5 sm:right-5 sm:gap-3">
       <HotlineButton

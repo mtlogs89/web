@@ -244,3 +244,28 @@ html.hide-floating #floating-contact {
   transform: translateY(16px);
   pointer-events: none;
 }
+
+/* Trang /gui-hang-di-my — màu lấy từ logo (teal #4DC3B5, coral #DC5A62, cam #F2AE52). */
+.lp-hero {
+  background:
+    radial-gradient(32rem 22rem at 0% -10%, rgba(77, 195, 181, 0.38), transparent 60%),
+    radial-gradient(26rem 18rem at 100% 0%, rgba(242, 174, 82, 0.30), transparent 55%),
+    radial-gradient(28rem 20rem at 90% 100%, rgba(220, 90, 98, 0.14), transparent 60%),
+    #f7fbfa;
+}
+@keyframes lp-rise {
+  from { opacity: 0; transform: translateY(8px); }
+  to { opacity: 1; transform: none; }
+}
+@media (prefers-reduced-motion: no-preference) {
+  .lp-in { animation: lp-rise 0.5s ease both; }
+}
+@media (max-width: 767px) {
+  html:has(.lp-my) {
+    scroll-padding-top: 5rem;
+    scroll-padding-bottom: calc(6.5rem + env(safe-area-inset-bottom));
+  }
+  .lp-my :is(input, button, a, select, textarea) {
+    scroll-margin-bottom: calc(6.5rem + env(safe-area-inset-bottom));
+  }
+}

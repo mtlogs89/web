@@ -9,12 +9,12 @@ export const dynamic = "force-dynamic";
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   const now = new Date();
 
-  const staticRoutes = ["", "/gioi-thieu", "/gui-hang", "/nhap-hang", "/thu-vien", "/tin-tuc", "/tra-cuu", "/lien-he", "/hang-gui-duoc", "/thoi-gian-giao-thuc-te"].map(
+  const staticRoutes = ["", "/gioi-thieu", "/gui-hang", "/gui-hang-di-my", "/nhap-hang", "/thu-vien", "/tin-tuc", "/tra-cuu", "/lien-he", "/hang-gui-duoc", "/thoi-gian-giao-thuc-te"].map(
     (path) => ({
       url: `${site.url}${path}`,
       lastModified: now,
       changeFrequency: "weekly" as const,
-      priority: path === "" ? 1 : 0.8,
+      priority: path === "" ? 1 : path === "/gui-hang-di-my" ? 0.9 : 0.8,
     })
   );
 

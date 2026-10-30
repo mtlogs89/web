@@ -20,7 +20,12 @@ export async function submitLead(_prev: LeadState, formData: FormData): Promise<
   const route = String(formData.get("route") || "") || null;
   const weight = String(formData.get("weight") || "") || null;
   const cargoType = String(formData.get("cargoType") || "") || null;
-  const message = String(formData.get("message") || "") || null;
+  const note = String(formData.get("message") || "").trim();
+  const source = String(formData.get("source") || "")
+    .trim()
+    .replace(/[\r\n]/g, " ")
+    .slice(0, 80);
+  const message = [note, source ? `Trang: ${source}` : ""].filter(Boolean).join(" · ") || null;
 
   await prisma.lead.create({
     data: { name, phone, route, weight, cargoType, message },

@@ -2,13 +2,21 @@
 
 import Link from "next/link";
 import { useState } from "react";
+import { usePathname } from "next/navigation";
 import { Menu, Phone, X } from "lucide-react";
 import { Logo } from "./logo";
 import { CallAction } from "./call-action";
 import { nav, site } from "@/lib/site";
+import { landingMy } from "@/lib/landing-my";
 
 export function Header() {
   const [open, setOpen] = useState(false);
+  const pathname = usePathname();
+  const laTrangMy = pathname === landingMy.path;
+  const callPhone = laTrangMy ? landingMy.phone : site.phone;
+  const callDisplay = laTrangMy ? landingMy.phoneDisplay : site.phoneDisplay;
+  const quoteHref = laTrangMy ? "#bao-gia" : "/lien-he";
+  const conversionLabel = laTrangMy ? undefined : "VzBiCL7SkdUcEKnr1_49";
 
   return (
     <>
@@ -19,11 +27,11 @@ export function Header() {
             <span>{site.hours}</span>
           </div>
           <CallAction
-            phone={site.phone}
+            phone={callPhone}
             className="flex items-center gap-1.5 font-semibold text-sun-300 hover:text-white"
-            conversionLabel="VzBiCL7SkdUcEKnr1_49"
+            conversionLabel={conversionLabel}
           >
-            <Phone className="h-4 w-4" /> {site.phoneDisplay}
+            <Phone className="h-4 w-4" /> {callDisplay}
           </CallAction>
         </div>
       </div>
@@ -42,17 +50,18 @@ export function Header() {
 
           <div className="flex items-center gap-3">
             <CallAction
-              phone={site.phone}
+              phone={callPhone}
               className="hidden items-center gap-2 font-bold text-ink sm:flex"
-              conversionLabel="VzBiCL7SkdUcEKnr1_49"
+              conversionLabel={conversionLabel}
+              ariaLabel={laTrangMy ? `Gọi ${landingMy.contactName} ${landingMy.phone}` : undefined}
             >
               <span className="flex h-9 w-9 items-center justify-center rounded-full bg-brand-50 text-brand-600">
                 <Phone className="h-4 w-4" />
               </span>
-              {site.phoneDisplay}
+              {callDisplay}
             </CallAction>
             <Link
-              href="/lien-he"
+              href={quoteHref}
               className="hidden rounded-full bg-coral-500 px-5 py-2.5 font-semibold text-white shadow-lg shadow-coral-500/30 transition hover:bg-coral-600 sm:inline-block"
             >
               Báo giá ngay
@@ -69,7 +78,7 @@ export function Header() {
 
         {open && (
           <div className="border-t border-brand-50 bg-white lg:hidden">
-            <nav className="mx-auto flex max-w-7xl flex-col px-6 py-3">
+            <nav className={`mx-auto flex max-w-7xl flex-col px-6 py-3 ${laTrangMy ? "pb-28" : ""}`}>
               {nav.map((item) => (
                 <Link
                   key={item.href}
@@ -81,7 +90,7 @@ export function Header() {
                 </Link>
               ))}
               <Link
-                href="/lien-he"
+                href={quoteHref}
                 onClick={() => setOpen(false)}
                 className="mt-3 rounded-full bg-coral-500 px-5 py-3 text-center font-semibold text-white"
               >

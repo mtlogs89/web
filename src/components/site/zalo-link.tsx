@@ -7,14 +7,17 @@ export function ZaloLink({
   className,
   children,
   conversionLabel,
+  id,
 }: {
   href: string;
   className?: string;
   children: React.ReactNode;
   conversionLabel?: string;
+  id?: string;
 }) {
   return (
     <a
+      id={id}
       href={href}
       className={className}
       onClick={() => conversionLabel && trackConversion(conversionLabel)}
