@@ -18,7 +18,7 @@ const beVietnam = Be_Vietnam_Pro({
 export const metadata: Metadata = {
   metadataBase: new URL(site.url),
   title: {
-    default: `${site.name} — Vận chuyển quốc tế hơn 200 quốc gia`,
+    default: `${site.name} — Gửi hàng đi Mỹ, Úc, Canada, Châu Âu từ TP.HCM`,
     template: `%s | ${site.name}`,
   },
   description: site.description,
@@ -33,14 +33,14 @@ export const metadata: Metadata = {
     type: "website",
     locale: "vi_VN",
     siteName: site.name,
-    title: `${site.name} — Vận chuyển quốc tế hơn 200 quốc gia`,
+    title: `${site.name} — Gửi hàng đi Mỹ, Úc, Canada, Châu Âu từ TP.HCM`,
     description: site.description,
     url: site.url,
     images: [{ url: "/images/og-cover.jpg", width: 1200, height: 630, alt: site.name }],
   },
   twitter: {
     card: "summary_large_image",
-    title: `${site.name} — Vận chuyển quốc tế hơn 200 quốc gia`,
+    title: `${site.name} — Gửi hàng đi Mỹ, Úc, Canada, Châu Âu từ TP.HCM`,
     description: site.description,
     images: ["/images/og-cover.jpg"],
   },

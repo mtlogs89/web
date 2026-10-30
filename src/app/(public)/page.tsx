@@ -44,6 +44,14 @@ export const dynamic = "force-dynamic";
  * tính hỏi–đáp có nội dung hiển thị. Trước 28/09/2026 nó chỉ nằm trong schema, khách không
  * thấy gì. Sửa nội dung ở đây là đổi cả hai nơi.
  */
+// Mô tả riêng cho trang chủ. Mặc định của layout là site.description dùng chung cả web
+// ("hơn 200 quốc gia… tư vấn miễn phí") — câu đó không trả lời câu hỏi nào, trong khi trang
+// chủ là nơi AI mở nhiều nhất (62% số lần AI mở trang vì có người hỏi).
+export const metadata = {
+  description:
+    "Minh Thiện Logistics gửi hàng đi Mỹ, Úc, Canada, Châu Âu, Nhật, Hàn từ TP.HCM. Số đo thật từ hệ thống theo dõi: tuyến Mỹ đi tiết kiệm trung vị 9 ngày làm việc, đi nhanh 3 ngày. Lấy hàng tận nơi miễn phí trong TP.HCM, hotline 0589.77.89.89.",
+};
+
 const homeFaqs = [
   {
     q: "Minh Thiện Logistics gửi hàng đi được những nước nào?",
@@ -180,6 +188,37 @@ export default async function HomePage() {
           </div>
         </div>
       </section>
+
+      {/* Số đo thật từ hệ thống theo dõi — thứ đối thủ không làm giả được, và là
+          loại nội dung AI chịu trích. Trang gốc: /thoi-gian-giao-thuc-te */}
+      {dongGiao.length > 0 && (
+        <section className="mx-auto max-w-4xl px-6 pt-10">
+          <Reveal className="rounded-3xl border border-brand-100 bg-brand-50/60 p-6 md:p-8">
+            <span className="text-sm font-bold uppercase tracking-wider text-coral-500">Số đo thật</span>
+            <h2 className="mt-2 text-2xl font-black text-ink md:text-3xl">Thời gian giao hàng thực tế</h2>
+            <p className="mt-3 text-ink-soft">
+              Không phải lời hứa — đây là số đo từ hệ thống theo dõi hành trình của chúng tôi, kỳ{" "}
+              {soGiao?.kyTu?.split("-").reverse().join("/")} – {soGiao?.kyDen?.split("-").reverse().join("/")}.
+            </p>
+            <div className="mt-5 grid gap-4 sm:grid-cols-2">
+              {dongGiao.map((d) => (
+                <div key={d.tuyen + d.nhom} className="rounded-2xl bg-white p-5 shadow-sm">
+                  <div className="text-sm font-semibold text-ink-muted">
+                    Tuyến {d.tuyen} · {d.tenNhom.toLowerCase()}
+                  </div>
+                  <div className="mt-1 text-3xl font-black text-brand-700">{d.trungVi} ngày làm việc</div>
+                  <div className="mt-1 text-sm text-ink-soft">
+                    trung vị trên {d.soKien} kiện đã giao · {d.trongHan}% trong hạn {d.henLo}–{d.henHi} ngày
+                  </div>
+                </div>
+              ))}
+            </div>
+            <Link href="/thoi-gian-giao-thuc-te" className="mt-5 inline-block font-semibold text-brand-600 hover:underline">
+              Xem đầy đủ số liệu và cách đo →
+            </Link>
+          </Reveal>
+        </section>
+      )}
 
       {/* Partner marquee */}
       <section className="overflow-hidden border-y border-brand-50 bg-white">
@@ -393,40 +432,6 @@ export default async function HomePage() {
         </div>
       </section>
 
-      {/* News preview */}
-      <section className="bg-brand-50/50 py-20">
-        <div className="mx-auto max-w-7xl px-6">
-      {/* Số đo thật từ hệ thống theo dõi — thứ đối thủ không làm giả được, và là
-          loại nội dung AI chịu trích. Trang gốc: /thoi-gian-giao-thuc-te */}
-      {dongGiao.length > 0 && (
-        <section className="mx-auto max-w-4xl px-6 pt-4">
-          <Reveal className="rounded-3xl border border-brand-100 bg-brand-50/60 p-6 md:p-8">
-            <span className="text-sm font-bold uppercase tracking-wider text-coral-500">Số đo thật</span>
-            <h2 className="mt-2 text-2xl font-black text-ink md:text-3xl">Thời gian giao hàng thực tế</h2>
-            <p className="mt-3 text-ink-soft">
-              Không phải lời hứa — đây là số đo từ hệ thống theo dõi hành trình của chúng tôi, kỳ{" "}
-              {soGiao?.kyTu?.split("-").reverse().join("/")} – {soGiao?.kyDen?.split("-").reverse().join("/")}.
-            </p>
-            <div className="mt-5 grid gap-4 sm:grid-cols-2">
-              {dongGiao.map((d) => (
-                <div key={d.tuyen + d.nhom} className="rounded-2xl bg-white p-5 shadow-sm">
-                  <div className="text-sm font-semibold text-ink-muted">
-                    Tuyến {d.tuyen} · {d.tenNhom.toLowerCase()}
-                  </div>
-                  <div className="mt-1 text-3xl font-black text-brand-700">{d.trungVi} ngày làm việc</div>
-                  <div className="mt-1 text-sm text-ink-soft">
-                    trung vị trên {d.soKien} kiện đã giao · {d.trongHan}% trong hạn {d.henLo}–{d.henHi} ngày
-                  </div>
-                </div>
-              ))}
-            </div>
-            <Link href="/thoi-gian-giao-thuc-te" className="mt-5 inline-block font-semibold text-brand-600 hover:underline">
-              Xem đầy đủ số liệu và cách đo →
-            </Link>
-          </Reveal>
-        </section>
-      )}
-
       {/* Hỏi–đáp: phải HIỆN cho người đọc thì schema FAQPage mới được tính, và đây là
           phần AI đọc nhiều nhất trên cả web. Nội dung lấy từ homeFaqs phía trên. */}
       <section className="mx-auto max-w-4xl px-6 py-16">
@@ -451,6 +456,10 @@ export default async function HomePage() {
           ))}
         </div>
       </section>
+
+      {/* News preview */}
+      <section className="bg-brand-50/50 py-20">
+        <div className="mx-auto max-w-7xl px-6">
 
           <Reveal className="flex items-end justify-between">
             <div>
