@@ -6,9 +6,11 @@ import { Menu, Phone, X } from "lucide-react";
 import { Logo } from "./logo";
 import { CallAction } from "./call-action";
 import { nav, site } from "@/lib/site";
+import { useHotline } from "./so-trang-uc";
 
 export function Header() {
   const [open, setOpen] = useState(false);
+  const hotline = useHotline();
 
   return (
     <>
@@ -19,11 +21,11 @@ export function Header() {
             <span>{site.hours}</span>
           </div>
           <CallAction
-            phone={site.phone}
+            phone={hotline.phone}
             className="flex items-center gap-1.5 font-semibold text-sun-300 hover:text-white"
             conversionLabel="VzBiCL7SkdUcEKnr1_49"
           >
-            <Phone className="h-4 w-4" /> {site.phoneDisplay}
+            <Phone className="h-4 w-4" /> {hotline.display}
           </CallAction>
         </div>
       </div>
@@ -42,14 +44,14 @@ export function Header() {
 
           <div className="flex items-center gap-3">
             <CallAction
-              phone={site.phone}
+              phone={hotline.phone}
               className="hidden items-center gap-2 font-bold text-ink sm:flex"
               conversionLabel="VzBiCL7SkdUcEKnr1_49"
             >
               <span className="flex h-9 w-9 items-center justify-center rounded-full bg-brand-50 text-brand-600">
                 <Phone className="h-4 w-4" />
               </span>
-              {site.phoneDisplay}
+              {hotline.display}
             </CallAction>
             <Link
               href="/lien-he"

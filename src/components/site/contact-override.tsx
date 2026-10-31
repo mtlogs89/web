@@ -2,7 +2,7 @@
 
 import { useEffect } from "react";
 import { site } from "@/lib/site";
-import { setHienSoVy } from "./floating-contact";
+import { setHienSoVy } from "./so-trang-uc";
 
 /** 0899391119 -> 0899.39.11.19 (cùng kiểu hotline chung 0589.77.89.89); số khác giữ nguyên. */
 function hienSo(phone: string) {
@@ -15,13 +15,13 @@ function hienSo(phone: string) {
  * Ghi đè số điện thoại của nút Gọi/Zalo nổi (floating-contact) khi bài viết
  * có hotline riêng. Không render gì — chỉ đổi href lúc mount.
  *
- * Nút nổi đã có sẵn 2 hotline (site.phone, site.phone2). Bài dùng một trong hai số đó
- * thì giữ nguyên cả 2 nút gọi, chỉ đổi Zalo; bài dùng số khác thì thay nút gọi thứ nhất.
+ * Nút nổi tự chọn 1 trong 2 hotline (site.phone, site.phone2) theo trang (xem so-trang-uc).
+ * Bài dùng một trong hai số đó thì không đụng nút gọi, chỉ đổi Zalo; bài dùng số khác thì thay nút gọi.
  */
 export function ContactOverride({ phone }: { phone: string }) {
   useEffect(() => {
     if (!phone) return;
-    // Bài gắn số Ms Vy (bài Úc) -> bật nút gọi thứ 2.
+    // Bài gắn số Ms Vy (bài Úc) -> cả trang dùng số Ms Vy thay số Ms Min.
     if (phone === site.phone2) setHienSoVy(true);
     const daCoSan = phone === site.phone || phone === site.phone2;
     const call = daCoSan ? null : (document.getElementById("floating-call") as HTMLAnchorElement | null);

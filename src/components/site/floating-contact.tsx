@@ -1,11 +1,9 @@
 "use client";
 
-import { useSyncExternalStore } from "react";
-import { usePathname } from "next/navigation";
 import { Phone } from "lucide-react";
-import { site } from "@/lib/site";
 import { CallAction } from "./call-action";
 import { trackConversion } from "@/lib/google-ads";
+import { useHotline } from "./so-trang-uc";
 
 /** Logo Zalo (bong bóng chat trắng + chữ "Zalo" xanh) — để khách nhận ra ngay là Zalo. */
 function ZaloIcon({ className }: { className?: string }) {
@@ -32,7 +30,6 @@ function ZaloIcon({ className }: { className?: string }) {
 
 /**
  * Một nút gọi: số hiện ở nhãn bên trái + vòng tròn điện thoại. Cả cụm bấm được.
- * Có 2 hotline nên phải ghi số ra, khách mới biết nút nào gọi ai.
  */
 function HotlineButton({
   id,
@@ -70,47 +67,21 @@ function HotlineButton({
   );
 }
 
-// Số Ms Vy CHỈ hiện ở trang liên quan tới Úc, còn lại chỉ 1 hotline chung — chủ chốt 31/10/2026.
-// Trang Úc = đường dẫn khớp chủ đề Úc (trang dịch vụ + bài có slug Úc), hoặc bài có ô Điện thoại
-// = số Ms Vy (ContactOverride bật qua setHienSoVy).
-const UC_PATH = /(^|-|\/)(di|o|sang)-uc($|-|\/)|australia|sydney|melbourne|brisbane|perth|adelaide/;
-
-let baiSoVy = false;
-const listeners = new Set<() => void>();
-export function setHienSoVy(v: boolean) {
-  baiSoVy = v;
-  listeners.forEach((l) => l());
-}
-function subscribe(l: () => void) {
-  listeners.add(l);
-  return () => listeners.delete(l);
-}
-
+// Mỗi trang chỉ 1 hotline: trang Úc -> Ms Vy, còn lại -> Ms Min (xem so-trang-uc).
 export function FloatingContact() {
-  const pathname = usePathname();
-  const bai = useSyncExternalStore(subscribe, () => baiSoVy, () => false);
-  const hienSo2 = UC_PATH.test(pathname) || bai;
+  const hotline = useHotline();
   return (
     <div id="floating-contact" className="fixed bottom-4 right-3 z-50 flex flex-col items-end gap-2 sm:bottom-5 sm:right-5 sm:gap-3">
       <HotlineButton
         id="floating-call"
-        phone={site.phone}
-        display={site.phoneDisplay}
-        name={`Hotline · ${site.contactName}`}
+        phone={hotline.phone}
+        display={hotline.display}
+        name={`Hotline · ${hotline.name}`}
         circleClass="bg-coral-500 shadow-coral-500/40"
       />
-      {hienSo2 && (
-        <HotlineButton
-          id="floating-call2"
-          phone={site.phone2}
-          display={site.phone2Display}
-          name={`Hotline · ${site.contactName2}`}
-          circleClass="bg-brand-500 shadow-brand-500/40"
-        />
-      )}
       <a
         id="floating-zalo"
-        href={site.zalo}
+        href={hotline.zalo}
         aria-label="Chat Zalo"
         className="flex h-12 w-12 items-center justify-center rounded-full bg-[#0068FF] shadow-lg shadow-[#0068FF]/40 sm:h-[54px] sm:w-[54px]"
         onClick={() => trackConversion("G8fXCJ6D_NQcEKnr1_49")}

@@ -1,7 +1,7 @@
 import Link from "next/link";
 import { MapPin, Phone } from "lucide-react";
 import { Logo } from "./logo";
-import { CallAction } from "./call-action";
+import { SoChiNhanh } from "./so-chi-nhanh";
 import { services, site } from "@/lib/site";
 
 export function Footer() {
@@ -53,14 +53,7 @@ export function Footer() {
                 {b.phones.length > 0 && (
                   <div className="mt-1 flex gap-2.5">
                     <Phone className="mt-0.5 h-4 w-4 shrink-0 text-sun-400" />
-                    <span>
-                      {b.phones.map((p, i) => (
-                        <span key={p}>
-                          {i > 0 && " · "}
-                          <CallAction phone={p.replace(/\./g, "")} className="font-semibold hover:text-brand-400" conversionLabel="VzBiCL7SkdUcEKnr1_49">{p}</CallAction>
-                        </span>
-                      ))}
-                    </span>
+                    <SoChiNhanh phones={b.phones} />
                   </div>
                 )}
               </li>
