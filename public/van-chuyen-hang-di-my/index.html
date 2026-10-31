@@ -3,6 +3,17 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
+<!--
+  Đo lường. Trang này là file tĩnh nên KHÔNG nhận pixel/GTM/bộ đếm từ layout của web,
+  phải gắn tay ở đây. Giữ cùng Pixel ID và cùng tên sự kiện với src/lib/openai-pixel.ts.
+  Pixel phải nằm ở <head> trang khách vào ĐẦU TIÊN để bắt oppref (mã lượt bấm quảng cáo
+  ChatGPT) vào cookie __oppref — thiếu là mất hết chuyển đổi từ quảng cáo.
+-->
+<script id="openai-ads-pixel">
+!function(w,d,s,u){if(w.oaiq)return;var q=function(){q.q.push(arguments)};q.q=[];w.oaiq=q;var j=d.createElement(s);j.async=1;j.src=u;var f=d.getElementsByTagName(s)[0];f.parentNode.insertBefore(j,f)}(window,document,"script","https://bzrcdn.openai.com/sdk/oaiq.min.js");
+oaiq("init",{pixelId:"F6z34umc3NWwSa3o9i8BCn",debug:/^(localhost|127\.0\.0\.1)$/.test(location.hostname)});
+</script>
+<script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src='https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);})(window,document,'script','dataLayer','GTM-W9TVBQKV');</script>
 <title>Vận chuyển hàng đi Mỹ 3–5 ngày, từ 79k/kg – Minh Thiện Logistics</title>
 <meta name="description" content="Gửi hàng đi Mỹ bay nhanh 3–5 ngày, đường thuỷ từ 79k/kg. Nhận thuốc tây, thịt, trứng, sữa, yến, mỹ phẩm, hàng Amazon/Etsy/TikTok. Lấy hàng miễn phí TP.HCM. Gọi 0977 064 246.">
 <link rel="canonical" href="https://minhthienlogs.com/van-chuyen-hang-di-my">
@@ -57,6 +68,7 @@ a,button,summary{-webkit-tap-highlight-color:rgba(14,122,108,.15)}
 </style>
 </head>
 <body>
+<noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-W9TVBQKV" height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 <div style="font-family: 'Be Vietnam Pro', system-ui, sans-serif; color: #12201E; background: #F7FAF9; line-height: 1.55">
 
 <!-- Header -->
@@ -506,5 +518,112 @@ Gọi ngay</a>
 <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7.9 20A9 9 0 1 0 4 16.1L2 22z"></path></svg>
 Zalo</a>
 </nav>
+<script>
+/*
+  Sự kiện chuyển đổi của landing (quảng cáo ChatGPT):
+  - phone_click / zalo_click (custom): mỗi lần bấm Gọi / Zalo — cùng tên với web chính.
+  - lead_created (chuẩn, "khách yêu cầu liên hệ"): 1 lần mỗi phiên, ở cú bấm Gọi/Zalo
+    đầu tiên. Đây là sự kiện chọn làm chuyển đổi trong Ads Manager.
+  - quote_calculated (custom): khách tự đổi cân nặng ở ô tính giá — 1 lần mỗi lượt xem.
+  Đồng thời gửi lượt xem + cú bấm về /api/t để hiện ở /admin (nguồn "chatgpt").
+  Không gửi số điện thoại hay thông tin khách. Bọc try/catch, không chặn cú bấm.
+*/
+(function () {
+  var measure = function () { try { window.oaiq && window.oaiq.apply(null, arguments); } catch (e) {} };
+  var uid = function () { return (window.crypto && crypto.randomUUID) ? crypto.randomUUID() : Date.now() + '-' + Math.random().toString(36).slice(2); };
+  var store = function (kind, key, make) {
+    try { var st = kind === 'local' ? localStorage : sessionStorage; var v = st.getItem(key); if (!v) { v = make(); st.setItem(key, v); } return v; } catch (e) { return make(); }
+  };
+  var send = function (body) {
+    try {
+      var data = JSON.stringify(body);
+      if (navigator.sendBeacon && navigator.sendBeacon('/api/t', new Blob([data], { type: 'application/json' }))) return;
+      fetch('/api/t', { method: 'POST', body: data, keepalive: true, headers: { 'content-type': 'application/json' } }).catch(function () {});
+    } catch (e) {}
+  };
+
+  // Nguồn phiên — cùng luật và cùng khoá sessionStorage với SiteAnalytics của web,
+  // thêm: link quảng cáo ChatGPT mang oppref.
+  function detectSource() {
+    var q = new URLSearchParams(location.search), r = '';
+    try { r = document.referrer ? new URL(document.referrer).host.toLowerCase() : ''; } catch (e) {}
+    var utm = (q.get('utm_source') || '').toLowerCase(), src = 'direct';
+    if (q.has('gclid') || q.has('gbraid') || q.has('wbraid') || q.has('gad_source')) src = 'google-ads';
+    else if (q.has('oppref') || utm.indexOf('chatgpt') > -1 || /chatgpt\.com|openai\.com/.test(r)) src = 'chatgpt';
+    else if (utm.indexOf('perplexity') > -1 || r.indexOf('perplexity') > -1) src = 'perplexity';
+    else if (r.indexOf('gemini.google') > -1) src = 'gemini';
+    else if (utm.indexOf('copilot') > -1 || /copilot\.microsoft|bing\.com/.test(r)) src = 'copilot';
+    else if (r.indexOf('claude.ai') > -1) src = 'claude';
+    else if (/(^|\.)google\./.test(r)) src = 'google';
+    else if (utm.indexOf('facebook') > -1 || q.has('fbclid') || /facebook|fb\.com|messenger/.test(r)) src = 'facebook';
+    else if (utm.indexOf('zalo') > -1 || r.indexOf('zalo') > -1) src = 'zalo';
+    else if (r.indexOf('coccoc') > -1) src = 'coccoc';
+    else if (r && !/minhthienlogs\.com$/.test(r)) src = 'other';
+    return { source: src, refHost: r && !/minhthienlogs\.com$/.test(r) ? r : null, landing: location.pathname };
+  }
+
+  var sid = store('session', 'mt_quote_sid', uid), visitId = uid();
+  if (!navigator.webdriver) {
+    try {
+      var src = JSON.parse(store('session', 'mt_src', function () { return JSON.stringify(detectSource()); }));
+      var first = !sessionStorage.getItem('mt_seen');
+      try { sessionStorage.setItem('mt_seen', '1'); } catch (e) {}
+      window.__mtVisit = visitId;
+      send({ k: 'view', id: visitId, sid: sid, vis: store('local', 'mt_vid', uid), path: location.pathname,
+        title: document.title.replace(/\s*[–|-]\s*Minh Thiện Logistics$/, '').slice(0, 160),
+        source: src.source, refHost: src.refHost, landing: first,
+        device: matchMedia('(pointer: coarse)').matches ? 'mobile' : 'desktop' });
+
+      var shown = 0, since = document.visibilityState === 'visible' ? Date.now() : 0, maxScroll = 0, lastSec = '', sent = '';
+      var onScroll = function () {
+        var h = document.documentElement.scrollHeight - innerHeight;
+        var pct = h > 0 ? Math.min(100, Math.round(scrollY / h * 100)) : 100;
+        if (pct <= maxScroll) return;
+        maxScroll = pct;
+        document.querySelectorAll('h2').forEach(function (hd) { if (hd.getBoundingClientRect().top < innerHeight * 0.5) lastSec = hd.textContent.trim().slice(0, 120); });
+      };
+      var flush = function () {
+        if (since) { shown += Date.now() - since; since = document.visibilityState === 'visible' ? Date.now() : 0; }
+        var d = Math.min(3600, Math.round(shown / 1000)), key = d + '|' + maxScroll + '|' + lastSec;
+        if (key === sent) return;
+        sent = key;
+        send({ k: 'update', id: visitId, sid: sid, d: d, s: maxScroll, sec: lastSec || null });
+      };
+      addEventListener('scroll', onScroll, { passive: true });
+      document.addEventListener('visibilitychange', function () { if (document.visibilityState === 'hidden') flush(); else since = Date.now(); });
+      addEventListener('pagehide', flush);
+    } catch (e) {}
+  }
+
+  document.addEventListener('click', function (e) {
+    try {
+      var a = e.target && e.target.closest ? e.target.closest('a') : null;
+      if (!a) return;
+      var href = (a.getAttribute('href') || '').trim(), name = null, host = '';
+      try { host = new URL(href, location.origin).hostname.toLowerCase(); } catch (err) {}
+      if (/^tel:/i.test(href)) name = 'phone_click';
+      else if (/^zalo:/i.test(href) || host === 'zalo.me' || /\.zalo\.me$/.test(host)) name = 'zalo_click';
+      if (!name) return;
+      // Nút nào: thanh đáy / đầu trang / ô tính giá…
+      var where = a.closest('.m-bar') ? 'thanh-day' : a.closest('header') ? 'header' : a.closest('.hero-bg') ? 'hero' : a.closest('#tinh-gia') ? 'tinh-gia' : a.closest('footer') ? 'footer' : 'than-trang';
+      measure('measure', 'custom', { type: 'custom' }, { custom_event_name: name });
+      var leadKey = 'mt_lead_' + sid;
+      var hadLead = false;
+      try { hadLead = !!sessionStorage.getItem(leadKey); sessionStorage.setItem(leadKey, '1'); } catch (err) {}
+      if (!hadLead) measure('measure', 'lead_created', { type: 'customer_action' }, { event_id: 'lead_' + sid });
+      (window.dataLayer = window.dataLayer || []).push({ event: 'landing_contact', contact_type: name, contact_position: where });
+      if (!navigator.webdriver) send({ k: 'event', sid: sid, vid: visitId, path: location.pathname, type: name === 'phone_click' ? 'call' : 'zalo', label: 'landing-my:' + where });
+    } catch (err) {}
+  }, true);
+
+  var calcSent = false, w = document.getElementById('calc-w');
+  if (w) w.addEventListener('change', function () {
+    if (calcSent) return;
+    calcSent = true;
+    measure('measure', 'custom', { type: 'custom' }, { custom_event_name: 'quote_calculated' });
+    (window.dataLayer = window.dataLayer || []).push({ event: 'landing_quote_calculated' });
+  });
+})();
+</script>
 </body>
 </html>
