@@ -1,5 +1,6 @@
 "use client";
 
+import { useSyncExternalStore } from "react";
 import { usePathname } from "next/navigation";
 import { Phone } from "lucide-react";
 import { site } from "@/lib/site";
@@ -69,12 +70,26 @@ function HotlineButton({
   );
 }
 
-// Trang chỉ giữ 1 hotline chung (0589.77.89.89), ẩn số Ms Vy — chủ chốt 29/10/2026.
-const CHI_HOTLINE_CHUNG = new Set(["/dich-vu/gui-hang-di-my"]);
+// Số Ms Vy CHỈ hiện ở trang liên quan tới Úc, còn lại chỉ 1 hotline chung — chủ chốt 31/10/2026.
+// Trang Úc = đường dẫn khớp chủ đề Úc (trang dịch vụ + bài có slug Úc), hoặc bài có ô Điện thoại
+// = số Ms Vy (ContactOverride bật qua setHienSoVy).
+const UC_PATH = /(^|-|\/)(di|o|sang)-uc($|-|\/)|australia|sydney|melbourne|brisbane|perth|adelaide/;
+
+let baiSoVy = false;
+const listeners = new Set<() => void>();
+export function setHienSoVy(v: boolean) {
+  baiSoVy = v;
+  listeners.forEach((l) => l());
+}
+function subscribe(l: () => void) {
+  listeners.add(l);
+  return () => listeners.delete(l);
+}
 
 export function FloatingContact() {
   const pathname = usePathname();
-  const anSo2 = CHI_HOTLINE_CHUNG.has(pathname);
+  const bai = useSyncExternalStore(subscribe, () => baiSoVy, () => false);
+  const hienSo2 = UC_PATH.test(pathname) || bai;
   return (
     <div id="floating-contact" className="fixed bottom-4 right-3 z-50 flex flex-col items-end gap-2 sm:bottom-5 sm:right-5 sm:gap-3">
       <HotlineButton
@@ -84,7 +99,7 @@ export function FloatingContact() {
         name={`Hotline · ${site.contactName}`}
         circleClass="bg-coral-500 shadow-coral-500/40"
       />
-      {!anSo2 && (
+      {hienSo2 && (
         <HotlineButton
           id="floating-call2"
           phone={site.phone2}

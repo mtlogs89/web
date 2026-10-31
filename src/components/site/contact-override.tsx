@@ -2,6 +2,7 @@
 
 import { useEffect } from "react";
 import { site } from "@/lib/site";
+import { setHienSoVy } from "./floating-contact";
 
 /** 0899391119 -> 0899.39.11.19 (cùng kiểu hotline chung 0589.77.89.89); số khác giữ nguyên. */
 function hienSo(phone: string) {
@@ -20,6 +21,8 @@ function hienSo(phone: string) {
 export function ContactOverride({ phone }: { phone: string }) {
   useEffect(() => {
     if (!phone) return;
+    // Bài gắn số Ms Vy (bài Úc) -> bật nút gọi thứ 2.
+    if (phone === site.phone2) setHienSoVy(true);
     const daCoSan = phone === site.phone || phone === site.phone2;
     const call = daCoSan ? null : (document.getElementById("floating-call") as HTMLAnchorElement | null);
     // Bản cho máy tính (nút sao chép, không phải link tel:) — xem CallAction.
@@ -40,6 +43,7 @@ export function ContactOverride({ phone }: { phone: string }) {
     names.forEach((n) => (n.textContent = "Hotline"));
     if (zalo) zalo.href = `https://zalo.me/${phone}`;
     return () => {
+      if (phone === site.phone2) setHienSoVy(false);
       // Rời trang bài viết (client navigation) -> trả lại hotline mặc định
       if (call && prevCall) call.href = prevCall;
       if (callCopy && prevCopy) callCopy.dataset.phone = prevCopy;
