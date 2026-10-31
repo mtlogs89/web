@@ -4,8 +4,9 @@
 - "0589… (Zalo Ms Min) hoặc 039.779.0199 (Ms Vy)" -> "039.779.0199 (Ms Vy)".
 - Số 0589… còn sót (đứng một mình) -> 039.779.0199; tên "Ms Min" còn sót -> "Ms Vy";
   link tel:/zalo.me 0589778989 -> 0397790199.
-- Cột: content, faqJson, excerpt, metaDescription, metaTitle, title, h1. Article.phone giữ nguyên
-  (đã là số Ms Vy từ 19/10). Chạy lại nhiều lần không sao. KHÔNG xoá bài, KHÔNG đổi updatedAt.
+- Cột: content, faqJson, excerpt, metaDescription, metaTitle, title, h1. Article.phone đang là số
+  Ms Min (bài thêm sau 19/10) -> số Ms Vy, để nút Gọi/Zalo cuối bài và Zalo nổi về Ms Vy.
+  Chạy lại nhiều lần không sao. KHÔNG xoá bài, KHÔNG đổi updatedAt.
 
 Chạy:  python3 xoa-so-min-bai-uc-20261031.py <dev.db>            (chạy thử, không ghi)
        python3 xoa-so-min-bai-uc-20261031.py <dev.db> --ghi     (ghi thật)
@@ -48,15 +49,18 @@ def main():
     db, ghi = sys.argv[1], "--ghi" in sys.argv
     con = sqlite3.connect(db)
     rows = con.execute(
-        f"SELECT id, slug, {', '.join(COT)} FROM Article WHERE category = ?", (CHUYEN_MUC,)
+        f"SELECT id, slug, phone, {', '.join(COT)} FROM Article WHERE category = ?", (CHUYEN_MUC,)
     ).fetchall()
     tong, bai = 0, 0
     for r in rows:
-        id_, slug = r[0], r[1]
+        id_, slug, phone = r[0], r[1], r[2]
         moi, dem = {}, 0
         for i, cot in enumerate(COT):
-            moi[cot], n = doi(r[2 + i])
+            moi[cot], n = doi(r[3 + i])
             dem += n
+        if phone == "0589778989":
+            phone = "0397790199"
+            dem += 1
         if not dem:
             continue
         bai += 1
@@ -64,8 +68,8 @@ def main():
         print(f"{slug[:70]:70} doi {dem} cho")
         if ghi:
             con.execute(
-                f"UPDATE Article SET {', '.join(c + ' = ?' for c in COT)} WHERE id = ?",
-                (*[moi[c] for c in COT], id_),
+                f"UPDATE Article SET phone = ?, {', '.join(c + ' = ?' for c in COT)} WHERE id = ?",
+                (phone, *[moi[c] for c in COT], id_),
             )
     if ghi:
         con.commit()
