@@ -31,7 +31,7 @@ type Props = {
  * giao diện và hoạt động ngay cả trước khi hydrate.
  */
 export function CallAction({ phone, className, children, id, ariaLabel, conversionLabel }: Props) {
-  const [copied, setCopied] = useState(false);
+  const [copied, setCopied] = useState<string | null>(null);
   const timer = useRef<ReturnType<typeof setTimeout> | null>(null);
 
   useEffect(() => () => {
@@ -49,9 +49,9 @@ export function CallAction({ phone, className, children, id, ariaLabel, conversi
       } catch {
         return; // Không sao chép được thì thôi — số vẫn hiện dạng chữ để đọc.
       }
-      setCopied(true);
+      setCopied(num);
       if (timer.current) clearTimeout(timer.current);
-      timer.current = setTimeout(() => setCopied(false), 2000);
+      timer.current = setTimeout(() => setCopied(null), 2000);
     },
     [phone, conversionLabel],
   );
@@ -88,9 +88,9 @@ export function CallAction({ phone, className, children, id, ariaLabel, conversi
           {copied && (
             <span
               role="status"
-              className="pointer-events-none absolute -top-9 left-1/2 z-20 -translate-x-1/2 rounded-lg bg-ink px-2.5 py-1 text-xs font-semibold whitespace-nowrap text-white shadow-lg"
+              className="pointer-events-none absolute -top-9 right-0 z-20 rounded-lg bg-ink px-2.5 py-1 text-xs font-semibold whitespace-nowrap text-white shadow-lg"
             >
-              Đã sao chép
+              Đã sao chép {copied}
             </span>
           )}
         </button>

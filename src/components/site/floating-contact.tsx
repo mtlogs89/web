@@ -29,7 +29,8 @@ function ZaloIcon({ className }: { className?: string }) {
 }
 
 /**
- * Một nút gọi: số hiện ở nhãn bên trái + vòng tròn điện thoại. Cả cụm bấm được.
+ * Một nút gọi: chỉ vòng tròn điện thoại, không hiện số (chủ chốt 01/11/2026 — khách bấm là gọi).
+ * Số và tên người trực vẫn nằm trong aria-label để trình đọc màn hình đọc được.
  */
 function HotlineButton({
   id,
@@ -49,17 +50,9 @@ function HotlineButton({
       id={id}
       phone={phone}
       ariaLabel={`Gọi ${name} ${display}`}
-      className="flex items-center gap-2"
+      className="flex items-center"
       conversionLabel="VzBiCL7SkdUcEKnr1_49"
     >
-      <span className="rounded-full bg-white/95 px-2.5 py-1 text-right leading-tight shadow-md ring-1 ring-black/5 sm:px-3 sm:py-1.5">
-        <span data-name-for={id} className="block text-[9px] font-medium text-slate-500 sm:text-[10px]">
-          {name}
-        </span>
-        <span data-label-for={id} className="block text-xs font-bold whitespace-nowrap text-ink sm:text-sm">
-          {display}
-        </span>
-      </span>
       <span className={`flex h-12 w-12 shrink-0 items-center justify-center rounded-full text-white shadow-lg sm:h-[54px] sm:w-[54px] ${circleClass}`}>
         <Phone className="h-5 w-5 sm:h-6 sm:w-6" />
       </span>
