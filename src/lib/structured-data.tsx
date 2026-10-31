@@ -16,7 +16,7 @@ export function websiteJsonLd() {
 export function organizationJsonLd() {
   // Càng nhiều kênh chính chủ khai ở đây, AI càng chắc chắn các nơi nhắc "Minh Thiện Logistics"
   // là cùng một doanh nghiệp. Chỉ khai kênh chủ đã xác nhận — khai nhầm là nối sang thực thể khác.
-  const sameAs = [site.facebook, site.instagram, site.googleMaps, site.zalo].filter(Boolean);
+  const sameAs = [site.facebook, site.instagram, site.googleMaps, site.zalo, site.taxRegistry].filter(Boolean);
   return {
     "@context": "https://schema.org",
     "@type": "Organization",
@@ -70,7 +70,7 @@ export function localBusinessJsonLd() {
     },
     geo: { "@type": "GeoCoordinates", latitude: site.geo.lat, longitude: site.geo.lng },
     hasMap: site.googleMaps,
-    sameAs: [site.facebook, site.instagram, site.googleMaps],
+    sameAs: [site.facebook, site.instagram, site.googleMaps, site.taxRegistry],
     openingHours: "Mo-Su 08:00-21:00",
     areaServed: "Worldwide",
     department: site.branches.slice(1).map((b) => ({

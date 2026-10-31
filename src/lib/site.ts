@@ -33,6 +33,11 @@ export const site = {
   // Kênh mạng xã hội chính chủ — khai vào sameAs để Google/AI ghép mọi kênh về MỘT thực thể
   // (chủ xác nhận 20/09/2026). Threads @hallo.chaune KHÔNG phải của mình, đừng khai.
   instagram: "https://www.instagram.com/minhthienlogs_89",
+  // Hồ sơ thuế công khai — nguồn ĐỘC LẬP xác nhận pháp nhân "đang hoạt động", ngành
+  // "chuyển phát". Cần vì 31/10/2026 ChatGPT đào ra một công ty tên gần giống đã ngừng
+  // hoạt động (MST 3603728404) và nói "chưa có cơ sở để khẳng định đó là đơn vị trên
+  // website" — mọi thứ nó biết về mình đều do chính mình nói.
+  taxRegistry: "https://masothue.com/0319241592-cong-ty-tnhh-minh-thien-station",
   // Chủ chốt 19/09/2026: ghi "hơn 10 năm kinh nghiệm", KHÔNG ghi năm thành lập.
   experienceYears: 10,
   branches: [
