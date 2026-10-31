@@ -10,6 +10,13 @@ const nextConfig: NextConfig = {
     // trả 400 và bài hiện ô trống — đã dính đúng như vậy tới 20/09/2026.
     remotePatterns: [{ protocol: "https", hostname: "images.unsplash.com" }],
   },
+  // Landing tĩnh ở public/van-chuyen-hang-di-my/index.html. Next không tự phục vụ
+  // index.html của thư mục trong public, nên phải trỏ đường dẫn gọn vào file đó.
+  async rewrites() {
+    return [
+      { source: "/van-chuyen-hang-di-my", destination: "/van-chuyen-hang-di-my/index.html" },
+    ];
+  },
   experimental: {
     serverActions: {
       // Mặc định 1MB — file bảng giá Excel có thể lớn hơn (file NCC kèm bảng
