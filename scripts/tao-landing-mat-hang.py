@@ -75,6 +75,8 @@ T = [
     ),
     dict(
         slug="gui-tom-kho-di-my", ten="tôm khô",
+        # Trang này đã làm lại bằng tay (tông cam/san hô) — script không ghi đè.
+        viet_tay=True,
         title="Gửi tôm khô đi Mỹ 3–5 ngày, từ 79k/kg",
         desc="Gửi tôm khô, tép khô, khô tôm Cà Mau đi Mỹ. Hút chân không miễn phí, giao tận nhà 3–5 ngày. Lấy hàng miễn phí TP.HCM. Gọi 0977 064 246.",
         h1='Gửi <span style="color: #4FD6C3">tôm khô</span> đi Mỹ, giữ nguyên màu đỏ, vị ngọt',
@@ -467,6 +469,10 @@ def main():
     khuon = KHUON.read_text(encoding="utf-8")
     slugs = []
     for t in T:
+        if t.get("viet_tay"):
+            slugs.append(t["slug"])
+            print("bỏ qua (viết tay)", t["slug"])
+            continue
         out = ROOT / "public" / t["slug"] / "index.html"
         out.parent.mkdir(parents=True, exist_ok=True)
         out.write_text(tao(khuon, t), encoding="utf-8")
