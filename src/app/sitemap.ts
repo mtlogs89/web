@@ -3,13 +3,14 @@ import { services, site } from "@/lib/site";
 import { prisma } from "@/lib/prisma";
 import { EMPTY_BODY } from "@/lib/articles";
 import { TUYEN_HANG } from "@/lib/hang-tuyen";
+import landingMatHang from "@/data/landing-mat-hang.json";
 
 export const dynamic = "force-dynamic";
 
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   const now = new Date();
 
-  const staticRoutes = ["", "/gioi-thieu", "/gui-hang", "/nhap-hang", "/thu-vien", "/tin-tuc", "/tra-cuu", "/lien-he", "/hang-gui-duoc", "/thoi-gian-giao-thuc-te", "/van-chuyen-hang-di-my"].map(
+  const staticRoutes = ["", "/gioi-thieu", "/gui-hang", "/nhap-hang", "/thu-vien", "/tin-tuc", "/tra-cuu", "/lien-he", "/hang-gui-duoc", "/thoi-gian-giao-thuc-te", "/van-chuyen-hang-di-my", ...landingMatHang.map((s) => `/${s}`)].map(
     (path) => ({
       url: `${site.url}${path}`,
       lastModified: now,

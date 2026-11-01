@@ -1,4 +1,5 @@
 import type { NextConfig } from "next";
+import landingMatHang from "./src/data/landing-mat-hang.json";
 
 const nextConfig: NextConfig = {
   // Trên Desktop còn một bản web cũ (~/Desktop/minhthien-web, 9/7/2026) và một
@@ -12,10 +13,12 @@ const nextConfig: NextConfig = {
   },
   // Landing tĩnh ở public/van-chuyen-hang-di-my/index.html. Next không tự phục vụ
   // index.html của thư mục trong public, nên phải trỏ đường dẫn gọn vào file đó.
+  // Các landing "gửi <mặt hàng> đi Mỹ" sinh bằng scripts/tao-landing-mat-hang.py.
   async rewrites() {
-    return [
-      { source: "/van-chuyen-hang-di-my", destination: "/van-chuyen-hang-di-my/index.html" },
-    ];
+    return ["van-chuyen-hang-di-my", ...landingMatHang].map((slug) => ({
+      source: `/${slug}`,
+      destination: `/${slug}/index.html`,
+    }));
   },
   experimental: {
     serverActions: {
