@@ -5,8 +5,15 @@ import { cookies } from "next/headers";
 const COOKIE = "mt_admin";
 const MAX_AGE = 60 * 60 * 24 * 7; // 7 ngày
 
+// Fail-closed: production thiếu secret thì từ chối, không dùng khoá mặc định
+// (ai biết khoá mặc định sẽ tự ký được cookie admin).
 function secret() {
-  return process.env.ADMIN_SESSION_SECRET || "insecure-dev-secret";
+  const s = process.env.ADMIN_SESSION_SECRET;
+  if (s) return s;
+  if (process.env.NODE_ENV === "production") {
+    throw new Error("ADMIN_SESSION_SECRET chưa được cấu hình");
+  }
+  return "insecure-dev-secret";
 }
 
 function b64url(input: Buffer | string) {
