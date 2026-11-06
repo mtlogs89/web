@@ -1,5 +1,6 @@
 import { NextResponse } from "next/server";
 import { prisma } from "@/lib/prisma";
+import { clientIp, rateLimit } from "@/lib/rate-limit";
 
 export const dynamic = "force-dynamic";
 
@@ -10,6 +11,11 @@ const ACTIONS = new Set(["zalo", "call"]);
  * luôn trong server action submitQuoteLead nên không đi qua đây.
  */
 export async function POST(req: Request) {
+  // Route công khai ghi vào DB: chặn spam, 30 lượt/phút mỗi IP.
+  if (!rateLimit(`quote-action:${clientIp(req)}`, 30, 60_000)) {
+    return NextResponse.json({ error: "Quá nhiều yêu cầu" }, { status: 429 });
+  }
+
   let body: Record<string, unknown>;
   try {
     body = await req.json();

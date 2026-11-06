@@ -14,6 +14,23 @@ const nextConfig: NextConfig = {
   // Landing tĩnh ở public/van-chuyen-hang-di-my/index.html. Next không tự phục vụ
   // index.html của thư mục trong public, nên phải trỏ đường dẫn gọn vào file đó.
   // Các landing "gửi <mặt hàng> đi Mỹ" sinh bằng scripts/tao-landing-mat-hang.py.
+  // Header bảo mật cơ bản (OWASP A02:2025 Security Misconfiguration). Chưa bật CSP:
+  // web có GTM, pixel quảng cáo và script inline, CSP sai sẽ làm hỏng đo lường.
+  // HSTS không kèm includeSubDomains để khỏi chặn subdomain còn chạy HTTP.
+  async headers() {
+    return [
+      {
+        source: "/:path*",
+        headers: [
+          { key: "X-Content-Type-Options", value: "nosniff" },
+          { key: "X-Frame-Options", value: "SAMEORIGIN" },
+          { key: "Referrer-Policy", value: "strict-origin-when-cross-origin" },
+          { key: "Permissions-Policy", value: "camera=(), microphone=(), geolocation=()" },
+          { key: "Strict-Transport-Security", value: "max-age=31536000" },
+        ],
+      },
+    ];
+  },
   async rewrites() {
     return ["van-chuyen-hang-di-my", ...landingMatHang].map((slug) => ({
       source: `/${slug}`,
