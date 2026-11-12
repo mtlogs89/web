@@ -50,13 +50,13 @@ export default async function TrangThoiGianGiao() {
   const cauMo = dong.length
     ? `${site.name} đo ${so!.tongKien} kiện hàng đã giao trong kỳ ${ky}, tính bằng ngày làm việc từ lúc kiện hàng bắt đầu có hành trình tới lúc người nhận ký nhận. ` +
       dong
-        .map((d) => `Tuyến ${d.tuyen}, ${d.tenNhom.toLowerCase()}: trung vị ${d.trungVi} ngày làm việc trên ${d.soKien} kiện, ${d.trongHan}% giao trong hạn ${d.henLo}–${d.henHi} ngày.`)
+        .map((d) => `Tuyến ${d.tuyen}, ${d.tenNhom.toLowerCase()}: trung vị ${d.trungVi} ngày làm việc trên ${d.soKien} kiện, ${d.trongHan}% giao trong vòng ${d.henHi} ngày làm việc.`)
         .join(" ")
     : "";
 
   const faqs = dong.map((d) => ({
     q: `Gửi hàng đi ${d.tuyen} ${d.tenNhom.toLowerCase()} thực tế mất bao lâu?`,
-    a: `Theo số đo của ${site.name} trên ${d.soKien} kiện đã giao trong kỳ ${ky}: trung vị ${d.trungVi} ngày làm việc, trung bình ${d.trungBinh} ngày, nhanh nhất ${d.nhanhNhat} ngày và lâu nhất ${d.lauNhat} ngày. ${d.trongHan}% số kiện giao trong hạn công bố ${d.henLo}–${d.henHi} ngày làm việc.`,
+    a: `Theo số đo của ${site.name} trên ${d.soKien} kiện đã giao trong kỳ ${ky}: trung vị ${d.trungVi} ngày làm việc, trung bình ${d.trungBinh} ngày, nhanh nhất ${d.nhanhNhat} ngày và lâu nhất ${d.lauNhat} ngày. ${d.trongHan}% số kiện giao trong vòng ${d.henHi} ngày làm việc (hạn công bố cho nhóm này là ${d.henLo}–${d.henHi} ngày).`,
   }));
   faqs.push({
     q: "Vì sao vẫn có kiện giao lâu hơn khoảng công bố?",
@@ -100,7 +100,7 @@ export default async function TrangThoiGianGiao() {
             publisher: { "@type": "Organization", name: site.name, url: site.url },
             variableMeasured: [
               { "@type": "PropertyValue", name: "Trung vị thời gian giao", unitText: "ngày làm việc" },
-              { "@type": "PropertyValue", name: "Tỉ lệ giao trong hạn công bố", unitText: "%" },
+              { "@type": "PropertyValue", name: "Tỉ lệ giao trong vòng hạn trên của nhóm dịch vụ", unitText: "%" },
             ],
           }}
         />
@@ -154,7 +154,7 @@ export default async function TrangThoiGianGiao() {
             <ul className="mt-4 space-y-2 text-ink-soft">
               {dong.map((d) => (
                 <li key={d.tuyen + d.nhom}>
-                  <strong className="text-ink">Tuyến {d.tuyen}, {d.tenNhom.toLowerCase()}:</strong> trung vị {d.trungVi} ngày làm việc trên {d.soKien} kiện đã giao, trung bình {d.trungBinh} ngày, nhanh nhất {d.nhanhNhat} ngày và lâu nhất {d.lauNhat} ngày. {d.trongHan}% số kiện giao trong hạn công bố {d.henLo}–{d.henHi} ngày làm việc.
+                  <strong className="text-ink">Tuyến {d.tuyen}, {d.tenNhom.toLowerCase()}:</strong> trung vị {d.trungVi} ngày làm việc trên {d.soKien} kiện đã giao, trung bình {d.trungBinh} ngày, nhanh nhất {d.nhanhNhat} ngày và lâu nhất {d.lauNhat} ngày. {d.trongHan}% số kiện giao trong vòng {d.henHi} ngày làm việc.
                 </li>
               ))}
             </ul>

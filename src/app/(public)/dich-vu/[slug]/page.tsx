@@ -353,7 +353,7 @@ export default async function ServicePage({
                   {dongGiao.map((d) => (
                     <li key={d.nhom}>
                       <strong className="text-ink">{d.tenNhom}:</strong> trung vị {d.trungVi} ngày làm việc trên {d.soKien} kiện đã giao,{" "}
-                      {d.trongHan}% trong hạn công bố {d.henLo}–{d.henHi} ngày.
+                      {d.trongHan}% giao trong vòng {d.henHi} ngày.
                     </li>
                   ))}
                 </ul>

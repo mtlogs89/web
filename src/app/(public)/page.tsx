@@ -208,7 +208,7 @@ export default async function HomePage() {
                   </div>
                   <div className="mt-1 text-3xl font-black text-brand-700">{d.trungVi} ngày làm việc</div>
                   <div className="mt-1 text-sm text-ink-soft">
-                    trung vị trên {d.soKien} kiện đã giao · {d.trongHan}% trong hạn {d.henLo}–{d.henHi} ngày
+                    trung vị trên {d.soKien} kiện đã giao · {d.trongHan}% giao trong vòng {d.henHi} ngày
                   </div>
                 </div>
               ))}
