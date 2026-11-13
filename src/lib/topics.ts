@@ -12,7 +12,7 @@ import { EU_COUNTRIES } from "./eu-countries";
 export type Topic = {
   category: string;
   label: string;
-  /** Trang dịch vụ nếu có, không thì trang lọc chuyên mục ở /tin-tuc. */
+  /** Trang dịch vụ nếu có, không thì trang chuyên mục ở /kien-thuc/<slug>. */
   hub: string;
   /** Từ khoá đã bỏ dấu, so trên đoạn chữ ĐÃ CẮT "gửi hàng". */
   keywords: RegExp;
@@ -22,7 +22,7 @@ export type Topic = {
 const EU_NAMES = EU_COUNTRIES.map((c) => toSlugWords(c.nameVi)).join("|");
 const EU_EN = EU_COUNTRIES.map((c) => c.slug.replace(/^gui-hang-di-/, "")).join("|");
 
-const catHub = (category: string) => `/tin-tuc?cat=${encodeURIComponent(category)}`;
+const catHub = (category: string) => `/kien-thuc/${toSlugWords(category)}`;
 
 // Thứ tự quan trọng: nước cụ thể trước, khối chung (Châu Âu) sau.
 export const TOPICS: Topic[] = [

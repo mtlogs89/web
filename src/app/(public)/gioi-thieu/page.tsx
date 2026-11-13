@@ -7,6 +7,7 @@ import { services, site } from "@/lib/site";
 import { getCategories } from "@/lib/articles";
 import { TOPICS } from "@/lib/topics";
 import { JsonLd, breadcrumbJsonLd, faqJsonLd } from "@/lib/structured-data";
+import { categoryHref } from "@/lib/kien-thuc";
 
 export const dynamic = "force-dynamic";
 
@@ -60,7 +61,7 @@ export default async function AboutPage() {
           name: `Giới thiệu ${site.name}`,
           inLanguage: "vi-VN",
           about: { "@id": `${site.url}/#organization` },
-          mainEntity: { "@id": `${site.url}/#business` },
+          mainEntity: { "@id": `${site.url}/#organization` },
         }}
       />
       <JsonLd data={faqJsonLd(faqs)} />
@@ -142,12 +143,12 @@ export default async function AboutPage() {
 
         {guides.length > 0 && (
           <section>
-            <h2 className="text-2xl font-black text-ink">Cẩm nang theo tuyến</h2>
+            <h2 className="text-2xl font-black text-ink">Kiến thức theo tuyến</h2>
             <ul className="mt-5 flex flex-wrap gap-2">
               {guides.map((t) => (
                 <li key={t.category}>
                   <Link
-                    href={`/tin-tuc?cat=${encodeURIComponent(t.category)}`}
+                    href={categoryHref(t.category)}
                     className="inline-flex items-center gap-1 rounded-full border border-brand-100 bg-white px-4 py-2 font-semibold text-brand-700 hover:border-brand-300"
                   >
                     {t.category} ({counts.get(t.category)}) <ArrowRight className="h-4 w-4" />

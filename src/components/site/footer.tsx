@@ -13,6 +13,15 @@ export function Footer() {
           <p className="mt-4 text-sm">
             Vận chuyển xuất nhập khẩu quốc tế tới hơn 200 quốc gia. Uy tín – nhanh chóng – tận tâm.
           </p>
+          <p className="mt-3 text-sm">
+            MST: <span className="font-semibold text-white">{site.taxId}</span>
+          </p>
+          <p className="mt-1 text-sm">
+            Email:{" "}
+            <a href={`mailto:${site.email}`} className="font-semibold text-white hover:text-brand-400">
+              {site.email}
+            </a>
+          </p>
         </div>
 
         <div>
@@ -32,7 +41,7 @@ export function Footer() {
           <div className="mb-4 font-semibold text-white">Hỗ trợ</div>
           <ul className="space-y-2.5 text-sm">
             <li><Link href="/gioi-thieu" className="hover:text-brand-400">Giới thiệu công ty</Link></li>
-            <li><Link href="/tin-tuc" className="hover:text-brand-400">Tin tức & kinh nghiệm</Link></li>
+            <li><Link href="/kien-thuc" className="hover:text-brand-400">Kiến thức & kinh nghiệm</Link></li>
             <li><Link href="/hang-gui-duoc" className="hover:text-brand-400">Hàng gì gửi đi được?</Link></li>
             <li><Link href="/thoi-gian-giao-thuc-te" className="hover:text-brand-400">Thời gian giao thực tế</Link></li>
             <li><Link href="/tra-cuu" className="hover:text-brand-400">Tra cứu đơn hàng</Link></li>

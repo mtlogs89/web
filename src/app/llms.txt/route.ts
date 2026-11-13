@@ -1,3 +1,4 @@
+import { categoryHref } from "@/lib/kien-thuc";
 import { site } from "@/lib/site";
 import { services } from "@/lib/site";
 import { prisma } from "@/lib/prisma";
@@ -25,7 +26,7 @@ export async function GET() {
     articleLines = [...groups.entries()]
       .sort((a, b) => b[1].length - a[1].length)
       .map(([cat, list]) => {
-        const hub = topicOfCategory(cat)?.hub ?? `/tin-tuc?cat=${encodeURIComponent(cat)}`;
+        const hub = topicOfCategory(cat)?.hub ?? categoryHref(cat);
         const lines = list
           .map((a) => `- [${a.title}](${site.url}/tin-tuc/${a.slug})${a.excerpt ? `: ${a.excerpt}` : ""}`)
           .join("\n");
@@ -86,7 +87,7 @@ ${articleLines || "- (đang cập nhật)"}
 
 ## Liên kết
 - Giới thiệu công ty: ${site.url}/gioi-thieu
-- Tin tức & cẩm nang: ${site.url}/tin-tuc
+- Kiến thức & cẩm nang: ${site.url}/kien-thuc
 - Tra cứu đơn hàng: ${site.url}/tra-cuu
 - Liên hệ / báo giá: ${site.url}/lien-he\n- Hàng gì gửi đi nước ngoài được: ${site.url}/hang-gui-duoc
 `;

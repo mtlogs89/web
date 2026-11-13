@@ -24,7 +24,7 @@ import { GalleryGrid } from "@/components/site/gallery-grid";
 import { QuoteCalculator } from "@/components/site/quote-calculator";
 import { getDestinations } from "@/lib/price-tables";
 import { getGalleryItems } from "@/lib/gallery";
-import { JsonLd, faqJsonLd } from "@/lib/structured-data";
+import { JsonLd, faqJsonLd, homepageGraphJsonLd } from "@/lib/structured-data";
 import { partners, site } from "@/lib/site";
 import { getServiceCards } from "@/lib/service-cards";
 import { getPublishedArticles } from "@/lib/articles";
@@ -126,6 +126,7 @@ export default async function HomePage() {
 
   return (
     <>
+      <JsonLd data={homepageGraphJsonLd()} />
       <JsonLd data={faqJsonLd(homeFaqs)} />
 
       {/* Hero */}
@@ -463,10 +464,10 @@ export default async function HomePage() {
 
           <Reveal className="flex items-end justify-between">
             <div>
-              <span className="text-sm font-bold uppercase tracking-wider text-coral-500">Tin tức & kinh nghiệm</span>
+              <span className="text-sm font-bold uppercase tracking-wider text-coral-500">Kiến thức & kinh nghiệm</span>
               <h2 className="mt-2 text-3xl font-black text-ink md:text-4xl">Cẩm nang gửi hàng quốc tế</h2>
             </div>
-            <Link href="/tin-tuc" className="hidden items-center gap-1.5 font-semibold text-brand-600 sm:inline-flex">
+            <Link href="/kien-thuc" className="hidden items-center gap-1.5 font-semibold text-brand-600 sm:inline-flex">
               Xem tất cả <ArrowRight className="h-4 w-4" />
             </Link>
           </Reveal>

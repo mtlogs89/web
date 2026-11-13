@@ -59,7 +59,7 @@ export const nav = [
   { label: "Gửi hàng đi", href: "/gui-hang" },
   { label: "Nhập hàng", href: "/nhap-hang" },
   { label: "Thư viện", href: "/thu-vien" },
-  { label: "Tin tức", href: "/tin-tuc" },
+  { label: "Kiến thức", href: "/kien-thuc" },
   { label: "Tra cứu đơn", href: "/tra-cuu" },
   { label: "Liên hệ", href: "/lien-he" },
 ] as const;

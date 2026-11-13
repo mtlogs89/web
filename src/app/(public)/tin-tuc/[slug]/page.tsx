@@ -22,6 +22,7 @@ import {
   faqJsonLd,
   breadcrumbJsonLd,
 } from "@/lib/structured-data";
+import { KT_PATH, categoryHref as catHref, categoryLabel } from "@/lib/kien-thuc";
 import { site } from "@/lib/site";
 import { ContactOverride } from "@/components/site/contact-override";
 import { ArticleContent, QUOTE_TOKEN, destFromCategory } from "@/components/site/article-content";
@@ -86,7 +87,7 @@ export default async function ArticlePage({
   const dests = coCongCuTinh ? await getDestinations() : undefined;
   const { destKey, country } = destFromCategory(article.category);
   const topic = topicOfCategory(article.category);
-  const categoryHref = `/tin-tuc?cat=${encodeURIComponent(article.category)}`;
+  const categoryHref = catHref(article.category);
   const related = await getRelatedArticles(article);
 
   return (
@@ -108,8 +109,8 @@ export default async function ArticlePage({
       <JsonLd
         data={breadcrumbJsonLd([
           { name: "Trang chủ", url: site.url },
-          { name: "Tin tức", url: `${site.url}/tin-tuc` },
-          { name: article.category, url: `${site.url}${categoryHref}` },
+          { name: "Kiến thức", url: `${site.url}${KT_PATH}` },
+          { name: categoryLabel(article.category), url: `${site.url}${categoryHref}` },
           { name: article.title, url },
         ])}
       />
@@ -117,8 +118,8 @@ export default async function ArticlePage({
       <PageHero
         title={article.title}
         crumbs={[
-          { name: "Tin tức", href: "/tin-tuc" },
-          { name: article.category, href: categoryHref },
+          { name: "Kiến thức", href: KT_PATH },
+          { name: categoryLabel(article.category), href: categoryHref },
         ]}
       />
 

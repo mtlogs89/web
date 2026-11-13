@@ -93,7 +93,7 @@ export async function POST(req: Request) {
     create: data,
   });
 
-  if (article.published) void pingIndexNow([`/tin-tuc/${article.slug}`, "/tin-tuc"]);
+  if (article.published) void pingIndexNow([`/tin-tuc/${article.slug}`, "/kien-thuc"]);
 
   return NextResponse.json({
     ok: true,

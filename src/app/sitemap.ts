@@ -1,5 +1,6 @@
 import type { MetadataRoute } from "next";
 import { services, site } from "@/lib/site";
+import { categoryHref } from "@/lib/kien-thuc";
 import { prisma } from "@/lib/prisma";
 import { EMPTY_BODY } from "@/lib/articles";
 import { TUYEN_HANG } from "@/lib/hang-tuyen";
@@ -10,7 +11,7 @@ export const dynamic = "force-dynamic";
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   const now = new Date();
 
-  const staticRoutes = ["", "/gioi-thieu", "/gui-hang", "/nhap-hang", "/thu-vien", "/tin-tuc", "/tra-cuu", "/lien-he", "/hang-gui-duoc", "/thoi-gian-giao-thuc-te", "/van-chuyen-hang-di-my", ...landingMatHang.map((s) => `/${s}`)].map(
+  const staticRoutes = ["", "/gioi-thieu", "/gui-hang", "/nhap-hang", "/thu-vien", "/kien-thuc", "/tra-cuu", "/lien-he", "/hang-gui-duoc", "/thoi-gian-giao-thuc-te", "/van-chuyen-hang-di-my", ...landingMatHang.map((s) => `/${s}`)].map(
     (path) => ({
       url: `${site.url}${path}`,
       lastModified: now,
@@ -50,7 +51,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     // DB chưa sẵn sàng (vd lúc build) — bỏ qua, vẫn có route tĩnh
   }
 
-  // Trang chuyên mục (/tin-tuc?cat=) là trang trụ cột của từng tuyến — cho Google/AI biết.
+  // Trang chuyên mục (/kien-thuc/<slug>) là trang trụ cột của từng tuyến — cho Google/AI biết.
   let categoryRoutes: MetadataRoute.Sitemap = [];
   try {
     const cats = await prisma.article.groupBy({
@@ -62,7 +63,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     categoryRoutes = cats
       .filter((c) => c._count._all >= 3)
       .map((c) => ({
-        url: `${site.url}/tin-tuc?cat=${encodeURIComponent(c.category)}`,
+        url: `${site.url}${categoryHref(c.category)}`,
         lastModified: c._max.updatedAt ?? now,
         changeFrequency: "weekly" as const,
         priority: 0.7,

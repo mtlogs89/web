@@ -25,7 +25,7 @@ export function legacyFallback(path: string): string {
   const topic = detectTopic(p);
   if (topic) return topic.hub;
   if (p.startsWith("/bang-gia") || /^\/(ui-)?gui-hang/.test(p)) return "/gui-hang";
-  return "/tin-tuc";
+  return "/kien-thuc";
 }
 
 // Từ quá chung, không giúp phân biệt bài.
