@@ -3,6 +3,7 @@ import { MapPin, Phone } from "lucide-react";
 import { Logo } from "./logo";
 import { SoChiNhanh } from "./so-chi-nhanh";
 import { services, site } from "@/lib/site";
+import { POLICY_PAGES } from "@/lib/chinh-sach";
 
 export function Footer() {
   return (
@@ -76,6 +77,13 @@ export function Footer() {
       </div>
 
       <div className="border-t border-white/10">
+        <nav aria-label="Chính sách" className="mx-auto flex max-w-7xl flex-wrap justify-center gap-x-5 gap-y-2 px-6 pt-5 text-sm">
+          {POLICY_PAGES.map((p) => (
+            <Link key={p.slug} href={`/${p.slug}`} className="hover:text-brand-400">
+              {p.title}
+            </Link>
+          ))}
+        </nav>
         <div className="mx-auto max-w-7xl px-6 py-5 text-center text-sm text-white/50">
           © {new Date().getFullYear()} {site.name}. Vận chuyển quốc tế uy tín.
         </div>

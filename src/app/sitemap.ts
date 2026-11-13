@@ -1,6 +1,7 @@
 import type { MetadataRoute } from "next";
 import { services, site } from "@/lib/site";
 import { categoryHref } from "@/lib/kien-thuc";
+import { POLICY_PAGES } from "@/lib/chinh-sach";
 import { prisma } from "@/lib/prisma";
 import { EMPTY_BODY } from "@/lib/articles";
 import { TUYEN_HANG } from "@/lib/hang-tuyen";
@@ -11,7 +12,7 @@ export const dynamic = "force-dynamic";
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   const now = new Date();
 
-  const staticRoutes = ["", "/gioi-thieu", "/gui-hang", "/nhap-hang", "/thu-vien", "/kien-thuc", "/tra-cuu", "/lien-he", "/hang-gui-duoc", "/thoi-gian-giao-thuc-te", "/van-chuyen-hang-di-my", ...landingMatHang.map((s) => `/${s}`)].map(
+  const staticRoutes = ["", "/gioi-thieu", "/gui-hang", "/nhap-hang", "/thu-vien", "/kien-thuc", "/tra-cuu", "/lien-he", "/hang-gui-duoc", "/thoi-gian-giao-thuc-te", "/van-chuyen-hang-di-my", ...landingMatHang.map((s) => `/${s}`), ...POLICY_PAGES.map((p) => `/${p.slug}`)].map(
     (path) => ({
       url: `${site.url}${path}`,
       lastModified: now,
