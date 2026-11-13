@@ -9,6 +9,7 @@ import { site } from "@/lib/site";
 export const metadata: Metadata = {
   title: "Liên hệ & báo giá",
   description: `Liên hệ ${site.name} — hotline ${site.phoneDisplay}, ${site.addressFull}. Báo giá gửi hàng quốc tế miễn phí.`,
+  alternates: { canonical: `${site.url}/lien-he` },
 };
 
 export default function ContactPage() {
@@ -69,6 +70,34 @@ export default function ContactPage() {
           <div className="mt-5">
             <LeadForm />
           </div>
+        </div>
+      </section>
+
+      <section className="mx-auto max-w-7xl px-6 pb-14">
+        <div className="flex flex-wrap items-end justify-between gap-3">
+          <div>
+            <h2 className="text-2xl font-black text-ink">Bản đồ văn phòng TP. Hồ Chí Minh</h2>
+            <p className="mt-1 text-ink-soft">{site.addressFull}</p>
+          </div>
+          <a
+            href={site.googleMaps}
+            target="_blank"
+            rel="noopener"
+            className="inline-flex items-center gap-2 rounded-full border border-brand-200 bg-white px-5 py-2.5 font-semibold text-brand-700 hover:border-brand-400"
+          >
+            <MapPin className="h-4 w-4" /> Chỉ đường Google Maps
+          </a>
+        </div>
+        <div className="mt-5 overflow-hidden rounded-3xl border border-brand-50 shadow-sm">
+          {/* Ghim theo toạ độ thật (site.geo) — nhúng không cần API key. lazy để không làm chậm trang. */}
+          <iframe
+            title={`Bản đồ ${site.name} – ${site.addressFull}`}
+            src={`https://www.google.com/maps?q=${site.geo.lat},${site.geo.lng}&z=17&hl=vi&output=embed`}
+            className="block h-[340px] w-full md:h-[440px]"
+            loading="lazy"
+            referrerPolicy="no-referrer-when-downgrade"
+            allowFullScreen
+          />
         </div>
       </section>
     </>

@@ -55,7 +55,8 @@ export const site = {
 } as const;
 
 export const nav = [
-  { label: "Trang chủ", href: "/" },
+  // Không có "Trang chủ": logo đã dẫn về trang chủ (bên SEO đề xuất 11/2026).
+  { label: "Giới thiệu", href: "/gioi-thieu" },
   { label: "Gửi hàng đi", href: "/gui-hang" },
   { label: "Nhập hàng", href: "/nhap-hang" },
   { label: "Thư viện", href: "/thu-vien" },
