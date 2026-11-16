@@ -12,7 +12,9 @@ export const dynamic = "force-dynamic";
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   const now = new Date();
 
-  const staticRoutes = ["", "/gioi-thieu", "/gui-hang", "/nhap-hang", "/thu-vien", "/kien-thuc", "/tra-cuu", "/lien-he", "/hang-gui-duoc", "/thoi-gian-giao-thuc-te", "/van-chuyen-hang-di-my", ...landingMatHang.map((s) => `/${s}`), ...POLICY_PAGES.map((p) => `/${p.slug}`)].map(
+  const staticRoutes = ["", "/gioi-thieu", "/gui-hang", "/nhap-hang", "/thu-vien", "/kien-thuc", "/tra-cuu", "/lien-he", "/hang-gui-duoc", "/thoi-gian-giao-thuc-te", "/van-chuyen-hang-di-my", // Landing mặt hàng: nginx (snippets/ms-min-landings.conf) 301 /<slug> → /tin-tuc/<slug>-dung,
+    // nên sitemap phải khai link cuối, không khai link bị chuyển hướng.
+    ...landingMatHang.map((s) => `/tin-tuc/${s}-dung`), ...POLICY_PAGES.map((p) => `/${p.slug}`)].map(
     (path) => ({
       url: `${site.url}${path}`,
       lastModified: now,
