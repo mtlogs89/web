@@ -12,9 +12,11 @@ export const dynamic = "force-dynamic";
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   const now = new Date();
 
-  const staticRoutes = ["", "/gioi-thieu", "/gui-hang", "/nhap-hang", "/thu-vien", "/kien-thuc", "/tra-cuu", "/lien-he", "/hang-gui-duoc", "/thoi-gian-giao-thuc-te", "/van-chuyen-hang-di-my", // Landing mặt hàng: nginx (snippets/ms-min-landings.conf) 301 /<slug> → /tin-tuc/<slug>-dung,
-    // nên sitemap phải khai link cuối, không khai link bị chuyển hướng.
-    ...landingMatHang.map((s) => `/tin-tuc/${s}-dung`), ...POLICY_PAGES.map((p) => `/${p.slug}`)].map(
+  const staticRoutes = ["", "/gioi-thieu", "/gui-hang", "/nhap-hang", "/thu-vien", "/kien-thuc", "/tra-cuu", "/lien-he", "/hang-gui-duoc", "/thoi-gian-giao-thuc-te", "/van-chuyen-hang-di-my",
+    // Landing mặt hàng có 2 bản: /tin-tuc/<slug> (Ms Min — bản cho Google xếp hạng) và
+    // /tin-tuc/<slug>-dung (Dũng — CHỈ chạy quảng cáo, canonical trỏ về bản Ms Min; chủ chốt 16/11/2026).
+    // Link ngắn /<slug> vẫn 301 sang bản Dũng cho quảng cáo — sitemap không khai link ngắn đó.
+    ...landingMatHang.map((s) => `/tin-tuc/${s}`), ...POLICY_PAGES.map((p) => `/${p.slug}`)].map(
     (path) => ({
       url: `${site.url}${path}`,
       lastModified: now,
