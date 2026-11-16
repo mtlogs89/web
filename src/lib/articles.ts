@@ -81,6 +81,34 @@ export async function getRelatedArticles(
 }
 
 /**
+ * Bài cùng chuyên mục đăng NGAY TRƯỚC và NGAY SAU bài này (theo ngày đăng).
+ * "Bài liên quan" chọn theo độ trùng từ khoá nên bài giống nhiều bài được link mãi, bài khác
+ * không ai trỏ tới (đo 16/11/2026: 52 bài 0 link vào, 188 bài ≤2). Khối này nối các bài thành
+ * chuỗi nên BÀI NÀO cũng có ít nhất 2 bài khác trỏ vào — Google lần theo được hết.
+ */
+export async function getNeighborArticles(
+  article: { id: string; category: string; publishedAt: Date },
+  each = 2,
+) {
+  const base = { published: true, category: article.category, id: { not: article.id }, NOT: { content: EMPTY_BODY } };
+  const select = { slug: true, title: true } as const;
+  const [older, newer] = await Promise.all([
+    prisma.article.findMany({ where: { ...base, publishedAt: { lt: article.publishedAt } }, orderBy: { publishedAt: "desc" }, take: each, select }),
+    prisma.article.findMany({ where: { ...base, publishedAt: { gt: article.publishedAt } }, orderBy: { publishedAt: "asc" }, take: each, select }),
+  ]);
+  return { older, newer };
+}
+
+/** Toàn bộ tiêu đề bài của 1 chuyên mục (nhẹ, chỉ slug + title) cho danh sách trên trang chuyên mục. */
+export async function getCategoryTitles(category: string) {
+  return prisma.article.findMany({
+    where: { published: true, category, NOT: { content: EMPTY_BODY } },
+    orderBy: { publishedAt: "desc" },
+    select: { slug: true, title: true },
+  });
+}
+
+/**
  * Bài đã gộp vào bài khác (ẩn, không xoá): SiteSetting "article_redirects" = {"slug-cũ": "slug-chính"}.
  * Ghi bởi script gộp bài — xem scripts/sua-noi-dung-20260916.py.
  */

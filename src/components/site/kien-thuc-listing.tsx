@@ -2,7 +2,7 @@ import Link from "next/link";
 import { ArrowRight } from "lucide-react";
 import { PageHero } from "@/components/site/page-hero";
 import { ArticleCard } from "@/components/site/article-card";
-import { getPublishedArticles, getCategories, countPublishedArticles } from "@/lib/articles";
+import { getPublishedArticles, getCategories, countPublishedArticles, getCategoryTitles } from "@/lib/articles";
 import { EU_COUNTRIES, EU_CATEGORY, DESTINATIONS } from "@/lib/eu-countries";
 import { JsonLd, breadcrumbJsonLd } from "@/lib/structured-data";
 import { KT_PATH, categoryHref, categoryLabel } from "@/lib/kien-thuc";
@@ -27,6 +27,9 @@ export async function KienThucListing({ cat, pageParam }: { cat?: string; pagePa
   ]);
 
   const totalPages = isEu ? 1 : Math.max(1, Math.ceil(total / PER_PAGE));
+  // Trang 1 của chuyên mục liệt kê TẤT CẢ bài (chỉ tiêu đề) — bài cũ không bị chôn ở ?page=3,4,5
+  // (Google không index các trang ?page=). Mọi bài cách trang chủ tối đa 2 cú bấm.
+  const allTitles = cat && page === 1 ? await getCategoryTitles(cat) : [];
   const countByCat = new Map(categories.map((c) => [c.name, c.count]));
 
   const pageHref = (p: number) => {
@@ -242,6 +245,23 @@ export async function KienThucListing({ cat, pageParam }: { cat?: string; pagePa
               </>
             )}
           </>
+        )}
+        {allTitles.length > 0 && (
+          <section className="mt-14 border-t border-brand-50 pt-10" aria-label="Tất cả bài trong chuyên mục">
+            <h2 className="text-xl font-black text-ink">
+              Tất cả {allTitles.length} bài {categoryLabel(cat!).toLowerCase()}
+            </h2>
+            <ul className="mt-5 grid gap-x-8 gap-y-2 text-[15px] sm:grid-cols-2">
+              {allTitles.map((t) => (
+                <li key={t.slug} className="flex gap-2">
+                  <span className="text-brand-400">•</span>
+                  <Link href={`/tin-tuc/${t.slug}`} className="text-ink-soft hover:text-brand-600 hover:underline">
+                    {t.title}
+                  </Link>
+                </li>
+              ))}
+            </ul>
+          </section>
         )}
       </section>
     </>

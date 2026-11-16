@@ -9,6 +9,7 @@ import {
   findSimilarSlug,
   getArticleBySlug,
   getArticleRedirect,
+  getNeighborArticles,
   getRelatedArticles,
   parseFaq,
   readingMinutes,
@@ -88,7 +89,9 @@ export default async function ArticlePage({
   const { destKey, country } = destFromCategory(article.category);
   const topic = topicOfCategory(article.category);
   const categoryHref = catHref(article.category);
-  const related = await getRelatedArticles(article);
+  const [related, neighbors] = await Promise.all([getRelatedArticles(article), getNeighborArticles(article)]);
+  const relatedSlugs = new Set(related.map((r) => r.slug));
+  const sameCat = [...neighbors.newer.slice().reverse(), ...neighbors.older].filter((n) => !relatedSlugs.has(n.slug));
 
   return (
     <>
@@ -251,6 +254,24 @@ export default async function ArticlePage({
                 </Link>
               </>
             )}
+          </nav>
+        )}
+
+        {sameCat.length > 0 && (
+          <nav aria-label="Cùng chuyên mục" className="mt-10">
+            <h2 className="text-xl font-black text-ink">Cùng chuyên mục: {categoryLabel(article.category)}</h2>
+            <ul className="mt-4 grid gap-2 sm:grid-cols-2">
+              {sameCat.map((n) => (
+                <li key={n.slug}>
+                  <Link
+                    href={`/tin-tuc/${n.slug}`}
+                    className="block h-full rounded-xl border border-brand-50 bg-white px-4 py-3 font-semibold text-ink hover:border-brand-200 hover:text-brand-700"
+                  >
+                    {n.title}
+                  </Link>
+                </li>
+              ))}
+            </ul>
           </nav>
         )}
 
