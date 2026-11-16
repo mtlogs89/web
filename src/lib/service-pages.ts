@@ -109,3 +109,14 @@ export async function getServicePageConfig(slug: string): Promise<ServicePageCon
   const all = await getServicePageConfigs();
   return all[slug] ?? null;
 }
+
+/**
+ * Bài đang được NHÚNG NGUYÊN VĂN vào trang dịch vụ nào (null nếu không).
+ * Bài nhúng và trang dịch vụ trùng nội dung → Google chỉ giữ 1 (Search Console 16/11/2026 báo
+ * các bài "tổng quan" = Crawled, chưa index). Bài đó phải khai canonical về trang dịch vụ.
+ */
+export async function serviceEmbeddingArticle(articleSlug: string): Promise<string | null> {
+  const all = await getServicePageConfigs();
+  for (const [svc, cfg] of Object.entries(all)) if (cfg.article === articleSlug) return svc;
+  return null;
+}

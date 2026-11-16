@@ -25,6 +25,7 @@ import {
 } from "@/lib/structured-data";
 import { KT_PATH, categoryHref as catHref, categoryLabel } from "@/lib/kien-thuc";
 import { site } from "@/lib/site";
+import { serviceEmbeddingArticle } from "@/lib/service-pages";
 import { ContactOverride } from "@/components/site/contact-override";
 import { ArticleContent, QUOTE_TOKEN, destFromCategory } from "@/components/site/article-content";
 import { getDestinations } from "@/lib/price-tables";
@@ -40,10 +41,12 @@ export async function generateMetadata({
   const article = await getArticleBySlug(slug);
   if (!article) return { title: "Không tìm thấy bài viết" };
   const url = `${site.url}/tin-tuc/${article.slug}`;
+  // Bài đang nhúng nguyên văn vào trang dịch vụ → canonical về trang dịch vụ (khỏi trùng nội dung).
+  const svc = await serviceEmbeddingArticle(article.slug);
   return {
     title: article.metaTitle || article.title,
     description: article.metaDescription || article.excerpt || undefined,
-    alternates: { canonical: url },
+    alternates: { canonical: svc ? `${site.url}/dich-vu/${svc}` : url },
     openGraph: {
       type: "article",
       title: article.metaTitle || article.title,

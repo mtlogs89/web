@@ -2,6 +2,7 @@ import type { MetadataRoute } from "next";
 import { services, site } from "@/lib/site";
 import { categoryHref } from "@/lib/kien-thuc";
 import { POLICY_PAGES } from "@/lib/chinh-sach";
+import { getServicePageConfigs } from "@/lib/service-pages";
 import { prisma } from "@/lib/prisma";
 import { EMPTY_BODY } from "@/lib/articles";
 import { TUYEN_HANG } from "@/lib/hang-tuyen";
@@ -46,7 +47,9 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
       select: { slug: true, updatedAt: true },
       orderBy: { publishedAt: "desc" },
     });
-    articleRoutes = articles.map((a) => ({
+    // Bài nhúng nguyên văn vào trang dịch vụ đã canonical về /dich-vu/... → không khai trong sitemap.
+    const nhung = new Set(Object.values(await getServicePageConfigs()).map((c) => c.article));
+    articleRoutes = articles.filter((a) => !nhung.has(a.slug)).map((a) => ({
       url: `${site.url}/tin-tuc/${a.slug}`,
       lastModified: a.updatedAt,
       changeFrequency: "monthly" as const,
