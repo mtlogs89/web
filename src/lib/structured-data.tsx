@@ -1,4 +1,5 @@
 import { site } from "./site";
+import { BAO_CHI } from "./bao-chi";
 
 const tel = (p: string) => `+84${p.replace(/\D/g, "").replace(/^0/, "")}`;
 const DAYS = ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"];
@@ -48,6 +49,7 @@ export function homepageGraphJsonLd() {
         description:
           "Minh Thiện Logistics là đơn vị vận chuyển và gửi hàng quốc tế tại Thành phố Hồ Chí Minh, nhận gửi hàng từ Việt Nam đi Mỹ, Úc, Canada, Châu Âu, Nhật Bản, Hàn Quốc và nhiều quốc gia; đồng thời cung cấp dịch vụ nhập hàng và mua hộ từ Trung Quốc, Thái Lan, Châu Âu và Mỹ.",
         taxID: site.taxId,
+        disambiguatingDescription: site.phanBiet,
         identifier: { "@type": "PropertyValue", propertyID: "Mã số thuế", value: site.taxId },
         brand: { "@id": id("brand") },
         logo: {
@@ -101,6 +103,15 @@ export function homepageGraphJsonLd() {
         subjectOf: [
           { "@type": "AboutPage", name: `Giới thiệu ${site.name}`, url: `${site.url}/gioi-thieu` },
           { "@type": "ContactPage", name: `Liên hệ ${site.name}`, url: `${site.url}/lien-he` },
+          // Bài báo viết về công ty — nguồn độc lập cho AI/Google.
+          ...BAO_CHI.map((b) => ({
+            "@type": "NewsArticle",
+            headline: b.title,
+            url: b.url,
+            ...(b.date ? { datePublished: b.date } : {}),
+            publisher: { "@type": "NewsMediaOrganization", name: b.ten, url: `https://${b.site}/` },
+            about: { "@id": id("organization") },
+          })),
         ],
         knowsAbout: [
           "Gửi hàng quốc tế",

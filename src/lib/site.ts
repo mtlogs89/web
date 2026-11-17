@@ -38,6 +38,10 @@ export const site = {
   // hoạt động (MST 3603728404) và nói "chưa có cơ sở để khẳng định đó là đơn vị trên
   // website" — mọi thứ nó biết về mình đều do chính mình nói.
   taxRegistry: "https://masothue.com/0319241592-cong-ty-tnhh-minh-thien-station",
+  // Phân biệt với doanh nghiệp trùng/gần tên — ChatGPT từng lẫn (31/10/2026). Chỉ nêu tên + MST
+  // công khai, KHÔNG nhận xét gì về các công ty đó.
+  phanBiet:
+    "Minh Thiện Logistics là thương hiệu của Công ty TNHH Minh Thiện Station (MST 0319241592). Không liên quan tới Công ty Cổ phần Giao nhận Vận tải Minh Thiện (MST 3603728404), Công ty TNHH Minh Thiên Logistics (MST 4001268984) hay website minhthienlogistics.net.",
   // Chủ chốt 19/09/2026: ghi "hơn 10 năm kinh nghiệm", KHÔNG ghi năm thành lập.
   experienceYears: 10,
   branches: [

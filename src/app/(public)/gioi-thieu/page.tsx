@@ -11,6 +11,7 @@ import { JsonLd, breadcrumbJsonLd, faqJsonLd } from "@/lib/structured-data";
 import { categoryHref, KT_PATH } from "@/lib/kien-thuc";
 import { POLICY_PAGES } from "@/lib/chinh-sach";
 import { laySoGiao } from "@/lib/delivery-stats";
+import { BAO_CHI, TOPLIST } from "@/lib/bao-chi";
 
 export const dynamic = "force-dynamic";
 
@@ -47,6 +48,7 @@ const TOC = [
   ["hang-hoa", "Hàng được & không được gửi"],
   ["den-bu", "Bảo hiểm, đền bù & khiếu nại"],
   ["khac-biet", "Điểm khác biệt"],
+  ["bao-chi", "Báo chí nói về Minh Thiện"],
   ["chinh-sach", "Chính sách & quy định"],
   ["hoi-dap", "Câu hỏi thường gặp"],
   ["lien-he", "Liên hệ"],
@@ -194,6 +196,7 @@ export default async function AboutPage() {
               </li>
               <li>Văn phòng giao dịch: {site.addressFull}.</li>
               <li>Chi nhánh: {site.branches[1].address}.</li>
+              <li>{site.phanBiet}</li>
             </ul>
           </section>
 
@@ -457,6 +460,40 @@ export default async function AboutPage() {
                 </Link>
                 .
               </li>
+            </ul>
+          </section>
+
+          <section>
+            <H2 id="bao-chi">Báo chí và trang độc lập nói về Minh Thiện</H2>
+            <ul className="mt-4 space-y-3">
+              {BAO_CHI.map((b) => (
+                <li key={b.url} className="rounded-2xl border border-brand-50 bg-white p-4 shadow-sm">
+                  <div className="text-sm font-semibold text-brand-700">
+                    {b.ten}
+                    {b.date ? ` · ${b.date.split("-").reverse().join("/")}` : ""}
+                  </div>
+                  <a href={b.url} target="_blank" rel="noopener" className="mt-1 block font-bold text-ink hover:text-brand-600 hover:underline">
+                    {b.title}
+                  </a>
+                </li>
+              ))}
+            </ul>
+            <p className="mt-5 text-ink-soft">
+              Minh Thiện Logistics cũng có tên trong {TOPLIST.length} trang tổng hợp đơn vị gửi hàng đi Mỹ theo tỉnh/thành:
+            </p>
+            <ul className="mt-3 flex flex-wrap gap-2 text-sm">
+              {TOPLIST.map((t) => (
+                <li key={t.url}>
+                  <a
+                    href={t.url}
+                    target="_blank"
+                    rel="noopener"
+                    className="inline-block rounded-full border border-brand-100 bg-white px-3 py-1.5 text-ink-soft hover:border-brand-300 hover:text-brand-700"
+                  >
+                    {t.ten}
+                  </a>
+                </li>
+              ))}
             </ul>
           </section>
 
