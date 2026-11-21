@@ -181,7 +181,7 @@ export default async function HomePage() {
               </div>
               <div>
                 <div className="text-3xl font-black text-sun-500">{site.experienceYears}+</div>
-                <div className="text-sm text-ink-soft">Năm kinh nghiệm</div>
+                <div className="text-sm text-ink-soft">Năm kinh nghiệm đội ngũ</div>
               </div>
             </div>
           </div>

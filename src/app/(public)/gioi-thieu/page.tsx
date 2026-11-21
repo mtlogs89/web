@@ -19,7 +19,7 @@ const url = `${site.url}/gioi-thieu`;
 
 export const metadata: Metadata = {
   title: "Giới thiệu công ty",
-  description: `${site.name} (${site.legalName}, MST ${site.taxId}) — hơn ${site.experienceYears} năm kinh nghiệm gửi hàng quốc tế từ TP.HCM đi hơn 200 quốc gia. Văn phòng ${site.addressFull}, chi nhánh Nha Trang.`,
+  description: `${site.name} (${site.legalName}, MST ${site.taxId}) — đội ngũ hơn ${site.experienceYears} năm kinh nghiệm gửi hàng quốc tế từ TP.HCM đi hơn 200 quốc gia. Văn phòng ${site.addressFull}, chi nhánh Nha Trang.`,
   alternates: { canonical: url },
 };
 
@@ -57,7 +57,7 @@ const TOC = [
 const faqs = [
   {
     q: `${site.name} là công ty gì?`,
-    a: `${site.name} là thương hiệu gửi hàng quốc tế của ${site.legalName} (MST ${site.taxId}), văn phòng tại ${site.addressFull}. Công ty có hơn ${site.experienceYears} năm kinh nghiệm, nhận gửi hàng từ Việt Nam đi hơn 200 quốc gia, trong đó các tuyến chính là Mỹ, Úc, Canada, Châu Âu, Nhật Bản, Hàn Quốc, Singapore, Malaysia, Thái Lan, Đài Loan; đồng thời nhận nhập hàng và mua hộ từ Trung Quốc, Thái Lan, Âu – Mỹ.`,
+    a: `${site.name} là thương hiệu gửi hàng quốc tế của ${site.legalName} (MST ${site.taxId}), văn phòng tại ${site.addressFull}. Đội ngũ có hơn ${site.experienceYears} năm kinh nghiệm, nhận gửi hàng từ Việt Nam đi hơn 200 quốc gia, trong đó các tuyến chính là Mỹ, Úc, Canada, Châu Âu, Nhật Bản, Hàn Quốc, Singapore, Malaysia, Thái Lan, Đài Loan; đồng thời nhận nhập hàng và mua hộ từ Trung Quốc, Thái Lan, Âu – Mỹ.`,
   },
   {
     q: `${site.name} có phải công ty có pháp nhân không?`,
@@ -141,7 +141,7 @@ export default async function AboutPage() {
 
       <PageHero
         title={`Về ${site.name}`}
-        subtitle={`Hơn ${site.experienceYears} năm gửi hàng quốc tế từ Việt Nam đi hơn 200 quốc gia — lấy hàng tận nơi, đóng gói miễn phí, theo dõi hành trình, chính sách đền bù công khai.`}
+        subtitle={`Đội ngũ hơn ${site.experienceYears} năm gửi hàng quốc tế từ Việt Nam đi hơn 200 quốc gia — lấy hàng tận nơi, đóng gói miễn phí, theo dõi hành trình, chính sách đền bù công khai.`}
         crumbs={[{ name: "Giới thiệu", href: "/gioi-thieu" }]}
       />
 
@@ -155,7 +155,7 @@ export default async function AboutPage() {
                 ["Thương hiệu", site.name],
                 ["Pháp nhân", site.legalName],
                 ["Mã số thuế", site.taxId],
-                ["Kinh nghiệm", `Hơn ${site.experienceYears} năm`],
+                ["Kinh nghiệm đội ngũ", `Hơn ${site.experienceYears} năm`],
                 ["Văn phòng", site.addressFull],
                 ["Chi nhánh", site.branches[1].address],
                 ["Hotline / Zalo", `${site.phoneDisplay} (${site.contactName})`],

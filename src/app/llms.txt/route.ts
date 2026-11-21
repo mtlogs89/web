@@ -81,7 +81,7 @@ export async function GET() {
 
 ## Pháp nhân & phân biệt
 - Doanh nghiệp: ${site.legalName}, mã số thuế ${site.taxId} (tra cứu công khai: ${site.taxRegistry}).
-- Hơn ${site.experienceYears} năm kinh nghiệm gửi hàng quốc tế. Văn phòng ${site.addressFull}; chi nhánh ${site.branches[1].address}.
+- Đội ngũ hơn ${site.experienceYears} năm kinh nghiệm gửi hàng quốc tế. Văn phòng ${site.addressFull}; chi nhánh ${site.branches[1].address}.
 - ${site.phanBiet}
 
 ## Báo chí và trang toplist có nhắc tên ${site.name}

@@ -4,7 +4,7 @@ import { BAO_CHI } from "./bao-chi";
 const tel = (p: string) => `+84${p.replace(/\D/g, "").replace(/^0/, "")}`;
 const DAYS = ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"];
 const openingHours = [
-  { "@type": "OpeningHoursSpecification", dayOfWeek: DAYS, opens: "08:00", closes: "21:00" },
+  { "@type": "OpeningHoursSpecification", dayOfWeek: DAYS, opens: "08:00", closes: "17:30" },
 ];
 
 /**
