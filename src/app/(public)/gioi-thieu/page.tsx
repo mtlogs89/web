@@ -464,7 +464,7 @@ export default async function AboutPage() {
           </section>
 
           <section>
-            <H2 id="bao-chi">Báo chí và trang độc lập nói về Minh Thiện</H2>
+            <H2 id="bao-chi">Báo chí và trang toplist nhắc tên Minh Thiện</H2>
             <ul className="mt-4 space-y-3">
               {BAO_CHI.map((b) => (
                 <li key={b.url} className="rounded-2xl border border-brand-50 bg-white p-4 shadow-sm">

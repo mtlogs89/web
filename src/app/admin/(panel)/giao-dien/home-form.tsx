@@ -34,6 +34,13 @@ export function HomeForm({
       {/* Chữ Hero */}
       <section className="rounded-3xl border border-brand-50 bg-white p-6 shadow-sm">
         <h2 className="text-lg font-black text-ink">Chữ trên đầu trang</h2>
+        <p className="mt-1 text-sm text-ink-muted">
+          Muốn nêu số đo thời gian giao thì gõ mã, web tự điền số mới mỗi tháng (đừng gõ số cứng, để lâu sẽ
+          lệch với trang Thời gian giao thực tế): <code>{"{my_tk_ngay}"}</code> ngày trung vị Mỹ đi tiết kiệm,{" "}
+          <code>{"{my_tk_kien}"}</code> số kiện, <code>{"{my_tk_dung_hen}"}</code> % về trong hạn,{" "}
+          <code>{"{my_nhanh_ngay}"}</code> Mỹ đi nhanh, <code>{"{uc_tk_ngay}"}</code> Úc,{" "}
+          <code>{"{ky}"}</code> kỳ đo, <code>{"{tong_kien}"}</code> tổng kiện.
+        </p>
         <div className="mt-4 space-y-4">
           <div>
             <label className="text-sm font-semibold text-ink-soft">Dòng nhãn nhỏ (badge)</label>

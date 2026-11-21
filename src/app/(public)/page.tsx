@@ -28,9 +28,10 @@ import { JsonLd, faqJsonLd, homepageGraphJsonLd } from "@/lib/structured-data";
 import { partners, site } from "@/lib/site";
 import { getServiceCards } from "@/lib/service-cards";
 import { getPublishedArticles } from "@/lib/articles";
-import { getHomeSettings } from "@/lib/settings";
-import { laySoGiao } from "@/lib/delivery-stats";
+import { HOME_DEFAULTS, getHomeSettings } from "@/lib/settings";
+import { dienSoGiao, laySoGiao } from "@/lib/delivery-stats";
 import { prisma } from "@/lib/prisma";
+import type { Metadata } from "next";
 
 export const dynamic = "force-dynamic";
 
@@ -47,10 +48,19 @@ export const dynamic = "force-dynamic";
 // Mô tả riêng cho trang chủ. Mặc định của layout là site.description dùng chung cả web
 // ("hơn 200 quốc gia… tư vấn miễn phí") — câu đó không trả lời câu hỏi nào, trong khi trang
 // chủ là nơi AI mở nhiều nhất (62% số lần AI mở trang vì có người hỏi).
-export const metadata = {
-  description:
-    "Minh Thiện Logistics gửi hàng đi Mỹ, Úc, Canada, Châu Âu, Nhật, Hàn từ TP.HCM. Số đo thật từ hệ thống theo dõi: tuyến Mỹ đi tiết kiệm trung vị 9 ngày làm việc, đi nhanh 3 ngày. Lấy hàng tận nơi miễn phí trong TP.HCM, hotline 0589.77.89.89.",
-};
+// Số lấy từ delivery_stats (đổi mỗi đầu tháng) — trước 21/11/2026 gõ cứng "9 ngày" nên lệch
+// với khối số đo trên chính trang.
+export async function generateMetadata(): Promise<Metadata> {
+  const coSo = dienSoGiao(
+    `${site.name} gửi hàng đi Mỹ, Úc, Canada, Châu Âu, Nhật, Hàn từ TP.HCM. Số đo thật kỳ {ky}: tuyến Mỹ đi tiết kiệm trung vị {my_tk_ngay} ngày làm việc, đi nhanh {my_nhanh_ngay} ngày. Lấy hàng tận nơi miễn phí trong TP.HCM, hotline ${site.phoneDisplay}.`,
+    await laySoGiao(),
+  );
+  return {
+    description:
+      coSo ??
+      `${site.name} gửi hàng đi Mỹ, Úc, Canada, Châu Âu, Nhật, Hàn từ TP.HCM. Lấy hàng tận nơi miễn phí trong TP.HCM, hotline ${site.phoneDisplay}.`,
+  };
+}
 
 const homeFaqs = [
   {
@@ -79,7 +89,9 @@ const homeFaqs = [
   },
   {
     q: "Mất hàng hoặc hư hỏng thì đền thế nào?",
-    a: "Có mua bảo hiểm: đền 100% cước và giá trị hàng khai báo. Không mua bảo hiểm: đền cước và tối đa 100 USD. Mỗi kiện đều được cân trước mặt khách và chụp ảnh để đối chiếu về sau.",
+    // Khớp từng chữ với /chinh-sach-den-bu-bao-hiem (src/lib/chinh-sach.ts). Trước 21/11/2026
+    // ghi "tối đa 100 USD" — lệch chính sách công bố.
+    a: "Không mua bảo hiểm: hoàn cước của phần hàng bị ảnh hưởng và đền tiền hàng 121.000đ/kg, phần tiền hàng tối đa 5.000.000đ. Có mua bảo hiểm (phí 20% giá trị hàng khai báo, báo trước khi gửi): đền 100% giá trị hàng đã khai. Mỗi kiện đều được cân trước mặt khách và chụp ảnh để đối chiếu về sau. Chi tiết ở trang Chính sách đền bù và bảo hiểm.",
   },
   {
     q: "Theo dõi đơn hàng ở đâu?",
@@ -99,6 +111,12 @@ export default async function HomePage() {
   const soGiao = await laySoGiao();
   const dongGiao = (soGiao?.dong ?? []).filter((d) => d.duDuLieu).slice(0, 2);
   const home = await getHomeSettings();
+  // Chữ đầu trang nhập ở admin có thể chứa mã {my_tk_ngay}… → điền số đo mới nhất (xem dienSoGiao).
+  const hero = {
+    badge: dienSoGiao(home.home_hero_badge, soGiao) ?? HOME_DEFAULTS.home_hero_badge,
+    title: dienSoGiao(home.home_hero_title, soGiao) ?? HOME_DEFAULTS.home_hero_title,
+    subtitle: dienSoGiao(home.home_hero_subtitle, soGiao) ?? HOME_DEFAULTS.home_hero_subtitle,
+  };
   const galleryItems = await getGalleryItems();
   const serviceCards = await getServiceCards();
   const dests = await getDestinations();
@@ -136,12 +154,12 @@ export default async function HomePage() {
         <div className="relative mx-auto grid grid-cols-1 max-w-7xl items-center gap-12 px-6 pb-24 pt-16 lg:grid-cols-2">
           <div>
             <span className="inline-flex items-center gap-2 rounded-full bg-white px-4 py-1.5 text-sm font-semibold text-brand-600 shadow-sm">
-              <Globe className="h-4 w-4 text-sun-400" /> {home.home_hero_badge}
+              <Globe className="h-4 w-4 text-sun-400" /> {hero.badge}
             </span>
             <h1 className="mt-6 text-4xl font-black leading-[1.05] text-ink md:text-[56px]">
-              <span className="grad-text">{home.home_hero_title}</span>
+              <span className="grad-text">{hero.title}</span>
             </h1>
-            <p className="mt-5 max-w-xl text-lg text-ink-soft">{home.home_hero_subtitle}</p>
+            <p className="mt-5 max-w-xl text-lg text-ink-soft">{hero.subtitle}</p>
             <div className="mt-8 flex flex-wrap gap-4">
               <Link
                 href="#bao-gia"
@@ -327,10 +345,19 @@ export default async function HomePage() {
                 className="object-cover"
               />
             </div>
-            <div className="rounded-3xl bg-white p-6 shadow-sm">
-              <div className="text-4xl font-black text-brand-600">99%</div>
-              <div className="mt-1 text-sm text-ink-soft">Đơn giao đúng hẹn</div>
-            </div>
+            {/* Trước 21/11/2026 ô này ghi "99% đơn giao đúng hẹn" — trái với số đo công bố trên chính
+                trang (77–82% về trong khoảng hẹn). Chỉ đưa số có thật, dẫn về trang số đo. */}
+            {soGiao ? (
+              <Link href="/thoi-gian-giao-thuc-te" className="rounded-3xl bg-white p-6 shadow-sm transition hover:shadow-md">
+                <div className="text-4xl font-black text-brand-600">{soGiao.tongKien}</div>
+                <div className="mt-1 text-sm text-ink-soft">Kiện đo thời gian giao thật, cập nhật mỗi tháng</div>
+              </Link>
+            ) : (
+              <div className="rounded-3xl bg-white p-6 shadow-sm">
+                <div className="text-4xl font-black text-brand-600">8–12</div>
+                <div className="mt-1 text-sm text-ink-soft">Ngày đi tiết kiệm Mỹ · Canada · Úc</div>
+              </div>
+            )}
             <div className="rounded-3xl p-6 text-white shadow-xl shadow-brand-500/20" style={{ background: "linear-gradient(135deg,#1FB6A2,#0f7568)" }}>
               <div className="text-4xl font-black text-sun-300">5★</div>
               <div className="mt-1 text-sm text-white/80">Đánh giá khách hàng</div>
