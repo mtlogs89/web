@@ -27,7 +27,21 @@ export type Destination = {
   table: StepTable | RangeTable;
   // phụ thu theo loại hàng (VNĐ/kg)
   surcharge: Record<string, number>;
+  /**
+   * Tuyến chia vùng giá (Mỹ: California rẻ hơn các bang khác — bảng giá của Min 11/2026).
+   * parent: tuyến cha — công cụ tính cước không liệt kê riêng mà cho chọn "Người nhận ở" dưới tuyến cha.
+   * regionLabel: tên vùng của bảng giá này ("các bang khác", "California").
+   */
+  parent?: string;
+  regionLabel?: string;
 };
+
+/** Tên đầy đủ khi tuyến chia vùng: "Mỹ – các bang khác", "Mỹ – California"; tuyến thường giữ nguyên tên. */
+export function tenTuyenDayDu(d: Destination, all: Destination[] = destinations): string {
+  if (!d.regionLabel) return d.label;
+  const goc = (d.parent ? all.find((x) => x.key === d.parent)?.label : d.label) ?? d.label;
+  return `${goc.replace(/\s*\(.*\)$/, "")} – ${d.regionLabel}`;
+}
 
 const SUR = (thuoc: number, myPham: number, yen: number, sach: number) => ({
   thuong: 0,
@@ -41,16 +55,39 @@ export const destinations: Destination[] = [
   {
     key: "my",
     label: "Mỹ (USA)",
+    regionLabel: "các bang khác",
     transit: [8, 12], // tiết kiệm; đi nhanh 3–5 ngày (xem lib/transit.ts)
     baoThue: true,
+    // Bảng giá Mỹ của Min (dịch vụ 8–12 ngày, hàng thường, cột "các bang còn lại"), 18/11/2026.
+    // Lưu ý: mốc 15kg rẻ hơn 14,5kg — đúng như bảng gốc (từ 15kg tính mức rẻ hơn).
     table: {
       type: "steps",
       over20PerKg: null,
       prices: [
-        1490000, 1490000, 1820000, 2085000, 2268000, 2515000, 2659000, 2928000, 3211000, 3283000,
-        3348000, 3632000, 3877000, 4134000, 4347000, 4634000, 4894000, 5143000, 5391000, 5642000,
-        5773000, 6017000, 6275000, 6492000, 6762000, 7006000, 7254000, 7508000, 7731000, 7980000,
-        8113000, 8237000, 8450000, 8684000, 8917000, 9115000, 9379000, 9588000, 9836000, 10055000,
+        1068000, 1116000, 1325000, 1535000, 1737000, 1941000, 2009000, 2197000, 2383000, 2569000,
+        2712000, 2855000, 3034000, 3213000, 3397000, 3579000, 3761000, 3941000, 4125000, 4160000,
+        4368000, 4535000, 4710000, 4886000, 5064000, 5241000, 5425000, 5610000, 5788000, 5753000,
+        5926000, 6099000, 6268000, 6437000, 6615000, 6791000, 6963000, 7136000, 7309000, 7480000,
+      ],
+    },
+    surcharge: SUR(150000, 50000, 300000, 30000),
+  },
+  {
+    key: "my_cali",
+    label: "Mỹ – California",
+    parent: "my",
+    regionLabel: "California",
+    transit: [8, 12],
+    baoThue: true,
+    // Cùng bảng của Min, cột "California" (rẻ hơn các bang khác).
+    table: {
+      type: "steps",
+      over20PerKg: null,
+      prices: [
+        1041000, 1089000, 1272000, 1457000, 1641000, 1824000, 1886000, 2060000, 2233000, 2407000,
+        2565000, 2725000, 2895000, 3066000, 3237000, 3409000, 3579000, 3748000, 3919000, 3950000,
+        4150000, 4312000, 4476000, 4640000, 4804000, 4968000, 5134000, 5300000, 5465000, 5429000,
+        5590000, 5751000, 5911000, 6071000, 6230000, 6390000, 6555000, 6719000, 6876000, 7033000,
       ],
     },
     surcharge: SUR(150000, 50000, 300000, 30000),
@@ -128,8 +165,52 @@ export const destinations: Destination[] = [
     surcharge: SUR(30000, 0, 0, 0),
   },
   {
+    key: "han",
+    label: "Hàn Quốc",
+    transit: [3, 5],
+    baoThue: false,
+    // Chủ chốt giá 22/11/2026: đồng giá 95.000đ/kg mọi mốc cân, kiện dưới 3kg cộng
+    // thêm 100.000đ/kiện. Không có bảng mốc 0,5kg như tuyến Mỹ nên dùng kiểu "ranges".
+    note: "Đồng giá 95.000đ/kg. Kiện dưới 3kg phụ thu 100.000đ/kiện.",
+    table: {
+      type: "ranges",
+      ranges: [{ min: 0, max: 100000, perKg: 95000 }],
+      smallSurcharge: { underKg: 3, fee: 100000 },
+    },
+    // CHƯA có số phụ thu theo mặt hàng cho tuyến Hàn — để 0 thay vì đoán. Mặt hàng
+    // đặc biệt (thuốc, mỹ phẩm, yến) báo khách gọi hotline, xem ghi chú ở công cụ.
+    surcharge: SUR(0, 0, 0, 0),
+  },
+  {
+    key: "dai_loan",
+    label: "Đài Loan",
+    transit: [3, 5],
+    baoThue: false,
+    // Chủ chốt giá 22/11/2026: đồng giá 105.000đ/kg, kiện dưới 3kg cộng 100.000đ/kiện.
+    note: "Đồng giá 105.000đ/kg. Kiện dưới 3kg phụ thu 100.000đ/kiện.",
+    table: {
+      type: "ranges",
+      ranges: [{ min: 0, max: 100000, perKg: 105000 }],
+      smallSurcharge: { underKg: 3, fee: 100000 },
+    },
+    // CHƯA có phụ thu theo mặt hàng cho tuyến này — để 0 thay vì đoán.
+    surcharge: SUR(0, 0, 0, 0),
+  },
+  {
+    key: "thai_lan",
+    label: "Thái Lan",
+    transit: [5, 7],
+    baoThue: false,
+    // Chủ 22/11/2026: "Thái thì tuỳ giá" — không có biểu giá cố định. Vẫn tách thành
+    // lựa chọn riêng để khách tìm thấy tuyến và để đo được nhu cầu, nhưng không hiện
+    // số; bảng rỗng → công cụ tự chuyển sang chế độ báo giá riêng.
+    note: "Tuyến này báo giá theo từng lô — gọi hotline để có giá đúng.",
+    table: { type: "steps", over20PerKg: null, prices: [] },
+    surcharge: SUR(0, 0, 0, 0),
+  },
+  {
     key: "khac",
-    label: "Nước khác (Nhật, Hàn, Châu Âu…)",
+    label: "Nước khác (Nhật, Châu Âu…)",
     transit: [3, 12],
     baoThue: false,
     table: { type: "steps", over20PerKg: null, prices: [] }, // không có bảng → liên hệ
@@ -187,8 +268,14 @@ export function estimate(
   const chargeableRaw = Math.max(actual, volumetric);
   if (chargeableRaw <= 0) return null;
 
-  if (dest.key === "khac") {
-    return { mode: "contact", destLabel: dest.label, reason: "Tuyến này cần liên hệ để được báo giá." };
+  // Bảng giá rỗng = tuyến chưa có biểu giá cố định (Thái Lan: báo theo từng lô).
+  const chuaCoBangGia = dest.table.type === "steps" && dest.table.prices.length === 0;
+  if (dest.key === "khac" || chuaCoBangGia) {
+    return {
+      mode: "contact",
+      destLabel: tenTuyenDayDu(dest, destList),
+      reason: dest.note ?? "Tuyến này cần liên hệ để được báo giá.",
+    };
   }
 
   const surKg = dest.surcharge[input.cargoKey] ?? 0;
@@ -199,7 +286,7 @@ export function estimate(
     let chargeable: number;
     if (chargeableRaw > 20) {
       if (t.over20PerKg == null) {
-        return { mode: "contact", destLabel: dest.label, reason: "Hàng trên 20kg — liên hệ để có giá tốt." };
+        return { mode: "contact", destLabel: tenTuyenDayDu(dest, destList), reason: "Hàng trên 20kg — liên hệ để có giá tốt." };
       }
       chargeable = Math.ceil(chargeableRaw);
       base = t.over20PerKg * chargeable;
@@ -211,7 +298,7 @@ export function estimate(
     const surcharge = surKg * chargeable;
     return {
       mode: "price",
-      destLabel: dest.label,
+      destLabel: tenTuyenDayDu(dest, destList),
       chargeable,
       total: base + surcharge,
       transit: dest.transit,
@@ -230,7 +317,7 @@ export function estimate(
   const surcharge = surKg * kg;
   return {
     mode: "price",
-    destLabel: dest.label,
+    destLabel: tenTuyenDayDu(dest, destList),
     chargeable: Math.round(kg * 10) / 10,
     total: base + surcharge,
     transit: dest.transit,
