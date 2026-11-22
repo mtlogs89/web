@@ -30,6 +30,7 @@ import { getServiceCards } from "@/lib/service-cards";
 import { getPublishedArticles } from "@/lib/articles";
 import { HOME_DEFAULTS, getHomeSettings } from "@/lib/settings";
 import { dienSoGiao, laySoGiao } from "@/lib/delivery-stats";
+import { TUYEN_HANG } from "@/lib/hang-tuyen";
 import { prisma } from "@/lib/prisma";
 import type { Metadata } from "next";
 
@@ -61,6 +62,9 @@ export async function generateMetadata(): Promise<Metadata> {
       `${site.name} gửi hàng đi Mỹ, Úc, Canada, Châu Âu, Nhật, Hàn từ TP.HCM. Lấy hàng tận nơi miễn phí trong TP.HCM, hotline ${site.phoneDisplay}.`,
   };
 }
+
+/** Số nhóm mặt hàng khác nhau trong bảng /hang-gui-duoc (41 lúc 22/11/2026) — đếm, không gõ cứng. */
+const soNhomHang = new Set(TUYEN_HANG.flatMap((t) => t.hang.map((h) => h.ten))).size;
 
 const homeFaqs = [
   {
@@ -358,10 +362,16 @@ export default async function HomePage() {
                 <div className="mt-1 text-sm text-ink-soft">Ngày đi tiết kiệm Mỹ · Canada · Úc</div>
               </div>
             )}
-            <div className="rounded-3xl p-6 text-white shadow-xl shadow-brand-500/20" style={{ background: "linear-gradient(135deg,#1FB6A2,#0f7568)" }}>
-              <div className="text-4xl font-black text-sun-300">5★</div>
-              <div className="mt-1 text-sm text-white/80">Đánh giá khách hàng</div>
-            </div>
+            {/* Trước 22/11/2026 ô này ghi "5★ đánh giá khách hàng" mà không có nguồn đánh giá nào (chủ bảo thay).
+                Giờ là số nhóm hàng đếm thẳng từ bảng hang-tuyen.json, bấm sang trang tra cứu. */}
+            <Link
+              href="/hang-gui-duoc"
+              className="rounded-3xl p-6 text-white shadow-xl shadow-brand-500/20 transition hover:brightness-110"
+              style={{ background: "linear-gradient(135deg,#1FB6A2,#0f7568)" }}
+            >
+              <div className="text-4xl font-black text-sun-300">{soNhomHang}</div>
+              <div className="mt-1 text-sm text-white/80">Nhóm hàng tra trước gửi được không · {TUYEN_HANG.length} tuyến</div>
+            </Link>
             <div className="rounded-3xl bg-coral-500 p-6 text-white shadow-xl shadow-coral-500/30">
               <div className="text-4xl font-black">24h</div>
               <div className="mt-1 text-sm text-white/90">Lấy hàng tận nơi</div>
