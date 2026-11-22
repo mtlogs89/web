@@ -7,7 +7,7 @@ export function Logo({ light = false }: { light?: boolean }) {
   return (
     <Link href="/" className="flex items-center gap-2.5" aria-label="Minh Thiện Logistics">
       {/* eslint-disable-next-line @next/next/no-img-element */}
-      <img src="/images/logo-mark.webp" alt="" role="presentation" width={44} height={44} className="h-11 w-11" />
+      <img src="/images/logo-mark.webp" alt="Logo Minh Thiện Logistics" width={44} height={44} className="h-11 w-11" />
       <span className="leading-none">
         <span
           className={`block text-xl font-black tracking-tight ${

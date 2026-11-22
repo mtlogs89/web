@@ -4,7 +4,8 @@ import { PageHero } from "@/components/site/page-hero";
 import { CallAction } from "@/components/site/call-action";
 import { site } from "@/lib/site";
 import { prisma } from "@/lib/prisma";
-import { JsonLd, breadcrumbJsonLd, faqJsonLd } from "@/lib/structured-data";
+import { JsonLd, breadcrumbJsonLd, faqJsonLd, entityGraphJsonLd } from "@/lib/structured-data";
+import { RSS_ALTERNATE } from "@/lib/rss";
 
 /**
  * Trang số liệu giao hàng đo được từ hệ thống theo dõi của công ty.
@@ -37,7 +38,7 @@ export const metadata: Metadata = {
   title: "Thời gian giao hàng thực tế — số đo từ hệ thống",
   description:
     "Minh Thiện Logistics công bố thời gian giao hàng đo được từ hệ thống theo dõi hành trình: trung vị, khoảng dao động và tỉ lệ đúng hẹn theo từng tuyến và từng nhóm dịch vụ.",
-  alternates: { canonical: url },
+  alternates: { canonical: url, types: RSS_ALTERNATE },
 };
 
 export default async function TrangThoiGianGiao() {
@@ -77,6 +78,7 @@ export default async function TrangThoiGianGiao() {
 
   return (
     <>
+      <JsonLd data={entityGraphJsonLd()} />
       <JsonLd data={faqJsonLd(faqs)} />
       <JsonLd
         data={breadcrumbJsonLd([
@@ -96,7 +98,8 @@ export default async function TrangThoiGianGiao() {
             dateModified: so.capNhat,
             isAccessibleForFree: true,
             license: "https://creativecommons.org/licenses/by/4.0/",
-            creator: { "@type": "Organization", name: site.name, url: site.url },
+            creator: { "@type": "Organization", "@id": `${site.url}/#organization`, name: site.name, url: site.url },
+            author: { "@type": "Organization", "@id": `${site.url}/#organization`, name: site.name, url: site.url },
             publisher: { "@type": "Organization", name: site.name, url: site.url },
             variableMeasured: [
               { "@type": "PropertyValue", name: "Trung vị thời gian giao", unitText: "ngày làm việc" },
@@ -118,6 +121,15 @@ export default async function TrangThoiGianGiao() {
         ) : (
           <>
             <p className="rounded-2xl border-l-4 border-brand-500 bg-brand-50 px-5 py-4 font-medium text-ink">{cauMo}</p>
+            {so.capNhat && (
+              <div className="mt-3 text-sm text-ink-muted">
+                Cập nhật <time dateTime={so.capNhat}>{new Date(so.capNhat).toLocaleDateString("vi-VN")}</time>
+                {" · "}Đo và biên soạn:{" "}
+                <Link href="/gioi-thieu" rel="author" className="author font-semibold text-brand-700 hover:underline">
+                  đội ngũ {site.name}
+                </Link>
+              </div>
+            )}
 
             <h2 className="mt-10 text-2xl font-black text-ink">Số liệu theo tuyến và dịch vụ</h2>
             <div className="mt-4 overflow-x-auto rounded-3xl border border-brand-50 bg-white shadow-sm">
@@ -173,7 +185,9 @@ export default async function TrangThoiGianGiao() {
             <div className="mt-4 space-y-3">
               {faqs.map((f) => (
                 <details key={f.q} className="group rounded-2xl border border-brand-50 bg-white p-5 shadow-sm">
-                  <summary className="cursor-pointer list-none font-bold text-ink marker:hidden group-open:text-brand-600">{f.q}</summary>
+                  <summary className="cursor-pointer list-none font-bold text-ink marker:hidden group-open:text-brand-600">
+                    <h3 className="inline text-base font-bold">{f.q}</h3>
+                  </summary>
                   <p className="mt-3 text-ink-soft">{f.a}</p>
                 </details>
               ))}

@@ -10,7 +10,22 @@ export function parseFaq(faqJson: string | null): FaqItem[] {
   if (!faqJson) return [];
   try {
     const parsed = JSON.parse(faqJson);
-    return Array.isArray(parsed) ? parsed : [];
+    // Có bài lưu nguyên khối schema FAQPage ({"@type":"FAQPage","mainEntity":[…]}) thay vì
+    // danh sách {q,a} — trước đây đọc ra rỗng nên hỏi–đáp không hiện, Google/AI không thấy.
+    const list: unknown[] = Array.isArray(parsed)
+      ? parsed
+      : parsed && typeof parsed === "object" && Array.isArray((parsed as { mainEntity?: unknown }).mainEntity)
+      ? (parsed as { mainEntity: unknown[] }).mainEntity
+      : [];
+    return list
+      .map((x) => {
+        const o = (x ?? {}) as Record<string, unknown>;
+        const ans = o.acceptedAnswer as Record<string, unknown> | undefined;
+        const q = String(o.q ?? o.question ?? o.name ?? "").trim();
+        const a = String(o.a ?? o.answer ?? ans?.text ?? "").trim();
+        return { q, a };
+      })
+      .filter((f) => f.q && f.a);
   } catch {
     return [];
   }

@@ -122,6 +122,7 @@ export function QuoteCalculator({
             </div>
             <ArrowRight className="h-4 w-4 shrink-0 text-ink-muted" />
             <select
+              aria-label="Tuyến vận chuyển: nước nhận hàng"
               value={destKey}
               onChange={(e) => setDestKey(e.target.value)}
               className="min-w-0 flex-1 rounded-xl border border-slate-200 px-3 py-3 font-medium outline-none focus:border-brand-500"
@@ -137,6 +138,7 @@ export function QuoteCalculator({
           <div>
             <label className="text-sm font-medium text-ink-soft">Cân nặng (kg)</label>
             <input
+              aria-label="Cân nặng kiện hàng (kg)"
               type="number"
               min={0}
               step="0.1"
@@ -148,6 +150,7 @@ export function QuoteCalculator({
           <div>
             <label className="text-sm font-medium text-ink-soft">Loại hàng</label>
             <select
+              aria-label="Loại hàng gửi"
               value={cargoKey}
               onChange={(e) => setCargoKey(e.target.value)}
               className={inputCls}
@@ -174,6 +177,7 @@ export function QuoteCalculator({
                   {["Dài", "Rộng", "Cao"][i]} (cm)
                 </label>
                 <input
+                  aria-label={`${["Chiều dài", "Chiều rộng", "Chiều cao"][i]} kiện hàng (cm)`}
                   type="number"
                   min={0}
                   value={dims[k]}

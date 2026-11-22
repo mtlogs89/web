@@ -9,6 +9,7 @@ import { CallAction } from "@/components/site/call-action";
 import { ServiceMedia } from "@/components/site/service-media";
 import { services, site } from "@/lib/site";
 import { serviceContent, serviceImages } from "@/lib/service-content";
+import { parseFaq } from "@/lib/articles";
 import { GalleryGrid } from "@/components/site/gallery-grid";
 import { ServiceArticleDetail } from "@/components/site/service-article-detail";
 import { ContactOverride } from "@/components/site/contact-override";
@@ -182,14 +183,7 @@ function getArticleBody(articleSlug: string): ArticleBody | null {
       | undefined;
     db.close();
     if (!row) return null;
-    let faqs: { q: string; a: string }[] = [];
-    if (row.faqJson) {
-      try {
-        faqs = JSON.parse(row.faqJson);
-      } catch {
-        faqs = [];
-      }
-    }
+    const faqs = parseFaq(row.faqJson);
     const ngay = (v: string | number | null) => {
       if (v == null) return null;
       const d = new Date(typeof v === "string" && /^\d+$/.test(v) ? Number(v) : v);

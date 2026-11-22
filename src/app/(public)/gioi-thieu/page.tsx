@@ -7,7 +7,12 @@ import { ZaloLink } from "@/components/site/zalo-link";
 import { partners, services, site } from "@/lib/site";
 import { getCategories } from "@/lib/articles";
 import { DESTINATIONS } from "@/lib/eu-countries";
-import { JsonLd, breadcrumbJsonLd, faqJsonLd } from "@/lib/structured-data";
+import { JsonLd, breadcrumbJsonLd, faqJsonLd, entityGraphJsonLd } from "@/lib/structured-data";
+import { RSS_ALTERNATE } from "@/lib/rss";
+
+/** Ngày viết lại trang (165d37d, 13/11/2026) và lần sửa nội dung gần nhất (90789ec, 21/11/2026). Sửa nội dung trang thì đổi ngày. */
+const GT_DANG = "2026-11-13";
+const GT_SUA = "2026-11-21";
 import { categoryHref, KT_PATH } from "@/lib/kien-thuc";
 import { POLICY_PAGES } from "@/lib/chinh-sach";
 import { laySoGiao } from "@/lib/delivery-stats";
@@ -20,7 +25,7 @@ const url = `${site.url}/gioi-thieu`;
 export const metadata: Metadata = {
   title: "Giới thiệu công ty",
   description: `${site.name} (${site.legalName}, MST ${site.taxId}) — đội ngũ hơn ${site.experienceYears} năm kinh nghiệm gửi hàng quốc tế từ TP.HCM đi hơn 200 quốc gia. Văn phòng ${site.addressFull}, chi nhánh Nha Trang.`,
-  alternates: { canonical: url },
+  alternates: { canonical: url, types: RSS_ALTERNATE },
 };
 
 /*
@@ -116,8 +121,10 @@ export default async function AboutPage() {
       : "";
   const sv = (slug: string) => services.find((s) => s.slug === slug);
 
+  const sua = new Date(`${GT_SUA}T00:00:00+07:00`);
   return (
     <>
+      <JsonLd data={entityGraphJsonLd()} />
       <JsonLd
         data={{
           "@context": "https://schema.org",
@@ -129,6 +136,10 @@ export default async function AboutPage() {
           isPartOf: { "@id": `${site.url}/#website` },
           about: { "@id": `${site.url}/#organization` },
           mainEntity: { "@id": `${site.url}/#organization` },
+          description: `${site.name} (${site.legalName}, MST ${site.taxId}) — đội ngũ hơn ${site.experienceYears} năm kinh nghiệm gửi hàng quốc tế từ TP.HCM đi hơn 200 quốc gia.`,
+          datePublished: new Date(`${GT_DANG}T00:00:00+07:00`).toISOString(),
+          dateModified: sua.toISOString(),
+          author: { "@type": "Organization", "@id": `${site.url}/#organization`, name: site.name, url: `${site.url}/` },
         }}
       />
       <JsonLd data={faqJsonLd(faqs)} />
@@ -147,6 +158,13 @@ export default async function AboutPage() {
 
       <div className="mx-auto grid max-w-7xl grid-cols-1 gap-10 px-6 py-12 lg:grid-cols-[1fr_260px]">
         <div className="min-w-0 space-y-14">
+          <p className="-mb-10 text-sm text-ink-muted">
+            Cập nhật <time dateTime={sua.toISOString()}>{sua.toLocaleDateString("vi-VN")}</time>
+            {" · "}Biên soạn:{" "}
+            <Link href="/gioi-thieu" rel="author" className="author font-semibold text-brand-700 hover:underline">
+              đội ngũ {site.name}
+            </Link>
+          </p>
           {/* Thông tin nhanh — khối đầu trang để người đọc và AI lấy đúng dữ kiện */}
           <section className="rounded-3xl border border-brand-100 bg-brand-50/50 p-6">
             <h2 className="text-lg font-black text-ink">Thông tin nhanh</h2>
@@ -518,7 +536,9 @@ export default async function AboutPage() {
             <div className="mt-5 space-y-3">
               {faqs.map((f) => (
                 <details key={f.q} className="rounded-2xl border border-brand-50 bg-white p-5 shadow-sm">
-                  <summary className="cursor-pointer font-bold text-ink">{f.q}</summary>
+                  <summary className="cursor-pointer font-bold text-ink">
+                    <h3 className="inline text-base font-bold">{f.q}</h3>
+                  </summary>
                   <p className="mt-2 text-ink-soft">{f.a}</p>
                 </details>
               ))}
