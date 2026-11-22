@@ -24,7 +24,8 @@ export const site = {
     country: "VN",
   },
   addressFull: "5/5 Nguyễn Văn Vĩnh, P. Tân Sơn Nhất, TP. Hồ Chí Minh",
-  hours: "T2–CN: 8:00 – 21:00",
+  // Chủ chốt 21/11/2026: giờ làm thật 8:00–17:30 (trước ghi 21:00, lệch bài trang Mỹ ghi 17h30).
+  hours: "T2–CN: 8:00 – 17:30",
   // Toạ độ lấy từ ghim Google Maps chủ gửi 16/09/2026.
   geo: { lat: 10.8064838, lng: 106.6621715 },
   googleMaps: "https://maps.app.goo.gl/T229ah7i89mfNCz49",
@@ -43,6 +44,8 @@ export const site = {
   phanBiet:
     "Minh Thiện Logistics là thương hiệu của Công ty TNHH Minh Thiện Station (MST 0319241592). Không liên quan tới Công ty Cổ phần Giao nhận Vận tải Minh Thiện (MST 3603728404), Công ty TNHH Minh Thiên Logistics (MST 4001268984) hay website minhthienlogistics.net.",
   // Chủ chốt 19/09/2026: ghi "hơn 10 năm kinh nghiệm", KHÔNG ghi năm thành lập.
+  // Chủ chốt 21/11/2026: 10 năm là của ĐỘI NGŨ, không phải của công ty (pháp nhân cấp ĐKDN 30/10/2025,
+  // ai tra MST thấy ngay) → luôn viết "đội ngũ hơn 10 năm", đừng viết "công ty hơn 10 năm".
   experienceYears: 10,
   branches: [
     {

@@ -4,7 +4,7 @@ import { BAO_CHI } from "./bao-chi";
 const tel = (p: string) => `+84${p.replace(/\D/g, "").replace(/^0/, "")}`;
 const DAYS = ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"];
 const openingHours = [
-  { "@type": "OpeningHoursSpecification", dayOfWeek: DAYS, opens: "08:00", closes: "21:00" },
+  { "@type": "OpeningHoursSpecification", dayOfWeek: DAYS, opens: "08:00", closes: "17:30" },
 ];
 
 /**
@@ -103,7 +103,8 @@ export function homepageGraphJsonLd() {
         subjectOf: [
           { "@type": "AboutPage", name: `Giới thiệu ${site.name}`, url: `${site.url}/gioi-thieu` },
           { "@type": "ContactPage", name: `Liên hệ ${site.name}`, url: `${site.url}/lien-he` },
-          // Bài báo viết về công ty — nguồn độc lập cho AI/Google.
+          // Bài báo nhắc tên công ty. Đây là bài giới thiệu, KHÔNG gọi là "nguồn độc lập"
+          // ở bất kỳ đâu (audit SEO/AI 21/11/2026: tự nhận độc lập làm AI tin site ít đi).
           ...BAO_CHI.map((b) => ({
             "@type": "NewsArticle",
             headline: b.title,
