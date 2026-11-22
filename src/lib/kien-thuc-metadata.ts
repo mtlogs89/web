@@ -1,3 +1,4 @@
+import { RSS_ALTERNATE } from "./rss";
 import type { Metadata } from "next";
 import { site } from "@/lib/site";
 import { KT_PATH, categoryHref, categoryLabel } from "@/lib/kien-thuc";
@@ -13,12 +14,12 @@ export function kienThucMetadata(cat: string | undefined, pageParam?: string): M
       title: `Kiến thức gửi hàng quốc tế: kinh nghiệm từng nước${suffix}`,
       description:
         "Kiến thức, kinh nghiệm và hướng dẫn gửi hàng đi Mỹ, Úc, Canada, Châu Âu, Nhật, Hàn, Singapore, Malaysia, Thái Lan và nhập hàng Trung Quốc từ Minh Thiện Logistics.",
-      alternates: { canonical },
+      alternates: { canonical, types: RSS_ALTERNATE },
     };
   }
   return {
     title: `${categoryLabel(cat)}: thủ tục hải quan, hàng cấm, thời gian${suffix}`,
     description: `Tổng hợp bài hướng dẫn ${cat.toLowerCase()}: thời gian, cách đóng gói, hàng được và không được gửi, thủ tục hải quan — Minh Thiện Logistics, hotline ${site.phoneDisplay}.`,
-    alternates: { canonical },
+    alternates: { canonical, types: RSS_ALTERNATE },
   };
 }

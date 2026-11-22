@@ -4,7 +4,7 @@ import { PageHero } from "@/components/site/page-hero";
 import { ArticleCard } from "@/components/site/article-card";
 import { getPublishedArticles, getCategories, countPublishedArticles, getCategoryTitles } from "@/lib/articles";
 import { EU_COUNTRIES, EU_CATEGORY, DESTINATIONS } from "@/lib/eu-countries";
-import { JsonLd, breadcrumbJsonLd } from "@/lib/structured-data";
+import { JsonLd, breadcrumbJsonLd, entityGraphJsonLd } from "@/lib/structured-data";
 import { KT_PATH, categoryHref, categoryLabel } from "@/lib/kien-thuc";
 import { site } from "@/lib/site";
 
@@ -43,6 +43,11 @@ export async function KienThucListing({ cat, pageParam }: { cat?: string; pagePa
   const euGeneralArticles = isEu ? articles.filter((a) => !euSlugs.has(a.slug)) : [];
 
   const pageUrl = `${site.url}${cat ? categoryHref(cat) : KT_PATH}`;
+  // Ngày cập nhật thật của chuyên mục = bài mới nhất được đăng hoặc sửa (Google hỏi "khi nào").
+  const moiNhat = articles.reduce<Date | null>((m, a) => {
+    const d = new Date(Math.max(new Date(a.publishedAt).getTime(), new Date(a.updatedAt ?? a.publishedAt).getTime()));
+    return !m || d > m ? d : m;
+  }, null);
   const collectionJson = {
     "@context": "https://schema.org",
     "@graph": [
@@ -54,6 +59,11 @@ export async function KienThucListing({ cat, pageParam }: { cat?: string; pagePa
         inLanguage: "vi-VN",
         isPartOf: { "@id": `${site.url}/#website` },
         about: { "@id": `${site.url}/#organization` },
+        description: cat
+          ? `Kinh nghiệm, thủ tục và lưu ý thực tế về ${cat.toLowerCase()} từ ${site.name}.`
+          : "Kinh nghiệm gửi hàng quốc tế, nhập hàng và mọi điều bạn cần biết trước khi gửi, chia theo từng nước.",
+        ...(moiNhat ? { dateModified: moiNhat.toISOString() } : {}),
+        author: { "@type": "Organization", "@id": `${site.url}/#organization`, name: site.name, url: `${site.url}/` },
       },
       breadcrumbJsonLd(
         cat
@@ -72,6 +82,7 @@ export async function KienThucListing({ cat, pageParam }: { cat?: string; pagePa
 
   return (
     <>
+      <JsonLd data={entityGraphJsonLd()} />
       <JsonLd data={collectionJson} />
       <PageHero
         title={cat ? categoryLabel(cat) : "Kiến thức gửi hàng quốc tế"}
@@ -87,6 +98,15 @@ export async function KienThucListing({ cat, pageParam }: { cat?: string; pagePa
         }
       />
       <section className="mx-auto max-w-7xl px-6 py-12">
+        {moiNhat && (
+          <p className="-mt-4 mb-8 text-sm text-ink-muted">
+            Cập nhật <time dateTime={moiNhat.toISOString()}>{moiNhat.toLocaleDateString("vi-VN")}</time>
+            {" · "}Biên soạn:{" "}
+            <Link href="/gioi-thieu" rel="author" className="author font-semibold text-brand-700 hover:underline">
+              đội ngũ {site.name}
+            </Link>
+          </p>
+        )}
         {/* Điểm đến chính */}
         {!cat && (
           <div className="mb-10">

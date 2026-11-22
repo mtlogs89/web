@@ -14,7 +14,7 @@ export const SERVICE_PAGES = [
   { slug: "gui-hang-di-canada", country: "Canada", destKey: "canada", label: "Gửi hàng đi Canada" },
   { slug: "gui-hang-di-chau-au", country: "Châu Âu", destKey: "khac", label: "Gửi hàng đi Châu Âu" },
   { slug: "gui-hang-di-nhat", country: "Nhật", destKey: "khac", label: "Gửi hàng đi Nhật Bản" },
-  { slug: "gui-hang-di-han", country: "Hàn", destKey: "khac", label: "Gửi hàng đi Hàn Quốc" },
+  { slug: "gui-hang-di-han", country: "Hàn", destKey: "han", label: "Gửi hàng đi Hàn Quốc" },
 ] as const;
 
 export type ServicePageSlug = (typeof SERVICE_PAGES)[number]["slug"];

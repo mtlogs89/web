@@ -22,6 +22,9 @@ export type TuyenHang = { ten: string; slug: string; hang: MatHang[] };
 
 export const TUYEN_HANG = duLieu as TuyenHang[];
 
+/** Ngày chủ xác nhận bảng hàng gửi được (commit 2c646d0). Sửa src/data/hang-tuyen.json thì đổi ngày này. */
+export const HANG_TUYEN_CAP_NHAT = "2026-09-20";
+
 /** Tuyến → chuyên mục bài viết, để lấy thời gian vận chuyển và link về trang tuyến. */
 export const TUYEN_CHUYEN_MUC: Record<string, string> = {
   "Mỹ": "Gửi hàng đi Mỹ",

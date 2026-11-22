@@ -23,7 +23,12 @@ import {
   serviceJsonLd,
   faqJsonLd,
   breadcrumbJsonLd,
+  entityGraphJsonLd,
+  webPageJsonLd,
 } from "@/lib/structured-data";
+import { SERVICE_ANSWER, buildServiceAnswer } from "@/lib/service-answer";
+import { ServiceAnswerBox } from "@/components/site/service-answer-box";
+import { RSS_ALTERNATE } from "@/lib/rss";
 
 const AREA_SERVED: Record<string, object> = {
   "gui-hang-di-my": { "@type": "Country", name: "United States" },
@@ -50,10 +55,17 @@ export async function generateMetadata({
   const service = services.find((s) => s.slug === slug);
   if (service) {
     const detail = serviceContent[slug];
+    const cfg = SERVICE_ANSWER[slug];
+    const ans = cfg
+      ? buildServiceAnswer(cfg, (await getDestinations()).find((d) => d.key === cfg.destKey), SERVICE_ROUTE[slug] ?? "")
+      : null;
+    const title = ans?.seoTitle || service.title;
+    const description = ans?.metaDescription || detail?.intro || service.short;
     return {
-      title: service.title,
-      description: detail?.intro || service.short,
-      alternates: { canonical: `${site.url}/dich-vu/${slug}` },
+      title,
+      description,
+      alternates: { canonical: `${site.url}/dich-vu/${slug}`, types: RSS_ALTERNATE },
+      openGraph: { type: "website", title, description, url: `${site.url}/dich-vu/${slug}` },
     };
   }
   const custom = await getCustomCard(slug);
@@ -152,15 +164,21 @@ function getRelatedArticles(articleSlugs: string[]) {
 }
 
 
-type ArticleBody = { html: string; faqs: { q: string; a: string }[]; phone: string | null };
+type ArticleBody = {
+  html: string;
+  faqs: { q: string; a: string }[];
+  phone: string | null;
+  publishedAt: Date | null;
+  updatedAt: Date | null;
+};
 
 function getArticleBody(articleSlug: string): ArticleBody | null {
   try {
     const db = new Database(`${process.cwd()}/prisma/dev.db`);
     const row = db.prepare(
-      "SELECT content, faqJson, phone FROM Article WHERE slug = ? AND published = 1"
+      "SELECT content, faqJson, phone, publishedAt, updatedAt FROM Article WHERE slug = ? AND published = 1"
     ).get(articleSlug) as
-      | { content: string; faqJson: string | null; phone: string | null }
+      | { content: string; faqJson: string | null; phone: string | null; publishedAt: string | number | null; updatedAt: string | number | null }
       | undefined;
     db.close();
     if (!row) return null;
@@ -172,7 +190,18 @@ function getArticleBody(articleSlug: string): ArticleBody | null {
         faqs = [];
       }
     }
-    return { html: row.content, faqs, phone: row.phone || null };
+    const ngay = (v: string | number | null) => {
+      if (v == null) return null;
+      const d = new Date(typeof v === "string" && /^\d+$/.test(v) ? Number(v) : v);
+      return Number.isNaN(d.getTime()) ? null : d;
+    };
+    return {
+      html: row.content,
+      faqs,
+      phone: row.phone || null,
+      publishedAt: ngay(row.publishedAt),
+      updatedAt: ngay(row.updatedAt),
+    };
   } catch (e) {
     console.error("Failed to fetch article content:", e);
     return null;
@@ -248,11 +277,25 @@ export default async function ServicePage({
     [rich?.article ?? "", ...relatedArticles.map((a) => a.slug)].filter(Boolean),
   );
 
+  // Tuyến đồng giá theo kg (Hàn): khối trả lời nhanh + bảng giá dựng từ lib/pricing.ts.
+  const answerCfg = SERVICE_ANSWER[slug];
+  const answer = answerCfg
+    ? buildServiceAnswer(
+        answerCfg,
+        (await getDestinations()).find((d) => d.key === answerCfg.destKey),
+        SERVICE_ROUTE[slug] ?? "",
+      )
+    : null;
+
   // FAQ hiển thị trên các trang rich là FAQ trong bài, nên schema phải lấy đúng bộ đó.
-  const faqsForSchema = articleBody?.faqs.length ? articleBody.faqs : detail.faqs;
+  // Có bảng giá thì 2 câu giá lấy từ bảng (một nguồn), bỏ câu giá cũ trong bài để khỏi lệch số.
+  const faqGoc = articleBody?.faqs.length ? articleBody.faqs : detail.faqs;
+  const faqsForSchema = answer
+    ? [...answer.faqs, ...faqGoc.filter((f) => !/giá|bao nhiêu tiền|cước/i.test(f.q))]
+    : faqGoc;
   // Hỏi–đáp khai ra schema thì PHẢI hiện cho người đọc, nếu không Google không tính.
   // Thân bài nhúng của trang Mỹ đã có sẵn mục này; 5 trang còn lại thì chưa nên phải tự vẽ.
-  const faqDaCoTrongBai = /Câu hỏi thường gặp/i.test(articleBody?.html ?? "");
+  const faqDaCoTrongBai = !answer && /Câu hỏi thường gặp/i.test(articleBody?.html ?? "");
   const faqCanVe = faqDaCoTrongBai ? [] : faqsForSchema;
 
   // Giá cho schema lấy đúng bảng của công cụ tính trên trang (chỉ tuyến có bảng theo mốc cân).
@@ -266,15 +309,32 @@ export default async function ServicePage({
         }
       : undefined;
 
+  // Ngày cập nhật thật của nội dung trang = ngày sửa bài nhúng (hoặc hôm chủ chốt giá tuyến).
+  const giaNgay = answerCfg?.giaCapNhat ? new Date(`${answerCfg.giaCapNhat}T00:00:00+07:00`) : null;
+  const updated = [articleBody?.updatedAt, giaNgay].filter((d): d is Date => !!d).sort((a, b) => b.getTime() - a.getTime())[0] ?? new Date();
+  const metaDescription = answer?.metaDescription || detail.intro;
+
   return (
     <>
+      <JsonLd data={entityGraphJsonLd()} />
+      <JsonLd
+        data={webPageJsonLd({
+          url,
+          name: answer?.seoTitle || service.title,
+          description: metaDescription,
+          datePublished: articleBody?.publishedAt?.toISOString(),
+          dateModified: updated.toISOString(),
+          mainEntityId: `${url}#service`,
+        })}
+      />
       <JsonLd
         data={serviceJsonLd({
           name: service.title,
-          description: detail.intro,
+          description: metaDescription,
           url,
           areaServed: AREA_SERVED[slug],
           price: schemaPrice,
+          unitPrice: answer ? { perKg: answer.perKg, note: answer.note } : undefined,
         })}
       />
       <JsonLd data={faqJsonLd(faqsForSchema)} />
@@ -298,6 +358,17 @@ export default async function ServicePage({
       {rich ? (
         <>
           {articleBody?.phone && <ContactOverride phone={articleBody.phone} />}
+          {answer ? (
+            <ServiceAnswerBox answer={answer} updated={updated} hangGuiDuocHref={`/hang-gui-duoc/${answerCfg?.tuyenHang}`} />
+          ) : (
+            <p className="mx-auto max-w-4xl px-4 pt-8 text-sm text-ink-muted sm:px-6">
+              Cập nhật <time dateTime={updated.toISOString()}>{updated.toLocaleDateString("vi-VN")}</time>
+              {" · "}Biên soạn:{" "}
+              <Link href="/gioi-thieu" rel="author" className="author font-semibold text-brand-700 hover:underline">
+                đội ngũ {site.name}
+              </Link>
+            </p>
+          )}
           <ServiceArticleDetail
             slug={slug}
             country={rich.country}
@@ -371,7 +442,7 @@ export default async function ServicePage({
                 {faqCanVe.map((f) => (
                   <details key={f.q} className="group rounded-2xl border border-brand-50 bg-white p-5 shadow-sm">
                     <summary className="cursor-pointer list-none font-bold text-ink marker:hidden group-open:text-brand-600">
-                      {f.q}
+                      <h3 className="inline text-base font-bold">{f.q}</h3>
                     </summary>
                     <p className="mt-3 text-ink-soft">{f.a}</p>
                   </details>

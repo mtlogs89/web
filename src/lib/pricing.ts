@@ -177,9 +177,9 @@ export const destinations: Destination[] = [
       ranges: [{ min: 0, max: 100000, perKg: 95000 }],
       smallSurcharge: { underKg: 3, fee: 100000 },
     },
-    // CHƯA có số phụ thu theo mặt hàng cho tuyến Hàn — để 0 thay vì đoán. Mặt hàng
-    // đặc biệt (thuốc, mỹ phẩm, yến) báo khách gọi hotline, xem ghi chú ở công cụ.
-    surcharge: SUR(0, 0, 0, 0),
+    // Phụ thu theo mặt hàng lấy đúng bảng chủ xác nhận (src/data/hang-tuyen.json, tuyến Hàn):
+    // thuốc, thực phẩm chức năng, mỹ phẩm, yến: nhận, không phụ thu; sách vở, tài liệu +10.000đ/kg.
+    surcharge: SUR(0, 0, 0, 10000),
   },
   {
     key: "dai_loan",

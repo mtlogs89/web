@@ -10,6 +10,9 @@ import { laySoGiao } from "@/lib/delivery-stats";
 import { POLICY_PAGES } from "@/lib/chinh-sach";
 import { DESTINATIONS } from "@/lib/eu-countries";
 import { BAO_CHI, TOPLIST } from "@/lib/bao-chi";
+import { getDestinations } from "@/lib/price-tables";
+import { SERVICE_ROUTE } from "@/lib/transit";
+import { SERVICE_ANSWER, buildServiceAnswer, dong } from "@/lib/service-answer";
 
 export const dynamic = "force-dynamic";
 
@@ -67,6 +70,19 @@ export async function GET() {
     .map((d) => `- ${d.tuyen}, ${d.tenNhom.toLowerCase()}: trung vị ${d.trungVi} ngày làm việc (đo ${d.soKien} kiện${d.trongHan != null ? `, ${d.trongHan}% về trong khoảng hẹn ${d.henLo}–${d.henHi} ngày` : ""}).`)
     .join("\n");
 
+  // Giá đã công bố của tuyến đồng giá (Hàn: chủ chốt 22/11/2026) — lấy từ lib/pricing.ts,
+  // cùng nguồn với bảng giá trên trang dịch vụ. Tuyến khác vẫn dùng công cụ tính cước.
+  const dests = await getDestinations();
+  const giaLines = Object.entries(SERVICE_ANSWER)
+    .map(([slug, cfg]) => {
+      const a = buildServiceAnswer(cfg, dests.find((d) => d.key === cfg.destKey), SERVICE_ROUTE[slug] ?? "");
+      if (!a) return "";
+      const r10 = a.bang.find((r) => r.kg === 10);
+      return `- Giá công bố tuyến ${cfg.country}: ${a.note.replace(/ Thời gian:.*$/, "")}${r10 ? ` Ví dụ thùng 10kg: ${dong(r10.cuoc)}.` : ""} ${cfg.thue} Bảng giá: ${site.url}/dich-vu/${slug}`;
+    })
+    .filter(Boolean)
+    .join("\n");
+
   const body = `# ${site.name}
 
 > Công ty vận chuyển và gửi hàng quốc tế tại TP. Hồ Chí Minh, Việt Nam. Chuyên gửi hàng đi hơn 200 quốc gia và nhập hàng từ Trung Quốc, Thái Lan, Âu – Mỹ.
@@ -108,6 +124,7 @@ ${soLines || "- (đang cập nhật)"}
 ${Object.values(ROUTE_TRANSIT).filter((r) => r.name !== "Đức").map((r) => `- Thời gian gửi hàng đi ${r.name} (đường bay): ${r.text}.`).join("\n")}
 - Tuyến Úc: thịt khô, giò chả, sữa, trứng Minh Thiện vẫn nhận gửi (phụ thu theo kg) nhưng có rủi ro bị giữ hoặc tiêu huỷ do kiểm dịch Úc; hạt giống, cây, đồ dính đất không nhận.\n- Lấy hàng tận nơi, đóng gói miễn phí, có mã tracking theo dõi tới khi người nhận ký nhận.
 - Giá tham khảo theo cân nặng: dùng công cụ tính cước trên trang dịch vụ từng tuyến; báo giá chính xác qua hotline/Zalo. Con số giá trên quảng cáo hay mạng xã hội không phải bảng giá chính thức.
+${giaLines}
 
 ## Mặt hàng gửi được theo tuyến (chính sách thật của công ty, chủ xác nhận)
 Bảng đầy đủ 41 nhóm mặt hàng cho 10 tuyến: ${site.url}/hang-gui-duoc

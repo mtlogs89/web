@@ -192,6 +192,97 @@ export function homepageGraphJsonLd() {
 }
 
 /**
+ * Thực thể công ty + website dạng gọn, in ở các trang trong (dịch vụ, bài, chuyên mục…).
+ *
+ * Vì sao in lại ở từng trang (audit AEO tuyến Hàn 22/11/2026): AI (ChatGPT, Perplexity)
+ * thường đọc MỘT trang lẻ khi trả lời, không đi theo @id về trang chủ. Trang không tự nói
+ * "ai cung cấp, ở đâu, gọi số nào" thì AI không gắn được nội dung với Minh Thiện. Cùng @id
+ * với bản đầy đủ ở trang chủ nên Google gộp về một thực thể, không thành thực thể mới.
+ * Không khai giá, không khai đánh giá sao, không khai địa chỉ ĐKKD.
+ */
+export function entityGraphJsonLd() {
+  const id = (frag: string) => `${site.url}/#${frag}`;
+  return {
+    "@context": "https://schema.org",
+    "@graph": [
+      {
+        "@type": ["Organization", "LocalBusiness"],
+        "@id": id("organization"),
+        name: site.name,
+        legalName: "CÔNG TY TNHH MINH THIỆN STATION",
+        alternateName: ["Minh Thien Logistics", "MINH THIEN STATION COMPANY LIMITED"],
+        url: `${site.url}/`,
+        description:
+          "Minh Thiện Logistics là đơn vị vận chuyển và gửi hàng quốc tế tại Thành phố Hồ Chí Minh, nhận gửi hàng từ Việt Nam đi Mỹ, Úc, Canada, Châu Âu, Nhật Bản, Hàn Quốc và nhiều quốc gia; đồng thời cung cấp dịch vụ nhập hàng và mua hộ.",
+        taxID: site.taxId,
+        logo: { "@type": "ImageObject", "@id": id("logo"), url: `${site.url}/images/logo-full.png` },
+        image: `${site.url}/images/og-cover.jpg`,
+        telephone: tel(site.phone),
+        email: site.email,
+        address: {
+          "@type": "PostalAddress",
+          streetAddress: site.address.street,
+          addressLocality: site.address.ward,
+          addressRegion: "Thành phố Hồ Chí Minh",
+          addressCountry: site.address.country,
+        },
+        geo: { "@type": "GeoCoordinates", latitude: site.geo.lat, longitude: site.geo.lng },
+        hasMap: site.googleMaps,
+        openingHoursSpecification: openingHours,
+        contactPoint: {
+          "@type": "ContactPoint",
+          contactType: "customer service",
+          telephone: tel(site.phone),
+          email: site.email,
+          url: `${site.url}/lien-he`,
+          availableLanguage: ["Vietnamese"],
+        },
+        sameAs: [site.facebook, site.instagram, site.zalo, site.taxRegistry].filter(Boolean),
+      },
+      {
+        "@type": "WebSite",
+        "@id": id("website"),
+        url: `${site.url}/`,
+        name: site.name,
+        alternateName: "Minh Thien Logistics",
+        publisher: { "@id": id("organization") },
+        inLanguage: "vi-VN",
+      },
+    ],
+  };
+}
+
+/**
+ * WebPage của một trang nội dung: ngày đăng, ngày cập nhật, ai biên soạn.
+ * Google hỏi "ai làm ra nội dung, khi nào" — trang dịch vụ trước đây không có cả hai.
+ */
+export function webPageJsonLd(input: {
+  url: string;
+  name: string;
+  description: string;
+  datePublished?: string;
+  dateModified: string;
+  mainEntityId?: string;
+}) {
+  return {
+    "@context": "https://schema.org",
+    "@type": "WebPage",
+    "@id": `${input.url}#webpage`,
+    url: input.url,
+    name: input.name,
+    description: input.description,
+    inLanguage: "vi-VN",
+    isPartOf: { "@id": `${site.url}/#website` },
+    about: { "@id": `${site.url}/#organization` },
+    ...(input.mainEntityId ? { mainEntity: { "@id": input.mainEntityId } } : {}),
+    ...(input.datePublished ? { datePublished: input.datePublished } : {}),
+    dateModified: input.dateModified,
+    author: { "@type": "Organization", "@id": `${site.url}/#organization`, name: site.name, url: `${site.url}/` },
+    publisher: { "@id": `${site.url}/#organization` },
+  };
+}
+
+/**
  * Trang /tra-cuu — công cụ tra cứu, KHÔNG dùng ParcelDelivery (trang chỉ là form,
  * không có dữ liệu một lô hàng cụ thể). Không nêu tên hãng vận chuyển nào.
  */
@@ -254,17 +345,39 @@ export function serviceJsonLd(input: {
   areaServed?: object;
   /** Khoảng giá (VNĐ) đúng bảng mà công cụ tính cước trên trang đang dùng. */
   price?: { low: number; high: number; note: string };
+  /** Tuyến đồng giá theo kg (Hàn, Đài): đơn giá mỗi kg đúng lib/pricing.ts. */
+  unitPrice?: { perKg: number; note: string };
 }) {
   return {
     "@context": "https://schema.org",
     "@type": "Service",
+    "@id": `${input.url}#service`,
     serviceType: input.name,
     name: input.name,
     description: input.description,
     url: input.url,
     provider: { "@id": `${site.url}/#organization` },
     areaServed: input.areaServed ?? "Worldwide",
-    ...(input.price
+    ...(input.unitPrice
+      ? {
+          offers: {
+            "@type": "Offer",
+            priceCurrency: "VND",
+            price: input.unitPrice.perKg,
+            priceSpecification: {
+              "@type": "UnitPriceSpecification",
+              price: input.unitPrice.perKg,
+              priceCurrency: "VND",
+              unitCode: "KGM",
+              unitText: "kg",
+              referenceQuantity: { "@type": "QuantitativeValue", value: 1, unitCode: "KGM" },
+            },
+            description: input.unitPrice.note,
+            url: input.url,
+            seller: { "@id": `${site.url}/#organization` },
+          },
+        }
+      : input.price
       ? {
           offers: {
             "@type": "AggregateOffer",
@@ -315,9 +428,11 @@ export function articleJsonLd(input: {
     inLanguage: "vi-VN",
     ...(input.section ? { articleSection: input.section } : {}),
     ...(input.keywords ? { keywords: input.keywords } : {}),
-    author: { "@type": "Organization", name: site.name, url: site.url },
+    isPartOf: { "@id": `${site.url}/#website` },
+    author: { "@type": "Organization", "@id": `${site.url}/#organization`, name: site.name, url: `${site.url}/` },
     publisher: {
       "@type": "Organization",
+      "@id": `${site.url}/#organization`,
       name: site.name,
       logo: { "@type": "ImageObject", url: `${site.url}/images/logo-full.png` },
     },

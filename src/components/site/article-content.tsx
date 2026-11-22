@@ -22,6 +22,8 @@ export function destFromCategory(category: string): { destKey?: string; country:
     "Gửi hàng đi Mỹ": "my",
     "Gửi hàng đi Canada": "canada",
     "Gửi hàng đi Úc": "uc",
+    // Tuyến Hàn có bảng đồng giá từ 22/11/2026 (lib/pricing.ts key "han").
+    "Gửi hàng đi Hàn Quốc": "han",
   };
   const country = category.replace(/^Gửi hàng đi\s+/i, "").trim();
   return { destKey: map[category], country: country && country !== category ? country : "nước ngoài" };

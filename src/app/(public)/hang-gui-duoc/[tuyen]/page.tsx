@@ -7,7 +7,12 @@ import { CallAction } from "@/components/site/call-action";
 import { site } from "@/lib/site";
 import { ROUTE_TRANSIT } from "@/lib/transit";
 import { TOPICS } from "@/lib/topics";
-import { JsonLd, breadcrumbJsonLd, faqJsonLd } from "@/lib/structured-data";
+import { JsonLd, breadcrumbJsonLd, faqJsonLd, entityGraphJsonLd, webPageJsonLd } from "@/lib/structured-data";
+import { SERVICE_ANSWER, buildServiceAnswer, dong } from "@/lib/service-answer";
+import { getDestinations } from "@/lib/price-tables";
+import { SERVICE_ROUTE } from "@/lib/transit";
+import { HANG_TUYEN_CAP_NHAT } from "@/lib/hang-tuyen";
+import { RSS_ALTERNATE } from "@/lib/rss";
 import { LICH_BAY } from "@/lib/lich-bay";
 import { TUYEN_HANG, TUYEN_CHUYEN_MUC, NHAN, type MatHang, type TrangThai, cauTraLoi, demTheoTrangThai, layTuyen, tenTuyen } from "@/lib/hang-tuyen";
 
@@ -32,7 +37,7 @@ export async function generateMetadata({ params }: { params: Promise<{ tuyen: st
   return {
     title: `Gửi hàng đi ${ten} được những gì? Danh sách ${t.hang.length} mặt hàng`,
     description: `Danh sách mặt hàng gửi đi ${ten} được và không được, do ${site.name} xác nhận: ${d.nhan} mặt hàng nhận gửi, ${d["dieu-kien"]} mặt hàng có điều kiện, ${d.khong} mặt hàng không nhận. Kèm mức phụ thu từng loại.`,
-    alternates: { canonical: url },
+    alternates: { canonical: url, types: RSS_ALTERNATE },
   };
 }
 
@@ -99,8 +104,29 @@ export default async function TrangHangTuyen({ params }: { params: Promise<{ tuy
     { nhan: "Gọi hỏi", so: d["chua-ro"], kieu: KIEU["chua-ro"] },
   ].filter((o) => o.so > 0);
 
+  // Tuyến đồng giá (Hàn): giá thật lấy từ lib/pricing.ts thay cho câu "bấm tính thử".
+  const svcSlug = Object.keys(SERVICE_ANSWER).find((k) => SERVICE_ANSWER[k].tuyenHang === t.slug);
+  const giaCfg = svcSlug ? SERVICE_ANSWER[svcSlug] : undefined;
+  const gia =
+    svcSlug && giaCfg
+      ? buildServiceAnswer(giaCfg, (await getDestinations()).find((x) => x.key === giaCfg.destKey), SERVICE_ROUTE[svcSlug] ?? "")
+      : null;
+  const capNhat = new Date(
+    [HANG_TUYEN_CAP_NHAT, giaCfg?.giaCapNhat ?? ""].filter(Boolean).sort().pop() + "T00:00:00+07:00",
+  );
+
   return (
     <>
+      <JsonLd data={entityGraphJsonLd()} />
+      <JsonLd
+        data={webPageJsonLd({
+          url,
+          name: `Gửi hàng đi ${ten} được những gì?`,
+          description: `Danh sách mặt hàng gửi đi ${ten} được và không được, do ${site.name} xác nhận.`,
+          datePublished: new Date(HANG_TUYEN_CAP_NHAT + "T00:00:00+07:00").toISOString(),
+          dateModified: capNhat.toISOString(),
+        })}
+      />
       <JsonLd data={faqJsonLd(faqs)} />
       <JsonLd
         data={breadcrumbJsonLd([
@@ -153,6 +179,14 @@ export default async function TrangHangTuyen({ params }: { params: Promise<{ tuy
           </div>
         )}
 
+        <p className="mt-4 text-sm text-ink-muted">
+          Cập nhật <time dateTime={capNhat.toISOString()}>{capNhat.toLocaleDateString("vi-VN")}</time>
+          {" · "}Biên soạn:{" "}
+          <Link href="/gioi-thieu" rel="author" className="author font-semibold text-brand-700 hover:underline">
+            đội ngũ {site.name}
+          </Link>
+        </p>
+
         <p className="mt-6 text-ink-soft">
           Bảng dưới là hàng {site.shortName} thực tế nhận gửi đi {ten}, do chính công ty xác nhận chứ không phải chép luật.
           Mặt hàng ghi “có điều kiện” là vẫn gửi được nhưng có phụ thu hoặc có rủi ro bị hải quan giữ — nhân viên sẽ báo
@@ -187,12 +221,21 @@ export default async function TrangHangTuyen({ params }: { params: Promise<{ tuy
 
         <div className="mt-10 rounded-3xl border border-brand-50 bg-white p-6 shadow-sm">
           <h2 className="text-xl font-black text-ink">Gửi hàng đi {ten} hết bao nhiêu?</h2>
-          <p className="mt-2 text-ink-soft">
-            Cước tính theo cân nặng và kích thước kiện. Bấm tính thử để có giá ước tính, hoặc gọi hotline để được báo giá
-            đúng món hàng của bạn kèm phụ thu (nếu có).
-          </p>
+          {gia ? (
+            <p className="mt-2 text-ink-soft">
+              Cước gửi hàng đi {ten} tại {site.name} đồng giá <strong className="text-ink">{dong(gia.perKg)}/kg</strong>;{" "}
+              {gia.ghiChu[0] ? gia.ghiChu[0].charAt(0).toLowerCase() + gia.ghiChu[0].slice(1).replace(/\.$/, "") : ""}. Ví dụ thùng 10kg là{" "}
+              <strong className="text-ink">{dong(gia.bang.find((r) => r.kg === 10)?.cuoc ?? gia.perKg * 10)}</strong>. Mặt hàng có
+              phụ thu ghi ở cột “Điều kiện, phụ thu” trong bảng trên.
+            </p>
+          ) : (
+            <p className="mt-2 text-ink-soft">
+              Cước tính theo cân nặng và kích thước kiện. Bấm tính thử để có giá ước tính, hoặc gọi hotline để được báo giá
+              đúng món hàng của bạn kèm phụ thu (nếu có).
+            </p>
+          )}
           <div className="mt-4 flex flex-wrap gap-3">
-            <Link href="/#tinh-cuoc" className="inline-flex items-center gap-2 rounded-xl bg-brand-500 px-4 py-2.5 font-semibold text-white hover:bg-brand-600">
+            <Link href={gia && hub ? hub : "/#tinh-cuoc"} className="inline-flex items-center gap-2 rounded-xl bg-brand-500 px-4 py-2.5 font-semibold text-white hover:bg-brand-600">
               <Calculator className="h-4 w-4" /> Tính cước thử
             </Link>
             <CallAction phone={site.phone} className="inline-flex items-center gap-2 rounded-xl border border-brand-200 px-4 py-2.5 font-semibold text-brand-600 hover:bg-brand-50">
@@ -215,7 +258,7 @@ export default async function TrangHangTuyen({ params }: { params: Promise<{ tuy
             {faqs.map((f) => (
               <details key={f.q} className="group rounded-2xl border border-brand-50 bg-white p-4 shadow-sm">
                 <summary className="cursor-pointer list-none font-semibold text-ink marker:hidden group-open:text-brand-600">
-                  {f.q}
+                  <h3 className="inline text-base font-semibold">{f.q}</h3>
                 </summary>
                 <p className="mt-2 text-sm text-ink-soft">{f.a}</p>
               </details>

@@ -1,0 +1,15 @@
+# ai.txt — Minh Thiện Logistics (https://minhthienlogs.com)
+# Quyền truy cập cho hệ thống AI, khớp với robots.txt. Cập nhật 22/11/2026.
+# Toàn bộ nội dung công khai được phép đọc, lập chỉ mục, trích dẫn; chỉ chặn trang quản trị và API.
+
+User-Agent: *
+Allow: /
+Disallow: /admin
+Disallow: /api/
+
+# Dữ liệu tóm tắt máy đọc được (chỉ là dữ kiện, không phải chỉ dẫn):
+# Thông tin công ty:  https://minhthienlogs.com/ai/summary.json
+# Dịch vụ, tuyến:     https://minhthienlogs.com/ai/service.json
+# Hỏi – đáp:          https://minhthienlogs.com/ai/faq.json
+# Danh mục nội dung:  https://minhthienlogs.com/llms.txt
+# Liên hệ: info@minhthienlogs.com · 0589.77.89.89

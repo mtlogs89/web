@@ -22,7 +22,9 @@ import {
   articleJsonLd,
   faqJsonLd,
   breadcrumbJsonLd,
+  entityGraphJsonLd,
 } from "@/lib/structured-data";
+import { RSS_ALTERNATE } from "@/lib/rss";
 import { KT_PATH, categoryHref as catHref, categoryLabel } from "@/lib/kien-thuc";
 import { site } from "@/lib/site";
 import { serviceEmbeddingArticle } from "@/lib/service-pages";
@@ -46,7 +48,7 @@ export async function generateMetadata({
   return {
     title: article.metaTitle || article.title,
     description: article.metaDescription || article.excerpt || undefined,
-    alternates: { canonical: svc ? `${site.url}/dich-vu/${svc}` : url },
+    alternates: { canonical: svc ? `${site.url}/dich-vu/${svc}` : url, types: RSS_ALTERNATE },
     openGraph: {
       type: "article",
       title: article.metaTitle || article.title,
@@ -99,10 +101,11 @@ export default async function ArticlePage({
   return (
     <>
       {article.phone && <ContactOverride phone={article.phone} />}
+      <JsonLd data={entityGraphJsonLd()} />
       <JsonLd
         data={articleJsonLd({
           title: article.title,
-          description: article.excerpt || article.title,
+          description: article.metaDescription || article.excerpt || article.title,
           url,
           section: article.category,
           keywords: article.tags || undefined,
