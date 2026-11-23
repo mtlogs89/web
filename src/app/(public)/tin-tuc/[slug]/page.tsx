@@ -16,7 +16,8 @@ import {
   tomTatThe,
 } from "@/lib/articles";
 import { detectTopic, topicOfCategory } from "@/lib/topics";
-import { ROUTE_GOODS_NOTE, ROUTE_TRANSIT } from "@/lib/transit";
+import { ROUTE_GOODS_NOTE, ROUTE_TRANSIT, SERVICE_ROUTE } from "@/lib/transit";
+import { SERVICE_ANSWER, buildServiceAnswer } from "@/lib/service-answer";
 import {
   JsonLd,
   articleJsonLd,
@@ -88,9 +89,19 @@ export default async function ArticlePage({
       : null;
   const phone = article.phone || site.phone;
   const phoneDisplay = article.phone === site.phone2 ? site.phone2Display : article.phone || site.phoneDisplay;
-  // Bảng giá chỉ cần khi bài có chèn công cụ tính cước.
+  // Bảng giá cần khi bài có chèn công cụ tính cước, hoặc khi tuyến của bài là tuyến đồng giá:
+  // ô vàng đầu bài hiện thêm dòng giá (chủ cho phép 23/11/2026 — thân bài vẫn theo quy tắc
+  // "không ghi số tiền trong bài"). Dòng giá dựng từ lib/pricing.ts nên đổi giá là đổi theo.
   const coCongCuTinh = article.content.includes(QUOTE_TOKEN);
-  const dests = coCongCuTinh ? await getDestinations() : undefined;
+  const svcGia = Object.keys(SERVICE_ANSWER).find((k) => SERVICE_ROUTE[k] === article.category);
+  const dests = coCongCuTinh || svcGia ? await getDestinations() : undefined;
+  const gia = svcGia
+    ? buildServiceAnswer(
+        SERVICE_ANSWER[svcGia],
+        dests?.find((d) => d.key === SERVICE_ANSWER[svcGia].destKey),
+        article.category,
+      )
+    : null;
   const { destKey, country } = destFromCategory(article.category);
   const topic = topicOfCategory(article.category);
   const categoryHref = catHref(article.category);
@@ -161,12 +172,25 @@ export default async function ArticlePage({
         {ROUTE_TRANSIT[article.category] && (
           // Số chuẩn do chủ chốt — bài robot viết có thể ghi số khác, ô này là câu trả lời chính thức.
           <div className="mt-4 rounded-2xl border border-sun-200 bg-sun-50 px-5 py-4 text-ink">
-            <strong>Thời gian gửi đi {ROUTE_TRANSIT[article.category].name} (đường bay):</strong>{" "}
-            {ROUTE_TRANSIT[article.category].text}.
+            <p>
+              <strong>Thời gian gửi đi {ROUTE_TRANSIT[article.category].name} (đường bay):</strong>{" "}
+              {ROUTE_TRANSIT[article.category].text}.
+            </p>
+            {gia && svcGia && (
+              <p className="mt-2">
+                <strong>Giá cước gửi đi {ROUTE_TRANSIT[article.category].name}:</strong> {gia.giaNgan}{" "}
+                <Link href={`/dich-vu/${svcGia}#tra-loi-nhanh`} className="font-bold text-brand-700 underline">
+                  Xem bảng giá
+                </Link>{" "}
+                <span className="text-sm text-ink-muted">
+                  (cập nhật <time dateTime={gia.giaCapNhat}>{gia.giaCapNhat.split("-").reverse().join("/")}</time>)
+                </span>
+              </p>
+            )}
             {ROUTE_GOODS_NOTE[article.category] && (
-              <span className="mt-2 block">
+              <p className="mt-2">
                 <strong>Mặt hàng:</strong> {ROUTE_GOODS_NOTE[article.category]}
-              </span>
+              </p>
             )}
           </div>
         )}

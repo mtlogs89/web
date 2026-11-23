@@ -39,6 +39,8 @@ export type ServiceAnswerConfig = {
   soLieu?: { cau: string; href: string };
   /** Câu về thuế — tuyến nào chưa bao thuế phải nói rõ. */
   thue: string;
+  /** Câu thuế gọn (viết thường đầu câu) cho dòng giá ở ô vàng đầu bài viết. */
+  thueNgan?: string;
   /** Các mốc cân in trong bảng giá (từ mốc không còn phụ thu kiện nhỏ trở lên). */
   mocCan: number[];
   /** Ngày chủ chốt giá (YYYY-MM-DD) — đổi giá ở pricing.ts thì đổi ngày này. */
@@ -60,6 +62,7 @@ export const SERVICE_ANSWER: Record<string, ServiceAnswerConfig> = {
       href: "/tin-tuc/gui-hang-di-han-quoc-so-lieu-thuc-te",
     },
     thue: "Cước chưa gồm thuế nhập khẩu tại Hàn Quốc nếu phát sinh (tuỳ giá trị, loại và số lượng hàng); điện thoại, laptop và hàng giá trị cao thường bị hải quan Hàn yêu cầu đóng thuế, nên hỏi trước từng đơn.",
+    thueNgan: "chưa gồm thuế nhập khẩu tại Hàn Quốc nếu phát sinh",
     mocCan: [3, 5, 10, 15, 20, 30],
     giaCapNhat: "2026-11-22",
   },
@@ -78,6 +81,13 @@ export type ServiceAnswer = {
   perKg: number;
   /** Một câu giá + thời gian cho schema Offer. */
   note: string;
+  /**
+   * Dòng giá cho ô vàng đầu các bài viết của tuyến (chủ cho hiện giá ở ô này 23/11/2026; thân bài
+   * vẫn theo quy tắc "không ghi số tiền trong bài"). Viết thường đầu câu để nối sau nhãn "Giá cước…:".
+   */
+  giaNgan: string;
+  /** Ngày chủ chốt giá, YYYY-MM-DD. */
+  giaCapNhat: string;
   /** <title> (mẫu tiêu đề tự nối "| Minh Thiện Logistics") và mô tả ≤160 ký tự cho Google/AI. */
   seoTitle: string;
   metaDescription: string;
@@ -162,5 +172,14 @@ export function buildServiceAnswer(
     faqs,
     perKg,
     note: `Đồng giá ${dong(perKg)}/kg${smallText}. Thời gian: ${thoiGian}.`,
+    giaNgan: [
+      `đồng giá ${dong(perKg)}/kg, thùng 10kg là ${dong(cuoc(10))}` +
+        `${small ? ` (kiện dưới ${small.underKg}kg cộng thêm ${dong(small.fee)}/kiện)` : ""}.`,
+      cfg.thueNgan ? `${hoa(cfg.thueNgan)}.` : "",
+      phuThu.length ? "Một số mặt hàng có phụ thu riêng." : "",
+    ]
+      .filter(Boolean)
+      .join(" "),
+    giaCapNhat: cfg.giaCapNhat,
   };
 }
