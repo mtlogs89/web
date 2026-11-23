@@ -8,6 +8,36 @@ const openingHours = [
 ];
 
 /**
+ * Vùng phục vụ (AEO 23/11/2026): hỏi "gửi hàng đi Hàn tại <tỉnh>" thì AI chọn nơi có địa chỉ/vùng
+ * phục vụ rõ ràng. Khai nước + 6 thành phố Minh Thiện tới tận nơi lấy hàng (site.pickupCities).
+ */
+const areaServed = () => [
+  { "@type": "Country", name: "Việt Nam" },
+  ...site.pickupCities.map((name) => ({ "@type": "City", name })),
+];
+
+/** Chi nhánh Nha Trang — MỘT nút dùng chung cho trang chủ và mọi trang khác (cùng @id). */
+const nhaTrangNode = (id: (frag: string) => string) => {
+  const b = site.branches[1];
+  return {
+    "@type": "LocalBusiness",
+    "@id": id("nha-trang-branch"),
+    name: `${site.name} - ${b.name}`,
+    url: `${site.url}/gioi-thieu`,
+    telephone: tel(b.phones[0]),
+    parentOrganization: { "@id": id("organization") },
+    address: {
+      "@type": "PostalAddress",
+      streetAddress: "45 Nguyễn Xiển",
+      addressLocality: "Phường Bắc Nha Trang",
+      addressRegion: "Khánh Hòa",
+      addressCountry: "VN",
+    },
+    openingHoursSpecification: openingHours,
+  };
+};
+
+/**
  * Schema trang chủ — MỘT @graph duy nhất, chỉ in ở trang chủ (không còn nằm ở layout).
  * Các trang khác trỏ về thực thể này bằng @id (`${site.url}/#organization`), đừng khai lại.
  *
@@ -19,7 +49,6 @@ const openingHours = [
  */
 export function homepageGraphJsonLd() {
   const id = (frag: string) => `${site.url}/#${frag}`;
-  const nhaTrang = site.branches[1];
   const sameAs = [site.facebook, site.instagram, site.zalo, site.taxRegistry].filter(Boolean);
   const providerRef = { "@id": id("organization") };
   const offer = (name: string, slug: string) => ({
@@ -99,6 +128,7 @@ export function homepageGraphJsonLd() {
           },
         ],
         sameAs,
+        areaServed: areaServed(),
         department: { "@id": id("nha-trang-branch") },
         subjectOf: [
           { "@type": "AboutPage", name: `Giới thiệu ${site.name}`, url: `${site.url}/gioi-thieu` },
@@ -145,22 +175,7 @@ export function homepageGraphJsonLd() {
         },
         mainEntityOfPage: { "@id": id("webpage") },
       },
-      {
-        "@type": "LocalBusiness",
-        "@id": id("nha-trang-branch"),
-        name: `${site.name} - ${nhaTrang.name}`,
-        url: `${site.url}/gioi-thieu`,
-        telephone: tel(nhaTrang.phones[0]),
-        parentOrganization: { "@id": id("organization") },
-        address: {
-          "@type": "PostalAddress",
-          streetAddress: "45 Nguyễn Xiển",
-          addressLocality: "Phường Bắc Nha Trang",
-          addressRegion: "Khánh Hòa",
-          addressCountry: "VN",
-        },
-        openingHoursSpecification: openingHours,
-      },
+      nhaTrangNode(id),
       {
         // Không có SearchAction: web chưa có ô tìm kiếm thật, khai ra là khai khống.
         "@type": "WebSite",
@@ -238,22 +253,12 @@ export function entityGraphJsonLd() {
           availableLanguage: ["Vietnamese"],
         },
         sameAs: [site.facebook, site.instagram, site.zalo, site.taxRegistry].filter(Boolean),
-        // AEO 23/11/2026: hỏi "gửi hàng đi Hàn tại <tỉnh>" thì AI chọn nơi có địa chỉ/vùng phục vụ
-        // rõ ràng. Khai nước + 6 thành phố Minh Thiện tới tận nơi lấy hàng (site.pickupCities).
-        areaServed: [
-          { "@type": "Country", name: "Việt Nam" },
-          ...site.pickupCities.map((name) => ({ "@type": "City", name })),
-        ],
-        // Chi nhánh thật (site.branches) — nối điểm "Minh Thiện Logistics Nha Trang" trên bản đồ về
-        // cùng một công ty.
-        department: site.branches.slice(1).map((b) => ({
-          "@type": "LocalBusiness",
-          name: `${site.name} — ${b.name}`,
-          address: { "@type": "PostalAddress", streetAddress: b.address, addressCountry: "VN" },
-          telephone: b.phones.map(tel),
-          parentOrganization: { "@id": id("organization") },
-        })),
+        areaServed: areaServed(),
+        // Chi nhánh thật — cùng nút @id với trang chủ, nối điểm "Minh Thiện Logistics Nha Trang"
+        // trên bản đồ về cùng một công ty.
+        department: { "@id": id("nha-trang-branch") },
       },
+      nhaTrangNode(id),
       {
         "@type": "WebSite",
         "@id": id("website"),
