@@ -68,7 +68,15 @@ export async function generateMetadata({
       title,
       description,
       alternates: { canonical: `${site.url}/dich-vu/${slug}`, types: RSS_ALTERNATE },
-      openGraph: { type: "website", title, description, url: `${site.url}/dich-vu/${slug}` },
+      // Khai openGraph ở trang thì Next.js bỏ hẳn khối openGraph của layout, mất luôn ảnh.
+      // Thiếu dòng images thì gửi link trang dịch vụ qua Zalo/Facebook sẽ không có ảnh (lỗi 22/11–23/11).
+      openGraph: {
+        type: "website",
+        title,
+        description,
+        url: `${site.url}/dich-vu/${slug}`,
+        images: [{ url: "/images/og-cover.jpg", width: 1200, height: 630, alt: site.name }],
+      },
     };
   }
   const custom = await getCustomCard(slug);
