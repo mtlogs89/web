@@ -172,8 +172,8 @@ export function buildServiceAnswer(
       // AEO 23/11/2026: câu "gửi hàng đi … ở đâu / tại TP.HCM" — AI cần địa chỉ, giờ mở cửa, cách giao.
       q: `Ở TP.HCM gửi hàng đi ${cfg.country} mang tới đâu?`,
       a:
-        `Mang tới kho ${site.name} tại ${site.addressFull}, mở cửa ${site.hours.replace(": ", " ")}, ` +
-        `hoặc gọi/Zalo ${site.phoneDisplay} để Minh Thiện tới tận nơi lấy hàng. Kho cân, kiểm hàng và đóng gói miễn phí tại chỗ` +
+        `Ở TP.HCM, nơi nhận hàng gửi đi ${cfg.country} của ${site.name} là kho ${site.addressFull}, mở cửa ${site.hours.replace(": ", " ")}; ` +
+        `gọi/Zalo ${site.phoneDisplay} thì Minh Thiện tới tận nơi lấy hàng. Kho cân, kiểm hàng và đóng gói miễn phí tại chỗ` +
         `${lich ? `; hàng đi ${cfg.country} bay ${lich.bay}, chốt hàng ${lich.chot}` : ""}. ` +
         `Ở ${site.pickupCities.filter((c) => c !== "TP. Hồ Chí Minh").join(", ")} cũng hẹn lấy tận nơi được; ` +
         `nơi khác gọi hotline để Minh Thiện đặt chuyển phát nội địa tới nhà lấy hàng về kho TP.HCM.`,

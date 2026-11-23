@@ -32,8 +32,8 @@ export function GuiTaiNoi({
         </h2>
         <p className="mt-3 leading-7 text-ink">
           <strong>
-            Ở TP.HCM, bạn mang hàng tới kho {site.name} tại {site.addressFull} (mở cửa {gio}), hoặc gọi{" "}
-            {site.phoneDisplay} để Minh Thiện tới tận nơi lấy hàng.
+            Ở TP.HCM, nơi nhận hàng gửi đi {country} của {site.name} là kho {site.addressFull}, mở cửa {gio};
+            gọi {site.phoneDisplay} thì Minh Thiện tới tận nơi lấy hàng.
           </strong>{" "}
           {lich ? `Hàng đi ${country} bay ${lich.bay}, chốt hàng ${lich.chot}.` : ""}
         </p>
