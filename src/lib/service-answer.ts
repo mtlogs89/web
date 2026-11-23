@@ -45,6 +45,11 @@ export type ServiceAnswerConfig = {
   mocCan: number[];
   /** Ngày chủ chốt giá (YYYY-MM-DD) — đổi giá ở pricing.ts thì đổi ngày này. */
   giaCapNhat: string;
+  /**
+   * Bài hướng dẫn gửi theo nơi (Cần Thơ, Hà Nội…) — link ở khối "Gửi hàng đi … tại TP.HCM và các
+   * tỉnh". Chỉ đưa bài đã soát không ghi sai cách lấy hàng/văn phòng.
+   */
+  baiTheoNoi?: { noi: string; slug: string }[];
 };
 
 export const SERVICE_ANSWER: Record<string, ServiceAnswerConfig> = {
@@ -65,6 +70,14 @@ export const SERVICE_ANSWER: Record<string, ServiceAnswerConfig> = {
     thueNgan: "chưa gồm thuế nhập khẩu tại Hàn Quốc nếu phát sinh",
     mocCan: [3, 5, 10, 15, 20, 30],
     giaCapNhat: "2026-11-22",
+    // Soát 23/11/2026: không ghi văn phòng ở tỉnh, không ghi giá. Bình Dương, An Giang, Hải Phòng,
+    // Quy Nhơn còn câu "lấy tận nơi chỉ áp dụng ở…" (trái quy tắc chủ) — sửa xong mới thêm vào.
+    baiTheoNoi: [
+      { noi: "Cần Thơ và miền Tây", slug: "gui-hang-di-han-quoc-tai-can-tho" },
+      { noi: "Hà Nội", slug: "gui-hang-di-han-quoc-tai-ha-noi-quy-trinh-luu-y-va-bang-gia-2026" },
+      { noi: "Đà Nẵng", slug: "gui-hang-di-han-quoc-tai-da-nang-quy-trinh-thuc-te-luu-y-hai-quan-bang-gia-2026" },
+      { noi: "Huế", slug: "gui-hang-di-han-quoc-tai-hue-cach-gui-thu-tuc-va-luu-y-thuc-te-2026" },
+    ],
   },
 };
 
@@ -154,6 +167,16 @@ export function buildServiceAnswer(
     {
       q: `Gửi thùng 10kg đồ ăn đi ${cfg.country} hết bao nhiêu tiền?`,
       a: `Thùng 10kg là ${dong(cuoc(10))} tiền cước (10 × ${dong(perKg)}), thùng 20kg là ${dong(cuoc(20))}. Đóng gói, thùng và hút chân không miễn phí; thời gian: ${thoiGian}.`,
+    },
+    {
+      // AEO 23/11/2026: câu "gửi hàng đi … ở đâu / tại TP.HCM" — AI cần địa chỉ, giờ mở cửa, cách giao.
+      q: `Ở TP.HCM gửi hàng đi ${cfg.country} mang tới đâu?`,
+      a:
+        `Mang tới kho ${site.name} tại ${site.addressFull}, mở cửa ${site.hours.replace(": ", " ")}, ` +
+        `hoặc gọi/Zalo ${site.phoneDisplay} để Minh Thiện tới tận nơi lấy hàng. Kho cân, kiểm hàng và đóng gói miễn phí tại chỗ` +
+        `${lich ? `; hàng đi ${cfg.country} bay ${lich.bay}, chốt hàng ${lich.chot}` : ""}. ` +
+        `Ở ${site.pickupCities.filter((c) => c !== "TP. Hồ Chí Minh").join(", ")} cũng hẹn lấy tận nơi được; ` +
+        `nơi khác gọi hotline để Minh Thiện đặt chuyển phát nội địa tới nhà lấy hàng về kho TP.HCM.`,
     },
   ];
 

@@ -238,6 +238,21 @@ export function entityGraphJsonLd() {
           availableLanguage: ["Vietnamese"],
         },
         sameAs: [site.facebook, site.instagram, site.zalo, site.taxRegistry].filter(Boolean),
+        // AEO 23/11/2026: hỏi "gửi hàng đi Hàn tại <tỉnh>" thì AI chọn nơi có địa chỉ/vùng phục vụ
+        // rõ ràng. Khai nước + 6 thành phố Minh Thiện tới tận nơi lấy hàng (site.pickupCities).
+        areaServed: [
+          { "@type": "Country", name: "Việt Nam" },
+          ...site.pickupCities.map((name) => ({ "@type": "City", name })),
+        ],
+        // Chi nhánh thật (site.branches) — nối điểm "Minh Thiện Logistics Nha Trang" trên bản đồ về
+        // cùng một công ty.
+        department: site.branches.slice(1).map((b) => ({
+          "@type": "LocalBusiness",
+          name: `${site.name} — ${b.name}`,
+          address: { "@type": "PostalAddress", streetAddress: b.address, addressCountry: "VN" },
+          telephone: b.phones.map(tel),
+          parentOrganization: { "@id": id("organization") },
+        })),
       },
       {
         "@type": "WebSite",

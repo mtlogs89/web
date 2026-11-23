@@ -29,6 +29,8 @@ import {
 } from "@/lib/structured-data";
 import { SERVICE_ANSWER, buildServiceAnswer } from "@/lib/service-answer";
 import { ServiceAnswerBox } from "@/components/site/service-answer-box";
+import { GuiTaiNoi } from "@/components/site/gui-tai-noi";
+import { LICH_BAY } from "@/lib/lich-bay";
 import { RSS_ALTERNATE } from "@/lib/rss";
 
 const AREA_SERVED: Record<string, object> = {
@@ -353,7 +355,14 @@ export default async function ServicePage({
         <>
           {articleBody?.phone && <ContactOverride phone={articleBody.phone} />}
           {answer ? (
-            <ServiceAnswerBox answer={answer} updated={updated} hangGuiDuocHref={`/hang-gui-duoc/${answerCfg?.tuyenHang}`} />
+            <>
+              <ServiceAnswerBox answer={answer} updated={updated} hangGuiDuocHref={`/hang-gui-duoc/${answerCfg?.tuyenHang}`} />
+              <GuiTaiNoi
+                country={answerCfg?.country ?? rich.country}
+                lich={answerCfg ? LICH_BAY[answerCfg.lichBay] : undefined}
+                baiTheoNoi={answerCfg?.baiTheoNoi}
+              />
+            </>
           ) : (
             <p className="mx-auto max-w-4xl px-4 pt-8 text-sm text-ink-muted sm:px-6">
               Cập nhật <time dateTime={updated.toISOString()}>{updated.toLocaleDateString("vi-VN")}</time>

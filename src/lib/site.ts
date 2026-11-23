@@ -47,6 +47,10 @@ export const site = {
   // Chủ chốt 21/11/2026: 10 năm là của ĐỘI NGŨ, không phải của công ty (pháp nhân cấp ĐKDN 30/10/2025,
   // ai tra MST thấy ngay) → luôn viết "đội ngũ hơn 10 năm", đừng viết "công ty hơn 10 năm".
   experienceYears: 10,
+  // Nơi Minh Thiện tới tận nơi lấy hàng (chủ chốt 22/11/2026). Nơi khác: khách gọi hotline để
+  // Minh Thiện đặt chuyển phát nội địa tới nhà lấy hàng về kho TP.HCM. Văn phòng chỉ có TP.HCM
+  // và chi nhánh Nha Trang — không có văn phòng/người nhận ở các thành phố còn lại.
+  pickupCities: ["TP. Hồ Chí Minh", "Hà Nội", "Đà Nẵng", "Huế", "Nha Trang", "Cần Thơ"],
   branches: [
     {
       name: "Trụ sở TP. Hồ Chí Minh",
