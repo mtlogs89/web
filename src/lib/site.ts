@@ -12,7 +12,8 @@ export const site = {
   phone: "0589778989",
   phoneDisplay: "0589.77.89.89",
   contactName: "Ms Min",
-  // Hotline thứ 2 trên nút gọi nổi + số của mọi bài Úc (chủ thêm 19/10/2026).
+  // Số Ms Vy: từng là số của mọi trang/bài Úc (19/10–26/11/2026). Từ 26/11/2026 trang Úc dùng
+  // hotline chung Ms Min — xem TRANG_UC_DUNG_SO_VY trong components/site/so-trang-uc.ts.
   phone2: "0397790199",
   phone2Display: "039.779.0199",
   contactName2: "Ms Vy",

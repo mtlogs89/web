@@ -334,8 +334,11 @@ function gioViet() {
  */
 let khungDangHien = 0;
 
-/** Hotline riêng theo tuyến: khách tính giá tuyến này thì Gọi/Zalo dùng số này. */
-const ROUTE_PHONE: Record<string, string> = { canada: "0899391119", uc: "0397790199" };
+/**
+ * Hotline riêng theo tuyến: khách tính giá tuyến này thì Gọi/Zalo dùng số này.
+ * Úc: từ 26/11/2026 dùng hotline chung Ms Min (trước là số Ms Vy 0397790199) — chủ yêu cầu.
+ */
+const ROUTE_PHONE: Record<string, string> = { canada: "0899391119" };
 
 /** 0899391119 -> 0899.39.11.19 (cùng kiểu với hotline chung 0589.77.89.89). */
 function formatPhone(p: string) {
