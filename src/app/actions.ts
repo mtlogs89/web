@@ -70,14 +70,12 @@ export async function submitQuoteLead(
   const page = String(formData.get("page") || "").slice(0, 200);
   const reason = String(formData.get("reason") || "").slice(0, 200);
   const priceTotal = Number(formData.get("priceTotal"));
-  const offer = String(formData.get("offer") || "").slice(0, 20);
 
   const message = [
     Number.isFinite(priceTotal) && priceTotal > 0
       ? `Web tính ra ${Math.round(priceTotal).toLocaleString("vi-VN")}đ`
       : `Web không ra giá${reason ? ` (${reason})` : ""}`,
     page && `trang ${page}`,
-    offer && `web đang hiện ưu đãi ${offer}`,
   ]
     .filter(Boolean)
     .join(" · ");

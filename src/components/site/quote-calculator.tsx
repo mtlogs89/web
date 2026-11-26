@@ -225,7 +225,6 @@ export function QuoteCalculator({
                 weight: Number(weight),
                 cargoLabel: cargoTypes.find((c) => c.key === cargoKey)?.label ?? cargoKey,
                 priceTotal: result.total,
-                chargeable: result.chargeable,
                 source,
               }}
               callPhone={callPhone}
@@ -247,7 +246,6 @@ export function QuoteCalculator({
                 weight: Number(weight),
                 cargoLabel: cargoTypes.find((c) => c.key === cargoKey)?.label ?? cargoKey,
                 priceTotal: null,
-                chargeable: Number(weight),
                 reason: result.reason,
                 source,
               }}
@@ -296,8 +294,6 @@ type QuoteInfo = {
   weight: number;
   cargoLabel: string;
   priceTotal: number | null;
-  /** Cân tính cước (đã quy đổi kích thước) — dùng để chọn mức ưu đãi. */
-  chargeable: number;
   reason?: string;
   source?: string;
 };
@@ -346,15 +342,13 @@ function formatPhone(p: string) {
   return d.length === 10 ? `${d.slice(0, 4)}.${d.slice(4, 6)}.${d.slice(6, 8)}.${d.slice(8)}` : p;
 }
 
-/** Tiền tố mã ưu đãi theo tuyến — nhân viên nghe mã là biết khách hỏi tuyến nào. */
-const OFFER_PREFIX: Record<string, string> = { my: "US", canada: "CA" };
-
 /** Viền chuyển màu theo logo: coral → amber → teal. */
 const LOGO_GRADIENT = "linear-gradient(135deg,#EC5E5E 0%,#F2A93C 50%,#1FB6A2 100%)";
 
 /**
  * Khung liên hệ ngay dưới con số giá — lúc khách đang quan tâm nhất.
- * Thứ tự (ưu tiên điện thoại): vé ưu đãi gọi ngay → Gọi / Zalo → ô để lại số.
+ * Thứ tự (ưu tiên điện thoại): Gọi / Zalo → ô để lại số.
+ * (Ô "Ưu đãi gọi ngay — giảm 100K/200K, mã US100/US200…" đã bỏ theo yêu cầu chủ 26/11/2026.)
  */
 function AfterQuote({
   quote,
@@ -417,64 +411,8 @@ function AfterQuote({
   const goiHienThi = soTuyen ? formatPhone(soTuyen) : callDisplay;
   const zaloLink = soTuyen ? `https://zalo.me/${soTuyen}` : zaloHref;
 
-  // Ưu đãi gọi ngay theo cân tính cước: dưới 10kg giảm 100k, từ 10kg trở lên giảm 200k.
-  // Mã theo tuyến khách chọn (không theo trang đang xem): Mỹ US…, Canada CA…,
-  // tuyến khác tạm dùng WEB… cho tới khi chủ đặt mã riêng.
-  const tienTo = OFFER_PREFIX[quote.dest] ?? "WEB";
-  const offer =
-    quote.chargeable >= 10
-      ? { amount: 200000, short: "200K", code: `${tienTo}200`, label: "từ 10kg" }
-      : quote.chargeable > 0
-        ? { amount: 100000, short: "100K", code: `${tienTo}100`, label: "dưới 10kg" }
-        : null;
-
   return (
     <div ref={boxRef} className="mt-4 space-y-3">
-      {offer && (
-        <div className="offer-pop relative overflow-hidden rounded-2xl shadow-xl shadow-coral-500/25">
-          <div
-            className="relative flex items-center gap-3 px-4 pb-3.5 pt-3.5 text-white"
-            style={{ background: "linear-gradient(120deg,#EC5E5E 0%,#EE7446 60%,#F2A93C 100%)" }}
-          >
-            <span
-              aria-hidden
-              className="offer-shine pointer-events-none absolute inset-y-0 -left-1/2 w-1/2 bg-gradient-to-r from-transparent via-white/30 to-transparent"
-            />
-            <div className="relative min-w-0 flex-1">
-              <div className="text-[11px] font-bold uppercase tracking-wider text-white/95">
-                🎁 Ưu đãi gọi ngay
-              </div>
-              <div className="mt-1 whitespace-nowrap text-[34px] font-black leading-none tracking-tight [text-shadow:0_1px_2px_rgb(0_0_0/0.15)]">
-                Giảm {offer.short}
-              </div>
-              <div className="mt-2 flex flex-wrap items-center gap-2 text-[13px] font-semibold">
-                <span>Cho đơn {offer.label}</span>
-                <span className="rounded-lg bg-white px-2 py-0.5 font-black tracking-wider text-coral-600 shadow-sm">
-                  Mã {offer.code}
-                </span>
-              </div>
-            </div>
-          </div>
-          <div className="flex items-baseline justify-between gap-2 border-t-2 border-dashed border-coral-200 bg-white px-4 py-2.5">
-            {quote.priceTotal != null ? (
-              <>
-                <span className="shrink-0 whitespace-nowrap text-[13px] font-semibold text-ink-soft">Chỉ còn</span>
-                <span className="text-right">
-                  <b className="text-[20px] font-black text-coral-600">
-                    {vnd(Math.max(0, quote.priceTotal - offer.amount))}
-                  </b>{" "}
-                  <span className="text-xs text-ink-muted line-through">{vnd(quote.priceTotal)}</span>
-                </span>
-              </>
-            ) : (
-              <span className="text-[13px] font-semibold text-ink-soft">
-                Gọi ngay để nhận báo giá kèm ưu đãi — đọc mã {offer.code}
-              </span>
-            )}
-          </div>
-        </div>
-      )}
-
       <div className="grid grid-cols-[1.3fr_1fr] gap-2">
         <span className="contents" onClickCapture={() => logQuoteAction("call", quote)}>
           <CallAction
@@ -556,7 +494,6 @@ function AfterQuote({
             <input type="hidden" name="cargoLabel" value={quote.cargoLabel} />
             <input type="hidden" name="priceTotal" value={quote.priceTotal ?? ""} />
             <input type="hidden" name="reason" value={quote.reason ?? ""} />
-            <input type="hidden" name="offer" value={offer?.code ?? ""} />
             {/* Bẫy bot: người thật không thấy ô này. */}
             <input type="text" name="website" tabIndex={-1} autoComplete="off" aria-hidden className="hidden" />
 
